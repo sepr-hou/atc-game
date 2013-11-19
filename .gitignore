@@ -1,0 +1,13 @@
+# Target directory
+/target/
+
+# Eclipse settings
+/.settings/
+
+# Binary files
+*.jar
+*.class
+
+# Backup files
+*~
+*.bak
