@@ -32,4 +32,36 @@ public class Rectangle
 	public boolean intersects(Vector2D centre, float radius)
 	{
 	}
+
+    /**
+     * Returns true if this rectangle is exactly equal to another
+     *
+     * <p>
+     * You probably DO NOT want to be calling this method.
+     *
+     * <p>
+     * Due to floating point rounding errors, this method is slightly dangerous
+     * and can return values you might not expect.
+     *
+     * @param other other rectangle to compare
+     * @return true if the 2 points are equal in both rectangles
+     */
+    public boolean equals(Rectangle other)
+    {
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+    }
+
+    @Override
+    public int hashCode()
+    {
+    }
+
+    @Override
+    public String toString()
+    {
+    }
 }

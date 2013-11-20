@@ -104,4 +104,36 @@ public class Vector2D
     public Vector2D rotate(float angle)
     {
     }
+
+    /**
+     * Returns true if this vector is exactly equal to another
+     *
+     * <p>
+     * You probably DO NOT want to be calling this method.
+     *
+     * <p>
+     * Due to floating point rounding errors, this method is slightly dangerous
+     * and can return values you might not expect.
+     *
+     * @param other other vector to compare
+     * @return true if x and y are equal in both vectors
+     */
+    public boolean equals(Vector2D other)
+    {
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+    }
+
+    @Override
+    public int hashCode()
+    {
+    }
+
+    @Override
+    public String toString()
+    {
+    }
 }
