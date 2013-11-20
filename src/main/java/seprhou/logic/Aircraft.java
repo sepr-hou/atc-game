@@ -9,6 +9,10 @@ package seprhou.logic;
  * In addition to this, aircraft also have a target velocity and altitude.
  * Each refresh, the aircraft's velocity and altitude are updated to get closer to the targets at a
  * rate specified in the aircraft's type.
+ *
+ * <p>
+ * By default, aircraft are active. If an aircraft is made inactive, it does not move when refreshed
+ * and will never collide with other aircraft.
  */
 public class Aircraft
 {
@@ -40,6 +44,8 @@ public class Aircraft
     {
         this.flightPlan = flightPlan;
         this.type = type;
+
+        // TODO Initialize other variables
     }
 
     /** Returns this aircraft's flight plan */
