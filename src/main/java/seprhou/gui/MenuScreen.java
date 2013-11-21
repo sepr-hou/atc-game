@@ -2,35 +2,24 @@ package seprhou.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MenuScreen extends AbstractScreen
 {
+	public MenuScreen(MainWindow mainWindow) {
+		super(mainWindow);
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final float BUTTON_WIDTH = 300f;
     private static final float BUTTON_HEIGHT = 60f;
     private static final float BUTTON_SPACING = 10f;
-    
-    Stage defaultStage = new Stage();
-    
-    @Override
-    public void render(
-        float delta )
-    {
-    	super.render(delta);
-        // (1) process the game logic
-
-        // update the actors
-        defaultStage.act( delta );
-
-        // draw the actors
-        defaultStage.draw();
-
-    }
-
     
     @Override
     public void resize(
@@ -41,9 +30,6 @@ public class MenuScreen extends AbstractScreen
         final float buttonX = ( 800 - BUTTON_WIDTH ) / 2;
         float currentY = 280f;
         defaultStage.clear();
-        
-        Skin defaultSkin = new Skin(Gdx.files.internal("/usr/userfs/j/jk767/cs/atc-game/src/main/resources/uiskin.json"));
-       
         
         // label "Game Title"
         Label welcomeLabel = new Label( "Air traffic controller game", defaultSkin );
@@ -65,14 +51,33 @@ public class MenuScreen extends AbstractScreen
         optionsButton.setY(( currentY -= BUTTON_HEIGHT + BUTTON_SPACING ));
         optionsButton.setWidth(BUTTON_WIDTH);
         optionsButton.setHeight(BUTTON_HEIGHT);
+        optionsButton.addListener(new ClickListener(){
+        @Override
+        public void clicked(InputEvent event,
+           float x,
+           float y){
+           mainWindow.setScreen(new OptionsScreen(mainWindow));
+        }
+        });
         defaultStage.addActor( optionsButton );
  
         // button "High Scores"
-        TextButton hallOfFameButton = new TextButton( "Hall of Fame", defaultSkin);
-        hallOfFameButton.setX(buttonX);
-        hallOfFameButton.setY(( currentY -= BUTTON_HEIGHT + BUTTON_SPACING ));
-        hallOfFameButton.setWidth(BUTTON_WIDTH);
-        hallOfFameButton.setHeight(BUTTON_HEIGHT);
-        defaultStage.addActor( hallOfFameButton );
+        TextButton highScoresButton = new TextButton( "High Scores", defaultSkin);
+        highScoresButton.setX(buttonX);
+        highScoresButton.setY(( currentY -= BUTTON_HEIGHT + BUTTON_SPACING ));
+        highScoresButton.setWidth(BUTTON_WIDTH);
+        highScoresButton.setHeight(BUTTON_HEIGHT);
+        highScoresButton.addListener(new ClickListener(){
+        @Override
+        public void clicked(InputEvent event,
+        	float x,
+            float y){
+            mainWindow.setScreen(new HighScoresScreen(mainWindow));
+        }
+        });
+        defaultStage.addActor( highScoresButton );
+        
+        Gdx.input.setInputProcessor(defaultStage);
     }
+    
 }
