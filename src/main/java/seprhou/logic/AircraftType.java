@@ -1,15 +1,16 @@
 package seprhou.logic;
 
-public class AircraftType {
-
+public class AircraftType
+{
 	private String name;
 	private float size, weight, ascentRate, minSpeed, maxSpeed, maxAltitude, maxAcceleration, maxTurnRate;
 	private int crew;
-	
+
 	public AircraftType(String name, float size, float weight,
-			float ascentRate, float minSpeed, float maxSpeed,
-			float maxAltitude, float maxAcceleration, float maxTurnRate,
-			int crew) {
+						float ascentRate, float minSpeed, float maxSpeed,
+						float maxAltitude, float maxAcceleration, float maxTurnRate,
+						int crew)
+	{
 		this.name = name;
 		this.size = size;
 		this.weight = weight;
@@ -21,35 +22,54 @@ public class AircraftType {
 		this.maxTurnRate = maxTurnRate;
 		this.crew = crew;
 	}
-	public String getName() {
+
+	public String getName()
+	{
 		return name;
 	}
-	public float getSize() {
+
+	public float getSize()
+	{
 		return size;
 	}
-	public float getWeight() {
+
+	public float getWeight()
+	{
 		return weight;
 	}
-	public float getAscentRate() {
+
+	public float getAscentRate()
+	{
 		return ascentRate;
 	}
-	public float getMinSpeed() {
+
+	public float getMinSpeed()
+	{
 		return minSpeed;
 	}
-	public float getMaxSpeed() {
+
+	public float getMaxSpeed()
+	{
 		return maxSpeed;
 	}
-	public float getMaxAltitude() {
+
+	public float getMaxAltitude()
+	{
 		return maxAltitude;
 	}
-	public float getMaxAcceleration() {
+
+	public float getMaxAcceleration()
+	{
 		return maxAcceleration;
 	}
-	public float getMaxTurnRate() {
+
+	public float getMaxTurnRate()
+	{
 		return maxTurnRate;
 	}
-	public int getCrew() {
+
+	public int getCrew()
+	{
 		return crew;
 	}
-	
 }
