@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public abstract class AbstractScreen implements Screen
 {
 	Stage defaultStage = new Stage();
-    Skin defaultSkin = new Skin(Gdx.files.internal("src/main/resources/uiskin.json"));
+    Skin defaultSkin = new Skin(Gdx.files.internal("data/uiskin.json"));
 	
 	MainWindow mainWindow;
     
