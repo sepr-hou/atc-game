@@ -42,6 +42,22 @@ public class Vector2D
 	}
 
 	/**
+	 * Returns the length of this vector squared
+	 *
+	 * <p>
+	 * This method exists because it avoids the square root which makes {@link #getLength()} slow.
+	 * If you just need to compare lengths, you can use this method instead.
+	 *
+	 * @return the length of this vector, squared
+	 * @see #getLength()
+	 */
+	public float getLengthSquared()
+	{
+		// TODO Implement this
+		return 0;
+	}
+
+	/**
 	 * Returns the angle between this vector to the X axis
 	 *
 	 * <p>This method always returns angles between -pi and pi.
