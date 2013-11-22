@@ -21,21 +21,27 @@ public class Vector2D
      */
     public Vector2D(float x, float y)
     {
+    	this.x = x;
+    	this.y = y;
     }
 
     /** Returns the X value of this vector */
     public float getX()
     {
+    	return x;
     }
 
     /** Returns the Y value of this vector */
     public float getY()
     {
+    	return y;
     }
 
     /** Returns the length (euclidean norm) of this vector */
     public float getLength()
     {
+    	float length = Math.sqrt(Math.pow(x,2)) + (Math.pow(y,2));
+    	return length;
     }
 
     /**
