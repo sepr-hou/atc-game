@@ -5,12 +5,40 @@
   <artifactId>atc-game</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <!-- Use UTF-8 for all source files -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gdx.version>0.9.9</gdx.version>
+    <mainClass>seprhou.gui.MainWindowLauncher</mainClass>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>gdx-nightlies</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
+    <!-- libGDX -->
+    <dependency>
+      <groupId>com.badlogicgames.gdx</groupId>
+      <artifactId>gdx</artifactId>
+      <version>${gdx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.badlogicgames.gdx</groupId>
+      <artifactId>gdx-backend-lwjgl</artifactId>
+      <version>${gdx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.badlogicgames.gdx</groupId>
+      <artifactId>gdx-platform</artifactId>
+      <version>${gdx.version}</version>
+      <classifier>natives-desktop</classifier>
+    </dependency>
+
     <!-- Using JUnit for tests -->
     <dependency>
       <groupId>junit</groupId>
@@ -32,6 +60,22 @@
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
           <compilerArgument>-Xlint:unchecked</compilerArgument>
+        </configuration>
+      </plugin>
+
+      <!-- Generate JAR with correct main class + dependencies -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass>${mainClass}</mainClass>
+            </manifest>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
