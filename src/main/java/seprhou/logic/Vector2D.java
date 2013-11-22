@@ -38,8 +38,7 @@ public class Vector2D
 	/** Returns the length (euclidean norm) of this vector */
 	public float getLength()
 	{
-		float length = Math.sqrt(Math.pow(x, 2)) + (Math.pow(y, 2));
-		return length;
+		return (float) Math.sqrt(x * x + y * y);
 	}
 
 	/**
@@ -55,6 +54,8 @@ public class Vector2D
 	 */
 	public float getAngle()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	/**
@@ -65,6 +66,8 @@ public class Vector2D
 	 */
 	public float distanceTo(Vector2D other)
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	/**
@@ -75,6 +78,8 @@ public class Vector2D
 	 */
 	public Vector2D add(Vector2D other)
 	{
+		// TODO Implement this
+		return null;
 	}
 
 	/**
@@ -85,6 +90,8 @@ public class Vector2D
 	 */
 	public Vector2D sub(Vector2D other)
 	{
+		// TODO Implement this
+		return null;
 	}
 
 	/**
@@ -95,6 +102,8 @@ public class Vector2D
 	 */
 	public Vector2D multiply(float scalar)
 	{
+		// TODO Implement this
+		return null;
 	}
 
 	/**
@@ -107,6 +116,8 @@ public class Vector2D
 	 */
 	public Vector2D rotate(float angle)
 	{
+		// TODO Implement this
+		return null;
 	}
 
 	/**
@@ -124,20 +135,28 @@ public class Vector2D
 	 */
 	public boolean equals(Vector2D other)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	@Override
 	public boolean equals(Object other)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	@Override
 	public int hashCode()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	@Override
 	public String toString()
 	{
+		// TODO Implement this
+		return null;
 	}
 }

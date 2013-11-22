@@ -12,22 +12,32 @@ public class Rectangle
 
 	public float getHeight()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	public float getWidth()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	public boolean contains(Vector2D point)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	public boolean intersects(Rectangle other)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	public boolean intersects(Vector2D centre, float radius)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	/**
@@ -45,20 +55,28 @@ public class Rectangle
 	 */
 	public boolean equals(Rectangle other)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	@Override
 	public boolean equals(Object other)
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	@Override
 	public int hashCode()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	@Override
 	public String toString()
 	{
+		// TODO Implement this
+		return null;
 	}
 }

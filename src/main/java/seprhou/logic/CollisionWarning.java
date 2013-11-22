@@ -1,9 +1,11 @@
 package seprhou.logic;
 
-/** An immutable subclass of Airspace */
+/**
+ * A warning that two aircraft are "close" to each other
+ */
 public class CollisionWarning
 {
-	private Aircraft aircraft1, aircraft2;
+	private final Aircraft aircraft1, aircraft2;
 
 	/**
 	 * Constructs a warning involving two aircraft
@@ -11,7 +13,7 @@ public class CollisionWarning
 	 * @param aircraft1 the first aircraft
 	 * @param aircraft2 the second aircraft
 	 */
-	public CollisionWarning(Aircraft aircraft1, Arcraft aircraft2)
+	public CollisionWarning(Aircraft aircraft1, Aircraft aircraft2)
 	{
 		this.aircraft1 = aircraft1;
 		this.aircraft2 = aircraft2;
@@ -23,36 +25,30 @@ public class CollisionWarning
 		return aircraft1;
 	}
 
-	/** changes the first aircraft */
-	public void setAircraft1(Aircraft aircraft1)
-	{
-		this.aircraft1 = aircraft1;
-	}
-
 	/** returns the second aircraft */
 	public Aircraft getAircraft2()
 	{
 		return aircraft2;
 	}
 
-	/** changes the second aircraft */
-	public void setAircraft2(Aircraft aircraft2)
-	{
-		this.aircraft2 = aircraft2;
-	}
-
 	/** returns whether or not the aircraft have collided */
 	public boolean hasCollided()
 	{
+		// TODO Implement this
+		return false;
 	}
 
 	/** returns the horizontal distance between the aircraft */
 	public float getHorizDistance()
 	{
+		// TODO Implement this
+		return 0;
 	}
 
 	/** returns the vertical distance between the aircraft */
 	public float getVertDistance()
 	{
+		// TODO Implement this
+		return 0;
 	}
 }
