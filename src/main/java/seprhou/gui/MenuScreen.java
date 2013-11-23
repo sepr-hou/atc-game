@@ -43,6 +43,14 @@ public class MenuScreen extends AbstractScreen
         startGameButton.setY(currentY);
         startGameButton.setWidth(BUTTON_WIDTH);
         startGameButton.setHeight(BUTTON_HEIGHT);
+        startGameButton.addListener(new ClickListener(){
+        @Override
+        public void clicked(InputEvent event,
+           float x,
+           float y){
+           mainWindow.setScreen(new GameScreen(mainWindow));
+        }
+        });
         defaultStage.addActor( startGameButton );
  
         // button "Options"
