@@ -1,19 +1,24 @@
 package seprhou.gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class MainWindowLauncher 
 {	
 	public static void main(String[] args){
 		
-		//Define window size
-		int width = 800, height = 480;
+		//Create configuration
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		
-		//Define window title
-		String title = "Air traffic controller game";
+		//Set configuration
+		cfg.title = "Air Traffic Controller Game";
+		cfg.width = 800;
+		cfg.height = 480;
+		cfg.resizable = false;
+		cfg.useGL20 = true;
 		
 		//Create game
-		new LwjglApplication(new MainWindow(), title, width, height, true);
+		new LwjglApplication(new MainWindow(), cfg);
 
 	}
 	
