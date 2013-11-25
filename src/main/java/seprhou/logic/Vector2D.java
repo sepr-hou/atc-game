@@ -119,8 +119,9 @@ public class Vector2D
 	 */
 	public Vector2D multiply(float scalar)
 	{
-		x *= scalar;
-		y *= scalar;
+		Vector2D result;
+		result.x = x * scalar;
+		result.y = x * scalar;
 		return null;
 	}
 
