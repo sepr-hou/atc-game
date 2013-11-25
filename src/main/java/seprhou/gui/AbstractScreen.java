@@ -19,17 +19,6 @@ public abstract class AbstractScreen implements Screen
     public AbstractScreen(final MainWindow mainWindow)
     {
     	this.mainWindow = mainWindow;
-    	defaultStage.addListener(new InputListener()
-    	{
-    		@Override
-    		public boolean keyDown(InputEvent event, int keycode){
-    			if (keycode == Keys.ESCAPE){
-    				mainWindow.setScreen(new MenuScreen(mainWindow));
-    				return true;
-    			}
-    			return false;
-    		}
-    	});
     	Gdx.input.setInputProcessor(defaultStage);
     }
     
@@ -64,6 +53,9 @@ public abstract class AbstractScreen implements Screen
 
         // draw the actors
         defaultStage.draw();
+        
+        //Return to main menu on ESCAPE press
+    	if(Gdx.input.isKeyPressed(Keys.ESCAPE))	mainWindow.setScreen(new MenuScreen(mainWindow));
     }
 	
 	@Override
