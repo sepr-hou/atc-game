@@ -1,15 +1,23 @@
 package seprhou.logic;
 
+/** An immutable, mathematical 2D vector class */
 public class Rectangle
 {
 	private final Vector2D p1, p2;
 
+	/**
+	 * Constructs a new rectangle with opposite corners point 1 and 2.
+	 * 
+	 * @param point1 the first vertex of the rectangle
+	 * @param point2 the opposite vertex to point 1
+	 */
 	public Rectangle(Vector2D point1, Vector2D point2)
 	{
 		this.p1 = point1;
 		this.p2 = point2;
 	}
 
+	/** Returns the height of the rectangle */
 	public float getHeight()
 	{
 		float height;
@@ -20,6 +28,7 @@ public class Rectangle
 			return -height;
 	}
 
+	/** Returns the width of the rectangle */
 	public float getWidth()
 	{
 		float width;
@@ -30,6 +39,7 @@ public class Rectangle
 			return -width;
 	}
 
+	/** Returns whether or not a point is enclosed within the rectangle */
 	public boolean contains(Vector2D point)
 	{
 		float maxY = Math.max(p1.getY(), p2.getY());
@@ -42,13 +52,15 @@ public class Rectangle
 			return false;
 	}
 
+	/** Returns whether or not one rectangle intersects another */
 	public boolean intersects(Rectangle other)
 	{
 		// TODO Implement this
 		return false;
 	}
 
-	public boolean intersects(Vector2D centre, float radius)
+	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. */
+	public boolean intersects(Vector2D center, float radius)
 	{
 		// TODO Implement this
 		return false;
