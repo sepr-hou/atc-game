@@ -12,14 +12,22 @@ public class Rectangle
 
 	public float getHeight()
 	{
-		// TODO Implement this
-		return 0;
+		float height;
+		height = p1.getY() - p2.getY();
+		if (height >= 0)
+			return height;
+		else
+			return -height;
 	}
 
 	public float getWidth()
 	{
-		// TODO Implement this
-		return 0;
+		float width;
+		width = p1.getX() - p2.getX();
+		if (width >= 0)
+			return width;
+		else
+			return -width;
 	}
 
 	public boolean contains(Vector2D point)
