@@ -117,7 +117,8 @@ public class Vector2D
 	 */
 	public Vector2D multiply(float scalar)
 	{
-		// TODO Implement this
+		x *= scalar;
+		y *= scalar;
 		return null;
 	}
 
