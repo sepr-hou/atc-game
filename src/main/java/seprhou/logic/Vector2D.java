@@ -53,8 +53,7 @@ public class Vector2D
 	 */
 	public float getLengthSquared()
 	{
-		// TODO Implement this
-		return 0;
+		return (float) (x * x + y * y);
 	}
 
 	/**
