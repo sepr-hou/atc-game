@@ -93,8 +93,10 @@ public class Vector2D
 	 */
 	public Vector2D add(Vector2D other)
 	{
-		// TODO Implement this
-		return null;
+		Vector2D result;
+		result.x = x + other.x;
+		result.y = y + other.y;
+		return result;
 	}
 
 	/**
