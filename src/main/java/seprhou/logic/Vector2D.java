@@ -156,8 +156,10 @@ public class Vector2D
 	 */
 	public boolean equals(Vector2D other)
 	{
-		// TODO Implement this
-		return false;
+		if (other.x == x && other.y == y)
+				return true;
+		else
+			return false;
 	}
 
 	@Override
