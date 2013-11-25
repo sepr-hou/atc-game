@@ -122,7 +122,7 @@ public class Vector2D
 		Vector2D result;
 		result.x = x * scalar;
 		result.y = x * scalar;
-		return null;
+		return result;
 	}
 
 	/**
