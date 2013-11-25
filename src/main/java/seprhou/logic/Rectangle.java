@@ -32,8 +32,14 @@ public class Rectangle
 
 	public boolean contains(Vector2D point)
 	{
-		// TODO Implement this
-		return false;
+		float maxY = Math.max(p1.getY(), p2.getY());
+		float minY = Math.min(p1.getY(), p2.getY());
+		float maxX = Math.max(p1.getX(), p2.getX());
+		float minX = Math.min(p1.getX(), p2.getX());
+		if (maxY - point.getY() >= minY && maxX - point.getX() >= minX)
+			return true;
+		else
+			return false;
 	}
 
 	public boolean intersects(Rectangle other)
