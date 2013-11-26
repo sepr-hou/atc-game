@@ -84,8 +84,11 @@ public class Vector2D
 	 */
 	public float distanceTo(Vector2D other)
 	{
-		// TODO Implement this
-		return 0;
+		float diffx = Math.max((this.getX() - other.getX), (other.getX() - this.getX));
+		float diffy = Math.max((this.getY() - other.getY), (other.getY() - this.getY));
+		float sumsqr = ((diffx * diffx) + (diffy * diffy));
+		float result = Math.sqrt(sumsqr);
+		return result;
 	}
 
 	/**
