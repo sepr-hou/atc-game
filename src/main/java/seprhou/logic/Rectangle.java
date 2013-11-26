@@ -52,11 +52,23 @@ public class Rectangle
 			return false;
 	}
 
-	/** Returns whether or not one rectangle intersects another */
+	/** Returns whether or not one rectangle intersects another
+	 *  as rectangles are the same orientation, only the 4 vertexes should be checked
+	 *  if one vertex intersects then the rectangles intersect, if not then no parts of the rectangles intersect */
 	public boolean intersects(Rectangle other)
 	{
-		// TODO Implement this
-		return false;
+		float maxY = (float) Math.max(other.p1.getY(), other.p2.getY());
+		float minY = (float) Math.min(other.p1.getY(), other.p2.getY());
+		float maxX = (float) Math.max(other.p1.getX(), other.p2.getX());
+		float minX = (float) Math.min(other.p1.getX(), other.p2.getX());
+		Vector2D vertex1 = new Vector2D(minX, minY);
+		Vector2D vertex2 = new Vector2D(minX, maxY);
+		Vector2D vertex3 = new Vector2D(maxX, minY);
+		Vector2D vertex4 = new Vector2D(maxX, maxY);
+		if (this.contains(vertex1) || this.contains(vertex2) || this.contains(vertex3) || this.contains(vertex4))
+			return true;
+		else
+			return false;
 	}
 
 	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. */
