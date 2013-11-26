@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Jack\Documents\GitHub\atc-game\src\main\java\seprhou\logic\.metadata\.plugins\org.eclipse.jdt.core
