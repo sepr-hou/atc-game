@@ -143,8 +143,12 @@ public class Vector2D
 	 */
 	public Vector2D rotate(float angle)
 	{
-		// TODO Implement this
-		return null;
+		float cosang = Math.cos(angle);
+		float sinang = Math.sin(angle);
+		Vector2D result = null;
+		result.x = (this.getX() * cosang) - (this.getY() * sinang);
+		result.y = (this.getX() * sinang) + (this.getY() * cosang);
+		return result;
 	}
 
 	/**
