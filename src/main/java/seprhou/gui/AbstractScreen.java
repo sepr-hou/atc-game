@@ -10,15 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public abstract class AbstractScreen implements Screen
-{
+{	
+
 	Stage defaultStage = new Stage();
-    Skin defaultSkin = new Skin(Gdx.files.internal("data/uiskin.json"));
+    Skin defaultSkin = new Skin(Gdx.files.internal("src/main/resources/data/uiskin.json"));
+	public AtcGame game;
 	
-	MainWindow mainWindow;
-    
-    public AbstractScreen(final MainWindow mainWindow)
+    public AbstractScreen(AtcGame game)
     {
-    	this.mainWindow = mainWindow;
+    	this.game = game;
     	Gdx.input.setInputProcessor(defaultStage);
     }
     
@@ -55,7 +55,7 @@ public abstract class AbstractScreen implements Screen
         defaultStage.draw();
         
         //Return to main menu on ESCAPE press
-    	if(Gdx.input.isKeyPressed(Keys.ESCAPE))	mainWindow.setScreen(new MenuScreen(mainWindow));
+    	if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(new MenuScreen(game));
     }
 	
 	@Override

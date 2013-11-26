@@ -3,7 +3,7 @@ package seprhou.gui;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-public class MainWindowLauncher 
+public class Main 
 {	
 	public static void main(String[] args){
 		
@@ -18,7 +18,7 @@ public class MainWindowLauncher
 		cfg.useGL20 = true;
 		
 		//Create game
-		new LwjglApplication(new MainWindow(), cfg);
+		new LwjglApplication(new AtcGame(), cfg);
 
 	}
 	

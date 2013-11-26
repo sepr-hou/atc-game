@@ -3,8 +3,8 @@ package seprhou.gui;
 public class OptionsScreen extends AbstractScreen
 {
 
-	public OptionsScreen(MainWindow mainWindow) {
-		super(mainWindow);
+	public OptionsScreen(AtcGame game) {
+		super(game);
 		// TODO Auto-generated constructor stub
 	}
 
