@@ -71,11 +71,16 @@ public class Rectangle
 			return false;
 	}
 
-	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. */
+	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. 
+	 *  either the center is in the rectangle or an edge of the rectangle intersects the circle */
 	public boolean intersects(Vector2D center, float radius)
 	{
-		// TODO Implement this
-		return false;
+		if (this.contains(center))
+			return true;
+		else if (/*HELP!!*/)
+			return true;
+		else
+			return false;
 	}
 
 	/**
