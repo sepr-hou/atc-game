@@ -72,12 +72,43 @@ public class Rectangle
 	}
 
 	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. 
-	 *  either the center is in the rectangle or an edge of the rectangle intersects the circle */
+	 *  either the center is in the rectangle or an edge of the rectangle intersects the circle 
+	 *  if the distance between a corner and the center of the circle is less than the radius then intersection
+	 *  if N E S or W point of circle in rectangle then intersection
+	 *  if there is another case please say*/
 	public boolean intersects(Vector2D center, float radius)
 	{
+		float maxY = (float) Math.max(other.p1.getY(), other.p2.getY());
+		float minY = (float) Math.min(other.p1.getY(), other.p2.getY());
+		float maxX = (float) Math.max(other.p1.getX(), other.p2.getX());
+		float minX = (float) Math.min(other.p1.getX(), other.p2.getX());
+		Vector2D vertex1 = new Vector2D(minX, minY);
+		Vector2D vertex2 = new Vector2D(minX, maxY);
+		Vector2D vertex3 = new Vector2D(maxX, minY);
+		Vector2D vertex4 = new Vector2D(maxX, maxY);
+		
+		
+		float distance1 = vertex1.distanceTo(center);
+		float distance2 = vertex2.distanceTo(center);
+		float distance3 = vertex3.distanceTo(center);
+		float distance4 = vertex4.distanceTo(center);
+		
+		
+		float maxYcirc = center.getY() + radius;
+		float maxXcirc = center.getX() + radius;
+		float minYcirc = center.getY() - radius;
+		float minXcirc = center.getX() - radius;
+		Vector2D northpoint = new Vector2D(centre.getX(), maxYcirc);
+		Vector2D eastpoint = new Vector2D(maxXcirc, center.getY());
+		Vector2D southpoint = new Vector2D(centre.getX(), minYcirc);
+		Vector2D westpoint = new Vector2D(minXcirc, center.getY());
+		
+		
 		if (this.contains(center))
 			return true;
-		else if (/*HELP!!*/)
+		else if ((distance1 < radius)||(distance2 < radius)||(distance3 < radius)||(distance4 < radius))
+			return true;
+		else if (this.contains(northpoint) || this.contains(eastpoint) || this.contains(southpoint) || this.contains(westpoint))
 			return true;
 		else
 			return false;
