@@ -42,10 +42,10 @@ public class Rectangle
 	/** Returns whether or not a point is enclosed within the rectangle */
 	public boolean contains(Vector2D point)
 	{
-		float maxY = Math.max(p1.getY(), p2.getY());
-		float minY = Math.min(p1.getY(), p2.getY());
-		float maxX = Math.max(p1.getX(), p2.getX());
-		float minX = Math.min(p1.getX(), p2.getX());
+		float maxY = (float) Math.max(p1.getY(), p2.getY());
+		float minY = (float) Math.min(p1.getY(), p2.getY());
+		float maxX = (float) Math.max(p1.getX(), p2.getX());
+		float minX = (float) Math.min(p1.getX(), p2.getX());
 		if (maxY - point.getY() >= minY && maxX - point.getX() >= minX)
 			return true;
 		else
