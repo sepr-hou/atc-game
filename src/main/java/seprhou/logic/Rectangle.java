@@ -129,8 +129,10 @@ public class Rectangle
 	 */
 	public boolean equals(Rectangle other)
 	{
-		// TODO Implement this
-		return false;
+		if (p1 == other.p1 && p2 == other.p2)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
