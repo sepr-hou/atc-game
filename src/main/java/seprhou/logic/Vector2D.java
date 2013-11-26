@@ -38,7 +38,7 @@ public class Vector2D
 	/** Returns the length (euclidean norm) of this vector */
 	public float getLength()
 	{
-		return (float) Math.sqrt(x * x + y * y);
+		return (float) Math.sqrt(this.getX() * this.getX() + this.getY() * this.getY());
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class Vector2D
 	 */
 	public float getLengthSquared()
 	{
-		return (float) (x * x + y * y);
+		return (float) (this.getX() * this.getX() + this.getY() * this.getY());
 	}
 
 	/**
@@ -71,8 +71,7 @@ public class Vector2D
 	{
 		/* dot product between vector and axis is equal to vector.x */
 		/* therefore cos(angle) = x / |vector|*/
-		float angle;
-		angle = Math.acos(x / this.getLength());
+		float angle = (float) Math.acos(this.getX() / this.getLength());
 		return angle;
 	}
 
@@ -84,8 +83,11 @@ public class Vector2D
 	 */
 	public float distanceTo(Vector2D other)
 	{
-		// TODO Implement this
-		return 0;
+		float diffx = Math.max((this.getX() - other.x), (other.getX() - this.x));
+		float diffy = Math.max((this.getY() - other.y), (other.getY() - this.y));
+		float sumsqr = ((diffx * diffx) + (diffy * diffy));
+		float result = (float) Math.sqrt(sumsqr);
+		return result;
 	}
 
 	/**
@@ -96,9 +98,7 @@ public class Vector2D
 	 */
 	public Vector2D add(Vector2D other)
 	{
-		Vector2D result;
-		result.x = x + other.x;
-		result.y = y + other.y;
+		Vector2D result = new Vector2D((this.getX() + other.getX()),(this.getY() + other.getY()));
 		return result;
 	}
 
@@ -110,9 +110,7 @@ public class Vector2D
 	 */
 	public Vector2D sub(Vector2D other)
 	{
-		Vector2D result;
-		result.x = x - other.x;
-		result.y = y - other.y;
+		Vector2D result = new Vector2D((this.getX() - other.getX()),(this.getY() - other.getY()));;
 		return result;
 	}
 
@@ -124,9 +122,7 @@ public class Vector2D
 	 */
 	public Vector2D multiply(float scalar)
 	{
-		Vector2D result;
-		result.x = x * scalar;
-		result.y = x * scalar;
+		Vector2D result = new Vector2D((this.getX() * scalar),(this.getY() * scalar));
 		return result;
 	}
 
@@ -140,8 +136,10 @@ public class Vector2D
 	 */
 	public Vector2D rotate(float angle)
 	{
-		// TODO Implement this
-		return null;
+		float cosang = (float) Math.cos(angle);
+		float sinang = (float) Math.sin(angle);
+		Vector2D result = new Vector2D((this.getX() * cosang) - (this.getY() * sinang),(this.getX() * sinang) + (this.getY() * cosang));
+		return result;
 	}
 
 	/**
@@ -159,7 +157,7 @@ public class Vector2D
 	 */
 	public boolean equals(Vector2D other)
 	{
-		if (other.x == x && other.y == y)
+		if (other.getX() == this.getX() && other.getY() == this.getY())
 				return true;
 		else
 			return false;
