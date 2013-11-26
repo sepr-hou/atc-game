@@ -13,8 +13,8 @@ import java.util.Collection;
 public class Airspace
 {
 	private final AirspaceConfig config;
-	private Collection<Aircraft> culledAircraft;
-	private Collection<Aircraft> activeAircraft;
+	private Collection<AirspaceObject> culledObjects;
+	private Collection<AirspaceObject> activeObjects;
 	private Collection<CollisionWarning> collisionWarnings;
 
 	/**
@@ -43,15 +43,15 @@ public class Airspace
 	 * <p>
 	 * The returned list is immutable.
 	 */
-	public Collection<Aircraft> getCulledAircraft()
+	public Collection<AirspaceObject> getCulledObjects()
 	{
-		return culledAircraft;
+		return culledObjects;
 	}
 
 	/** Returns the list of active aircraft */
-	public Collection<Aircraft> getActiveAircraft()
+	public Collection<AirspaceObject> getActiveObjects()
 	{
-		return activeAircraft;
+		return activeObjects;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class Airspace
 	 * @param point point to start search at
 	 * @return the closest aircraft or {@code null} if there are no active aircraft
 	 */
-	public Aircraft findAircraft(Vector2D point)
+	public AirspaceObject findAircraft(Vector2D point)
 	{
 		// TODO implement this
 		return null;
@@ -84,7 +84,7 @@ public class Airspace
 	 * @param radius the radius of the circle to search
 	 * @return the list of aircraft found - may be empty of no aircraft were found
 	 */
-	public Collection<Aircraft> findAircraft(Vector2D centre, float radius)
+	public Collection<AirspaceObject> findAircraft(Vector2D centre, float radius)
 	{
 		// TODO implement this
 		return null;

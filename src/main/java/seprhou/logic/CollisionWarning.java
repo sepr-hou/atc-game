@@ -5,30 +5,30 @@ package seprhou.logic;
  */
 public class CollisionWarning
 {
-	private final Aircraft aircraft1, aircraft2;
+	private final AirspaceObject object1, object2;
 
 	/**
 	 * Constructs a warning involving two aircraft
 	 *
-	 * @param aircraft1 the first aircraft
-	 * @param aircraft2 the second aircraft
+	 * @param object1 the first aircraft
+	 * @param object2 the second aircraft
 	 */
-	public CollisionWarning(Aircraft aircraft1, Aircraft aircraft2)
+	public CollisionWarning(AirspaceObject object1, AirspaceObject object2)
 	{
-		this.aircraft1 = aircraft1;
-		this.aircraft2 = aircraft2;
+		this.object1 = object1;
+		this.object2 = object2;
 	}
 
 	/** returns the first aircraft */
-	public Aircraft getAircraft1()
+	public AirspaceObject getObject1()
 	{
-		return aircraft1;
+		return object1;
 	}
 
 	/** returns the second aircraft */
-	public Aircraft getAircraft2()
+	public AirspaceObject getObject2()
 	{
-		return aircraft2;
+		return object2;
 	}
 
 	/** returns whether or not the aircraft have collided */
@@ -38,15 +38,15 @@ public class CollisionWarning
 		return false;
 	}
 
-	/** returns the horizontal distance between the aircraft */
-	public float getHorizDistance()
+	/** returns the horizontal distance between the objects */
+	public float getHorizontalDistance()
 	{
 		// TODO Implement this
 		return 0;
 	}
 
-	/** returns the vertical distance between the aircraft */
-	public float getVertDistance()
+	/** returns the vertical distance between the objects (altitudes) */
+	public float getVerticalDistance()
 	{
 		// TODO Implement this
 		return 0;

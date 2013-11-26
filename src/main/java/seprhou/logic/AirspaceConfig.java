@@ -12,12 +12,12 @@ public class AirspaceConfig
 
 	private List<Vector2D> waypoints, entryExitPoints;
 
-	private AircraftFactory aircraftFactory;
+	private AircraftObjectFactory objectFactory;
 
-	/** Returns the object responsible for constructing aircraft */
-	public AircraftFactory getAircraftFactory()
+	/** Returns the factory responsible for constructing airspace objects */
+	public AircraftObjectFactory getObjectFactory()
 	{
-		return aircraftFactory;
+		return objectFactory;
 	}
 
 	/** Returns the dimensions of the airspace */
@@ -31,7 +31,7 @@ public class AirspaceConfig
 	 *
 	 * <p>This only affects the collision warnings. Actual crashes are determined from the aircraft sizes
 	 *
-	 * @see AircraftType#getSize()
+	 * @see AirspaceObject#getSize()
 	 */
 	public float getHorizontalSeparation()
 	{
@@ -43,7 +43,7 @@ public class AirspaceConfig
 	 *
 	 * <p>This only affects the collision warnings. Actual crashes are determined from the aircraft sizes
 	 *
-	 * @see AircraftType#getSize()
+	 * @see AirspaceObject#getSize()
 	 */
 	public float getVerticalSeparation()
 	{

@@ -6,21 +6,21 @@ package seprhou.logic;
  * By implementing this class, you can control when all aircraft are generated,
  * what the aircraft are, and what their flight plans are.
  *
- * @see AbstractAircraftFactory
+ * @see AbstractAircraftObjectFactory
  */
-public interface AircraftFactory
+public interface AircraftObjectFactory
 {
 	/**
-	 * Creates a new aircraft
+	 * Creates a new airspace object
 	 *
 	 * <p>
 	 * This method is called every game refresh to create a game aircraft.
 	 * Most of the time, this method would return {@code null} - indicating that
 	 * no aircraft are to be introduced this turn.
 	 *
-	 * @param airspace the airspace the aircraft will be created in
+	 * @param airspace the airspace the object will be created in
 	 * @param delta time (in seconds) since last game refresh
-	 * @return the new aircraft or {@code null} to create no aircraft this refresh
+	 * @return the new object or {@code null} to create no object this refresh
 	 */
-	public Aircraft makeAircraft(Airspace airspace, float delta);
+	public AirspaceObject makeObject(Airspace airspace, float delta);
 }
