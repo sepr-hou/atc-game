@@ -71,7 +71,7 @@ public class Vector2D
 	{
 		/* dot product between vector and axis is equal to vector.x */
 		/* therefore cos(angle) = x / |vector|*/
-		float angle = Math.acos(this.getX() / this.getLength());
+		float angle = (float) Math.acos(this.getX() / this.getLength());
 		return angle;
 	}
 
@@ -83,10 +83,10 @@ public class Vector2D
 	 */
 	public float distanceTo(Vector2D other)
 	{
-		float diffx = Math.max((this.getX() - other.getX), (other.getX() - this.getX));
-		float diffy = Math.max((this.getY() - other.getY), (other.getY() - this.getY));
+		float diffx = Math.max((this.getX() - other.x), (other.getX() - this.x));
+		float diffy = Math.max((this.getY() - other.y), (other.getY() - this.y));
 		float sumsqr = ((diffx * diffx) + (diffy * diffy));
-		float result = Math.sqrt(sumsqr);
+		float result = (float) Math.sqrt(sumsqr);
 		return result;
 	}
 
@@ -136,8 +136,8 @@ public class Vector2D
 	 */
 	public Vector2D rotate(float angle)
 	{
-		float cosang = Math.cos(angle);
-		float sinang = Math.sin(angle);
+		float cosang = (float) Math.cos(angle);
+		float sinang = (float) Math.sin(angle);
 		Vector2D result = new Vector2D((this.getX() * cosang) - (this.getY() * sinang),(this.getX() * sinang) + (this.getY() * cosang));
 		return result;
 	}
