@@ -78,10 +78,10 @@ public class Rectangle
 	 *  if there is another case please say*/
 	public boolean intersects(Vector2D center, float radius)
 	{
-		float maxY = (float) Math.max(other.p1.getY(), other.p2.getY());
-		float minY = (float) Math.min(other.p1.getY(), other.p2.getY());
-		float maxX = (float) Math.max(other.p1.getX(), other.p2.getX());
-		float minX = (float) Math.min(other.p1.getX(), other.p2.getX());
+		float maxY = (float) Math.max(p1.getY(), p2.getY());
+		float minY = (float) Math.min(p1.getY(), p2.getY());
+		float maxX = (float) Math.max(p1.getX(), p2.getX());
+		float minX = (float) Math.min(p1.getX(), p2.getX());
 		Vector2D vertex1 = new Vector2D(minX, minY);
 		Vector2D vertex2 = new Vector2D(minX, maxY);
 		Vector2D vertex3 = new Vector2D(maxX, minY);
@@ -98,9 +98,9 @@ public class Rectangle
 		float maxXcirc = center.getX() + radius;
 		float minYcirc = center.getY() - radius;
 		float minXcirc = center.getX() - radius;
-		Vector2D northpoint = new Vector2D(centre.getX(), maxYcirc);
+		Vector2D northpoint = new Vector2D(center.getX(), maxYcirc);
 		Vector2D eastpoint = new Vector2D(maxXcirc, center.getY());
-		Vector2D southpoint = new Vector2D(centre.getX(), minYcirc);
+		Vector2D southpoint = new Vector2D(center.getX(), minYcirc);
 		Vector2D westpoint = new Vector2D(minXcirc, center.getY());
 		
 		
