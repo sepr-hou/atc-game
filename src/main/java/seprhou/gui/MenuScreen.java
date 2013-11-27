@@ -24,12 +24,11 @@ public class MenuScreen extends AbstractScreen {
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		final float buttonX = (800 - BUTTON_WIDTH) / 2;
-		float currentY = 280f;
+		float currentY = ((580 - BUTTON_HEIGHT)/2);
 		defaultStage.clear();
 
 		// label "Game Title"
-		Label welcomeLabel = new Label("Air traffic controller game",
-				defaultSkin);
+		Label welcomeLabel = new Label("Air traffic controller game",defaultSkin);
 		welcomeLabel.setX(((800 - welcomeLabel.getWidth()) / 2));
 		welcomeLabel.setY((currentY + 100));
 		defaultStage.addActor(welcomeLabel);
@@ -60,7 +59,6 @@ public class MenuScreen extends AbstractScreen {
 				game.setScreen(new OptionsScreen(game));
 			}
 		});
-
 		defaultStage.addActor(optionsButton);
 
 		// button "High Scores"
