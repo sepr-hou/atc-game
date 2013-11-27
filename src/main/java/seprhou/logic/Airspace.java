@@ -93,8 +93,11 @@ public class Airspace
 	/** Returns true if the game is over */
 	public boolean isGameOver()
 	{
-		// TODO implement this
-		return false;
+		// TODO finish this
+		if (/* aircraft have collided*/)
+			return true;
+		else
+			return false;
 	}
 
 	/**
