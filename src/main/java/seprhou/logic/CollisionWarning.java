@@ -41,8 +41,8 @@ public class CollisionWarning
 	/** returns the horizontal distance between the objects */
 	public float getHorizontalDistance()
 	{
-		// TODO Implement this
-		return 0;
+		float result = object1.getPosition().distanceTo(object2.getPosition())
+		return result;
 	}
 
 	/** returns the vertical distance between the objects (altitudes) */
