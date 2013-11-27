@@ -13,10 +13,10 @@ public class Main
 		//Set configuration
 		cfg.title = "Air Traffic Controller Game";
 		cfg.width = 800;
-		cfg.height = 480;
+		cfg.height = 500;
 		cfg.resizable = true;
 		cfg.useGL20 = true;
-//		cfg.fullscreen = true;
+		cfg.fullscreen = false;
 		
 		//Create game
 		new LwjglApplication(new AtcGame(), cfg);

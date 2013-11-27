@@ -23,17 +23,17 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		final float buttonX = (800 - BUTTON_WIDTH) / 2;
-		float currentY = ((580 - BUTTON_HEIGHT)/2);
+		final float buttonX = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
+		float currentY = ((SCREEN_HEIGHT - BUTTON_HEIGHT)/2);
 		defaultStage.clear();
 
 		// label "Game Title"
 		Label welcomeLabel = new Label("Air traffic controller game",defaultSkin);
-		welcomeLabel.setX(((800 - welcomeLabel.getWidth()) / 2));
+		welcomeLabel.setX(((SCREEN_WIDTH - welcomeLabel.getWidth()) / 2));
 		welcomeLabel.setY((currentY + 100));
 		defaultStage.addActor(welcomeLabel);
 
-		// button "Start Game"
+		// button "Start Game"setScreen(menuScreen);
 		TextButton startGameButton = new TextButton("Start game", defaultSkin);
 		startGameButton.setX(buttonX);
 		startGameButton.setY(currentY);

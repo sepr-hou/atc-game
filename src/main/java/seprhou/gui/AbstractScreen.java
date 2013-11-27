@@ -19,13 +19,15 @@ public abstract class AbstractScreen implements Screen
 	public AtcGame game;
 	OrthographicCamera camera;
 	SpriteBatch batch;
+	public static final int SCREEN_WIDTH = 1680;
+	public static final int SCREEN_HEIGHT = 1050;
 	
     public AbstractScreen(AtcGame game)
     {
     	this.game = game;
     	
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, 800, 480);
+		camera.setToOrtho(true, SCREEN_WIDTH, SCREEN_HEIGHT);
 		batch = new SpriteBatch();
 		
 		
@@ -41,22 +43,18 @@ public abstract class AbstractScreen implements Screen
         Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
         
-        //Update Orthographic Camera
-        
-        batch.begin();
-        
         // update the actors
         defaultStage.act( delta );
-
-        // draw the actors
-        defaultStage.draw();
         
+        batch.begin();
+        	// draw the actors
+        	defaultStage.draw();
         batch.end();
         
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        //Return to main menu on ESCAPE press
+		//Return to main menu on ESCAPE press
     	if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(new MenuScreen(game));
     }
 	
@@ -81,7 +79,7 @@ public abstract class AbstractScreen implements Screen
 
 	@Override
 	public void resize(int arg0, int arg1) {
-		defaultStage.setViewport(800, 480, false);
+		defaultStage.setViewport(SCREEN_WIDTH, SCREEN_HEIGHT, false);
 		
 	}
 
