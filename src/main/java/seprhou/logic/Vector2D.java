@@ -155,32 +155,39 @@ public class Vector2D
 	 * @param other other vector to compare
 	 * @return true if x and y are equal in both vectors
 	 */
-	public boolean equals(Vector2D other)
+	public final boolean equals(Vector2D other)
 	{
-		if (other.getX() == this.getX() && other.getY() == this.getY())
-				return true;
+		return Float.floatToIntBits(this.getX()) == Float.floatToIntBits(other.getX()) &&
+				Float.floatToIntBits(this.getY()) == Float.floatToIntBits(other.getY());
+	}
+
+	@Override
+	public final boolean equals(Object other)
+	{
+		if (this == other)
+			return true;
+
+		if (other instanceof Vector2D)
+			return equals((Vector2D) other);
 		else
 			return false;
 	}
 
 	@Override
-	public boolean equals(Object other)
+	public final int hashCode()
 	{
-		// TODO Implement this
-		return false;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		// TODO Implement this
-		return 0;
+		int result = Float.floatToIntBits(x);
+		result = 31 * result + Float.floatToIntBits(y);
+		return result;
 	}
 
 	@Override
 	public String toString()
 	{
-		// TODO Implement this
-		return null;
+		float angle = getAngle();
+		float angleDegrees = angle * (float) (180.0 / Math.PI);
+
+		return "Vector2D: (" + getX() + ", " + getY() + ") \n" +
+				" r = " + getLength() + ", θ = " + angle + ", " + angleDegrees + "°" ;
 	}
 }
