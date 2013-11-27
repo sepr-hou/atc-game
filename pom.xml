@@ -8,7 +8,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <gdx.version>0.9.9</gdx.version>
-    <mainClass>seprhou.gui.MainWindowLauncher</mainClass>
+    <mainClass>seprhou.gui.Main</mainClass>
   </properties>
 
   <repositories>
