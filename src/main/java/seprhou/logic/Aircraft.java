@@ -27,12 +27,32 @@ public abstract class Aircraft extends AirspaceObject
 	 */
 	protected Aircraft(String name, float weight, int crew, List<Waypoint> flightPlan)
 	{
+		if (flightPlan == null)
+			throw new IllegalArgumentException("flightPlan cannot be null");
+		if (flightPlan.size() < 2)
+			throw new IllegalArgumentException("flightPlan must have at least 2 waypoints");
+
+		if (name == null)
+			name = "";
+
+		// Setup my attributes
 		this.name = name;
 		this.weight = weight;
 		this.crew = crew;
 		this.flightPlan = Collections.unmodifiableList(flightPlan);
 
-		// TODO Set initial position + velocity values
+		// Setup initial object attributes
+		Waypoint waypoint1 = flightPlan.get(0);
+		Waypoint waypoint2 = flightPlan.get(1);
+
+		Vector2D direction = waypoint2.getPosition().sub(waypoint1.getPosition());
+
+		this.position = waypoint1.getPosition();
+		this.velocity = direction.multiply(waypoint2.getSpeed());
+		this.altitude = waypoint2.getAltitude();
+
+		this.targetVelocity = this.velocity;
+		this.targetAltitude = this.altitude;
 	}
 
 	/** Returns this aircraft's name */
@@ -76,6 +96,18 @@ public abstract class Aircraft extends AirspaceObject
 	{
 		super.refresh(dt);
 
-		// TODO Update waypoints hit
+		// Test intersection with all remaining waypoints
+		for (int i = lastWaypoint + 1; i < flightPlan.size(); i++)
+		{
+			Vector2D waypointPosition = flightPlan.get(i).getPosition();
+
+			if (position.distanceTo(waypointPosition) <= getSize())
+			{
+				// Hit it!
+				lastWaypoint = i;
+				waypointsHit++;
+				break;
+			}
+		}
 	}
 }
