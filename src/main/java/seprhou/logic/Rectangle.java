@@ -152,7 +152,8 @@ public class Rectangle
 	@Override
 	public String toString()
 	{
-		// TODO Implement this
-		return null;
+		return "Rectangle: (" + p1 + ", " + p2 + ") \n" +
+				"Height = " + getHeight() + "\n" +
+				"Width =" + getWidth() ;
 	}
 }
