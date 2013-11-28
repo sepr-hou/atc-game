@@ -23,8 +23,14 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
+		
+		// Put buttons in the middle of the screen in the x-axis
 		final float buttonX = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
+		
+		// Start placing the label and buttons 100px above the centre of the screen in the y-axis
 		float currentY = ((SCREEN_HEIGHT - BUTTON_HEIGHT)/2);
+		
+		// Clear the stage
 		defaultStage.clear();
 
 		// label "Game Title"
