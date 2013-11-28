@@ -87,6 +87,38 @@ public abstract class AirspaceObject
 		this.targetAltitude = newAltitude;
 	}
 
+	/** Moves value towards target in one step of size change */
+	private static float floatMoveTowards(float value, float target, float change)
+	{
+		if (target < value)
+		{
+			value -= change;
+			if (target > value)
+				value = target;
+		}
+		else if (target > value)
+		{
+			value += change;
+			if (target < value)
+				value = target;
+		}
+
+		return value;
+	}
+
+	/** As floatMoveTowards, followed by clamping the result to maximum and minimum values */
+	private static float floatMoveAndClamp(float value, float target, float change, float min, float max)
+	{
+		value = floatMoveTowards(value, target, change);
+
+		if (value < min)
+			value = min;
+		if (value > max)
+			value = max;
+
+		return value;
+	}
+
 	/**
 	 * Called every game tick to update this object's position and other data
 	 *
@@ -101,60 +133,31 @@ public abstract class AirspaceObject
 			float maxAltitude = getMaxAltitude();
 			float ascentAmount = getAscentRate() * dt;
 
-			// Handle each direction to move in
-			if (targetAltitude < altitude)
-			{
-				altitude -= ascentAmount;
-				if (altitude < targetAltitude)
-					altitude = targetAltitude;
-			}
-			else
-			{
-				altitude += ascentAmount;
-				if (altitude > targetAltitude)
-					altitude = targetAltitude;
-			}
-
-			// Clamp maximum altitude
-			if (altitude > maxAltitude)
-				altitude = maxAltitude;
+			altitude = floatMoveAndClamp(altitude, targetAltitude, ascentAmount, 0, maxAltitude);
 		}
 
 		// Update velocity
 		if (!velocity.equals(targetAltitude))
 		{
-			float minSpeedSq = getMinSpeed();
-			float maxSpeedSq = getMaxSpeed();
+			float minSpeed = getMinSpeed();
+			float maxSpeed = getMaxSpeed();
 			float acceleration = getMaxAcceleration() * dt;
 			float turnRate = getMaxTurnRate() * dt;
 
-			// TODO FROM HERE
-
-			// Handle each direction to move in
-			if (targetAltitude < altitude)
-			{
-				altitude -= ascentAmount;
-				if (altitude < targetAltitude)
-					altitude = targetAltitude;
-			}
-			else
-			{
-				altitude += ascentAmount;
-				if (altitude > targetAltitude)
-					altitude = targetAltitude;
-			}
-
-			// Clamp speed
+			// Process speed value
 			float speed = velocity.getLength();
-			if
+			float targetSpeed = targetVelocity.getLength();
 
-			if (altitude > maxAltitude)
-			{
-				altitude = maxAltitude;
-				targetAltitude = maxAltitude;
-			}
+			speed = floatMoveAndClamp(speed, targetSpeed, acceleration, minSpeed, maxSpeed);
 
-			// TODO STOP HERE
+			// Process angle value
+			float angle = velocity.getAngle();
+			float targetAngle = targetVelocity.getAngle();
+
+			angle = floatMoveTowards(angle, targetAngle, turnRate);
+
+			// Reconstruct velocity vector
+			velocity = Vector2D.fromPolar(speed, angle);
 		}
 
 		// Update position

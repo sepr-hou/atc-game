@@ -23,6 +23,21 @@ public class Vector2D
 		this.y = y;
 	}
 
+	/**
+	 * Creates a new vector from the given polar coordinates
+	 *
+	 * @param length length of the vector (negative values reverse the direction)
+	 * @param angle angle of the vector (radians)
+	 * @return the new vector
+	 */
+	public static Vector2D fromPolar(float length, float angle)
+	{
+		float newX = (float) (length * Math.cos(angle));
+		float newY = (float) (length * Math.sin(angle));
+
+		return new Vector2D(newX, newY);
+	}
+
 	/** Returns the X value of this vector */
 	public float getX()
 	{
