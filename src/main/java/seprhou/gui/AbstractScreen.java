@@ -26,8 +26,11 @@ public abstract class AbstractScreen implements Screen
     {
     	this.game = game;
     	
-		camera = new OrthographicCamera();
+    	//Set up camera with chosen screen width and height
+    	camera = new OrthographicCamera();
 		camera.setToOrtho(true, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
+		//Create a batch to enable drawing
 		batch = new SpriteBatch();
 		
 		
@@ -39,22 +42,24 @@ public abstract class AbstractScreen implements Screen
     public void render(
         float delta )
     {
-        // the following code clears the screen with the given RGB color (black)
+        // Clears the screen with the given RGB colour (black)
         Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
         
         // update the actors
         defaultStage.act( delta );
         
+        // Begin and end drawing
         batch.begin();
         	// draw the actors
         	defaultStage.draw();
         batch.end();
         
+        //Refresh camera
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-		//Return to main menu on ESCAPE press
+		// Return to main menu on ESCAPE press
     	if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(new MenuScreen(game));
     }
 	
@@ -79,6 +84,7 @@ public abstract class AbstractScreen implements Screen
 
 	@Override
 	public void resize(int arg0, int arg1) {
+		// Makes the stage the same size as the camera and changes the actors' sizes in proportion
 		defaultStage.setViewport(SCREEN_WIDTH, SCREEN_HEIGHT, false);
 		
 	}
