@@ -13,6 +13,11 @@ public class Rectangle
 	 */
 	public Rectangle(Vector2D point1, Vector2D point2)
 	{
+		if (point1 == null)
+			throw new IllegalArgumentException("point1 cannot be null");
+		if (point2 == null)
+			throw new IllegalArgumentException("point2 cannot be null");
+
 		this.p1 = point1;
 		this.p2 = point2;
 	}
@@ -121,26 +126,29 @@ public class Rectangle
 	 * @param other other rectangle to compare
 	 * @return true if the 2 points are equal in both rectangles
 	 */
-	public boolean equals(Rectangle other)
+	public final boolean equals(Rectangle other)
 	{
-		if (p1 == other.p1 && p2 == other.p2)
+		return (p1.equals(other.p1) && p2.equals(other.p2));
+	}
+
+	@Override
+	public final boolean equals(Object other)
+	{
+		if (this == other)
 			return true;
+
+		if (other instanceof Rectangle)
+			return equals((Rectangle) other);
 		else
 			return false;
 	}
 
 	@Override
-	public boolean equals(Object other)
+	public final int hashCode()
 	{
-		// TODO Implement this
-		return false;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		// TODO Implement this
-		return 0;
+		int result = p1.hashCode();
+		result = 31 * result + p2.hashCode();
+		return result;
 	}
 
 	@Override
