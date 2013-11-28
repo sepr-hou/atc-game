@@ -1,6 +1,6 @@
 package seprhou.logic;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Controls an entire air space and all the aircraft in it
@@ -13,9 +13,11 @@ import java.util.Collection;
 public class Airspace
 {
 	private final AirspaceConfig config;
-	private Collection<AirspaceObject> culledObjects;
-	private Collection<AirspaceObject> activeObjects;
-	private Collection<CollisionWarning> collisionWarnings;
+	private ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
+	private ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
+	private ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
+
+	private boolean gameOver;
 
 	/**
 	 * Constructs a new Airspace with the given configuration options
@@ -41,11 +43,12 @@ public class Airspace
 	 * were therefore culled / destroyed.
 	 *
 	 * <p>
-	 * The returned list is immutable.
+	 * The returned list is unmodifiable and is reused each refresh (so you must
+	 * copy it if you want to keep it between refreshes)
 	 */
 	public Collection<AirspaceObject> getCulledObjects()
 	{
-		return culledObjects;
+		return Collections.unmodifiableCollection(culledObjects);
 	}
 
 	/** Returns the list of active aircraft */
@@ -58,11 +61,12 @@ public class Airspace
 	 * Returns the list of collision warnings generated during the last refresh
 	 *
 	 * <p>
-	 * The returned list is immutable.
+	 * The returned list is unmodifiable and is reused each refresh (so you must
+	 * copy it if you want to keep it between refreshes)
 	 */
 	public Collection<CollisionWarning> getCollisionWarnings()
 	{
-		return collisionWarnings;
+		return Collections.unmodifiableCollection(collisionWarnings);
 	}
 
 	/**
@@ -73,8 +77,22 @@ public class Airspace
 	 */
 	public AirspaceObject findAircraft(Vector2D point)
 	{
-		// TODO implement this
-		return null;
+		AirspaceObject bestObject = null;
+		float bestDistance = Float.POSITIVE_INFINITY;
+
+		// Iterate through all objects and return the one closest
+		for (AirspaceObject current : activeObjects)
+		{
+			float distance = current.getPosition().distanceTo(point);
+
+			if (distance < bestDistance)
+			{
+				bestDistance = distance;
+				bestObject = current;
+			}
+		}
+
+		return bestObject;
 	}
 
 	/**
@@ -86,15 +104,86 @@ public class Airspace
 	 */
 	public Collection<AirspaceObject> findAircraft(Vector2D centre, float radius)
 	{
-		// TODO implement this
-		return null;
+		ArrayList<AirspaceObject> results = new ArrayList<>();
+
+		// Iterate through all objects and return the one closest
+		for (AirspaceObject current : activeObjects)
+		{
+			float distance = current.getPosition().distanceTo(centre);
+
+			if (distance < radius)
+				results.add(current);
+		}
+
+		return results;
 	}
 
 	/** Returns true if the game is over */
 	public boolean isGameOver()
 	{
-		// TODO finish this
-		return  false;
+		return gameOver;
+	}
+
+	/** Culls objects outside the game area */
+	private void cullObjects()
+	{
+		Rectangle gameArea = config.getDimensions();
+
+		culledObjects.clear();
+
+		// Test if every object is within the area and cull if not
+		//  Do in reverse in case multiple objects are culled
+		for (int i = activeObjects.size() - 1; i >= 0; i--)
+		{
+			AirspaceObject object = activeObjects.get(i);
+
+			if (gameArea.intersects(object.getPosition(), object.getSize()))
+			{
+				activeObjects.remove(i);
+				culledObjects.add(object);
+			}
+		}
+	}
+
+	/** Generates the list of collision warnings */
+	private void calculateCollisions()
+	{
+		// This is a simple collision algorithm, going through all objects
+		// and checking them with all other objects.
+		// As such it is O(n^2) so it may be slow for lots of objects
+
+		float horizSeparation = config.getHorizontalSeparation();
+		float vertSeparation = config.getVerticalSeparation();
+		int objectsCount = activeObjects.size();
+
+		// Erase existing warnings
+		collisionWarnings.clear();
+
+		// Find new warnings
+		for (int a = 0; a < objectsCount; a++)
+		{
+			AirspaceObject object1 = activeObjects.get(a);
+			Vector2D object1Position = object1.getPosition();
+			float object1Altitude = object1.getAltitude();
+
+			for (int b = a + 1; b < objectsCount; b++)
+			{
+				AirspaceObject object2 = activeObjects.get(b);
+
+				// Test collision
+				if (object1Position.distanceTo(object2.getPosition()) < horizSeparation ||
+					Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation)
+				{
+					// Add collision warning
+					CollisionWarning warning = new CollisionWarning(object1, object2);
+
+					collisionWarnings.add(new CollisionWarning(object1, object2));
+
+					if (warning.hasCollided())
+						gameOver = true;
+				}
+			}
+		}
 	}
 
 	/**
@@ -112,6 +201,19 @@ public class Airspace
 	 */
 	public void refresh(float delta)
 	{
-		// TODO implement this
+		// Refresh all active objects
+		for (AirspaceObject current : activeObjects)
+			current.refresh(delta);
+
+		// Cull any objects outside the game area
+		cullObjects();
+
+		// Add new aircraft
+		AirspaceObject newObject = config.getObjectFactory().makeObject(this, delta);
+		if (newObject != null)
+			activeObjects.add(newObject);
+
+		// Generate collision warnings + determine if game is over
+		calculateCollisions();
 	}
 }
