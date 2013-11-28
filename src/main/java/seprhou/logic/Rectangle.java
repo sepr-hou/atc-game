@@ -30,10 +30,7 @@ public class Rectangle
 	{
 		float width;
 		width = p1.getX() - p2.getX();
-		if (width >= 0)
-			return width;
-		else
-			return -width;
+		return Math.abs(width);
 	}
 
 	/** Returns whether or not a point is enclosed within the rectangle */
