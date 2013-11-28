@@ -95,7 +95,70 @@ public abstract class AirspaceObject
 	 */
 	public void refresh(float dt)
 	{
-		// TODO Implement refresh
+		// Update altitude
+		if (altitude != targetAltitude)
+		{
+			float maxAltitude = getMaxAltitude();
+			float ascentAmount = getAscentRate() * dt;
+
+			// Handle each direction to move in
+			if (targetAltitude < altitude)
+			{
+				altitude -= ascentAmount;
+				if (altitude < targetAltitude)
+					altitude = targetAltitude;
+			}
+			else
+			{
+				altitude += ascentAmount;
+				if (altitude > targetAltitude)
+					altitude = targetAltitude;
+			}
+
+			// Clamp maximum altitude
+			if (altitude > maxAltitude)
+				altitude = maxAltitude;
+		}
+
+		// Update velocity
+		if (!velocity.equals(targetAltitude))
+		{
+			float minSpeedSq = getMinSpeed();
+			float maxSpeedSq = getMaxSpeed();
+			float acceleration = getMaxAcceleration() * dt;
+			float turnRate = getMaxTurnRate() * dt;
+
+			// TODO FROM HERE
+
+			// Handle each direction to move in
+			if (targetAltitude < altitude)
+			{
+				altitude -= ascentAmount;
+				if (altitude < targetAltitude)
+					altitude = targetAltitude;
+			}
+			else
+			{
+				altitude += ascentAmount;
+				if (altitude > targetAltitude)
+					altitude = targetAltitude;
+			}
+
+			// Clamp speed
+			float speed = velocity.getLength();
+			if
+
+			if (altitude > maxAltitude)
+			{
+				altitude = maxAltitude;
+				targetAltitude = maxAltitude;
+			}
+
+			// TODO STOP HERE
+		}
+
+		// Update position
+		position = position.add(velocity.multiply(dt));
 	}
 
 	/**
