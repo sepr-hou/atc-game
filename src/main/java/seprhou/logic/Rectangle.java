@@ -22,10 +22,7 @@ public class Rectangle
 	{
 		float height;
 		height = p1.getY() - p2.getY();
-		if (height >= 0)
-			return height;
-		else
-			return -height;
+		return Math.abs(height);
 	}
 
 	/** Returns the width of the rectangle */
