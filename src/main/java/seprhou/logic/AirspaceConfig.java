@@ -5,10 +5,32 @@ package seprhou.logic;
  */
 public class AirspaceConfig
 {
-	private Rectangle dimensions;
-	private float horizontalSeparation, verticalSeparation;
+	private final Rectangle dimensions;
+	private final float horizontalSeparation, verticalSeparation;
 
-	private AircraftObjectFactory objectFactory;
+	private final AircraftObjectFactory objectFactory;
+
+	/**
+	 * Constructs a new AirspaceConfig object
+	 *
+	 * @param objectFactory factory used to create aircraft
+	 * @param dimensions dimensions of the game area
+	 * @param horizontalSeparation horizontal separation distance
+	 * @param verticalSeparation vertical separation distance
+	 */
+	public AirspaceConfig(AircraftObjectFactory objectFactory, Rectangle dimensions,
+						  float horizontalSeparation, float verticalSeparation)
+	{
+		if (objectFactory == null)
+			throw new IllegalArgumentException("objectFactory cannot be null");
+		if (dimensions == null)
+			throw new IllegalArgumentException("dimensions cannot be null");
+
+		this.dimensions = dimensions;
+		this.horizontalSeparation = horizontalSeparation;
+		this.verticalSeparation = verticalSeparation;
+		this.objectFactory = objectFactory;
+	}
 
 	/** Returns the factory responsible for constructing airspace objects */
 	public AircraftObjectFactory getObjectFactory()
