@@ -1,7 +1,5 @@
 package seprhou.logic;
 
-import java.util.List;
-
 /**
  * Contains the configuration properties for an Airspace
  */
@@ -9,8 +7,6 @@ public class AirspaceConfig
 {
 	private Rectangle dimensions;
 	private float horizontalSeparation, verticalSeparation;
-
-	private List<Vector2D> waypoints, entryExitPoints;
 
 	private AircraftObjectFactory objectFactory;
 
@@ -48,17 +44,5 @@ public class AirspaceConfig
 	public float getVerticalSeparation()
 	{
 		return verticalSeparation;
-	}
-
-	/** Returns the list of available intermediate waypoints */
-	public List<Vector2D> getWaypoints()
-	{
-		return waypoints;
-	}
-
-	/** Returns the list of available entry and exit points */
-	public List<Vector2D> getEntryExitPoints()
-	{
-		return entryExitPoints;
 	}
 }
