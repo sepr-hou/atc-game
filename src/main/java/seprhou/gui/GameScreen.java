@@ -7,6 +7,7 @@ public class GameScreen extends AbstractScreen{
 		super(game);
 	
 		// TODO Auto-generated constructor stub
+		defaultStage.addActor(new GameArea());
 	}
 
 }

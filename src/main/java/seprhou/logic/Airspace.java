@@ -216,4 +216,18 @@ public class Airspace
 		// Generate collision warnings + determine if game is over
 		calculateCollisions();
 	}
+
+	/**
+	 * Draws all objects in the airspace
+	 *
+	 * <p>
+	 * This effectively calls {@link AirspaceObject#draw(Object)} on all objects.
+	 *
+	 * @param state any state information to be passed to the drawer
+	 */
+	public void draw(Object state)
+	{
+		for (AirspaceObject current : activeObjects)
+			current.draw(state);
+	}
 }
