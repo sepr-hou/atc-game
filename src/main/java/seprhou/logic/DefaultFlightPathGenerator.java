@@ -57,11 +57,11 @@ public class DefaultFlightPathGenerator
 		Waypoint entryPoint = new Waypoint(entryPointPosition, entrySpeed, entryAltitude);
 		flightPath.add(entryPoint);
 		
+		/*Adds a random amount (0-5) of sensible waypoints to the list*/
 		/*change*/float waypointSpeed = 8;
 		/*change*/float waypointAltitude = 8;
 		int numberOfWaypoints = random.nextInt(5);
 		for (int i = 0 : numberOfWaypoints){
-			/*Adds sensible waypoint to list*/
 			Waypoint previousWaypoint = flightPath.get(i-1);
 			Waypoint currentWaypoint = flightPath.get(i);
 			Waypoint bestWaypoint = null;
@@ -93,6 +93,7 @@ public class DefaultFlightPathGenerator
 		}
 		Waypoint exitPoint = new Waypoint(bestExit.getPosition(), exitSpeed, exitAltitude);
 		flightPath.add(exitPoint);
+		
 		return flightPath;
 	}
 }
