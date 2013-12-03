@@ -6,6 +6,23 @@ public class Rectangle
 	private final Vector2D p1, p2;
 
 	/**
+	 * Constructs a new rectangle with the given width and height
+	 *
+	 * @param width width of rectangle
+	 * @param height height of rectangle
+	 */
+	public Rectangle(float width, float height)
+	{
+		if (width < 0)
+			throw new IllegalArgumentException("width must be at least 0");
+		if (height < 0)
+			throw new IllegalArgumentException("height must be at least 0");
+
+		this.p1 = Vector2D.ZERO;
+		this.p2 = new Vector2D(width, height);
+	}
+
+	/**
 	 * Constructs a new rectangle with opposite corners point 1 and 2.
 	 * 
 	 * @param point1 the first vertex of the rectangle
