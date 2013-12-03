@@ -2,6 +2,7 @@ package seprhou.logic;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The default flight path generator
@@ -9,6 +10,7 @@ import java.util.List;
 public class DefaultFlightPathGenerator
 {
 	private final List<Vector2D> waypoints, entryExitPoints;
+	private final Random random = new Random();
 
 	/**
 	 * Creates a new flight path generator, choosing waypoints from the given list
@@ -46,7 +48,51 @@ public class DefaultFlightPathGenerator
 	 */
 	public List<Waypoint> makeFlightPath(Airspace airspace)
 	{
-		// TODO implement this
-		return null;
+		List<Waypoint> flightPath = null;
+		/*Creates entry waypoint and adds it to list*/
+		float entrySpeed = 10;
+		float entryAltitude = 10;
+		int entryPointNumber = random.nextInt(entryExitPoints.size());
+		Vector2D entryPointPosition = entryExitPoints.get(entryPointNumber);
+		Waypoint entryPoint = new Waypoint(entryPointPosition, entrySpeed, entryAltitude);
+		flightPath.add(entryPoint);
+		
+		/*change*/float waypointSpeed = 8;
+		/*change*/float waypointAltitude = 8;
+		int numberOfWaypoints = random.nextInt(5);
+		for (int i = 0 : numberOfWaypoints){
+			/*Adds sensible waypoint to list*/
+			Waypoint previousWaypoint = flightPath.get(i-1);
+			Waypoint currentWaypoint = flightPath.get(i);
+			Waypoint bestWaypoint = null;
+			float bestDistance = Float.POSITIVE_INFINITY;
+			for (Waypoint adjWaypoint : waypoints){
+				float distance = adjWaypoint.getPosition().distanceTo(currentWaypoint.getPosition());
+				if (distance < bestDistance && adjWaypoint.getPosition() != previousWaypoint.getPosition()){
+					bestDistance = distance;
+					bestWaypoint = adjWaypoint;
+				}
+			}
+			Waypoint newWaypoint = new Waypoint(bestWaypoint.getPosition(), waypointSpeed, WaypointAltitude);
+			flightPath.add(newWaypoint);
+		}
+		
+		/*Creates exit waypoint and adds to list*/
+		/*change*/float exitSpeed = 10;
+		/*change*/float exitAltitude = 1;
+		Waypoint previousWaypoint = flightPath.get(i-1);
+		Waypoint currentWaypoint = flightPath.get(i);
+		Waypoint bestExit = null;
+		float bestDistance = Float.POSITIVE_INFINITY;
+		for (Waypoint exit : entryExitPoints){
+			float distance = exit.getPosition().distanceTo(currentWaypoint.getPosition());
+			if (distance < bestDistance && exit.getPosition() != flightPath.get(0).getPosition()){
+				bestDistance = distance;
+				bestExit = exit;
+			}
+		}
+		Waypoint exitPoint = new Waypoint(bestExit.getPosition(), exitSpeed, exitAltitude);
+		flightPath.add(exitPoint);
+		return flightPath;
 	}
 }
