@@ -27,34 +27,17 @@ public class Waypoint
 		return position;
 	}
 
-	/** changes the position of the waypoint */
-	public void setPosition(Vector2D position)
-	{
-		this.position = position;
-	}
-
 	/** returns the speed of the aircraft at the waypoint */
 	public float getSpeed()
 	{
 		return speed;
 	}
 
-	/** changes the speed of the aircraft at the waypoint */
-	public void setSpeed(float speed)
-	{
-		this.speed = speed;
-	}
-
-	/** returns the altitude of the aircraft at the waypoint */
+		/** returns the altitude of the aircraft at the waypoint */
 	public float getAltitude()
 	{
 		return altitude;
 	}
 
-	/** changes the altitude of the aircraft at the waypoint */
-	public void setAltitude(float altitude)
-	{
-		this.altitude = altitude;
-	}
-
+	
 }
