@@ -2,9 +2,12 @@ package seprhou.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Assets
-{
+{	
+	public static Texture backgroundTexture = new Texture(getDataFile("backgroundimage.png"));
+	
 	/**
 	 * Returns a handle to a data file
 	 *

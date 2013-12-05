@@ -62,6 +62,7 @@ public class GameArea extends Actor
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha)
 	{
+		batch.draw(Assets.backgroundTexture,0,0);
 		// Draw all aircraft
 		airspace.draw(batch);
 
