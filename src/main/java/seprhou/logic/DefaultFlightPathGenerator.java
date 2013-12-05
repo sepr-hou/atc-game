@@ -57,11 +57,11 @@ public class DefaultFlightPathGenerator
 		Waypoint entryPoint = new Waypoint(entryPointPosition, entrySpeed, entryAltitude);
 		flightPath.add(entryPoint);
 		
-		/*Adds a random amount (0-5) of sensible waypoints to the list*/
+		/*Adds a random amount (1-5) of sensible waypoints to the list*/
 		/*change*/float waypointSpeed = 8;
 		/*change*/float waypointAltitude = 8;
 		int numberOfWaypoints = random.nextInt(5);
-		for (int i = 0; i < numberOfWaypoints; i++){
+		for (int i = 0; i < (numberOfWaypoints + 1); i++){
 			Waypoint previousWaypoint = flightPath.get(i-1);
 			Waypoint currentWaypoint = flightPath.get(i);
 			Vector2D bestPosition = null;
