@@ -137,7 +137,7 @@ public class Airspace
 		{
 			AirspaceObject object = activeObjects.get(i);
 
-			if (gameArea.intersects(object.getPosition(), object.getSize()))
+			if (!gameArea.intersects(object.getPosition(), object.getSize()))
 			{
 				activeObjects.remove(i);
 				culledObjects.add(object);

@@ -137,7 +137,7 @@ public abstract class AirspaceObject
 		}
 
 		// Update velocity
-		if (!velocity.equals(targetAltitude))
+		if (!velocity.equals(targetVelocity))
 		{
 			float minSpeed = getMinSpeed();
 			float maxSpeed = getMaxSpeed();
