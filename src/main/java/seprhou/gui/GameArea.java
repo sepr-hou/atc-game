@@ -22,8 +22,7 @@ public class GameArea extends Actor
 	private static final List<Vector2D> WAYPOINTS = new ArrayList<>();
 	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>();
 
-	private static final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
-
+	private final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
 	private Airspace airspace;
 
 	/**
@@ -63,15 +62,19 @@ public class GameArea extends Actor
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha)
 	{
-		batch.draw(Assets.backgroundTexture,0,0);
+		if (clipBegin())
+		{
+			// Draw all aircraft
+			airspace.draw(batch);
 
-		// Draw all aircraft
-		airspace.draw(batch);
+			// TODO Draw collision warnings
 
-		// TODO Draw collision warnings
+			// End clipping
+			clipEnd();
+		}
 	}
 
-	private static class GameAircraftFactory implements AircraftObjectFactory
+	private class GameAircraftFactory implements AircraftObjectFactory
 	{
 		private DefaultFlightPathGenerator flightPathGenerator =
 				new DefaultFlightPathGenerator(WAYPOINTS, ENTRY_EXIT_POINTS);
@@ -88,7 +91,7 @@ public class GameArea extends Actor
 				// TODO Use proper flight path generator
 				List<Waypoint> flightPath = new ArrayList<>();
 				flightPath.add(new Waypoint(new Vector2D(0, 0), 20, 20));
-				flightPath.add(new Waypoint(new Vector2D(1, 1), 20, 20));
+				flightPath.add(new Waypoint(new Vector2D(3, 3), 20, 20));
 
 				// TODO Possibly adjust / randomize these arguments
 				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPath);
@@ -99,10 +102,8 @@ public class GameArea extends Actor
 	}
 
 	/** The only type of aircraft (currently?) available */
-	private static class ConcreteAircraft extends Aircraft
+	private class ConcreteAircraft extends Aircraft
 	{
-		private static Texture MY_TEXTURE = null;	// TODO Replace with correct texture
-
 		public ConcreteAircraft(String name, float weight, int crew, List<Waypoint> flightPlan)
 		{
 			super(name, weight, crew, flightPlan);
@@ -114,10 +115,14 @@ public class GameArea extends Actor
 			SpriteBatch batch = (SpriteBatch) state;
 			float angleDegrees = getVelocity().getAngle() * (float) (180.0 / Math.PI);
 
+			// Add parent X and Y since SpriteBatch does not adjust coordinates for the Actor
+			float xPos = GameArea.this.getX() + getPosition().getX() - getSize();
+			float yPos = GameArea.this.getY() + getPosition().getY() - getSize();
+
 			batch.draw(
-				MY_TEXTURE,                         // Aircraft texture
-				getPosition().getX() - getSize(),   // X position (bottom left)
-				getPosition().getY() - getSize(),   // Y position (bottom right)
+				Assets.AIRCRAFT_TEXTURE,            // Aircraft texture
+				xPos,                               // X position (bottom left)
+				yPos,                               // Y position (bottom right)
 				getSize(),                          // X rotation origin
 				getSize(),                          // Y rotation origin
 				getSize() * 2,                      // Width
@@ -127,8 +132,8 @@ public class GameArea extends Actor
 				angleDegrees,                       // Rotation
 				0,                                  // X position in texture
 				0,                                  // Y position in texture
-				MY_TEXTURE.getWidth(),              // Width of source texture
-				MY_TEXTURE.getHeight(),             // Height of source texture
+				Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source texture
+				Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source texture
 				false,                              // Flip in X axis
 				false                               // Flip in Y axis
 			);

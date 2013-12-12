@@ -4,10 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.awt.*;
+
 public class Assets
 {	
-	public static Texture backgroundTexture = new Texture(getDataFile("backgroundimage.png"));
-	
+	public static Texture backgroundTexture = new Texture(getDataFile("default.png"));
+
+	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("arrow.png"));
+
 	/**
 	 * Returns a handle to a data file
 	 *
