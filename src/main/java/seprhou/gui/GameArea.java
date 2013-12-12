@@ -87,8 +87,8 @@ public class GameArea extends Actor
 
 				// TODO Use proper flight path generator
 				List<Waypoint> flightPath = new ArrayList<>();
-				flightPath.add(new Waypoint(new Vector2D(0, 0), 20, 100));
-				flightPath.add(new Waypoint(new Vector2D(100, 100), 20, 100));
+				flightPath.add(new Waypoint(new Vector2D(0, 0), 20, 20));
+				flightPath.add(new Waypoint(new Vector2D(1, 1), 20, 20));
 
 				// TODO Possibly adjust / randomize these arguments
 				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPath);
@@ -112,33 +112,34 @@ public class GameArea extends Actor
 		public void draw(Object state)
 		{
 			SpriteBatch batch = (SpriteBatch) state;
+			float angleDegrees = getVelocity().getAngle() * (float) (180.0 / Math.PI);
 
 			batch.draw(
-				MY_TEXTURE,							// Aircraft texture
-				getPosition().getX() - getSize(),	// X position (bottom left)
-				getPosition().getY() - getSize(),	// Y position (bottom right)
-				getPosition().getX(),				// X rotation origin
-				getPosition().getY(),				// Y rotation origin
-				getSize() * 2,						// Width
-				getSize() * 2,						// Height
-				1.0f,								// X scaling
-				1.0f,								// Y scaling
-				getVelocity().getAngle(),			// Rotation
-				0,									// X position in texture
-				0,									// Y position in texture
-				MY_TEXTURE.getWidth(),				// Width of source texture
-				MY_TEXTURE.getHeight(),				// Height of source texture
-				false,								// Flip in X axis
-				false								// Flip in Y axis
+				MY_TEXTURE,                         // Aircraft texture
+				getPosition().getX() - getSize(),   // X position (bottom left)
+				getPosition().getY() - getSize(),   // Y position (bottom right)
+				getSize(),                          // X rotation origin
+				getSize(),                          // Y rotation origin
+				getSize() * 2,                      // Width
+				getSize() * 2,                      // Height
+				1.0f,                               // X scaling
+				1.0f,                               // Y scaling
+				angleDegrees,                       // Rotation
+				0,                                  // X position in texture
+				0,                                  // Y position in texture
+				MY_TEXTURE.getWidth(),              // Width of source texture
+				MY_TEXTURE.getHeight(),             // Height of source texture
+				false,                              // Flip in X axis
+				false                               // Flip in Y axis
 			);
 		}
 
-		@Override public float getSize()				{ return 16; }
-		@Override protected float getAscentRate()		{ return 10; }
-		@Override protected float getMinSpeed()			{ return 0; }
-		@Override protected float getMaxSpeed()			{ return 100; }
-		@Override protected float getMaxAltitude()		{ return 100; }
-		@Override protected float getMaxAcceleration()	{ return 10; }
-		@Override protected float getMaxTurnRate()		{ return 10; }
+		@Override public float getSize()                { return 64; }
+		@Override protected float getAscentRate()       { return 10; }
+		@Override protected float getMinSpeed()         { return 0; }
+		@Override protected float getMaxSpeed()         { return 100; }
+		@Override protected float getMaxAltitude()      { return 100; }
+		@Override protected float getMaxAcceleration()  { return 10; }
+		@Override protected float getMaxTurnRate()      { return 10; }
 	}
 }
