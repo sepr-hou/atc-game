@@ -7,6 +7,8 @@ import java.util.Random;
  */
 public class DefaultObjectCreationRate
 {
+	private static float RATE_PER_SEC = 0.2f;
+
 	private final Random random = new Random();
 
 	/**
@@ -17,7 +19,7 @@ public class DefaultObjectCreationRate
 	 */
 	public boolean nextBoolean(Airspace airspace, float delta)
 	{
-		// TODO Implement this
-		return false;
+		// TODO This might be "too simple" and need changing later
+		return random.nextFloat() < delta * RATE_PER_SEC;
 	}
 }
