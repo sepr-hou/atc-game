@@ -18,6 +18,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(Enclosed.class)
 public class RectangleTest
 {
+	private static final Rectangle TEST_RECTANGLE = new Rectangle(10, 10);
+
 	@RunWith(Parameterized.class)
 	public static class ClassInvariant
 	{
@@ -75,25 +77,135 @@ public class RectangleTest
 		}
 	}
 
-	@RunWith(JUnit4.class)
-	public static class Intersections
+	@RunWith(Parameterized.class)
+	public static class Contains
 	{
-		@Test
-		public void testContains()
+		private static final Rectangle CONTAINS_TEST_RECTANGLE =
+				new Rectangle(new Vector2D(-10, -10), new Vector2D(10, 10));
+
+		private final Vector2D testVector;
+		private final boolean pass;
+
+		public Contains(boolean pass, Vector2D testVector)
 		{
-			//
+			this.testVector = testVector;
+			this.pass = pass;
+		}
+
+		/** Test data */
+		@Parameterized.Parameters
+		public static Collection<Object[]> data()
+		{
+			return Arrays.asList(new Object[][]
+			{
+				// Passing tests
+				{ true,  Vector2D.ZERO },
+				{ true,  new Vector2D(-10, -10) },
+				{ true,  new Vector2D(10, -10) },
+				{ true,  new Vector2D(10, 9) },
+
+				// Failing tests
+				{ false, new Vector2D(1000, 1000) },
+				{ false, new Vector2D(11, 11) },
+				{ false, new Vector2D(0, 11) },
+				{ false, new Vector2D(-10.0001f, -10) },
+			});
 		}
 
 		@Test
-		public void testIntersectsRect()
+		public void containsTest()
 		{
-			//
+			assertThat("Point: " + testVector, CONTAINS_TEST_RECTANGLE.contains(testVector), is(pass));
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class IntersectsRectangle
+	{
+		private final Rectangle rectangle2;
+		private final boolean pass;
+
+		public IntersectsRectangle(boolean pass, Rectangle rectangle2)
+		{
+			this.rectangle2 = rectangle2;
+			this.pass = pass;
+		}
+
+		/** Test data */
+		@Parameterized.Parameters
+		public static Collection<Object[]> data()
+		{
+			return Arrays.asList(new Object[][]
+			{
+				// Passing tests
+				{ true,  new Rectangle(100, 100) },
+				{ true,  new Rectangle(new Vector2D(1, 1), new Vector2D(9, 9)) },
+				{ true,  new Rectangle(new Vector2D(-10, -10), new Vector2D(1, 1)) },
+				{ true,  new Rectangle(new Vector2D(9, 0), new Vector2D(10, 10)) },
+
+				// Failing tests
+				{ false, new Rectangle(new Vector2D(-10, -10), new Vector2D(-5, -5)) },
+				{ false, new Rectangle(new Vector2D(-10, -10), new Vector2D(0, 0)) },
+				{ false, new Rectangle(Vector2D.ZERO, Vector2D.ZERO) },
+				{ false, new Rectangle(new Vector2D(10, 10), new Vector2D(15, 15)) },
+				{ false, new Rectangle(new Vector2D(0, 0), new Vector2D(-5, 5)) },
+			});
 		}
 
 		@Test
-		public void testIntersectsCircle()
+		public void intersectsTest()
 		{
-			//
+			assertThat("Other Rectangle: " + rectangle2, TEST_RECTANGLE.intersects(rectangle2), is(pass));
+		}
+
+		@Test
+		public void intersectsTestReverse()
+		{
+			assertThat("Other Rectangle: " + rectangle2, rectangle2.intersects(TEST_RECTANGLE), is(pass));
+		}
+	}
+
+	@RunWith(Parameterized.class)
+	public static class IntersectsCircle
+	{
+		private final Vector2D center;
+		private final float radius;
+		private final boolean pass;
+
+		public IntersectsCircle(boolean pass, Vector2D center, float radius)
+		{
+			this.center = center;
+			this.radius = radius;
+			this.pass = pass;
+		}
+
+		/** Test data */
+		@Parameterized.Parameters
+		public static Collection<Object[]> data()
+		{
+			return Arrays.asList(new Object[][]
+			{
+				// Passing tests
+				{ true,  new Vector2D(0, 0), 1000 },
+				{ true,  new Vector2D(0, 0), 1 },
+				{ true,  new Vector2D(5, 5), 1 },
+				{ true,  new Vector2D(11, 11), 2 },
+				{ true,  new Vector2D(5, 11), 2 },
+				{ true,  new Vector2D(5, 11), 6 },
+				{ true,  new Vector2D(10, 11), 2 },
+
+				// Failing tests
+				{ false, new Vector2D(1000, 1000), 10 },
+				{ false, new Vector2D(11, 11), 1 },
+				{ false, new Vector2D(10, 11), 0.999f },
+			});
+		}
+
+		@Test
+		public void intersectsTest()
+		{
+			assertThat("Other Circle: (" + center.getX() + ", " + center.getY() + ") r = " + radius,
+					TEST_RECTANGLE.intersects(center, radius), is(pass));
 		}
 	}
 }
