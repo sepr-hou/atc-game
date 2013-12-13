@@ -10,7 +10,7 @@ public class Assets
 {
 	public static Texture BACKGROUND_TEXTURE = new Texture(getDataFile("backgroundimage.png"));
 
-	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("arrow.png"));
+	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
 
 	/**
 	 * Returns a handle to a data file

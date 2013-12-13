@@ -64,6 +64,10 @@ public class GameArea extends Actor
 	{
 		if (clipBegin())
 		{
+			
+			// Not sure the ideal place to put this but it works here, you need it otherwise there will be a white box around the image
+			Assets.BACKGROUND_TEXTURE.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
 			// Draw background
 			batch.draw(Assets.BACKGROUND_TEXTURE, getX(), getY());
 
