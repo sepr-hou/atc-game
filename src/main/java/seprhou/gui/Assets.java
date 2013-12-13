@@ -8,9 +8,22 @@ import java.awt.*;
 
 public class Assets
 {
-	public static Texture BACKGROUND_TEXTURE = new Texture(getDataFile("backgroundimage.png"));
+	public static Texture BACKGROUND_TEXTURE = newLinearTexture(getDataFile("backgroundimage.png"));
 
 	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
+
+	/**
+	 * Creates a new texture using linear filtering from the given file handle
+	 *
+	 * @param handle input file handle
+	 * @return a new texture using the file and has linear filtering
+	 */
+	private static Texture newLinearTexture(FileHandle handle)
+	{
+		Texture texture = new Texture(handle);
+		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		return texture;
+	}
 
 	/**
 	 * Returns a handle to a data file
