@@ -64,6 +64,9 @@ public class GameArea extends Actor
 	{
 		if (clipBegin())
 		{
+			// Draw background
+			batch.draw(Assets.BACKGROUND_TEXTURE, getX(), getY());
+
 			// Draw all aircraft
 			airspace.draw(batch);
 
