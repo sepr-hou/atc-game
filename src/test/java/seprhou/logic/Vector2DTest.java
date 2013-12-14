@@ -1,5 +1,6 @@
 package seprhou.logic;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
@@ -21,7 +23,7 @@ import static seprhou.logic.IsCloseToFloat.closeTo;
 public class Vector2DTest
 {
 	public static final float ELIPSON_LENGTH = 0.00001f;
-	public static final float ELIPSON_ANGLE  = 0.00000001f;
+	public static final float ELIPSON_ANGLE  = 0.000001f;
 
 	/**
 	 * Contains the unary tests for {@link Vector2D}
@@ -100,7 +102,15 @@ public class Vector2DTest
 		{
 			// For the zero vector, any angle is valid
 			if (!vector.equals(Vector2D.ZERO))
-				assertThat(vector.getAngle(), closeTo(dataAngle, ELIPSON_ANGLE));
+			{
+				Matcher<Float> matcher = closeTo(dataAngle, ELIPSON_ANGLE);
+
+				// If the angle is PI, allow +/- values for it
+				if (dataAngle == (float) Math.PI || dataAngle == (float) -Math.PI)
+					matcher = either(matcher).or(closeTo(-dataAngle, ELIPSON_ANGLE));
+
+				assertThat(vector.getAngle(), matcher);
+			}
 		}
 	}
 
@@ -177,8 +187,8 @@ public class Vector2DTest
 
 			assertThat(a.rotate( b).getX(), closeTo(ansX, ELIPSON_LENGTH));
 			assertThat(a.rotate( b).getY(), closeTo(ansY, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getX(), closeTo(-ansY, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getY(), closeTo(ansX, ELIPSON_LENGTH));
+			assertThat(a.rotate(-b).getX(), closeTo(ansY, ELIPSON_LENGTH));
+			assertThat(a.rotate(-b).getY(), closeTo(-ansX, ELIPSON_LENGTH));
 		}
 
 		@Test
