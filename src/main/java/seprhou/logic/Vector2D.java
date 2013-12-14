@@ -84,10 +84,7 @@ public class Vector2D
 	 */
 	public float getAngle()
 	{
-		/* dot product between vector and axis is equal to vector.x */
-		/* therefore cos(angle) = x / |vector|*/
-		float angle = (float) Math.acos(this.getX() / this.getLength());
-		return angle;
+		return (float) Math.atan2(this.getY(), this.getX());
 	}
 
 	/**
