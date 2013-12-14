@@ -82,7 +82,12 @@ public class Rectangle
 		return p2.getX() - p1.getX();
 	}
 
-	/** Returns whether or not a point is enclosed within the rectangle */
+	/**
+	 * Returns whether or not a point is enclosed within the rectangle
+	 *
+	 * @param point point to test
+	 * @return true if the point lies within this rectangle
+	 */
 	public boolean contains(Vector2D point)
 	{
 		float maxY = p2.getY();
@@ -94,24 +99,36 @@ public class Rectangle
 				(minX <= point.getX() && point.getX() < maxX);
 	}
 
-	/** Returns whether or not one rectangle intersects another
-	 *  as rectangles are the same orientation, only the 4 vertexes should be checked
-	 *  if one vertex intersects then the rectangles intersect, if not then no parts of the rectangles intersect */
+	/**
+	 * Returns true if this rectangle intersects (overlaps) with another
+	 *
+	 * @param other other rectangle to compare
+	 * @return true if the rectangles intersect
+	 */
 	public boolean intersects(Rectangle other)
 	{
+		// Basic bounding box intersection
 		return (other.p1.getX() < p2.getX() &&
 				other.p2.getX() > p1.getX() &&
 				other.p1.getY() < p2.getY() &&
 				other.p2.getY() > p1.getY());
 	}
 
-	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. 
-	 *  either the center is in the rectangle or an edge of the rectangle intersects the circle 
-	 *  if the distance between a corner and the center of the circle is less than the radius then intersection
-	 *  if N E S or W point of circle in rectangle then intersection
-	 *  if there is another case please say*/
+	/**
+	 * Returns true if this rectangle intersects (overlaps) with a circle
+	 *
+	 * @param center center of the circle
+	 * @param radius radius of the circle
+	 * @return true if they intersect
+	 */
 	public boolean intersects(Vector2D center, float radius)
 	{
+		/*
+		 * either the center is in the rectangle or an edge of the rectangle intersects the circle
+		 * if the distance between a corner and the center of the circle is less than the radius then intersection
+		 * if N E S or W point of circle in rectangle then intersection
+		 */
+
 		float maxY = p2.getY();
 		float minY = p1.getY();
 		float maxX = p2.getX();
