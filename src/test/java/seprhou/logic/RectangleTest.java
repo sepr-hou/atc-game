@@ -115,7 +115,7 @@ public class RectangleTest
 		@Test
 		public void containsTest()
 		{
-			assertThat("Point: " + testVector, CONTAINS_TEST_RECTANGLE.contains(testVector), is(pass));
+			assertThat(testVector.toString(), CONTAINS_TEST_RECTANGLE.contains(testVector), is(pass));
 		}
 	}
 
@@ -155,13 +155,13 @@ public class RectangleTest
 		@Test
 		public void intersectsTest()
 		{
-			assertThat("Other Rectangle: " + rectangle2, TEST_RECTANGLE.intersects(rectangle2), is(pass));
+			assertThat(rectangle2.toString(), TEST_RECTANGLE.intersects(rectangle2), is(pass));
 		}
 
 		@Test
 		public void intersectsTestReverse()
 		{
-			assertThat("Other Rectangle: " + rectangle2, rectangle2.intersects(TEST_RECTANGLE), is(pass));
+			assertThat(rectangle2.toString(), rectangle2.intersects(TEST_RECTANGLE), is(pass));
 		}
 	}
 
