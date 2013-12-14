@@ -101,8 +101,8 @@ public class RectangleTest
 				// Passing tests
 				{ true,  Vector2D.ZERO },
 				{ true,  new Vector2D(-10, -10) },
-				{ true,  new Vector2D(10, -10) },
-				{ true,  new Vector2D(10, 9) },
+				{ true,  new Vector2D(9, -10) },
+				{ true,  new Vector2D(-10, 9) },
 
 				// Failing tests
 				{ false, new Vector2D(1000, 1000) },

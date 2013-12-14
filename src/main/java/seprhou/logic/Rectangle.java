@@ -90,7 +90,8 @@ public class Rectangle
 		float maxX = p2.getX();
 		float minX = p1.getX();
 
-		return (maxY - point.getY() >= minY && maxX - point.getX() >= minX);
+		return  (minY <= point.getY() && point.getY() < maxY) &&
+				(minX <= point.getX() && point.getX() < maxX);
 	}
 
 	/** Returns whether or not one rectangle intersects another
