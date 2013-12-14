@@ -99,15 +99,10 @@ public class Rectangle
 	 *  if one vertex intersects then the rectangles intersect, if not then no parts of the rectangles intersect */
 	public boolean intersects(Rectangle other)
 	{
-		float maxY = p2.getY();
-		float minY = p1.getY();
-		float maxX = p2.getX();
-		float minX = p1.getX();
-
-		return this.contains(new Vector2D(minX, minY)) ||
-				this.contains(new Vector2D(minX, maxY)) ||
-				this.contains(new Vector2D(maxX, minY)) ||
-				this.contains(new Vector2D(maxX, maxY));
+		return (other.p1.getX() < p2.getX() &&
+				other.p2.getX() > p1.getX() &&
+				other.p1.getY() < p2.getY() &&
+				other.p2.getY() > p1.getY());
 	}
 
 	/** Returns whether or not the rectangle intersects a circle with center at the given point and of the radius given. 
