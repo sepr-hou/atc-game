@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class DefaultObjectCreationRate
 {
-	private static float RATE_PER_SEC = 0.2f;
+	private static final float RATE_PER_SEC = 0.2f;
 
 	private final Random random = new Random();
 

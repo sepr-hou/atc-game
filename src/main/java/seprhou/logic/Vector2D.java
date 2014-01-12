@@ -122,7 +122,7 @@ public class Vector2D
 	 */
 	public Vector2D sub(Vector2D other)
 	{
-		Vector2D result = new Vector2D((this.getX() - other.getX()),(this.getY() - other.getY()));;
+		Vector2D result = new Vector2D((this.getX() - other.getX()),(this.getY() - other.getY()));
 		return result;
 	}
 
