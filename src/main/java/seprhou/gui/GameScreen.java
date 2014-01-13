@@ -11,11 +11,23 @@ public class GameScreen extends AbstractScreen
 	// Game parameters
 	private static final float HORIZONTAL_SEPARATION = 10.0f;
 	private static final float VERTICAL_SEPARATION = 10.0f;
-	private static final List<Vector2D> WAYPOINTS = new ArrayList<>(Arrays.asList(
-			new Vector2D(50, 0),
-			new Vector2D(0, 50),
-			new Vector2D(200, 0),
-			new Vector2D(30, 0)
+	static final List<Vector2D> WAYPOINTS = new ArrayList<>(Arrays.asList(
+			new Vector2D(280, 210),
+			new Vector2D(280, 420),
+			new Vector2D(280, 630),
+			new Vector2D(280, 840),
+			new Vector2D(560, 210),
+			new Vector2D(560, 420),
+			new Vector2D(560, 630),
+			new Vector2D(560, 840),
+			new Vector2D(840, 210),
+			new Vector2D(840, 420),
+			new Vector2D(840, 630),
+			new Vector2D(840, 840),
+			new Vector2D(1120, 210),
+			new Vector2D(1120, 420),
+			new Vector2D(1120, 630),
+			new Vector2D(1120, 840)
 	));
 	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(100, 0),

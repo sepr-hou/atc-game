@@ -9,7 +9,7 @@ import java.awt.*;
 public class Assets
 {
 	public static Texture BACKGROUND_TEXTURE = newLinearTexture(getDataFile("backgroundimage.png"));
-
+	public static Texture WAYPOINT_TEXTURE = new Texture(getDataFile("waypoint.png"));
 	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
 
 	/**
