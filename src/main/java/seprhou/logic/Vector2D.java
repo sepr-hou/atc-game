@@ -155,6 +155,16 @@ public class Vector2D
 	}
 
 	/**
+	 * Returns a normalized version of this vector
+	 *
+	 * @return this vector with length 1
+	 */
+	public Vector2D normalize()
+	{
+		return multiply(1 / getLength());
+	}
+
+	/**
 	 * Returns true if this vector is exactly equal to another
 	 *
 	 * <p>
