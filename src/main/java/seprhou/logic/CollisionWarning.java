@@ -35,7 +35,7 @@ public class CollisionWarning
 	public boolean hasCollided()
 	{
 		float threshold = object1.getSize() + object2.getSize();
-		return getLateralDistance() < threshold || getVerticalDistance() < threshold;
+		return getLateralDistance() < threshold && getVerticalDistance() < threshold;
 	}
 
 	/** returns the horizontal distance between the objects */

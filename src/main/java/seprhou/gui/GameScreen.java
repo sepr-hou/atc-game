@@ -9,8 +9,8 @@ import java.util.List;
 public class GameScreen extends AbstractScreen
 {
 	// Game parameters
-	private static final float HORIZONTAL_SEPARATION = 10.0f;
-	private static final float VERTICAL_SEPARATION = 10.0f;
+	private static final float HORIZONTAL_SEPARATION = 200.0f;
+	private static final float VERTICAL_SEPARATION = 200.0f;
 	static final List<Vector2D> WAYPOINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(280, 210),
 			new Vector2D(280, 420),
@@ -31,7 +31,7 @@ public class GameScreen extends AbstractScreen
 	));
 	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(100, 0),
-			new Vector2D(0, 100)
+			new Vector2D(0, 800)
 	));
 
 	private final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
