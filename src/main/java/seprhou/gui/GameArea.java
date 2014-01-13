@@ -58,7 +58,7 @@ public class GameArea extends Actor
 			
 			// Draw all waypoints
 			for (Vector2D point: GameScreen.WAYPOINTS){
-				batch.draw(Assets.WAYPOINT_TEXTURE, point.getX(),point.getY());
+				batch.draw(Assets.WAYPOINT_TEXTURE, point.getX()-5,point.getY()-5);
 			}
 			
 

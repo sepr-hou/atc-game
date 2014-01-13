@@ -48,7 +48,7 @@ public class ConcreteAircraft extends Aircraft
 		);
 	}
 
-	@Override public float getSize()                { return 64; }
+	@Override public float getSize()                { return 32; }
 	@Override protected float getAscentRate()       { return 10; }
 	@Override protected float getMinSpeed()         { return 0; }
 	@Override protected float getMaxSpeed()         { return 100; }
