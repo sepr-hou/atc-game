@@ -2,6 +2,8 @@ package seprhou.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import seprhou.logic.*;
@@ -50,8 +52,15 @@ public class GameArea extends Actor
 
 		if (clipBegin())
 		{
+			
 			// Draw background
 			batch.draw(Assets.BACKGROUND_TEXTURE, getX(), getY());
+			
+			// Draw all waypoints
+			for (Vector2D point: GameScreen.WAYPOINTS){
+				batch.draw(Assets.WAYPOINT_TEXTURE, point.getX(),point.getY());
+			}
+			
 
 			// Draw all aircraft
 			airspace.draw(batch);
