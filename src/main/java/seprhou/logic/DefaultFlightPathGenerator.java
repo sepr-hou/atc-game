@@ -49,24 +49,14 @@ public class DefaultFlightPathGenerator
 	 * @param <T> type of the items in the list
 	 * @return the chosen item
 	 */
-	private <T> Set<T> randomSubset(List<T> list, int n)
+	private <T> List<T> randomSubset(List<T> list, int n)
 	{
-		HashSet<T> set = new HashSet<T>();
-		int listSize = list.size();
+		// Copy the list and shuffle it
+		List<T> result = new ArrayList<>(list);
+		Collections.shuffle(result, random);
 
-		// Floyd random sampling algorithm
-		for(int i = listSize - n; i < listSize; i++)
-		{
-			int pos = random.nextInt(i + 1);
-			T item = list.get(pos);
-
-			if (set.contains(item))
-				set.add(list.get(i));
-			else
-				set.add(item);
-		}
-
-		return set;
+		// Return first n items
+		return result.subList(0, n);
 	}
 
 	/**
@@ -100,17 +90,16 @@ public class DefaultFlightPathGenerator
 
 		// Choose some waypoints + 2 entry and exit points
 		int waypointCount = random.nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
-		Set<Vector2D> myEntryExitPoints = randomSubset(entryExitPoints, 2);
-		Set<Vector2D> myWaypoints = randomSubset(waypoints, waypointCount);
+		List<Vector2D> myEntryExitPoints = randomSubset(entryExitPoints, 2);
+		List<Vector2D> myWaypoints = randomSubset(waypoints, waypointCount);
 
 		// Generate flightpath from the chosen positions
-		Iterator<Vector2D> entryIterator = myEntryExitPoints.iterator();
-		appendWaypoint(flightPath, entryIterator.next());
+		appendWaypoint(flightPath, myEntryExitPoints.get(0));
 
 		for (Vector2D position : myWaypoints)
 			appendWaypoint(flightPath, position);
 
-		appendWaypoint(flightPath, entryIterator.next());
+		appendWaypoint(flightPath, myEntryExitPoints.get(1));
 
 		return flightPath;
 	}
