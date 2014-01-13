@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import seprhou.logic.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,8 +20,16 @@ public class GameArea extends Actor
 	// Game parameters
 	private static final float HORIZONTAL_SEPARATION = 10.0f;
 	private static final float VERTICAL_SEPARATION = 10.0f;
-	private static final List<Vector2D> WAYPOINTS = new ArrayList<>();
-	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>();
+	private static final List<Vector2D> WAYPOINTS = new ArrayList<>(Arrays.asList(
+			new Vector2D(50, 0),
+			new Vector2D(0, 50),
+			new Vector2D(200, 0),
+			new Vector2D(30, 0)
+	));
+	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>(Arrays.asList(
+			new Vector2D(100, 0),
+			new Vector2D(0, 100)
+	));
 
 	private final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
 	private Airspace airspace;
@@ -89,12 +98,7 @@ public class GameArea extends Actor
 		{
 			if (objectCreationRate.nextBoolean(airspace, delta))
 			{
-				//List<Waypoint> flightPath = flightPathGenerator.makeFlightPath(airspace);
-
-				// TODO Use proper flight path generator
-				List<Waypoint> flightPath = new ArrayList<>();
-				flightPath.add(new Waypoint(new Vector2D(0, 0), 20, 20));
-				flightPath.add(new Waypoint(new Vector2D(3, 3), 20, 20));
+				List<Waypoint> flightPath = flightPathGenerator.makeFlightPath(airspace);
 
 				// TODO Possibly adjust / randomize these arguments
 				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPath);
