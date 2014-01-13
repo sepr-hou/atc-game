@@ -34,16 +34,12 @@ public class CollisionWarning
 	/** returns whether or not the aircraft have collided */
 	public boolean hasCollided()
 	{
-		float h_threshold = 10;
-		float v_threshold = 10;
-		if ((this.getHorizontalDistance() < h_threshold) && (this.getVerticalDistance() < v_threshold))
-			return true;
-		else
-			return false;
+		float threshold = object1.getSize() + object2.getSize();
+		return getLateralDistance() < threshold || getVerticalDistance() < threshold;
 	}
 
 	/** returns the horizontal distance between the objects */
-	public float getHorizontalDistance()
+	public float getLateralDistance()
 	{
 		float result = object1.getPosition().distanceTo(object2.getPosition());
 		return result;
