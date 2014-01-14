@@ -34,7 +34,7 @@ public abstract class AbstractScreen implements Screen
 		batch = new SpriteBatch();
 		
 		
-		
+		Gdx.input.setCursorImage(Assets.CURSOR_IMAGE, 0, 0);
     	Gdx.input.setInputProcessor(defaultStage);
     }
     
