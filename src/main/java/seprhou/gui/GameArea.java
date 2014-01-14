@@ -80,12 +80,32 @@ public class GameArea extends Actor
 		if (airspace.isGameOver())
 			return;
 
-		// Handle input events
+		// Selecting new aircraft
 		if (clickPosition != null)
 		{
 			// Someone clicked on something - update selected aircraft
 			parent.setSelectedAircraft((Aircraft) airspace.findAircraft(clickPosition));
 			clickPosition = null;
+		}
+
+		// Keyboard controls
+		Aircraft selected = parent.getSelectedAircraft();
+		if (selected != null)
+		{
+			// TODO This is currently hooked up to the max turn rate - is this what we want?
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			{
+				selected.setTargetVelocity(
+						selected.getTargetVelocity()
+								.rotate(selected.getMaxTurnRate() * delta));
+			}
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			{
+				// Note the rotation angle is NEGATIVE here
+				selected.setTargetVelocity(
+						selected.getTargetVelocity()
+								.rotate(-selected.getMaxTurnRate() * delta));
+			}
 		}
 
 		// Refresh airspace

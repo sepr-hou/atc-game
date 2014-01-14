@@ -185,20 +185,20 @@ public abstract class AirspaceObject
 	public abstract float getSize();
 
 	/** Returns the rate of change of altitude (units / sec) */
-	protected abstract float getAscentRate();
+	public abstract float getAscentRate();
 
 	/** Returns the minimum speed of the object */
-	protected abstract float getMinSpeed();
+	public abstract float getMinSpeed();
 
 	/** Returns the maximum speed of the object */
-	protected abstract float getMaxSpeed();
+	public abstract float getMaxSpeed();
 
 	/** Returns the maximum altitude of the object */
-	protected abstract float getMaxAltitude();
+	public abstract float getMaxAltitude();
 
 	/** Returns the maximum rate of change of speed (units / sec) */
-	protected abstract float getMaxAcceleration();
+	public abstract float getMaxAcceleration();
 
 	/** Returns the maximum rate of change of angle (radians / sec) */
-	protected abstract float getMaxTurnRate();
+	public abstract float getMaxTurnRate();
 }
