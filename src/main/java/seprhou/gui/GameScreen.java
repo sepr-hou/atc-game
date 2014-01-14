@@ -10,7 +10,7 @@ import java.util.List;
 public class GameScreen extends AbstractScreen
 {
 	// Game parameters
-	private static final float HORIZONTAL_SEPARATION = 200.0f;
+	private static final float LATERAL_SEPARATION = 200.0f;
 	private static final float VERTICAL_SEPARATION = 200.0f;
 	static final List<Vector2D> WAYPOINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(280, 210),
@@ -30,12 +30,11 @@ public class GameScreen extends AbstractScreen
 			new Vector2D(1120, 630),
 			new Vector2D(1120, 840)
 	));
+
 	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(100, 0),
 			new Vector2D(0, 800)
 	));
-
-	private final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
 
 	private final GameArea gameArea;
 
@@ -61,12 +60,12 @@ public class GameScreen extends AbstractScreen
 	{
 		super.show();
 
-		// Create a new airspace when the game is re-shown
-		Rectangle dimensions = new Rectangle(gameArea.getWidth(), gameArea.getHeight());
-		AirspaceConfig config = new AirspaceConfig(AIRCRAFT_FACTORY, dimensions,
-				HORIZONTAL_SEPARATION, VERTICAL_SEPARATION);
-
-		airspace = new Airspace(config);
+		// Create the airspace
+		airspace = new Airspace();
+		airspace.setObjectFactory(new GameAircraftFactory());
+		airspace.setDimensions(new Rectangle(gameArea.getWidth(), gameArea.getHeight()));
+		airspace.setLateralSeparation(LATERAL_SEPARATION);
+		airspace.setVerticalSeparation(VERTICAL_SEPARATION);
 	}
 
 	@Override
@@ -77,9 +76,7 @@ public class GameScreen extends AbstractScreen
 		selectedAircraft = null;
 	}
 
-	/**
-	 * Returns the airspace object currently in use
-	 */
+	/** Returns the airspace object used by the game */
 	public Airspace getAirspace()
 	{
 		return airspace;

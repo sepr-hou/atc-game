@@ -12,7 +12,10 @@ import java.util.*;
  */
 public class Airspace
 {
-	private final AirspaceConfig config;
+	private AircraftObjectFactory objectFactory;
+	private Rectangle dimensions;
+	private float lateralSeparation, verticalSeparation;
+
 	private ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
 	private ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
 
@@ -21,20 +24,106 @@ public class Airspace
 
 	private boolean gameOver;
 
-	/**
-	 * Constructs a new Airspace with the given configuration options
-	 *
-	 * @param config airspace configuration
-	 */
-	public Airspace(AirspaceConfig config)
+	/** Returns the factory responsible for constructing airspace objects */
+	public AircraftObjectFactory getObjectFactory()
 	{
-		this.config = config;
+		return objectFactory;
 	}
 
-	/** Returns the airspace configuration */
-	public AirspaceConfig getConfig()
+	/**
+	 * Sets the class used by this airspace for creating aircraft
+	 *
+	 * @param factory new object factory (not null)
+	 */
+	public void setObjectFactory(AircraftObjectFactory factory)
 	{
-		return config;
+		if (factory == null)
+			throw new IllegalArgumentException("factory cannot be null");
+
+		this.objectFactory = factory;
+	}
+
+	/** Returns the dimensions of the airspace */
+	public Rectangle getDimensions()
+	{
+		return dimensions;
+	}
+
+	/**
+	 * Sets the dimensions of the game area to the given rectangle
+	 *
+	 * @param dimensions new airspace dimensions
+	 */
+	public void setDimensions(Rectangle dimensions)
+	{
+		if (dimensions == null)
+			throw new IllegalArgumentException("dimensions cannot be null");
+
+		this.dimensions = dimensions;
+	}
+
+	/**
+	 * Returns the lateral separation distance to generate warnings at
+	 *
+	 * <p>This only affects the collision warnings. Actual crashes are determined from the aircraft sizes
+	 *
+	 * @see AirspaceObject#getSize()
+	 */
+	public float getLateralSeparation()
+	{
+		return lateralSeparation;
+	}
+
+	/**
+	 * Sets the new lateral separation distance
+	 *
+	 * @param separation lateral separation distance to generate warnings at
+	 * @see #getLateralSeparation()
+	 */
+	public void setLateralSeparation(float separation)
+	{
+		if (separation <= 0)
+			throw new IllegalArgumentException("separation must be greater than 0");
+
+		this.lateralSeparation = separation;
+	}
+
+	/**
+	 * Returns the vertical separation distance to generate warnings at
+	 *
+	 * <p>This only affects the collision warnings. Actual crashes are determined from the aircraft sizes
+	 *
+	 * @see AirspaceObject#getSize()
+	 */
+	public float getVerticalSeparation()
+	{
+		return verticalSeparation;
+	}
+
+	/**
+	 * Sets the new vertical separation distance
+	 *
+	 * @param separation vertical separation distance to generate warnings at
+	 * @see #getVerticalSeparation()
+	 */
+	public void setVerticalSeparation(float separation)
+	{
+		if (separation <= 0)
+			throw new IllegalArgumentException("separation must be greater than 0");
+
+		this.verticalSeparation = separation;
+	}
+
+	/**
+	 * Throws an exception if the class has not been initialized properly
+	 */
+	private void ensureInitialized()
+	{
+		if (objectFactory == null || dimensions == null ||
+				lateralSeparation == 0 || verticalSeparation == 0)
+		{
+			throw new IllegalStateException("The Airspace class must be initialized before use");
+		}
 	}
 
 	/**
@@ -136,7 +225,7 @@ public class Airspace
 	/** Culls objects outside the game area */
 	private void cullObjects()
 	{
-		Rectangle gameArea = config.getDimensions();
+		Rectangle gameArea = getDimensions();
 
 		culledObjects.clear();
 
@@ -161,8 +250,8 @@ public class Airspace
 		// and checking them with all other objects.
 		// As such it is O(n^2) so it may be slow for lots of objects
 
-		float horizSeparation = config.getHorizontalSeparation();
-		float vertSeparation = config.getVerticalSeparation();
+		float lateralSeparation = getLateralSeparation();
+		float vertSeparation = getVerticalSeparation();
 		int objectsCount = activeObjects.size();
 
 		// Erase existing warnings
@@ -180,7 +269,7 @@ public class Airspace
 				AirspaceObject object2 = activeObjects.get(b);
 
 				// Test collision
-				if (object1Position.distanceTo(object2.getPosition()) < horizSeparation ||
+				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation ||
 					Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation)
 				{
 					// Add collision warning
@@ -210,6 +299,8 @@ public class Airspace
 	 */
 	public void refresh(float delta)
 	{
+		ensureInitialized();
+
 		// Refresh all active objects
 		for (AirspaceObject current : activeObjects)
 			current.refresh(delta);
@@ -218,7 +309,7 @@ public class Airspace
 		cullObjects();
 
 		// Add new aircraft
-		AirspaceObject newObject = config.getObjectFactory().makeObject(this, delta);
+		AirspaceObject newObject = getObjectFactory().makeObject(this, delta);
 		if (newObject != null)
 			activeObjects.add(newObject);
 
