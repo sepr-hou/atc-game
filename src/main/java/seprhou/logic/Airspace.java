@@ -14,8 +14,10 @@ public class Airspace
 {
 	private final AirspaceConfig config;
 	private ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
-	private ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
 	private ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
+
+	/** During the game refresh, this list is sorted so that LOWER planes (altitude) are put FIRST */
+	private ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
 
 	private boolean gameOver;
 
@@ -51,7 +53,11 @@ public class Airspace
 		return Collections.unmodifiableCollection(culledObjects);
 	}
 
-	/** Returns the list of active aircraft */
+	/**
+	 * Returns the list of active aircraft
+	 *
+	 * <p>These objects are sorted by altitude (small altitudes first)
+	 */
 	public Collection<AirspaceObject> getActiveObjects()
 	{
 		return activeObjects;
@@ -74,17 +80,17 @@ public class Airspace
 	 *
 	 * <p>
 	 * This method takes into account the size of aircraft to determine where they are.
-	 * If the game is over, more than one aircraft may be occupying a given point, so
-	 * in this case this method may return unreliable results.
+	 * If multiple aircraft occupy a point, the one with the HIGHEST altitude will be chosen
 	 *
 	 * @param centre point to start search at
 	 * @return the aircraft found occupying the given point
 	 */
 	public AirspaceObject findAircraft(Vector2D centre)
 	{
-		// Iterate through all objects and return the first found
-		for (AirspaceObject current : activeObjects)
+		// Iterate through all objects IN REVERSE and return the first found
+		for (int i = activeObjects.size() - 1; i >= 0; i--)
 		{
+			AirspaceObject current = activeObjects.get(i);
 			float distance = current.getPosition().distanceTo(centre);
 
 			if (distance < current.getSize())
@@ -97,6 +103,9 @@ public class Airspace
 	/**
 	 * Finds the aircraft who's centres are within the given circle
 	 *
+	 * <p>
+	 * Objects are ordered with highest altitude first
+	 *
 	 * @param centre the centre of the circle to search
 	 * @param radius the radius of the circle to search
 	 * @return the list of aircraft found - may be empty of no aircraft were found
@@ -105,9 +114,10 @@ public class Airspace
 	{
 		ArrayList<AirspaceObject> results = new ArrayList<>();
 
-		// Iterate through all objects and return the one closest
-		for (AirspaceObject current : activeObjects)
+		// Iterate through all objects IN REVERSE and return the accepted objects
+		for (int i = activeObjects.size() - 1; i >= 0; i--)
 		{
+			AirspaceObject current = activeObjects.get(i);
 			float distance = current.getPosition().distanceTo(centre);
 
 			if (distance < radius)
@@ -214,6 +224,9 @@ public class Airspace
 
 		// Generate collision warnings + determine if game is over
 		calculateCollisions();
+
+		// Sort the list of aircraft
+		Collections.sort(activeObjects, AltitudeComparator.INSTANCE);
 	}
 
 	/**
@@ -226,7 +239,20 @@ public class Airspace
 	 */
 	public void draw(Object state)
 	{
+		// Draw forwards to draw lower planes first
 		for (AirspaceObject current : activeObjects)
 			current.draw(state);
+	}
+
+	/** Comparator comparing by altitude */
+	private static class AltitudeComparator implements Comparator<AirspaceObject>
+	{
+		public static final AltitudeComparator INSTANCE = new AltitudeComparator();
+
+		@Override
+		public int compare(AirspaceObject o1, AirspaceObject o2)
+		{
+			return Float.compare(o1.getAltitude(), o2.getAltitude());
+		}
 	}
 }
