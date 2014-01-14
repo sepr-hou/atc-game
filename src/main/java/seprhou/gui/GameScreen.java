@@ -66,6 +66,14 @@ public class GameScreen extends AbstractScreen
 		airspace = new Airspace(config);
 	}
 
+	@Override
+	public void hide()
+	{
+		// Destroy the logic data
+		airspace = null;
+		selectedAircraft = null;
+	}
+
 	/**
 	 * Returns the airspace object currently in use
 	 */
