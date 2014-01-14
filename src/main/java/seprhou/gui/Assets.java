@@ -7,28 +7,33 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import java.awt.*;
-
-public class Assets
+/**
+ * Class which stores references to game assets
+ */
+public final class Assets
 {
-	public static Texture BACKGROUND_TEXTURE = newLinearTexture(getDataFile("backgroundimage.png"));
-	public static Texture WAYPOINT_TEXTURE = new Texture(getDataFile("waypoint.png"));
-	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
-	public static Texture MENU_BACKGROUND_TEXTURE = new Texture(getDataFile("menubackground.png"));
+	// Textures
+	public static Texture BACKGROUND_TEXTURE = loadTextureFromFile("backgroundimage.png");
+	public static Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
+	public static Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
+	public static Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
+
+	// Game cursor
 	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
 
-	public static Skin SKIN = new Skin(Assets.getDataFile("uiskin.json"));
+	// Skin (used for menu gui)
+	public static Skin SKIN = new Skin(getDataFile("uiskin.json"));
 	public static BitmapFont FONT = SKIN.getFont("default-font");
 
 	/**
-	 * Creates a new texture using linear filtering from the given file handle
+	 * Loads a texture from a file
 	 *
-	 * @param handle input file handle
-	 * @return a new texture using the file and has linear filtering
+	 * @param name name of the file to access
+	 * @return the new texture
 	 */
-	private static Texture newLinearTexture(FileHandle handle)
+	private static Texture loadTextureFromFile(String name)
 	{
-		Texture texture = new Texture(handle);
+		Texture texture = new Texture(getDataFile(name));
 		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		return texture;
 	}
@@ -42,7 +47,7 @@ public class Assets
 	 *
 	 * @param name name of the file to access
 	 */
-	public static FileHandle getDataFile(String name)
+	private static FileHandle getDataFile(String name)
 	{
 		FileHandle handle;
 
@@ -61,5 +66,9 @@ public class Assets
 
 		// Oh noes
 		throw new RuntimeException("Data file not found: " + name);
+	}
+
+	private Assets()
+	{
 	}
 }

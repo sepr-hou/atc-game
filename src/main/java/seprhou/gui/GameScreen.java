@@ -1,5 +1,6 @@
 package seprhou.gui;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import seprhou.logic.*;
 
 import java.util.ArrayList;
@@ -36,21 +37,28 @@ public class GameScreen extends AbstractScreen
 
 	private final AircraftObjectFactory AIRCRAFT_FACTORY = new GameAircraftFactory();
 
-	private Airspace airspace;
-	private GameArea gameArea;
-	private Aircraft selectedAircraft;
+	private final GameArea gameArea;
 
+	private Airspace airspace;
+	private Aircraft selectedAircraft;
 
 	public GameScreen(AtcGame game)
 	{
 		super(game);
+		Stage stage = getStage();
 
 		// Create the game area (where the action takes place)
 		gameArea = new GameArea(this);
 		gameArea.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		defaultStage.addActor(gameArea);
+		stage.addActor(gameArea);
+	}
 
-		// Create the airspace
+	@Override
+	public void show()
+	{
+		super.show();
+
+		// Create a new airspace when the game is re-shown
 		Rectangle dimensions = new Rectangle(gameArea.getWidth(), gameArea.getHeight());
 		AirspaceConfig config = new AirspaceConfig(AIRCRAFT_FACTORY, dimensions,
 				HORIZONTAL_SEPARATION, VERTICAL_SEPARATION);
@@ -58,6 +66,9 @@ public class GameScreen extends AbstractScreen
 		airspace = new Airspace(config);
 	}
 
+	/**
+	 * Returns the airspace object currently in use
+	 */
 	public Airspace getAirspace()
 	{
 		return airspace;
