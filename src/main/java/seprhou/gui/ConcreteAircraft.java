@@ -51,11 +51,11 @@ public class ConcreteAircraft extends Aircraft
 		Assets.FONT.draw(batch, str, xPos + getSize() * 2, yPos + getSize() * 2);
 	}
 
-	@Override public float getSize()                { return 32; }
+	@Override public float getSize()             { return 32; }
 	@Override public float getAscentRate()       { return 10; }
 	@Override public float getMinSpeed()         { return 0; }
 	@Override public float getMaxSpeed()         { return 100; }
-	@Override public float getMaxAltitude()      { return 100; }
+	@Override public float getMaxAltitude()      { return 50000; }
 	@Override public float getMaxAcceleration()  { return 10; }
 	@Override public float getMaxTurnRate()      { return 10; }
 }

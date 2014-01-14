@@ -16,12 +16,18 @@ import seprhou.logic.*;
  */
 public class GameArea extends Actor
 {
+	/** Amount the altitude jumps to when a key is pressed */
+	private static final float ALTITUDE_JUMP = 5000;
+
 	private final GameScreen parent;
 
 	private SpriteBatch batch;
 
 	/** Position of click event - null if there has been no clicks since last call to act */
 	private Vector2D clickPosition;
+
+	/** If true, a keydown event was received for the up / down buttons */
+	private boolean upPressed, downPressed;
 
 	/**
 	 * Creates a new GameArea
@@ -31,7 +37,23 @@ public class GameArea extends Actor
 		this.parent = parent;
 		this.addListener(new InputListener()
 		{
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
+			public boolean keyDown(InputEvent event, int keycode)
+			{
+				if (keycode == Input.Keys.UP)
+				{
+					upPressed = true;
+					return true;
+				}
+				else if (keycode == Input.Keys.DOWN)
+				{
+					downPressed = true;
+					return true;
+				}
+
+				return false;
+			}
+
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
 			{
 				if (button == Input.Buttons.LEFT)
 				{
@@ -86,6 +108,8 @@ public class GameArea extends Actor
 		if (selected != null)
 		{
 			// TODO This is currently hooked up to the max turn rate - is this what we want?
+
+			// These keys are updated each frame so they're checked here
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
 			{
 				selected.setTargetVelocity(
@@ -99,7 +123,17 @@ public class GameArea extends Actor
 						selected.getTargetVelocity()
 								.rotate(-selected.getMaxTurnRate() * delta));
 			}
+
+			// These keys are updated once - the Stage events handler works out when the down event occured
+			if (upPressed)
+				selected.setTargetAltitude(selected.getTargetAltitude() + ALTITUDE_JUMP);
+			else if (downPressed)
+				selected.setTargetAltitude(selected.getTargetAltitude() - ALTITUDE_JUMP);
 		}
+
+		// Clear keypress events
+		upPressed = false;
+		downPressed = false;
 
 		// Refresh airspace
 		airspace.refresh(delta);
