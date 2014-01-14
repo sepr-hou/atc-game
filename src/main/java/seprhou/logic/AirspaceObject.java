@@ -154,6 +154,10 @@ public abstract class AirspaceObject
 			float angle = velocity.getAngle();
 			float targetAngle = targetVelocity.getAngle();
 
+			// Adjust turn direction so the angle moves around the discontinuity properly
+			if (Math.abs(angle - targetAngle) > Math.PI)
+				turnRate = -turnRate;
+
 			angle = floatMoveTowards(angle, targetAngle, turnRate);
 
 			// Reconstruct velocity vector
