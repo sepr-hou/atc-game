@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -32,12 +33,10 @@ public class MenuScreen extends AbstractScreen {
 		
 		// Clear the stage
 		defaultStage.clear();
-
-		// label "Game Title"
-		Label welcomeLabel = new Label("Air traffic controller game",defaultSkin);
-		welcomeLabel.setX(((SCREEN_WIDTH - welcomeLabel.getWidth()) / 2));
-		welcomeLabel.setY((currentY + 100));
-		defaultStage.addActor(welcomeLabel);
+		
+		// Set background image
+		Image backgroundImage = new Image(Assets.MENU_BACKGROUND_TEXTURE);
+		defaultStage.addActor(backgroundImage);
 
 		// button "Start Game"setScreen(menuScreen);
 		TextButton startGameButton = new TextButton("Start game", defaultSkin);
