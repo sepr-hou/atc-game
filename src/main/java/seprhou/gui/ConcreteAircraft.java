@@ -17,17 +17,16 @@ public class ConcreteAircraft extends Aircraft
 	@Override
 	public void draw(Object state)
 	{
-		SpriteBatch batch = (SpriteBatch) state;
+		GameArea gameArea = (GameArea) state;
+		SpriteBatch batch = gameArea.getBatch();
+
 		float angleDegrees = getVelocity().getAngle() * (float) (180.0 / Math.PI);
 
-		// TODO add GameArea.getX and GameArea.getY ?????
-		//// Add parent X and Y since SpriteBatch does not adjust coordinates for the Actor
-		//float xPos = GameArea.this.getX() + getPosition().getX() - getSize();
-		//float yPos = GameArea.this.getY() + getPosition().getY() - getSize();
+		// Add parent X and Y since SpriteBatch does not adjust coordinates for the Actor
+		float xPos = gameArea.getX() + getPosition().getX() - getSize();
+		float yPos = gameArea.getY() + getPosition().getY() - getSize();
 
-		float xPos = getPosition().getX() - getSize();
-		float yPos = getPosition().getY() - getSize();
-
+		// Draw the aircraft
 		batch.draw(
 				Assets.AIRCRAFT_TEXTURE,            // Aircraft texture
 				xPos,                               // X position (bottom left)

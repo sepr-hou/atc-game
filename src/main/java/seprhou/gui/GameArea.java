@@ -103,18 +103,26 @@ public class GameArea extends Actor
 
 		if (clipBegin())
 		{
-			
 			// Draw background
 			batch.draw(Assets.BACKGROUND_TEXTURE, getX(), getY());
-			
+
 			// Draw all waypoints
 			for (Vector2D point: GameScreen.WAYPOINTS){
 				batch.draw(Assets.WAYPOINT_TEXTURE, point.getX()-5,point.getY()-5);
 			}
-			
 
 			// Draw all aircraft
-			airspace.draw(batch);
+			this.batch = batch;
+			airspace.draw(this);
+			this.batch = null;
+
+			// Draw selected circle
+			Aircraft selected = parent.getSelectedAircraft();
+			if (selected != null)
+			{
+				Vector2D position = selected.getPosition();
+				batch.draw(Assets.WAYPOINT_TEXTURE, getX() + position.getX(), getY() + position.getY());
+			}
 
 			// TODO Draw collision warnings
 
