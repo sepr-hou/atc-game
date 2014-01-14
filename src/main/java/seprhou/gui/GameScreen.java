@@ -38,6 +38,7 @@ public class GameScreen extends AbstractScreen
 
 	private Airspace airspace;
 	private GameArea gameArea;
+	private Aircraft selectedAircraft;
 
 
 	public GameScreen(AtcGame game)
@@ -60,6 +61,24 @@ public class GameScreen extends AbstractScreen
 	public Airspace getAirspace()
 	{
 		return airspace;
+	}
+
+	/**
+	 * Returns the currently selected aircraft or null if nothing is selected
+	 */
+	public Aircraft getSelectedAircraft()
+	{
+		return selectedAircraft;
+	}
+
+	/**
+	 * Sets the currently selected aircraft
+	 *
+	 * @param selectedAircraft new current aircraft or null for no selected aircraft
+	 */
+	public void setSelectedAircraft(Aircraft selectedAircraft)
+	{
+		this.selectedAircraft = selectedAircraft;
 	}
 
 	private class GameAircraftFactory implements AircraftObjectFactory

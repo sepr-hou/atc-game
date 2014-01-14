@@ -70,29 +70,28 @@ public class Airspace
 	}
 
 	/**
-	 * Finds the aircraft closest to the given point
+	 * Finds the aircraft which is occupying the given point
 	 *
-	 * @param point point to start search at
-	 * @return the closest aircraft or {@code null} if there are no active aircraft
+	 * <p>
+	 * This method takes into account the size of aircraft to determine where they are.
+	 * If the game is over, more than one aircraft may be occupying a given point, so
+	 * in this case this method may return unreliable results.
+	 *
+	 * @param centre point to start search at
+	 * @return the aircraft found occupying the given point
 	 */
-	public AirspaceObject findAircraft(Vector2D point)
+	public AirspaceObject findAircraft(Vector2D centre)
 	{
-		AirspaceObject bestObject = null;
-		float bestDistance = Float.POSITIVE_INFINITY;
-
-		// Iterate through all objects and return the one closest
+		// Iterate through all objects and return the first found
 		for (AirspaceObject current : activeObjects)
 		{
-			float distance = current.getPosition().distanceTo(point);
+			float distance = current.getPosition().distanceTo(centre);
 
-			if (distance < bestDistance)
-			{
-				bestDistance = distance;
-				bestObject = current;
-			}
+			if (distance < current.getSize())
+				return current;
 		}
 
-		return bestObject;
+		return null;
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class Airspace
 	 * @param radius the radius of the circle to search
 	 * @return the list of aircraft found - may be empty of no aircraft were found
 	 */
-	public Collection<AirspaceObject> findAircraft(Vector2D centre, float radius)
+	public List<AirspaceObject> findAircraft(Vector2D centre, float radius)
 	{
 		ArrayList<AirspaceObject> results = new ArrayList<>();
 
