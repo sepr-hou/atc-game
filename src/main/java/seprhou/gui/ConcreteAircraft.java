@@ -45,6 +45,10 @@ public class ConcreteAircraft extends Aircraft
 				false,                              // Flip in X axis
 				false                               // Flip in Y axis
 		);
+
+		// Draw altitude in top right
+		String str = ((int) getAltitude()) + "ft";
+		Assets.FONT.draw(batch, str, xPos + getSize() * 2, yPos + getSize() * 2);
 	}
 
 	@Override public float getSize()                { return 32; }

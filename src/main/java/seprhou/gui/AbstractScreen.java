@@ -15,7 +15,6 @@ public abstract class AbstractScreen implements Screen
 {	
 
 	Stage defaultStage = new Stage();
-    Skin defaultSkin = new Skin(Assets.getDataFile("uiskin.json"));
 	public AtcGame game;
 	OrthographicCamera camera;
 	SpriteBatch batch;

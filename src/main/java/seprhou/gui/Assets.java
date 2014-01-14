@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.awt.*;
 
@@ -14,6 +16,9 @@ public class Assets
 	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
 	public static Texture MENU_BACKGROUND_TEXTURE = new Texture(getDataFile("menubackground.png"));
 	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
+
+	public static Skin SKIN = new Skin(Assets.getDataFile("uiskin.json"));
+	public static BitmapFont FONT = SKIN.getFont("default-font");
 
 	/**
 	 * Creates a new texture using linear filtering from the given file handle

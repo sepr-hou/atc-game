@@ -39,7 +39,7 @@ public class MenuScreen extends AbstractScreen {
 		defaultStage.addActor(backgroundImage);
 
 		// button "Start Game"setScreen(menuScreen);
-		TextButton startGameButton = new TextButton("Start game", defaultSkin);
+		TextButton startGameButton = new TextButton("Start game", Assets.SKIN);
 		startGameButton.setX(buttonX);
 		startGameButton.setY(currentY);
 		startGameButton.setWidth(BUTTON_WIDTH);
@@ -53,7 +53,7 @@ public class MenuScreen extends AbstractScreen {
 		defaultStage.addActor(startGameButton);
 
 		// button "Options"
-		TextButton optionsButton = new TextButton("Options", defaultSkin);
+		TextButton optionsButton = new TextButton("Options", Assets.SKIN);
 		optionsButton.setX(buttonX);
 		optionsButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
 		optionsButton.setWidth(BUTTON_WIDTH);
@@ -67,7 +67,7 @@ public class MenuScreen extends AbstractScreen {
 		defaultStage.addActor(optionsButton);
 
 		// button "High Scores"
-		TextButton highScoresButton = new TextButton("High Scores", defaultSkin);
+		TextButton highScoresButton = new TextButton("High Scores", Assets.SKIN);
 		highScoresButton.setX(buttonX);
 		highScoresButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
 		highScoresButton.setWidth(BUTTON_WIDTH);
