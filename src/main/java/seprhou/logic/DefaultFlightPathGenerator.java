@@ -9,7 +9,7 @@ public class DefaultFlightPathGenerator
 {
 	// TODO Remove or turn into constructor argument
 	private static final int SPEED = 20;
-	private static final List<Integer> ALTITUDES = Arrays.asList(1000, 2000, 3000);
+	private static final List<Integer> ALTITUDES = Arrays.asList(30000, 35000, 40000);
 
 	private static final int MIN_WAYPOINTS = 2;
 	private static final int MAX_WAYPOINTS = 4;
