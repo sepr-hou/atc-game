@@ -2,6 +2,7 @@ package seprhou.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ public class Assets
 	public static Texture WAYPOINT_TEXTURE = new Texture(getDataFile("waypoint.png"));
 	public static Texture AIRCRAFT_TEXTURE = new Texture(getDataFile("airplane.png"));
 	public static Texture MENU_BACKGROUND_TEXTURE = new Texture(getDataFile("menubackground.png"));
+	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
 
 	/**
 	 * Creates a new texture using linear filtering from the given file handle
