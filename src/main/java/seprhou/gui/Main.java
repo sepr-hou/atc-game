@@ -12,16 +12,16 @@ public class Main
 	{
 		//Create configuration
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		
+
 		//Set configuration
-		cfg.title = "Air Traffic Controller Game";
+		cfg.title = "Airspace Frenzy 6";
 		cfg.width = 800;
 		cfg.height = 500;
 		cfg.resizable = true;
 		cfg.useGL20 = true;
 		cfg.vSyncEnabled = true;
 //		cfg.fullscreen = true;
-		
+
 		//Create game
 		new LwjglApplication(new AtcGame(), cfg);
 	}
