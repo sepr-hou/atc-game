@@ -3,6 +3,7 @@ package seprhou.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -17,6 +18,7 @@ public abstract class AbstractScreen implements Screen
 	private final AtcGame game;
 	private final Stage stage;
 	private final boolean enableEscape;
+	private FPSLogger logger = new FPSLogger();
 
 	/**
 	 * Creates a new AbstractScreen owned by a game
@@ -88,6 +90,9 @@ public abstract class AbstractScreen implements Screen
 
 		// Render game
 		stage.draw();
+		
+		// Record frames per second and output to console
+		logger.log();
 	}
 
 	@Override
