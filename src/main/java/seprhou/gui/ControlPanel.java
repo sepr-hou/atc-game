@@ -3,6 +3,7 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+
 import seprhou.logic.*;
 
 public class ControlPanel extends Group
@@ -20,6 +21,12 @@ public class ControlPanel extends Group
 	public ControlPanel(GameScreen parent)
 	{
 		this.parent = parent;
+		
+		Label logo = new Label("Aircraft Frenzy 6", Assets.SKIN);
+		logo.setX((float) 50.0);
+		logo.setY((float) 940.0);
+		logo.setFontScale((float) 1.8);
+		this.addActor(logo);
 
 		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
 		nameFlightNo.setX((float) 50.0);
