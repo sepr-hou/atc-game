@@ -278,13 +278,12 @@ public class Airspace
 					continue;
 
 				// Test collision
-				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation ||
+				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation &&
 					Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation)
 				{
 					// Add collision warning
 					CollisionWarning warning = new CollisionWarning(object1, object2);
-
-					collisionWarnings.add(new CollisionWarning(object1, object2));
+					collisionWarnings.add(warning);
 
 					if (warning.hasCollided())
 						gameOver = true;
