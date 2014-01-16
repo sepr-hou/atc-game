@@ -96,7 +96,7 @@ public class GameArea extends Actor
 		// Die if the game is over
 		// TODO Do we really want to do this?
 		if (airspace.isGameOver()){
-			parent.getGame().showGameOver();
+			parent.getGame().showGameOver(parent.getSecondsSinceStart());
 			return;
 		}
 		// Selecting new aircraft

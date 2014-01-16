@@ -81,7 +81,7 @@ public abstract class AbstractScreen implements Screen
 		// If escape is pressed, go back to the menu
 		if (enableEscape && Gdx.input.isKeyPressed(Keys.ESCAPE))
 		{
-			game.setScreen(game.menuScreen);
+			game.showMenu();
 			return;
 		}
 

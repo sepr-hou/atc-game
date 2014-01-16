@@ -13,7 +13,8 @@ import com.badlogic.gdx.Screen;
  */
 public class AtcGame extends Game
 {
-	public Screen menuScreen, gameScreen, optionsScreen, scoresScreen, gameOverScreen;
+	private Screen menuScreen, gameScreen, optionsScreen, scoresScreen;
+	private GameOverScreen gameOverScreen;
 
 	@Override
 	public void create()
@@ -54,11 +55,17 @@ public class AtcGame extends Game
 		setScreen(scoresScreen);
 	}
 	
-	/** Show the game over screen */
-	public void showGameOver()
+	/**
+	 * Show the game over screen
+	 *
+	 * @param time the number of seconds elapsed when the game finished
+	 */
+	public void showGameOver(float time)
 	{
 		if (gameOverScreen == null)
 			gameOverScreen = new GameOverScreen(this);
+
+		gameOverScreen.setTimerValue(time);
 		setScreen(gameOverScreen);
 	}
 }

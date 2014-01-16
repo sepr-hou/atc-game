@@ -135,16 +135,6 @@ public class ControlPanel extends Group
 		}
 
 		// Update timer
-		timerLabel.setText(formatTime(parent.getSecondsSinceStart()));
-	}
-
-	private String formatTime(float time)
-	{
-		// Separate into minutes, seconds and tenths
-		int minutes = ((int) time) / 60;
-		int seconds = ((int) time) % 60;
-		int tenths =  ((int) (time * 10)) % 10;
-
-		return String.format("%02d:%02d.%d", minutes, seconds, tenths);
+		timerLabel.setText(Utils.formatTime(parent.getSecondsSinceStart()));
 	}
 }
