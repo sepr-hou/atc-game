@@ -1,5 +1,6 @@
 package seprhou.gui;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import seprhou.logic.Aircraft;
 import seprhou.logic.Waypoint;
@@ -27,8 +28,18 @@ public class ConcreteAircraft extends Aircraft
 		float yPos = gameArea.getY() + getPosition().getY() - getSize();
 
 		// Draw the aircraft
+		Texture aircraftTexture;
+		
+		// If selected, use different colour plane
+		if (this == gameArea.getGameScreen().getSelectedAircraft())
+				aircraftTexture = Assets.AIRCRAFT_SELECTED;
+		else
+			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
+				
+		
 		batch.draw(
-				Assets.AIRCRAFT_TEXTURE,            // Aircraft texture
+				
+				aircraftTexture,            // Aircraft texture
 				xPos,                               // X position (bottom left)
 				yPos,                               // Y position (bottom right)
 				getSize(),                          // X rotation origin

@@ -169,15 +169,6 @@ public class GameArea extends Actor
 			airspace.draw(this);
 			this.batch = null;
 
-			// Draw selected circle
-			Aircraft selected = parent.getSelectedAircraft();
-			if (selected != null)
-			{
-				Vector2D position = selected.getPosition();
-				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
-				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position.getX() - circleRadius, getY() + position.getY() - circleRadius);
-			}
-
 			// TODO Draw collision warnings
 			for (CollisionWarning collision: airspace.getCollisionWarnings()){
 				Vector2D position = collision.getObject1().getPosition();
