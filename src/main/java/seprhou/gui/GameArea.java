@@ -149,11 +149,13 @@ public class GameArea extends Actor
 	{
 		Airspace airspace = this.parent.getAirspace();
 
+		// Begin the clipping
+		//  Note that batch.flush() MUST be called before calls to clipBegin() and clipEnd() because
+		//  otherwise the opengl commands do not occur in the right order
+
+		batch.flush();
 		if (clipBegin())
 		{
-			// Draw background
-			batch.draw(Assets.BACKGROUND_TEXTURE, getX(), getY());
-
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
 
@@ -177,7 +179,9 @@ public class GameArea extends Actor
 				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position.getX() - circleRadius, getY() + position.getY() - circleRadius);
 				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position2.getX() - circleRadius, getY() + position2.getY() - circleRadius);
 			}
+
 			// End clipping
+			batch.flush();
 			clipEnd();
 		}
 	}

@@ -1,6 +1,7 @@
 package seprhou.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
 
 import java.util.ArrayList;
@@ -33,7 +34,8 @@ public class GameScreen extends AbstractScreen
 
 	private static final List<Vector2D> ENTRY_EXIT_POINTS = new ArrayList<>(Arrays.asList(
 			new Vector2D(100, 0),
-			new Vector2D(0, 800)
+			new Vector2D(0, 800),
+			new Vector2D(1000, 0)
 	));
 
 	private final GameArea gameArea;
@@ -46,6 +48,10 @@ public class GameScreen extends AbstractScreen
 	{
 		super(game);
 		Stage stage = getStage();
+
+		// Background image
+		Image background = new Image(Assets.BACKGROUND_TEXTURE);
+		stage.addActor(background);
 
 		// Create the game area (where the action takes place)
 		gameArea = new GameArea(this);
