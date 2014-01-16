@@ -66,13 +66,6 @@ public class GameScreen extends AbstractScreen
 		airspace.setDimensions(new Rectangle(gameArea.getWidth(), gameArea.getHeight()));
 		airspace.setLateralSeparation(LATERAL_SEPARATION);
 		airspace.setVerticalSeparation(VERTICAL_SEPARATION);
-	}
-
-	@Override
-	public void hide()
-	{
-		// Destroy the logic data
-		airspace = null;
 		selectedAircraft = null;
 	}
 

@@ -92,9 +92,10 @@ public class GameArea extends Actor
 
 		// Die if the game is over
 		// TODO Do we really want to do this?
-		if (airspace.isGameOver())
+		if (airspace.isGameOver()){
+			parent.getGame().showGameOver();
 			return;
-
+		}
 		// Selecting new aircraft
 		if (clickPosition != null)
 		{
@@ -172,11 +173,18 @@ public class GameArea extends Actor
 			if (selected != null)
 			{
 				Vector2D position = selected.getPosition();
-				batch.draw(Assets.WAYPOINT_TEXTURE, getX() + position.getX(), getY() + position.getY());
+				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
+				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position.getX() - circleRadius, getY() + position.getY() - circleRadius);
 			}
 
 			// TODO Draw collision warnings
-
+			for (CollisionWarning collision: airspace.getCollisionWarnings()){
+				Vector2D position = collision.getObject1().getPosition();
+				Vector2D position2 = collision.getObject2().getPosition();
+				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
+				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position.getX() - circleRadius, getY() + position.getY() - circleRadius);
+				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position2.getX() - circleRadius, getY() + position2.getY() - circleRadius);
+			}
 			// End clipping
 			clipEnd();
 		}
