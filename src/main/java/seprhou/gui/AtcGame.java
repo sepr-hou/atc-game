@@ -13,7 +13,7 @@ import com.badlogic.gdx.Screen;
  */
 public class AtcGame extends Game
 {
-	public Screen menuScreen, gameScreen, optionsScreen, scoresScreen;
+	public Screen menuScreen, gameScreen, optionsScreen, scoresScreen, gameOverScreen;
 
 	@Override
 	public void create()
@@ -52,5 +52,13 @@ public class AtcGame extends Game
 		if (scoresScreen == null)
 			scoresScreen = new HighScoresScreen(this);
 		setScreen(scoresScreen);
+	}
+	
+	/** Show the game over screen */
+	public void showGameOver()
+	{
+		if (gameOverScreen == null)
+			gameOverScreen = new GameOverScreen(this);
+		setScreen(gameOverScreen);
 	}
 }
