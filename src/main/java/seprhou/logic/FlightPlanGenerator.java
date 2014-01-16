@@ -18,6 +18,8 @@ public class FlightPlanGenerator
 	private static final int MIN_WAYPOINTS = 2;
 	private static final int MAX_WAYPOINTS = 4;
 
+	private static final float MIN_SAFE_ENTRY_DISTANCE = 200;
+
 	private final List<Vector2D> waypoints, entryExitPoints;
 	private final Random random = new Random();
 	private float timeSinceLastAircraft;
@@ -65,6 +67,59 @@ public class FlightPlanGenerator
 	}
 
 	/**
+	 * Chooses an item from a list but does not include the invalidItem
+	 *
+	 * @param list list to choose from
+	 * @param invalidItem the item which will not be picked
+	 * @param <T> type of the items in the list
+	 * @return the chosen item
+	 */
+	private <T> T randomItem(List<T> list, T invalidItem)
+	{
+		// Check for impossible situation
+		if (list.size() == 1 && list.get(0) == invalidItem)
+			throw new IllegalStateException("list given to randomItem contains no valid items!");
+
+		// Choose one item and skip it if it's invalid
+		int item = random.nextInt(list.size());
+		if (list.get(item) == invalidItem)
+			item = (item + 1) % list.size();
+
+		return list.get(item);
+	}
+
+	/**
+	 * Generates the list of points which a flight can safely enter currently
+	 *
+	 * @param airspace airspace to gather data from
+	 * @return the list of safe entry points
+	 */
+	private List<Vector2D> generateEntryPointSubset(Airspace airspace)
+	{
+		List<Vector2D> safePoints = new ArrayList<>();
+
+		for (Vector2D point : entryExitPoints)
+		{
+			boolean ok = true;
+
+			// Test all aircraft against this point
+			for (AirspaceObject object : airspace.getActiveObjects())
+			{
+				if (object.isSolid() && object.getPosition().distanceTo(point) < MIN_SAFE_ENTRY_DISTANCE)
+				{
+					ok = false;
+					break;
+				}
+			}
+
+			if (ok)
+				safePoints.add(point);
+		}
+
+		return safePoints;
+	}
+
+	/**
 	 * Creates a new flight plan immediately (without taking timers into account)
 	 *
 	 * <p>
@@ -78,20 +133,26 @@ public class FlightPlanGenerator
 	 */
 	public FlightPlan makeFlightPlanNow(Airspace airspace)
 	{
+		// Generate a subset of entryExitPoints which contains the points which we can enter from
+		List<Vector2D> entryPointSubset = generateEntryPointSubset(airspace);
+		if (entryPointSubset.size() == 0)
+			return null;
+
 		// Choose some waypoints + 2 entry and exit points
 		int waypointCount = random.nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
-		List<Vector2D> myEntryExitPoints = randomSubset(entryExitPoints, 2);
 		List<Vector2D> myWaypoints = randomSubset(waypoints, waypointCount);
+		Vector2D entryPoint = randomItem(entryPointSubset, null);
+		Vector2D exitPoint = randomItem(entryExitPoints, entryPoint);
 
-		// Concatenate the lists
-		myWaypoints.add(0, myEntryExitPoints.get(0));
-		myWaypoints.add(myEntryExitPoints.get(1));
+		// Insert entry + exit points into the list
+		myWaypoints.add(0, entryPoint);
+		myWaypoints.add(exitPoint);
 
 		// Choose initial speed and altitude
 		float initialSpeed = SPEED;
 		float initialAltitude = ALTITUDES.get(random.nextInt(ALTITUDES.size()));
 
-		// Create flight pla
+		// Create flight plan
 		timeSinceLastAircraft = 0;
 		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude);
 	}
