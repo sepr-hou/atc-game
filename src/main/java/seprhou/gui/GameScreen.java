@@ -131,8 +131,8 @@ public class GameScreen extends AbstractScreen
 
 	private class GameAircraftFactory implements AircraftObjectFactory
 	{
-		private DefaultFlightPathGenerator flightPathGenerator =
-				new DefaultFlightPathGenerator(WAYPOINTS, ENTRY_EXIT_POINTS);
+		private FlightPlanGenerator flightPathGenerator =
+				new FlightPlanGenerator(WAYPOINTS, ENTRY_EXIT_POINTS);
 		private DefaultObjectCreationRate objectCreationRate =
 				new DefaultObjectCreationRate();
 
@@ -141,7 +141,7 @@ public class GameScreen extends AbstractScreen
 		{
 			if (objectCreationRate.nextBoolean(airspace, delta))
 			{
-				List<Waypoint> flightPath = flightPathGenerator.makeFlightPath(airspace);
+				FlightPlan flightPath = flightPathGenerator.makeFlightPlan(airspace);
 
 				// TODO Possibly adjust / randomize these arguments
 				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPath);

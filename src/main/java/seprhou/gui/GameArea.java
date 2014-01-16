@@ -165,12 +165,12 @@ public class GameArea extends Actor
 			// Show next waypoint
 			Aircraft selected = parent.getSelectedAircraft();
 			Vector2D nextWayPoint = null;
-			if (selected != null){
-				List<Waypoint> flightPlan = selected.getFlightPlan();
+			if (selected != null)
+			{
+				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
 				int lastWayPoint = selected.getLastWaypoint();
-				if (lastWayPoint < flightPlan.size())
-					nextWayPoint = flightPlan.get(lastWayPoint+1).getPosition();
-						
+				if (lastWayPoint < waypoints.size())
+					nextWayPoint = waypoints.get(lastWayPoint+1);
 			}
 			
 			for (Vector2D point : GameScreen.WAYPOINTS)

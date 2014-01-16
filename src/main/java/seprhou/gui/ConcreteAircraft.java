@@ -3,14 +3,12 @@ package seprhou.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import seprhou.logic.Aircraft;
-import seprhou.logic.Waypoint;
-
-import java.util.List;
+import seprhou.logic.FlightPlan;
 
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
 {
-	public ConcreteAircraft(String name, float weight, int crew, List<Waypoint> flightPlan)
+	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
 		super(name, weight, crew, flightPlan);
 	}

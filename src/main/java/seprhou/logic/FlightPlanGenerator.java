@@ -3,9 +3,9 @@ package seprhou.logic;
 import java.util.*;
 
 /**
- * The default flight path generator
+ * The default flight plan generator
  */
-public class DefaultFlightPathGenerator
+public class FlightPlanGenerator
 {
 	// TODO Remove or turn into constructor argument
 	private static final int SPEED = 20;
@@ -18,12 +18,12 @@ public class DefaultFlightPathGenerator
 	private final Random random = new Random();
 
 	/**
-	 * Creates a new flight path generator, choosing waypoints from the given list
+	 * Creates a new flight plan generator, choosing waypoints from the given list
 	 *
 	 * @param waypoints waypoint list
 	 * @param entryExitPoints entry and exit point list
 	 */
-	public DefaultFlightPathGenerator(List<Vector2D> waypoints, List<Vector2D> entryExitPoints)
+	public FlightPlanGenerator(List<Vector2D> waypoints, List<Vector2D> entryExitPoints)
 	{
 		if (waypoints.size() < MAX_WAYPOINTS)
 			throw new IllegalArgumentException("size of waypoints must be at least " + MAX_WAYPOINTS);
@@ -60,22 +60,7 @@ public class DefaultFlightPathGenerator
 	}
 
 	/**
-	 * Adds a waypoint to the flight path
-	 *
-	 * @param flightPath flight path to add waypoint to
-	 * @param position position to use in the waypoint
-	 */
-	private void appendWaypoint(List<Waypoint> flightPath, Vector2D position)
-	{
-		flightPath.add(new Waypoint(
-				position,
-				SPEED,
-				ALTITUDES.get(random.nextInt(ALTITUDES.size()))
-		));
-	}
-
-	/**
-	 * Creates a new flightpath
+	 * Creates a new flight plan
 	 *
 	 * <p>
 	 * This method makes no (and cannot make any) distinction between types of
@@ -84,23 +69,22 @@ public class DefaultFlightPathGenerator
 	 * @param airspace the airspace the aircraft will be created in
 	 * @return a valid list of waypoints
 	 */
-	public List<Waypoint> makeFlightPath(Airspace airspace)
+	public FlightPlan makeFlightPlan(Airspace airspace)
 	{
-		List<Waypoint> flightPath = new ArrayList<Waypoint>();
-
 		// Choose some waypoints + 2 entry and exit points
 		int waypointCount = random.nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
 		List<Vector2D> myEntryExitPoints = randomSubset(entryExitPoints, 2);
 		List<Vector2D> myWaypoints = randomSubset(waypoints, waypointCount);
 
-		// Generate flightpath from the chosen positions
-		appendWaypoint(flightPath, myEntryExitPoints.get(0));
+		// Concatenate the lists
+		myWaypoints.add(0, myEntryExitPoints.get(0));
+		myWaypoints.add(myEntryExitPoints.get(1));
 
-		for (Vector2D position : myWaypoints)
-			appendWaypoint(flightPath, position);
+		// Choose initial speed and altitude
+		float initialSpeed = SPEED;
+		float initialAltitude = ALTITUDES.get(random.nextInt(ALTITUDES.size()));
 
-		appendWaypoint(flightPath, myEntryExitPoints.get(1));
-
-		return flightPath;
+		// Create flight plan
+		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude);
 	}
 }

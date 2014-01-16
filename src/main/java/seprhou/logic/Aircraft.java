@@ -1,6 +1,5 @@
 package seprhou.logic;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,7 +11,7 @@ public abstract class Aircraft extends AirspaceObject
 	private final float weight;
 	private final int crew;
 
-	private final List<Waypoint> flightPlan;
+	private final FlightPlan flightPlan;
 
 	private int lastWaypoint;
 	private int waypointsHit;
@@ -23,14 +22,12 @@ public abstract class Aircraft extends AirspaceObject
 	 * @param name aircraft name (descriptive only)
 	 * @param weight aircraft weight
 	 * @param crew number of crew
-	 * @param flightPlan aircraft flight plan (must not be modified)
+	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, List<Waypoint> flightPlan)
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
 		if (flightPlan == null)
 			throw new IllegalArgumentException("flightPlan cannot be null");
-		if (flightPlan.size() < 2)
-			throw new IllegalArgumentException("flightPlan must have at least 2 waypoints");
 
 		if (name == null)
 			name = "";
@@ -39,17 +36,12 @@ public abstract class Aircraft extends AirspaceObject
 		this.name = name;
 		this.weight = weight;
 		this.crew = crew;
-		this.flightPlan = Collections.unmodifiableList(flightPlan);
+		this.flightPlan = flightPlan;
 
 		// Setup initial object attributes
-		Waypoint waypoint1 = flightPlan.get(0);
-		Waypoint waypoint2 = flightPlan.get(1);
-
-		Vector2D direction = waypoint2.getPosition().sub(waypoint1.getPosition());
-
-		this.position = waypoint1.getPosition();
-		this.velocity = direction.changeLength(waypoint2.getSpeed());
-		this.altitude = waypoint2.getAltitude();
+		this.position = flightPlan.getWaypoints().get(0);
+		this.velocity = flightPlan.getInitialVelocity();
+		this.altitude = flightPlan.getInitialAltitude();
 
 		this.targetVelocity = this.velocity;
 		this.targetAltitude = this.altitude;
@@ -87,7 +79,7 @@ public abstract class Aircraft extends AirspaceObject
 	}
 
 	/** Returns this aircraft's flight plan (unmodifiable) */
-	public List<Waypoint> getFlightPlan()
+	public FlightPlan getFlightPlan()
 	{
 		return flightPlan;
 	}
@@ -110,9 +102,11 @@ public abstract class Aircraft extends AirspaceObject
 		super.refresh(dt);
 
 		// Test intersection with all remaining waypoints
-		for (int i = lastWaypoint + 1; i < flightPlan.size(); i++)
+		List<Vector2D> waypoints = flightPlan.getWaypoints();
+
+		for (int i = lastWaypoint + 1; i < waypoints.size(); i++)
 		{
-			Vector2D waypointPosition = flightPlan.get(i).getPosition();
+			Vector2D waypointPosition = waypoints.get(i);
 
 			if (position.distanceTo(waypointPosition) <= getSize())
 			{
