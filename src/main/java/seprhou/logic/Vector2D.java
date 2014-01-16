@@ -161,7 +161,23 @@ public class Vector2D
 	 */
 	public Vector2D normalize()
 	{
-		return multiply(1 / getLength());
+		return changeLength(1);
+	}
+
+	/**
+	 * Creates a vector with the given length but the same angle as this vector
+	 *
+	 * @param newLength length of the new vector
+	 * @return a new vector containing the result
+	 */
+	public Vector2D changeLength(float newLength)
+	{
+		float myLength = getLength();
+
+		if (myLength == 0)
+			return XAXIS;
+
+		return multiply(newLength / myLength);
 	}
 
 	/**

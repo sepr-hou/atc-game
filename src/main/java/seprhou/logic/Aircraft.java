@@ -45,10 +45,10 @@ public abstract class Aircraft extends AirspaceObject
 		Waypoint waypoint1 = flightPlan.get(0);
 		Waypoint waypoint2 = flightPlan.get(1);
 
-		Vector2D direction = waypoint2.getPosition().sub(waypoint1.getPosition()).normalize();
+		Vector2D direction = waypoint2.getPosition().sub(waypoint1.getPosition());
 
 		this.position = waypoint1.getPosition();
-		this.velocity = direction.multiply(waypoint2.getSpeed());
+		this.velocity = direction.changeLength(waypoint2.getSpeed());
 		this.altitude = waypoint2.getAltitude();
 
 		this.targetVelocity = this.velocity;

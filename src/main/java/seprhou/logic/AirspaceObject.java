@@ -72,7 +72,24 @@ public abstract class AirspaceObject
 	 */
 	public void setTargetVelocity(Vector2D newVelocity)
 	{
-		this.targetVelocity = newVelocity;
+		// Apply speed clamps
+		float maxSpeed = getMaxSpeed();
+		float minSpeed = getMinSpeed();
+		float speed = newVelocity.getLength();
+
+		if (speed < minSpeed || speed > maxSpeed)
+		{
+			if (speed < minSpeed)
+				speed = minSpeed;
+			else if (speed > maxSpeed)
+				speed = maxSpeed;
+
+			this.targetVelocity = targetVelocity.changeLength(speed);
+		}
+		else
+		{
+			this.targetVelocity = newVelocity;
+		}
 	}
 
 	/**
@@ -84,6 +101,15 @@ public abstract class AirspaceObject
 	 */
 	public void setTargetAltitude(float newAltitude)
 	{
+		// Apply altitude clamps
+		float minAltitude = getMinAltitude();
+		float maxAltitude = getMaxAltitude();
+
+		if (newAltitude < minAltitude)
+			newAltitude = minAltitude;
+		else if (newAltitude > maxAltitude)
+			newAltitude = maxAltitude;
+
 		this.targetAltitude = newAltitude;
 	}
 
@@ -130,10 +156,11 @@ public abstract class AirspaceObject
 		// Update altitude
 		if (altitude != targetAltitude)
 		{
+			float minAltitude = getMinAltitude();
 			float maxAltitude = getMaxAltitude();
 			float ascentAmount = getAscentRate() * dt;
 
-			altitude = floatMoveAndClamp(altitude, targetAltitude, ascentAmount, 0, maxAltitude);
+			altitude = floatMoveAndClamp(altitude, targetAltitude, ascentAmount, minAltitude, maxAltitude);
 		}
 
 		// Update velocity
@@ -196,6 +223,9 @@ public abstract class AirspaceObject
 
 	/** Returns the maximum speed of the object */
 	public abstract float getMaxSpeed();
+
+	/** Returns the minimum altitude of the object */
+	public abstract float getMinAltitude();
 
 	/** Returns the maximum altitude of the object */
 	public abstract float getMaxAltitude();
