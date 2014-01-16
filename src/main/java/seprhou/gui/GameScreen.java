@@ -48,7 +48,7 @@ public class GameScreen extends AbstractScreen
 
 		// Create the game area (where the action takes place)
 		gameArea = new GameArea(this);
-		gameArea.setBounds(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		gameArea.setBounds(0, 0, 1400, SCREEN_HEIGHT);
 		stage.addActor(gameArea);
 
 		// Give the game area keyboard focus (this is where keyboard events are sent)
