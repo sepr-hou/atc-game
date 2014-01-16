@@ -1,12 +1,6 @@
 package seprhou.gui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import seprhou.logic.*;
@@ -102,7 +96,6 @@ public class ControlPanel extends Group
 	
 	public void act(float delta)
 	{
-		Airspace airspace = this.parent.getAirspace();
 		Aircraft selected = this.parent.getSelectedAircraft();
 		if (selected != null){
 			valueFlightNo.setText(selected.getName());
