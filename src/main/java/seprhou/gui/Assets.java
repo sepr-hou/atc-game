@@ -15,6 +15,7 @@ public final class Assets
 	// Textures
 	public static Texture BACKGROUND_TEXTURE = loadTextureFromFile("backgroundimage.png");
 	public static Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
+	public static Texture NEXT_WAYPOINT_TEXTURE = loadTextureFromFile("nextwaypoint.png");
 	public static Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
 	public static Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
 	public static Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");

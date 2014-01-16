@@ -1,7 +1,10 @@
 package seprhou.gui;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -158,14 +161,32 @@ public class GameArea extends Actor
 		{
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
-
+			
+			// Show next waypoint
+			Aircraft selected = parent.getSelectedAircraft();
+			Vector2D nextWayPoint = null;
+			if (selected != null){
+				List<Waypoint> flightPlan = selected.getFlightPlan();
+				int lastWayPoint = selected.getLastWaypoint();
+				if (lastWayPoint < flightPlan.size())
+					nextWayPoint = flightPlan.get(lastWayPoint+1).getPosition();
+						
+			}
+			
 			for (Vector2D point : GameScreen.WAYPOINTS)
 			{
-				batch.draw(Assets.WAYPOINT_TEXTURE,
+				Texture waypointTexture;
+				if (point == nextWayPoint)
+					waypointTexture = Assets.NEXT_WAYPOINT_TEXTURE;
+				else
+					waypointTexture = Assets.WAYPOINT_TEXTURE;
+				
+				batch.draw(waypointTexture,
 						getX() + point.getX() - waypointOffset,
 						getY() + point.getY() - waypointOffset);
 			}
-
+			
+			
 			// Draw all aircraft
 			this.batch = batch;
 			airspace.draw(this);
@@ -179,7 +200,8 @@ public class GameArea extends Actor
 				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position.getX() - circleRadius, getY() + position.getY() - circleRadius);
 				batch.draw(Assets.CIRCLE_TEXTURE, getX() + position2.getX() - circleRadius, getY() + position2.getY() - circleRadius);
 			}
-
+			
+			
 			// End clipping
 			batch.flush();
 			clipEnd();
