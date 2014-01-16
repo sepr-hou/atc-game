@@ -157,10 +157,11 @@ public class GameArea extends Actor
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
 
-			for (Vector2D point: GameScreen.WAYPOINTS){
+			for (Vector2D point : GameScreen.WAYPOINTS)
+			{
 				batch.draw(Assets.WAYPOINT_TEXTURE,
-						point.getX() - waypointOffset,
-						point.getY() - waypointOffset);
+						getX() + point.getX() - waypointOffset,
+						getY() + point.getY() - waypointOffset);
 			}
 
 			// Draw all aircraft
