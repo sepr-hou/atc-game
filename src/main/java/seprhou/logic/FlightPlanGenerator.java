@@ -4,49 +4,54 @@ import java.util.*;
 
 /**
  * The default flight plan generator which controls introducing aircraft into the game
+ *
+ * <p>
+ * This class contains many configuration parameters affecting generated flight paths.
+ * To use this class properly, call the setter for all the options which you want to
+ * change after creating this class.
  */
 public class FlightPlanGenerator
 {
-	// TODO Remove or turn into constructor argument
-	private static final float RATE_PER_SEC = 0.2f;
-	private static final float MIN_TIME = 1f;
-	private static final int MAX_AIRCRAFT = 5;
-
-	private static final int SPEED = 20;
-	private static final List<Integer> ALTITUDES = Arrays.asList(30000, 35000, 40000);
-
-	private static final int MIN_WAYPOINTS = 2;
-	private static final int MAX_WAYPOINTS = 4;
-
-	private static final float MIN_SAFE_ENTRY_DISTANCE = 200;
-
-	private final List<Vector2D> waypoints, entryExitPoints;
 	private final Random random = new Random();
-	private float timeSinceLastAircraft;
 
-	/**
-	 * Creates a new flight plan generator, choosing waypoints from the given list
-	 *
-	 * @param waypoints waypoint list
-	 * @param entryExitPoints entry and exit point list
-	 */
-	public FlightPlanGenerator(List<Vector2D> waypoints, List<Vector2D> entryExitPoints)
-	{
-		if (waypoints.size() < MAX_WAYPOINTS)
-			throw new IllegalArgumentException("size of waypoints must be at least " + MAX_WAYPOINTS);
+	// Config options
+	//  Filled with some "sensibleish" default options
+	private List<Vector2D> waypoints;
+	private List<Vector2D> entryExitPoints;
+	private List<Integer> initialAltitudes = Arrays.asList(30000, 35000, 40000);
+	private List<Integer> initialSpeeds = Arrays.asList(50);
+	private float minSafeEntryDistance = 200;
+	private float aircraftPerSec = 0.2f;
+	private int maxAircraft = 5;
+	private int minWaypoints = 2;
+	private int maxWaypoints = 4;
 
-		this.waypoints = Collections.unmodifiableList(waypoints);
-		this.entryExitPoints = Collections.unmodifiableList(entryExitPoints);
-	}
+	/** Sets the list of waypoints to choose from */
+	public void setWaypoints(List<Vector2D> waypoints) { this.waypoints = waypoints; }
 
-	/** Returns the list of waypoints */
-	public List<Vector2D> getWaypoints() { return waypoints; }
+	/** Sets the list of entry and exit points to choose from */
+	public void setEntryExitPoints(List<Vector2D> entryExitPoints) { this.entryExitPoints = entryExitPoints; }
 
-	/** Returns the list of entry and exit points */
-	public List<Vector2D> getEntryExitPoints()
-	{
-		return entryExitPoints;
-	}
+	/** Sets the list of initial altitudes */
+	public void setInitialAltitudes(List<Integer> initialAltitudes) { this.initialAltitudes = initialAltitudes; }
+
+	/** Sets the list of initial speeds */
+	public void setInitialSpeeds(List<Integer> initialSpeeds) { this.initialSpeeds = initialSpeeds; }
+
+	/** Sets the minimum free radius needed for an aircraft to enter at an entry point */
+	public void setMinSafeEntryDistance(float minSafeEntryDistance) { this.minSafeEntryDistance = minSafeEntryDistance; }
+
+	/** Sets the average number of aircraft to generate per second */
+	public void setAircraftPerSec(float aircraftPerSec) { this.aircraftPerSec = aircraftPerSec; }
+
+	/** Sets the maximum number of aircraft */
+	public void setMaxAircraft(int maxAircraft) { this.maxAircraft = maxAircraft; }
+
+	/** Sets the minimum number of waypoints in a flight plan */
+	public void setMinWaypoints(int minWaypoints) { this.minWaypoints = minWaypoints; }
+
+	/** Sets the maximum number of waypoints in a flight plan */
+	public void setMaxWaypoints(int maxWaypoints) { this.maxWaypoints = maxWaypoints; }
 
 	/**
 	 * Generates a random subset of the given list
@@ -64,6 +69,18 @@ public class FlightPlanGenerator
 
 		// Return first n items
 		return result.subList(0, n);
+	}
+
+	/**
+	 * Chooses an item from a list
+	 *
+	 * @param list list to choose from
+	 * @param <T> type of the items in the list
+	 * @return the chosen item
+	 */
+	private <T> T randomItem(List<T> list)
+	{
+		return list.get(random.nextInt(list.size()));
 	}
 
 	/**
@@ -105,7 +122,7 @@ public class FlightPlanGenerator
 			// Test all aircraft against this point
 			for (AirspaceObject object : airspace.getActiveObjects())
 			{
-				if (object.isSolid() && object.getPosition().distanceTo(point) < MIN_SAFE_ENTRY_DISTANCE)
+				if (object.isSolid() && object.getPosition().distanceTo(point) < minSafeEntryDistance)
 				{
 					ok = false;
 					break;
@@ -133,15 +150,22 @@ public class FlightPlanGenerator
 	 */
 	public FlightPlan makeFlightPlanNow(Airspace airspace)
 	{
+		// Sanity check at least the basic options
+		if (waypoints == null || entryExitPoints == null)
+		{
+			throw new IllegalStateException("FlightPlanGenerator has not been setup correctly\n" +
+					"  You must call at least setWaypoints and setEntryExitPoints on it");
+		}
+
 		// Generate a subset of entryExitPoints which contains the points which we can enter from
 		List<Vector2D> entryPointSubset = generateEntryPointSubset(airspace);
 		if (entryPointSubset.size() == 0)
 			return null;
 
 		// Choose some waypoints + 2 entry and exit points
-		int waypointCount = random.nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
+		int waypointCount = random.nextInt(maxWaypoints - minWaypoints) + minWaypoints;
 		List<Vector2D> myWaypoints = randomSubset(waypoints, waypointCount);
-		Vector2D entryPoint = randomItem(entryPointSubset, null);
+		Vector2D entryPoint = randomItem(entryPointSubset);
 		Vector2D exitPoint = randomItem(entryExitPoints, entryPoint);
 
 		// Insert entry + exit points into the list
@@ -149,11 +173,10 @@ public class FlightPlanGenerator
 		myWaypoints.add(exitPoint);
 
 		// Choose initial speed and altitude
-		float initialSpeed = SPEED;
-		float initialAltitude = ALTITUDES.get(random.nextInt(ALTITUDES.size()));
+		float initialSpeed = randomItem(initialSpeeds);
+		float initialAltitude = randomItem(initialAltitudes);
 
 		// Create flight plan
-		timeSinceLastAircraft = 0;
 		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude);
 	}
 
@@ -170,18 +193,12 @@ public class FlightPlanGenerator
 	 */
 	public FlightPlan makeFlightPlan(Airspace airspace, float delta)
 	{
-		timeSinceLastAircraft += delta;
-
 		// Check max aircraft
-		if (airspace.getActiveObjects().size() >= MAX_AIRCRAFT)
-			return null;
-
-		// Check Minimum time between aircraft
-		if (timeSinceLastAircraft < MIN_TIME)
+		if (airspace.getActiveObjects().size() >= maxAircraft)
 			return null;
 
 		// Add some randomness
-		if (random.nextFloat() >= delta * RATE_PER_SEC)
+		if (random.nextFloat() >= delta * aircraftPerSec)
 			return null;
 
 		// Try to generate an

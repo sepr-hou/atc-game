@@ -131,8 +131,14 @@ public class GameScreen extends AbstractScreen
 
 	private class GameAircraftFactory implements AircraftObjectFactory
 	{
-		private FlightPlanGenerator flightPathGenerator =
-				new FlightPlanGenerator(WAYPOINTS, ENTRY_EXIT_POINTS);
+		private final FlightPlanGenerator flightPathGenerator;
+
+		public GameAircraftFactory()
+		{
+			flightPathGenerator = new FlightPlanGenerator();
+			flightPathGenerator.setWaypoints(WAYPOINTS);
+			flightPathGenerator.setEntryExitPoints(ENTRY_EXIT_POINTS);
+		}
 
 		@Override
 		public AirspaceObject makeObject(Airspace airspace, float delta)
