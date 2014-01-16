@@ -3,21 +3,22 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-
 import seprhou.logic.*;
 
+/**
+ * The actor which displays the control panel on the right of the game screen
+ */
 public class ControlPanel extends Group
 {
 	private final GameScreen parent;
-	private final Label valueFlightNo;
-	private final Label valueAltitude;
-	private final Label valueBearing;
-	private final Label valueAirspeed;
-	private final Label valueXPosition;
-	private final Label valueYPosition;
-	private final Label valueCrew;
-	private final Label valueWeight;
-	
+	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed,
+			valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel;
+
+	/**
+	 * Creates a new ControlPanel
+	 *
+	 * @param parent parent GameScreen
+	 */
 	public ControlPanel(GameScreen parent)
 	{
 		this.parent = parent;
@@ -94,13 +95,22 @@ public class ControlPanel extends Group
 		valueWeight.setX((float) 55.0);
 		valueWeight.setY((float) 400.0);
 		this.addActor(valueWeight);
+
+		timerLabel = new Label("", Assets.SKIN);
+		timerLabel.setX((float) 55.0);
+		timerLabel.setY((float) 350.0);
+		this.addActor(timerLabel);
 	}
 
+	/**
+	 * Returns the game screen used by the panel
+	 */
 	public GameScreen getGameScreen()
 	{
 		return parent;
 	}
-	
+
+	@Override
 	public void act(float delta)
 	{
 		Aircraft selected = this.parent.getSelectedAircraft();
@@ -123,6 +133,18 @@ public class ControlPanel extends Group
 			valueCrew.setText("");
 			valueWeight.setText("");
 		}
-		
+
+		// Update timer
+		timerLabel.setText(formatTime(parent.getSecondsSinceStart()));
+	}
+
+	private String formatTime(float time)
+	{
+		// Separate into minutes, seconds and tenths
+		int minutes = ((int) time) / 60;
+		int seconds = ((int) time) % 60;
+		int tenths =  ((int) (time * 10)) % 10;
+
+		return String.format("%02d:%02d.%d", minutes, seconds, tenths);
 	}
 }

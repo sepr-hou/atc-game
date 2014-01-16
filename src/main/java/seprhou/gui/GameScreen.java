@@ -1,5 +1,6 @@
 package seprhou.gui;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
@@ -43,6 +44,7 @@ public class GameScreen extends AbstractScreen
 
 	private Airspace airspace;
 	private Aircraft selectedAircraft;
+	private float secondsSinceStart;
 
 	public GameScreen(AtcGame game)
 	{
@@ -62,6 +64,16 @@ public class GameScreen extends AbstractScreen
 		controlPanel = new ControlPanel(this);
 		controlPanel.setBounds(1400, 0, 280, SCREEN_HEIGHT);
 		stage.addActor(controlPanel);
+
+		// Add timer update actor
+		stage.addActor(new Actor()
+		{
+			@Override
+			public void act(float delta)
+			{
+				secondsSinceStart += delta;
+			}
+		});
 				
 		// Give the game area keyboard focus (this is where keyboard events are sent)
 		stage.setKeyboardFocus(gameArea);
@@ -78,7 +90,10 @@ public class GameScreen extends AbstractScreen
 		airspace.setDimensions(new Rectangle(gameArea.getWidth(), gameArea.getHeight()));
 		airspace.setLateralSeparation(LATERAL_SEPARATION);
 		airspace.setVerticalSeparation(VERTICAL_SEPARATION);
+
+		// Reset information from past games
 		selectedAircraft = null;
+		secondsSinceStart = 0;
 	}
 
 	/** Returns the airspace object used by the game */
@@ -94,6 +109,15 @@ public class GameScreen extends AbstractScreen
 	{
 		return selectedAircraft;
 	}
+
+	/**
+	 * Returns the number of seconds since the start of this game
+	 */
+	public float getSecondsSinceStart()
+	{
+		return secondsSinceStart;
+	}
+
 
 	/**
 	 * Sets the currently selected aircraft
