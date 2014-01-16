@@ -133,18 +133,16 @@ public class GameScreen extends AbstractScreen
 	{
 		private FlightPlanGenerator flightPathGenerator =
 				new FlightPlanGenerator(WAYPOINTS, ENTRY_EXIT_POINTS);
-		private DefaultObjectCreationRate objectCreationRate =
-				new DefaultObjectCreationRate();
 
 		@Override
 		public AirspaceObject makeObject(Airspace airspace, float delta)
 		{
-			if (objectCreationRate.nextBoolean(airspace, delta))
-			{
-				FlightPlan flightPath = flightPathGenerator.makeFlightPlan(airspace);
+			FlightPlan flightPlan = flightPathGenerator.makeFlightPlan(airspace, delta);
 
+			if (flightPlan != null)
+			{
 				// TODO Possibly adjust / randomize these arguments
-				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPath);
+				return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPlan);
 			}
 
 			return null;

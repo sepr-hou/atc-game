@@ -3,11 +3,15 @@ package seprhou.logic;
 import java.util.*;
 
 /**
- * The default flight plan generator
+ * The default flight plan generator which controls introducing aircraft into the game
  */
 public class FlightPlanGenerator
 {
 	// TODO Remove or turn into constructor argument
+	private static final float RATE_PER_SEC = 0.2f;
+	private static final float MIN_TIME = 1f;
+	private static final int MAX_AIRCRAFT = 5;
+
 	private static final int SPEED = 20;
 	private static final List<Integer> ALTITUDES = Arrays.asList(30000, 35000, 40000);
 
@@ -16,6 +20,7 @@ public class FlightPlanGenerator
 
 	private final List<Vector2D> waypoints, entryExitPoints;
 	private final Random random = new Random();
+	private float timeSinceLastAircraft;
 
 	/**
 	 * Creates a new flight plan generator, choosing waypoints from the given list
@@ -60,16 +65,18 @@ public class FlightPlanGenerator
 	}
 
 	/**
-	 * Creates a new flight plan
+	 * Creates a new flight plan immediately (without taking timers into account)
 	 *
 	 * <p>
-	 * This method makes no (and cannot make any) distinction between types of
-	 * aircraft (all types get the same waypoint lists).
+	 * This is like {@link #makeFlightPlan(Airspace, float)} but will try to make one now even
+	 * if the configuration doesn't want to now. This may still return null however if
+	 * it is not even possible to generate a path without impossible to avoid collisions.
 	 *
 	 * @param airspace the airspace the aircraft will be created in
-	 * @return a valid list of waypoints
+	 * @return the new flight plan or null if no aircraft should be created now
+	 * @see #makeFlightPlan(Airspace, float)
 	 */
-	public FlightPlan makeFlightPlan(Airspace airspace)
+	public FlightPlan makeFlightPlanNow(Airspace airspace)
 	{
 		// Choose some waypoints + 2 entry and exit points
 		int waypointCount = random.nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
@@ -84,7 +91,39 @@ public class FlightPlanGenerator
 		float initialSpeed = SPEED;
 		float initialAltitude = ALTITUDES.get(random.nextInt(ALTITUDES.size()));
 
-		// Create flight plan
+		// Create flight pla
+		timeSinceLastAircraft = 0;
 		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude);
+	}
+
+	/**
+	 * Creates a new flight plan
+	 *
+	 * <p>
+	 * This method uses all its various configuration settings to create a
+	 * sutible flight plan. It does not generate a flight plan every time it
+	 * is called however.
+	 *
+	 * @param airspace the airspace the aircraft will be created in
+	 * @return the new flight plan or null if no aircraft should be created now
+	 */
+	public FlightPlan makeFlightPlan(Airspace airspace, float delta)
+	{
+		timeSinceLastAircraft += delta;
+
+		// Check max aircraft
+		if (airspace.getActiveObjects().size() >= MAX_AIRCRAFT)
+			return null;
+
+		// Check Minimum time between aircraft
+		if (timeSinceLastAircraft < MIN_TIME)
+			return null;
+
+		// Add some randomness
+		if (random.nextFloat() >= delta * RATE_PER_SEC)
+			return null;
+
+		// Try to generate an
+		return makeFlightPlanNow(airspace);
 	}
 }
