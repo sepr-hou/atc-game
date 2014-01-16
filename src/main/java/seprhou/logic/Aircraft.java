@@ -60,6 +60,19 @@ public abstract class Aircraft extends AirspaceObject
 	{
 		return name;
 	}
+	
+	public int getBearing() {
+		float angle = this.velocity.getAngle();
+		angle = angle * 180;
+		angle /= Math.PI;
+		angle = -angle;
+		angle += 90;
+		if (angle < 0){
+			angle += 360;
+		}
+		int intAngle = Math.round(angle);
+		return intAngle;
+	}
 
 	/** Returns this aircraft's weight */
 	public float getWeight()
@@ -110,4 +123,6 @@ public abstract class Aircraft extends AirspaceObject
 			}
 		}
 	}
+
+	
 }
