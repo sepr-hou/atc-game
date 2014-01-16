@@ -60,8 +60,12 @@ public abstract class AbstractScreen implements Screen
 	{
 		// Called when the screen is re-shown after being hidden
 
+		// Setup cursor
+		int xOffset = Assets.CURSOR_IMAGE.getWidth() / 2;
+		int yOffset = Assets.CURSOR_IMAGE.getHeight() / 2;
+		Gdx.input.setCursorImage(Assets.CURSOR_IMAGE, xOffset, yOffset);
+
 		// Setup input processor (which is probably owned by another screen currently)
-		Gdx.input.setCursorImage(Assets.CURSOR_IMAGE, 0, 0);
 		Gdx.input.setInputProcessor(this.stage);
 	}
 
