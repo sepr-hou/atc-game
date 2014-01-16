@@ -57,5 +57,5 @@ public class ConcreteAircraft extends Aircraft
 	@Override public float getMaxSpeed()         { return 100; }
 	@Override public float getMaxAltitude()      { return 50000; }
 	@Override public float getMaxAcceleration()  { return 10; }
-	@Override public float getMaxTurnRate()      { return 10; }
+	@Override public float getMaxTurnRate()      { return 1; }
 }
