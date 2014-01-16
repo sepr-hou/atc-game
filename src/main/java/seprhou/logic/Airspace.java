@@ -261,12 +261,21 @@ public class Airspace
 		for (int a = 0; a < objectsCount; a++)
 		{
 			AirspaceObject object1 = activeObjects.get(a);
+
+			// Ignore non-solid objects
+			if (!object1.isSolid())
+				continue;
+
 			Vector2D object1Position = object1.getPosition();
 			float object1Altitude = object1.getAltitude();
 
 			for (int b = a + 1; b < objectsCount; b++)
 			{
 				AirspaceObject object2 = activeObjects.get(b);
+
+				// Ignore non-solid objects
+				if (!object2.isSolid())
+					continue;
 
 				// Test collision
 				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation ||
