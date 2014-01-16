@@ -195,6 +195,9 @@ public class Vector2D
 	 */
 	public final boolean equals(Vector2D other)
 	{
+		if (other == null)
+			return false;
+
 		return Float.floatToIntBits(this.getX()) == Float.floatToIntBits(other.getX()) &&
 				Float.floatToIntBits(this.getY()) == Float.floatToIntBits(other.getY());
 	}
@@ -202,6 +205,8 @@ public class Vector2D
 	@Override
 	public final boolean equals(Object other)
 	{
+		if (other == null)
+			return false;
 		if (this == other)
 			return true;
 
