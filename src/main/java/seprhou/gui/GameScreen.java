@@ -37,6 +37,7 @@ public class GameScreen extends AbstractScreen
 	));
 
 	private final GameArea gameArea;
+	private final ControlPanel controlPanel;
 
 	private Airspace airspace;
 	private Aircraft selectedAircraft;
@@ -51,6 +52,11 @@ public class GameScreen extends AbstractScreen
 		gameArea.setBounds(0, 0, 1400, SCREEN_HEIGHT);
 		stage.addActor(gameArea);
 
+		// Create the control panel (where info is displayed)
+		controlPanel = new ControlPanel(this);
+		controlPanel.setBounds(1400, 0, 280, SCREEN_HEIGHT);
+		stage.addActor(controlPanel);
+				
 		// Give the game area keyboard focus (this is where keyboard events are sent)
 		stage.setKeyboardFocus(gameArea);
 	}
