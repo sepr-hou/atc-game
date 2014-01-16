@@ -17,6 +17,7 @@ public final class Assets
 	public static Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
 	public static Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
 	public static Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
+	public static Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
 
 	// Game cursor
 	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
