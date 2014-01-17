@@ -24,80 +24,83 @@ public class ControlPanel extends Group
 	{
 		this.parent = parent;
 		
+		float titleAlign = (float) 50.0;
+		float valueAlign = (float) 55.0;
+		
 		Image gamelogo = new Image(Assets.GAME_TITLE);
-		gamelogo.setX((float) 50.0);
+		gamelogo.setX(titleAlign);
 		gamelogo.setY((float) 850);
 		this.addActor(gamelogo);
 
 		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
-		nameFlightNo.setX((float) 50.0);
+		nameFlightNo.setX(titleAlign);
 		nameFlightNo.setY((float) 800.0);
 		this.addActor(nameFlightNo);
 		valueFlightNo = new Label("", Assets.SKIN);
-		valueFlightNo.setX((float) 55.0);
+		valueFlightNo.setX(valueAlign);
 		valueFlightNo.setY((float) 780.0);
 		this.addActor(valueFlightNo);
 		
 		Label nameAltitude = new Label("Altitude:", Assets.SKIN);
-		nameAltitude.setX((float) 50.0);
+		nameAltitude.setX(titleAlign);
 		nameAltitude.setY((float) 740.0);
 		this.addActor(nameAltitude);
 		valueAltitude = new Label("", Assets.SKIN);
-		valueAltitude.setX((float) 55.0);
+		valueAltitude.setX(valueAlign);
 		valueAltitude.setY((float) 720.0);
 		this.addActor(valueAltitude);
 		
 		Label nameBearing = new Label("Bearing:", Assets.SKIN);
-		nameBearing.setX((float) 50.0);
+		nameBearing.setX(titleAlign);
 		nameBearing.setY((float) 680.0);
 		this.addActor(nameBearing);
 		valueBearing = new Label("", Assets.SKIN);
-		valueBearing.setX((float) 55.0);
+		valueBearing.setX(valueAlign);
 		valueBearing.setY((float) 660.0);
 		this.addActor(valueBearing);
 		
 		Label nameAirspeed = new Label("Airspeed:", Assets.SKIN);
-		nameAirspeed.setX((float) 50.0);
+		nameAirspeed.setX(titleAlign);
 		nameAirspeed.setY((float) 620.0);
 		this.addActor(nameAirspeed);
 		valueAirspeed = new Label("", Assets.SKIN);
-		valueAirspeed.setX((float) 55.0);
+		valueAirspeed.setX(valueAlign);
 		valueAirspeed.setY((float) 600.0);
 		this.addActor(valueAirspeed);
 		
 		Label namePosition = new Label("Position:", Assets.SKIN);
-		namePosition.setX((float) 50.0);
+		namePosition.setX(titleAlign);
 		namePosition.setY((float) 560.0);
 		this.addActor(namePosition);
 		valueXPosition = new Label("", Assets.SKIN);
-		valueXPosition.setX((float) 55.0);
+		valueXPosition.setX(valueAlign);
 		valueXPosition.setY((float) 540.0);
 		this.addActor(valueXPosition);
 		valueYPosition = new Label("", Assets.SKIN);
-		valueYPosition.setX((float) 55.0);
+		valueYPosition.setX(valueAlign);
 		valueYPosition.setY((float) 520.0);
 		this.addActor(valueYPosition);
 		
 		Label nameCrew = new Label("Crew:", Assets.SKIN);
-		nameCrew.setX((float) 50.0);
+		nameCrew.setX(titleAlign);
 		nameCrew.setY((float) 480.0);
 		this.addActor(nameCrew);
 		valueCrew = new Label("", Assets.SKIN);
-		valueCrew.setX((float) 55.0);
+		valueCrew.setX(valueAlign);
 		valueCrew.setY((float) 460.0);
 		this.addActor(valueCrew);
 		
 		Label nameWeight = new Label("Weight:", Assets.SKIN);
-		nameWeight.setX((float) 50.0);
+		nameWeight.setX(titleAlign);
 		nameWeight.setY((float) 420.0);
 		this.addActor(nameWeight);
 		valueWeight = new Label("", Assets.SKIN);
-		valueWeight.setX((float) 55.0);
+		valueWeight.setX(valueAlign);
 		valueWeight.setY((float) 400.0);
 		this.addActor(valueWeight);
 
 		timerLabel = new Label("", Assets.SKIN);
-		timerLabel.setX((float) 55.0);
+		timerLabel.setX(valueAlign);
 		timerLabel.setY((float) 350.0);
 		this.addActor(timerLabel);
 	}
