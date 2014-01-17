@@ -8,6 +8,12 @@ import seprhou.logic.FlightPlan;
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
 {
+	// Derived constants
+	private static final int AIRCRAFT_MIN_SPEED = Utils.min(Constants.INITIAL_SPEEDS);
+	private static final int AIRCRAFT_MAX_SPEED = Utils.max(Constants.INITIAL_SPEEDS);
+	private static final int AIRCRAFT_MIN_ATITUDE = Utils.min(Constants.INITIAL_ALTITUDES);
+	private static final int AIRCRAFT_MAX_ALTITUDE = Utils.max(Constants.INITIAL_ALTITUDES);
+
 	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
 		super(name, weight, crew, flightPlan);
@@ -60,12 +66,15 @@ public class ConcreteAircraft extends Aircraft
 		Assets.FONT.draw(batch, str, xPos + getSize() * 2, yPos + getSize() * 2);
 	}
 
-	@Override public float getSize()             { return 32; }
-	@Override public float getAscentRate()       { return 1000; }
-	@Override public float getMinSpeed()         { return 0; }
-	@Override public float getMaxSpeed()         { return 100; }
-	@Override public float getMinAltitude()      { return 30000; }
-	@Override public float getMaxAltitude()      { return 40000; }
-	@Override public float getMaxAcceleration()  { return 10; }
-	@Override public float getMaxTurnRate()      { return 1; }
+	@Override public float getSize()             { return Constants.AIRCRAFT_SIZE; }
+	@Override public float getAscentRate()       { return Constants.AIRCRAFT_ASCENT_RATE; }
+	@Override public float getMaxTurnRate()      { return Constants.AIRCRAFT_TURN_RATE; }
+
+	@Override public float getMinSpeed()         { return AIRCRAFT_MIN_SPEED; }
+	@Override public float getMaxSpeed()         { return AIRCRAFT_MAX_SPEED; }
+	@Override public float getMinAltitude()      { return AIRCRAFT_MIN_ATITUDE; }
+	@Override public float getMaxAltitude()      { return AIRCRAFT_MAX_ALTITUDE; }
+
+	// Note currently changing speed of active aircraft is disabled
+	@Override public float getMaxAcceleration()  { return 0; }
 }
