@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
+import seprhou.logic.Utils;
 
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
