@@ -1,12 +1,8 @@
 package seprhou.gui;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.utils.Scaling;
 
 import seprhou.logic.*;
 
@@ -32,12 +28,6 @@ public class ControlPanel extends Group
 		gamelogo.setX((float) 50.0);
 		gamelogo.setY((float) 850);
 		this.addActor(gamelogo);
-		
-		//Label logo = new Label("Airspace Frenzy 6", Assets.SKIN);
-		//logo.setX((float) 50.0);
-		//logo.setY((float) 940.0);
-		//logo.setFontScale((float) 1.8);
-		//this.addActor(logo);
 
 		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
 		nameFlightNo.setX((float) 50.0);
