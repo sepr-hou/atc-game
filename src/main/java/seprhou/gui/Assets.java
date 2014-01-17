@@ -21,7 +21,7 @@ public final class Assets
 	public static Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
 	public static Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
 	public static Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
-	public static Texture GAME_TITLE = loadTextureFromFile("title.gif");
+	public static Texture GAME_TITLE = loadTextureFromFile("Title.gif");
 
 	// Game cursor
 	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
