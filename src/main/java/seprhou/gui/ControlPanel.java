@@ -23,7 +23,7 @@ public class ControlPanel extends Group
 	{
 		this.parent = parent;
 		
-		Label logo = new Label("Aircraft Frenzy 6", Assets.SKIN);
+		Label logo = new Label("Airspace Frenzy 6", Assets.SKIN);
 		logo.setX((float) 50.0);
 		logo.setY((float) 940.0);
 		logo.setFontScale((float) 1.8);
