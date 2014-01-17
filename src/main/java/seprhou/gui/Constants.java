@@ -89,6 +89,7 @@ public final class Constants
 	public static final float AIRCRAFT_TURN_RATE = 1;
 
 	/** Returns a constant list from some arguments */
+	@SafeVarargs
 	private static <T> List<T> constantList(T... a)
 	{
 		return Collections.unmodifiableList(Arrays.asList(a));

@@ -10,8 +10,9 @@ import seprhou.logic.Utils;
 public class ConcreteAircraft extends Aircraft
 {
 	// Derived constants
-	private static final int AIRCRAFT_MIN_SPEED = Utils.min(Constants.INITIAL_SPEEDS);
-	private static final int AIRCRAFT_MAX_SPEED = Utils.max(Constants.INITIAL_SPEEDS);
+	//  The +1 and -1 here are leeway needed due to float rounding errors
+	private static final int AIRCRAFT_MIN_SPEED = Utils.min(Constants.INITIAL_SPEEDS) - 1;
+	private static final int AIRCRAFT_MAX_SPEED = Utils.max(Constants.INITIAL_SPEEDS) + 1;
 	private static final int AIRCRAFT_MIN_ATITUDE = Utils.min(Constants.INITIAL_ALTITUDES);
 	private static final int AIRCRAFT_MAX_ALTITUDE = Utils.max(Constants.INITIAL_ALTITUDES);
 
@@ -34,17 +35,15 @@ public class ConcreteAircraft extends Aircraft
 
 		// Draw the aircraft
 		Texture aircraftTexture;
-		
+
 		// If selected, use different colour plane
 		if (this == gameArea.getGameScreen().getSelectedAircraft())
-				aircraftTexture = Assets.AIRCRAFT_SELECTED;
+			aircraftTexture = Assets.AIRCRAFT_SELECTED;
 		else
 			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
-				
-		
+
 		batch.draw(
-				
-				aircraftTexture,            // Aircraft texture
+				aircraftTexture,                    // Aircraft texture
 				xPos,                               // X position (bottom left)
 				yPos,                               // Y position (bottom right)
 				getSize(),                          // X rotation origin
@@ -77,5 +76,6 @@ public class ConcreteAircraft extends Aircraft
 	@Override public float getMaxAltitude()      { return AIRCRAFT_MAX_ALTITUDE; }
 
 	// Note currently changing speed of active aircraft is disabled
-	@Override public float getMaxAcceleration()  { return 0; }
+	//  1 used because of float rounding errors
+	@Override public float getMaxAcceleration()  { return 1; }
 }
