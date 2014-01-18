@@ -213,7 +213,7 @@ public class GameArea extends Actor
 	 * @param a first point
 	 * @param b second point
 	 */
-	private static void drawLine(SpriteBatch batch, Vector2D a, Vector2D b, Color color, float thickness)
+	private void drawLine(SpriteBatch batch, Vector2D a, Vector2D b, Color color, float thickness)
 	{
 		Vector2D vectorDiff = b.sub(a);
 		float length = vectorDiff.getLength();
@@ -223,22 +223,22 @@ public class GameArea extends Actor
 		batch.setColor(color);
 
 		batch.draw(
-				Assets.BLANK,   // Aircraft texture
-				a.getX(),       // X position (bottom left)
-				a.getY(),       // Y position (bottom right)
-				0,              // X rotation origin
-				0,              // Y rotation origin
-				length,         // Width
-				thickness,      // Height
-				1.0f,           // X scaling
-				1.0f,           // Y scaling
-				angle,          // Rotation
-				0,              // X position in texture
-				0,              // Y position in texture
-				1,              // Width of source texture
-				1,              // Height of source texture
-				false,          // Flip in X axis
-				false           // Flip in Y axis
+				Assets.BLANK,       // Aircraft texture
+				getX() + a.getX(),  // X position (bottom left)
+				getY() + a.getY(),  // Y position (bottom right)
+				0,                  // X rotation origin
+				0,                  // Y rotation origin
+				length,             // Width
+				thickness,          // Height
+				1.0f,               // X scaling
+				1.0f,               // Y scaling
+				angle,              // Rotation
+				0,                  // X position in texture
+				0,                  // Y position in texture
+				1,                  // Width of source texture
+				1,                  // Height of source texture
+				false,              // Flip in X axis
+				false               // Flip in Y axis
 		);
 
 		batch.setColor(prevColor);
