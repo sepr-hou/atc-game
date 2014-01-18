@@ -180,10 +180,20 @@ public class GameArea extends Actor
 				{
 					Vector2D waypoint = waypoints.get(i);
 
-					// Draw highlighted waypoint
-					batch.draw(Assets.NEXT_WAYPOINT_TEXTURE,
-							getX() + waypoint.getX() - waypointOffset,
-							getY() + waypoint.getY() - waypointOffset);
+					if (i == waypoints.size() - 1)
+					{
+						// Draw exit point
+						batch.draw(Assets.CIRCLE_TEXTURE,
+								getX() + waypoint.getX() - Assets.CIRCLE_TEXTURE.getWidth() / 2,
+								getY() + waypoint.getY() - Assets.CIRCLE_TEXTURE.getHeight() / 2);
+					}
+					else
+					{
+						// Draw highlighted waypoint
+						batch.draw(Assets.NEXT_WAYPOINT_TEXTURE,
+								getX() + waypoint.getX() - waypointOffset,
+								getY() + waypoint.getY() - waypointOffset);
+					}
 
 					// Draw line
 					drawLine(batch, current, waypoint, Color.ORANGE, 2);
