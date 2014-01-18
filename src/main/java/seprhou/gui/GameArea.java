@@ -92,8 +92,8 @@ public class GameArea extends Actor
 		Airspace airspace = this.parent.getAirspace();
 
 		// Die if the game is over
-		// TODO Do we really want to do this?
-		if (airspace.isGameOver()){
+		if (airspace.isGameOver())
+		{
 			parent.getGame().showGameOver(parent.getSecondsSinceStart());
 			return;
 		}
@@ -109,8 +109,6 @@ public class GameArea extends Actor
 		Aircraft selected = parent.getSelectedAircraft();
 		if (selected != null)
 		{
-			// TODO This is currently hooked up to the max turn rate - is this what we want?
-
 			// These keys are updated each frame so they're checked here
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
 			{
@@ -190,8 +188,9 @@ public class GameArea extends Actor
 			airspace.draw(this);
 			this.batch = null;
 
-			// TODO Draw collision warnings
-			for (CollisionWarning collision: airspace.getCollisionWarnings()){
+			// Draw collision warnings
+			for (CollisionWarning collision: airspace.getCollisionWarnings())
+			{
 				Vector2D position = collision.getObject1().getPosition();
 				Vector2D position2 = collision.getObject2().getPosition();
 				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
