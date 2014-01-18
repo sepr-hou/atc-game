@@ -164,13 +164,7 @@ public class GameArea extends Actor
 
 			for (Vector2D point : Constants.WAYPOINTS)
 			{
-				Texture waypointTexture;
-				//if (point == nextWayPoint)
-				//	waypointTexture = Assets.NEXT_WAYPOINT_TEXTURE;
-				//else
-					waypointTexture = Assets.WAYPOINT_TEXTURE;
-				
-				batch.draw(waypointTexture,
+				batch.draw(Assets.WAYPOINT_TEXTURE,
 						getX() + point.getX() - waypointOffset,
 						getY() + point.getY() - waypointOffset);
 			}
