@@ -2,6 +2,7 @@ package seprhou.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,6 +23,7 @@ public final class Assets
 	public static final Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
 	public static final Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
 	public static final Texture GAME_TITLE = loadTextureFromFile("title.gif");
+	public static final Texture BLANK;
 
 	// Game cursor
 	public static final Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
@@ -34,6 +36,13 @@ public final class Assets
 	{
 		// Make the font linear (looks a bit nicer on smaller screens)
 		FONT.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+		// Create blank texture (white 1x1 square)
+		Pixmap blackPixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+		blackPixmap.setColor(Color.WHITE);
+		blackPixmap.fill();
+		BLANK = new Texture(blackPixmap);
+		BLANK.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 	}
 
 	/**
