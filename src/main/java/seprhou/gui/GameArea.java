@@ -159,36 +159,9 @@ public class GameArea extends Actor
 		{
 			Aircraft selected = parent.getSelectedAircraft();
 
-			// Draw flight path
-			if (selected != null)
-			{
-				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
-				Vector2D current = selected.getPosition();
-
-				// Draw from current position to next waypoint, to next waypoint (etc)
-				for (int i = selected.getLastWaypoint() + 1; i < waypoints.size(); i++)
-				{
-					Vector2D waypoint = waypoints.get(i);
-					drawLine(batch, current, waypoint, Color.ORANGE, 2);
-					current = waypoint;
-				}
-			}
-
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
 
-			/*
-			// Show next waypoint
-			Vector2D nextWayPoint = null;
-			if (selected != null)
-			{
-				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
-				int lastWayPoint = selected.getLastWaypoint();
-				if (lastWayPoint < waypoints.size())
-					nextWayPoint = waypoints.get(lastWayPoint+1);
-			}
-			*/
-			
 			for (Vector2D point : Constants.WAYPOINTS)
 			{
 				Texture waypointTexture;
@@ -201,8 +174,29 @@ public class GameArea extends Actor
 						getX() + point.getX() - waypointOffset,
 						getY() + point.getY() - waypointOffset);
 			}
-			
-			
+
+			// Draw flight path + highlighted waypoints
+			if (selected != null)
+			{
+				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
+				Vector2D current = selected.getPosition();
+
+				// Draw from current position to next waypoint, to next waypoint (etc)
+				for (int i = selected.getLastWaypoint() + 1; i < waypoints.size(); i++)
+				{
+					Vector2D waypoint = waypoints.get(i);
+
+					// Draw highlighted waypoint
+					batch.draw(Assets.NEXT_WAYPOINT_TEXTURE,
+							getX() + waypoint.getX() - waypointOffset,
+							getY() + waypoint.getY() - waypointOffset);
+
+					// Draw line
+					drawLine(batch, current, waypoint, Color.ORANGE, 2);
+					current = waypoint;
+				}
+			}
+
 			// Draw all aircraft
 			this.batch = batch;
 			airspace.draw(this);
