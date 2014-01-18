@@ -21,7 +21,7 @@ public final class Assets
 	public static Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
 	public static Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
 	public static Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
-	public static Texture GAME_TITLE = loadTextureFromFile("Title.gif");
+	public static Texture GAME_TITLE = loadTextureFromFile("title.gif");
 
 	// Game cursor
 	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
@@ -29,6 +29,12 @@ public final class Assets
 	// Skin (used for menu gui)
 	public static Skin SKIN = new Skin(getDataFile("uiskin.json"));
 	public static BitmapFont FONT = SKIN.getFont("default-font");
+
+	static
+	{
+		// Make the font linear (looks a bit nicer on smaller screens)
+		FONT.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+	}
 
 	/**
 	 * Loads a texture from a file
