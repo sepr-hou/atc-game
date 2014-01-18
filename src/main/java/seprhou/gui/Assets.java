@@ -13,22 +13,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public final class Assets
 {
 	// Textures
-	public static Texture BACKGROUND_TEXTURE = loadTextureFromFile("backgroundimage.png");
-	public static Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
-	public static Texture NEXT_WAYPOINT_TEXTURE = loadTextureFromFile("nextwaypoint.png");
-	public static Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
-	public static Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
-	public static Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
-	public static Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
-	public static Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
-	public static Texture GAME_TITLE = loadTextureFromFile("title.gif");
+	public static final Texture BACKGROUND_TEXTURE = loadTextureFromFile("backgroundimage.png");
+	public static final Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
+	public static final Texture NEXT_WAYPOINT_TEXTURE = loadTextureFromFile("nextwaypoint.png");
+	public static final Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
+	public static final Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
+	public static final Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
+	public static final Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
+	public static final Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
+	public static final Texture GAME_TITLE = loadTextureFromFile("title.gif");
 
 	// Game cursor
-	public static Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
+	public static final Pixmap CURSOR_IMAGE = new Pixmap(getDataFile("cursor.png"));
 
 	// Skin (used for menu gui)
-	public static Skin SKIN = new Skin(getDataFile("uiskin.json"));
-	public static BitmapFont FONT = SKIN.getFont("default-font");
+	public static final Skin SKIN = new Skin(getDataFile("uiskin.json"));
+	public static final BitmapFont FONT = SKIN.getFont("default-font");
 
 	static
 	{
