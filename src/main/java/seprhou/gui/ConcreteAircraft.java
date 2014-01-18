@@ -3,14 +3,20 @@ package seprhou.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import seprhou.logic.Aircraft;
-import seprhou.logic.Waypoint;
-
-import java.util.List;
+import seprhou.logic.FlightPlan;
+import seprhou.logic.Utils;
 
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
 {
-	public ConcreteAircraft(String name, float weight, int crew, List<Waypoint> flightPlan)
+	// Derived constants
+	//  The +1 and -1 here are leeway needed due to float rounding errors
+	private static final int AIRCRAFT_MIN_SPEED = Utils.min(Constants.INITIAL_SPEEDS) - 1;
+	private static final int AIRCRAFT_MAX_SPEED = Utils.max(Constants.INITIAL_SPEEDS) + 1;
+	private static final int AIRCRAFT_MIN_ATITUDE = Utils.min(Constants.INITIAL_ALTITUDES);
+	private static final int AIRCRAFT_MAX_ALTITUDE = Utils.max(Constants.INITIAL_ALTITUDES);
+
+	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
 		super(name, weight, crew, flightPlan);
 	}
@@ -29,17 +35,15 @@ public class ConcreteAircraft extends Aircraft
 
 		// Draw the aircraft
 		Texture aircraftTexture;
-		
+
 		// If selected, use different colour plane
 		if (this == gameArea.getGameScreen().getSelectedAircraft())
-				aircraftTexture = Assets.AIRCRAFT_SELECTED;
+			aircraftTexture = Assets.AIRCRAFT_SELECTED;
 		else
 			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
-				
-		
+
 		batch.draw(
-				
-				aircraftTexture,            // Aircraft texture
+				aircraftTexture,                    // Aircraft texture
 				xPos,                               // X position (bottom left)
 				yPos,                               // Y position (bottom right)
 				getSize(),                          // X rotation origin
@@ -62,12 +66,16 @@ public class ConcreteAircraft extends Aircraft
 		Assets.FONT.draw(batch, str, xPos + getSize() * 2, yPos + getSize() * 2);
 	}
 
-	@Override public float getSize()             { return 32; }
-	@Override public float getAscentRate()       { return 1000; }
-	@Override public float getMinSpeed()         { return 0; }
-	@Override public float getMaxSpeed()         { return 100; }
-	@Override public float getMinAltitude()      { return 30000; }
-	@Override public float getMaxAltitude()      { return 40000; }
-	@Override public float getMaxAcceleration()  { return 10; }
-	@Override public float getMaxTurnRate()      { return 1; }
+	@Override public float getSize()             { return Constants.AIRCRAFT_SIZE; }
+	@Override public float getAscentRate()       { return Constants.AIRCRAFT_ASCENT_RATE; }
+	@Override public float getMaxTurnRate()      { return Constants.AIRCRAFT_TURN_RATE; }
+
+	@Override public float getMinSpeed()         { return AIRCRAFT_MIN_SPEED; }
+	@Override public float getMaxSpeed()         { return AIRCRAFT_MAX_SPEED; }
+	@Override public float getMinAltitude()      { return AIRCRAFT_MIN_ATITUDE; }
+	@Override public float getMaxAltitude()      { return AIRCRAFT_MAX_ALTITUDE; }
+
+	// Note currently changing speed of active aircraft is disabled
+	//  1 used because of float rounding errors
+	@Override public float getMaxAcceleration()  { return 1; }
 }

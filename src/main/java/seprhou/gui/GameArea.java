@@ -19,9 +19,6 @@ import seprhou.logic.*;
  */
 public class GameArea extends Actor
 {
-	/** Amount the altitude jumps to when a key is pressed */
-	private static final float ALTITUDE_JUMP = 5000;
-
 	private final GameScreen parent;
 
 	private SpriteBatch batch;
@@ -130,9 +127,9 @@ public class GameArea extends Actor
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
 			if (upPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() + ALTITUDE_JUMP);
+				selected.setTargetAltitude(selected.getTargetAltitude() + Constants.ALTITUDE_JUMP);
 			else if (downPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() - ALTITUDE_JUMP);
+				selected.setTargetAltitude(selected.getTargetAltitude() - Constants.ALTITUDE_JUMP);
 		}
 
 		// Clear keypress events
@@ -165,15 +162,15 @@ public class GameArea extends Actor
 			// Show next waypoint
 			Aircraft selected = parent.getSelectedAircraft();
 			Vector2D nextWayPoint = null;
-			if (selected != null){
-				List<Waypoint> flightPlan = selected.getFlightPlan();
+			if (selected != null)
+			{
+				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
 				int lastWayPoint = selected.getLastWaypoint();
-				if (lastWayPoint < flightPlan.size())
-					nextWayPoint = flightPlan.get(lastWayPoint+1).getPosition();
-						
+				if (lastWayPoint < waypoints.size())
+					nextWayPoint = waypoints.get(lastWayPoint+1);
 			}
 			
-			for (Vector2D point : GameScreen.WAYPOINTS)
+			for (Vector2D point : Constants.WAYPOINTS)
 			{
 				Texture waypointTexture;
 				if (point == nextWayPoint)
