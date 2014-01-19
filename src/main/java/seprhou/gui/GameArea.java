@@ -40,12 +40,12 @@ public class GameArea extends Actor
 		{
 			public boolean keyDown(InputEvent event, int keycode)
 			{
-				if (keycode == Input.Keys.UP)
+				if (keycode == Input.Keys.UP || keycode == Input.Keys.W)
 				{
 					upPressed = true;
 					return true;
 				}
-				else if (keycode == Input.Keys.DOWN)
+				else if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S)
 				{
 					downPressed = true;
 					return true;
@@ -110,13 +110,13 @@ public class GameArea extends Actor
 		if (selected != null)
 		{
 			// These keys are updated each frame so they're checked here
-			if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
 			{
 				selected.setTargetVelocity(
 						selected.getTargetVelocity()
 								.rotate(selected.getMaxTurnRate() * delta));
 			}
-			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
 			{
 				// Note the rotation angle is NEGATIVE here
 				selected.setTargetVelocity(
