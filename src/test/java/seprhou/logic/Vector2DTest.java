@@ -10,9 +10,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.Matchers.either;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static seprhou.logic.IsCloseToFloat.closeTo;
 
@@ -75,6 +73,18 @@ public class Vector2DTest
 			});
 		}
 
+		/** Returns a matcher which matches a value close to dataAngle */
+		private Matcher<Float> closeToAngleMatcher()
+		{
+			Matcher<Float> matcher = closeTo(dataAngle);
+
+			// If the angle is PI, allow +/- values for it
+			if (dataAngle == (float) Math.PI || dataAngle == (float) -Math.PI)
+				matcher = either(matcher).or(closeTo(-dataAngle));
+
+			return matcher;
+		}
+
 		@Test
 		public void testXYValues()
 		{
@@ -100,14 +110,32 @@ public class Vector2DTest
 			// For the zero vector, any angle is valid
 			if (!vector.equals(Vector2D.ZERO))
 			{
-				Matcher<Float> matcher = closeTo(dataAngle);
-
-				// If the angle is PI, allow +/- values for it
-				if (dataAngle == (float) Math.PI || dataAngle == (float) -Math.PI)
-					matcher = either(matcher).or(closeTo(-dataAngle));
-
-				assertThat(vector.getAngle(), matcher);
+				assertThat(vector.getAngle(), closeToAngleMatcher());
 			}
+		}
+
+		@Test
+		public void testNormalize()
+		{
+			Vector2D normalized = vector.normalize();
+
+			assertThat(normalized.getLength(), closeTo(1));
+			assertThat(normalized.getAngle(), closeToAngleMatcher());
+		}
+
+		@Test
+		public void testChangeLength()
+		{
+			Vector2D newVector = vector.changeLength(50);
+
+			assertThat(newVector.getLength(), closeTo(50));
+			assertThat(newVector.getAngle(), closeToAngleMatcher());
+		}
+
+		@Test
+		public void testEqualsNull()
+		{
+			assertThat(vector, not(equalTo(null)));
 		}
 	}
 
