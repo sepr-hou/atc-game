@@ -91,44 +91,6 @@ public final class Utils
 		return String.format("%02d:%02d.%d", minutes, seconds, tenths);
 	}
 
-	/**
-	 * Returns the minimum item in a list of integers
-	 *
-	 * @param list list of integers
-	 * @return minimum item
-	 */
-	public static int min(Iterable<Integer> list)
-	{
-		int minValue = Integer.MAX_VALUE;
-
-		for (Integer item : list)
-		{
-			if (item < minValue)
-				minValue = item;
-		}
-
-		return minValue;
-	}
-
-	/**
-	 * Returns the maximum item in a list of integers
-	 *
-	 * @param list list of integers
-	 * @return maximum item
-	 */
-	public static int max(Iterable<Integer> list)
-	{
-		int maxValue = Integer.MIN_VALUE;
-
-		for (Integer item : list)
-		{
-			if (item > maxValue)
-				maxValue = item;
-		}
-
-		return maxValue;
-	}
-
 	private Utils()
 	{
 	}

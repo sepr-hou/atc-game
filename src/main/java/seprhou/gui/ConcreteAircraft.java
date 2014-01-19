@@ -4,17 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
-import seprhou.logic.Utils;
+
+import java.util.Collections;
 
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
 {
 	// Derived constants
 	//  The +1 and -1 here are leeway needed due to float rounding errors
-	private static final int AIRCRAFT_MIN_SPEED = Utils.min(Constants.INITIAL_SPEEDS) - 1;
-	private static final int AIRCRAFT_MAX_SPEED = Utils.max(Constants.INITIAL_SPEEDS) + 1;
-	private static final int AIRCRAFT_MIN_ATITUDE = Utils.min(Constants.INITIAL_ALTITUDES);
-	private static final int AIRCRAFT_MAX_ALTITUDE = Utils.max(Constants.INITIAL_ALTITUDES);
+	private static final int AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 1;
+	private static final int AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 1;
+	private static final int AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
+	private static final int AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
 
 	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
@@ -72,7 +73,7 @@ public class ConcreteAircraft extends Aircraft
 
 	@Override public float getMinSpeed()         { return AIRCRAFT_MIN_SPEED; }
 	@Override public float getMaxSpeed()         { return AIRCRAFT_MAX_SPEED; }
-	@Override public float getMinAltitude()      { return AIRCRAFT_MIN_ATITUDE; }
+	@Override public float getMinAltitude()      { return AIRCRAFT_MIN_ALTITUDE; }
 	@Override public float getMaxAltitude()      { return AIRCRAFT_MAX_ALTITUDE; }
 
 	// Note currently changing speed of active aircraft is disabled

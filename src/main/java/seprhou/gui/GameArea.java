@@ -40,12 +40,12 @@ public class GameArea extends Actor
 		{
 			public boolean keyDown(InputEvent event, int keycode)
 			{
-				if (keycode == Input.Keys.UP)
+				if (keycode == Input.Keys.UP || keycode == Input.Keys.W)
 				{
 					upPressed = true;
 					return true;
 				}
-				else if (keycode == Input.Keys.DOWN)
+				else if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S)
 				{
 					downPressed = true;
 					return true;
@@ -110,13 +110,13 @@ public class GameArea extends Actor
 		if (selected != null)
 		{
 			// These keys are updated each frame so they're checked here
-			if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
 			{
 				selected.setTargetVelocity(
 						selected.getTargetVelocity()
 								.rotate(selected.getMaxTurnRate() * delta));
 			}
-			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
 			{
 				// Note the rotation angle is NEGATIVE here
 				selected.setTargetVelocity(
@@ -155,34 +155,50 @@ public class GameArea extends Actor
 		batch.flush();
 		if (clipBegin())
 		{
+			Aircraft selected = parent.getSelectedAircraft();
+
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
-			
-			// Show next waypoint
-			Aircraft selected = parent.getSelectedAircraft();
-			Vector2D nextWayPoint = null;
-			if (selected != null)
-			{
-				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
-				int lastWayPoint = selected.getLastWaypoint();
-				if (lastWayPoint < waypoints.size())
-					nextWayPoint = waypoints.get(lastWayPoint+1);
-			}
-			
+
 			for (Vector2D point : Constants.WAYPOINTS)
 			{
-				Texture waypointTexture;
-				if (point == nextWayPoint)
-					waypointTexture = Assets.NEXT_WAYPOINT_TEXTURE;
-				else
-					waypointTexture = Assets.WAYPOINT_TEXTURE;
-				
-				batch.draw(waypointTexture,
+				batch.draw(Assets.WAYPOINT_TEXTURE,
 						getX() + point.getX() - waypointOffset,
 						getY() + point.getY() - waypointOffset);
 			}
-			
-			
+
+			// Draw flight path + highlighted waypoints
+			if (selected != null)
+			{
+				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
+				Vector2D current = selected.getPosition();
+
+				// Draw from current position to next waypoint, to next waypoint (etc)
+				for (int i = selected.getLastWaypoint() + 1; i < waypoints.size(); i++)
+				{
+					Vector2D waypoint = waypoints.get(i);
+
+					if (i == waypoints.size() - 1)
+					{
+						// Draw exit point
+						batch.draw(Assets.CIRCLE_TEXTURE,
+								getX() + waypoint.getX() - Assets.CIRCLE_TEXTURE.getWidth() / 2,
+								getY() + waypoint.getY() - Assets.CIRCLE_TEXTURE.getHeight() / 2);
+					}
+					else
+					{
+						// Draw highlighted waypoint
+						batch.draw(Assets.NEXT_WAYPOINT_TEXTURE,
+								getX() + waypoint.getX() - waypointOffset,
+								getY() + waypoint.getY() - waypointOffset);
+					}
+
+					// Draw line
+					drawLine(batch, current, waypoint, Color.ORANGE, 2);
+					current = waypoint;
+				}
+			}
+
 			// Draw all aircraft
 			this.batch = batch;
 			airspace.draw(this);
@@ -213,7 +229,7 @@ public class GameArea extends Actor
 	 * @param a first point
 	 * @param b second point
 	 */
-	private static void drawLine(SpriteBatch batch, Vector2D a, Vector2D b, Color color, float thickness)
+	private void drawLine(SpriteBatch batch, Vector2D a, Vector2D b, Color color, float thickness)
 	{
 		Vector2D vectorDiff = b.sub(a);
 		float length = vectorDiff.getLength();
@@ -223,22 +239,22 @@ public class GameArea extends Actor
 		batch.setColor(color);
 
 		batch.draw(
-				Assets.BLANK,   // Aircraft texture
-				a.getX(),       // X position (bottom left)
-				a.getY(),       // Y position (bottom right)
-				0,              // X rotation origin
-				0,              // Y rotation origin
-				length,         // Width
-				thickness,      // Height
-				1.0f,           // X scaling
-				1.0f,           // Y scaling
-				angle,          // Rotation
-				0,              // X position in texture
-				0,              // Y position in texture
-				1,              // Width of source texture
-				1,              // Height of source texture
-				false,          // Flip in X axis
-				false           // Flip in Y axis
+				Assets.BLANK,       // Aircraft texture
+				getX() + a.getX(),  // X position (bottom left)
+				getY() + a.getY(),  // Y position (bottom right)
+				0,                  // X rotation origin
+				0,                  // Y rotation origin
+				length,             // Width
+				thickness,          // Height
+				1.0f,               // X scaling
+				1.0f,               // Y scaling
+				angle,              // Rotation
+				0,                  // X position in texture
+				0,                  // Y position in texture
+				1,                  // Width of source texture
+				1,                  // Height of source texture
+				false,              // Flip in X axis
+				false               // Flip in Y axis
 		);
 
 		batch.setColor(prevColor);
