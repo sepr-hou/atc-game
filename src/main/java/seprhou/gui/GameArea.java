@@ -155,34 +155,50 @@ public class GameArea extends Actor
 		batch.flush();
 		if (clipBegin())
 		{
+			Aircraft selected = parent.getSelectedAircraft();
+
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
-			
-			// Show next waypoint
-			Aircraft selected = parent.getSelectedAircraft();
-			Vector2D nextWayPoint = null;
-			if (selected != null)
-			{
-				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
-				int lastWayPoint = selected.getLastWaypoint();
-				if (lastWayPoint < waypoints.size())
-					nextWayPoint = waypoints.get(lastWayPoint+1);
-			}
-			
+
 			for (Vector2D point : Constants.WAYPOINTS)
 			{
-				Texture waypointTexture;
-				if (point == nextWayPoint)
-					waypointTexture = Assets.NEXT_WAYPOINT_TEXTURE;
-				else
-					waypointTexture = Assets.WAYPOINT_TEXTURE;
-				
-				batch.draw(waypointTexture,
+				batch.draw(Assets.WAYPOINT_TEXTURE,
 						getX() + point.getX() - waypointOffset,
 						getY() + point.getY() - waypointOffset);
 			}
-			
-			
+
+			// Draw flight path + highlighted waypoints
+			if (selected != null)
+			{
+				List<Vector2D> waypoints = selected.getFlightPlan().getWaypoints();
+				Vector2D current = selected.getPosition();
+
+				// Draw from current position to next waypoint, to next waypoint (etc)
+				for (int i = selected.getLastWaypoint() + 1; i < waypoints.size(); i++)
+				{
+					Vector2D waypoint = waypoints.get(i);
+
+					if (i == waypoints.size() - 1)
+					{
+						// Draw exit point
+						batch.draw(Assets.CIRCLE_TEXTURE,
+								getX() + waypoint.getX() - Assets.CIRCLE_TEXTURE.getWidth() / 2,
+								getY() + waypoint.getY() - Assets.CIRCLE_TEXTURE.getHeight() / 2);
+					}
+					else
+					{
+						// Draw highlighted waypoint
+						batch.draw(Assets.NEXT_WAYPOINT_TEXTURE,
+								getX() + waypoint.getX() - waypointOffset,
+								getY() + waypoint.getY() - waypointOffset);
+					}
+
+					// Draw line
+					drawLine(batch, current, waypoint, Color.ORANGE, 2);
+					current = waypoint;
+				}
+			}
+
 			// Draw all aircraft
 			this.batch = batch;
 			airspace.draw(this);
