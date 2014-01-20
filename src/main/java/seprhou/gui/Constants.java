@@ -55,10 +55,10 @@ public final class Constants
 	);
 
 	/** Set of altitudes new flights are generated using */
-	public static final List<Integer> INITIAL_ALTITUDES = constantList(30000, 35000, 40000);
+	public static final List<Float> INITIAL_ALTITUDES = constantList(30000f, 35000f, 40000f);
 
 	/** Set of speeds new flights are generated using */
-	public static final List<Integer> INITIAL_SPEEDS = constantList(50);
+	public static final List<Float> INITIAL_SPEEDS = constantList(50f);
 
 	/** Minimum free radius needed for an aircraft to enter at an entry point */
 	public static final float MIN_SAFE_ENTY_DISTANCE = 200;
