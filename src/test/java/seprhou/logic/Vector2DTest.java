@@ -10,9 +10,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.hamcrest.Matchers.either;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static seprhou.logic.IsCloseToFloat.closeTo;
 
@@ -22,9 +20,6 @@ import static seprhou.logic.IsCloseToFloat.closeTo;
 @RunWith(Enclosed.class)
 public class Vector2DTest
 {
-	public static final float ELIPSON_LENGTH = 0.00001f;
-	public static final float ELIPSON_ANGLE  = 0.000001f;
-
 	/**
 	 * Contains the unary tests for {@link Vector2D}
 	 *
@@ -41,8 +36,10 @@ public class Vector2DTest
 		private final float dataX, dataY, dataLength, dataAngle;
 		private final Vector2D vector;
 
-		public UnaryTests(boolean usePolar, float x, float y, float length, float angle)
+		public UnaryTests(boolean usePolar, float x, float y, float length, double angleDouble)
 		{
+			float angle = (float) angleDouble;
+
 			this.dataX = x;
 			this.dataY = y;
 			this.dataLength = length;
@@ -61,40 +58,52 @@ public class Vector2DTest
 			{
 				// Use Polar, X, Y, Length, Angle
 				{ true,     0,    0,    0, 0 },
-				{ true,     3,    4,    5, (float) Math.atan(4.0 / 3.0) },
-				{ true,    -3,   -4,    5, (float) (Math.atan(4.0 / 3.0) - Math.PI) },
-				{ true,     3,   -4,    5, (float) -Math.atan(4.0 / 3.0) },
-				{ true,     0,  100,  100, (float) (Math.PI / 2) },
+				{ true,     3,    4,    5, Math.atan(4.0 / 3.0) },
+				{ true,    -3,   -4,    5, (Math.atan(4.0 / 3.0) - Math.PI) },
+				{ true,     3,   -4,    5, -Math.atan(4.0 / 3.0) },
+				{ true,     0,  100,  100, (Math.PI / 2) },
 				{ true,   100,    0,  100, 0 },
-				{ true,  -100,    0,  100, (float) -Math.PI },
+				{ true,  -100,    0,  100, -Math.PI },
 
 				{ false,    0,    0,    0, 0 },
-				{ false,    3,    4,    5, (float) Math.atan(4.0 / 3.0) },
-				{ false,   -3,   -4,    5, (float) (Math.atan(4.0 / 3.0) - Math.PI) },
-				{ false,    3,   -4,    5, (float) -Math.atan(4.0 / 3.0) },
-				{ false,    0,  100,  100, (float) (Math.PI / 2) },
+				{ false,    3,    4,    5, Math.atan(4.0 / 3.0) },
+				{ false,   -3,   -4,    5, (Math.atan(4.0 / 3.0) - Math.PI) },
+				{ false,    3,   -4,    5, -Math.atan(4.0 / 3.0) },
+				{ false,    0,  100,  100, (Math.PI / 2) },
 				{ false,  100,    0,  100, 0 },
-				{ false, -100,    0,  100, (float) -Math.PI },
+				{ false, -100,    0,  100, -Math.PI },
 			});
+		}
+
+		/** Returns a matcher which matches a value close to dataAngle */
+		private Matcher<Float> closeToAngleMatcher()
+		{
+			Matcher<Float> matcher = closeTo(dataAngle);
+
+			// If the angle is PI, allow +/- values for it
+			if (dataAngle == (float) Math.PI || dataAngle == (float) -Math.PI)
+				matcher = either(matcher).or(closeTo(-dataAngle));
+
+			return matcher;
 		}
 
 		@Test
 		public void testXYValues()
 		{
-			assertThat(vector.getX(), closeTo(dataX, ELIPSON_LENGTH));
-			assertThat(vector.getY(), closeTo(dataY, ELIPSON_LENGTH));
+			assertThat(vector.getX(), closeTo(dataX));
+			assertThat(vector.getY(), closeTo(dataY));
 		}
 
 		@Test
 		public void testLength()
 		{
-			assertThat(vector.getLength(), closeTo(dataLength, ELIPSON_LENGTH));
+			assertThat(vector.getLength(), closeTo(dataLength));
 		}
 
 		@Test
 		public void testLengthSquared()
 		{
-			assertThat(vector.getLengthSquared(), closeTo(dataLength * dataLength, ELIPSON_LENGTH));
+			assertThat(vector.getLengthSquared(), closeTo(dataLength * dataLength));
 		}
 
 		@Test
@@ -103,14 +112,32 @@ public class Vector2DTest
 			// For the zero vector, any angle is valid
 			if (!vector.equals(Vector2D.ZERO))
 			{
-				Matcher<Float> matcher = closeTo(dataAngle, ELIPSON_ANGLE);
-
-				// If the angle is PI, allow +/- values for it
-				if (dataAngle == (float) Math.PI || dataAngle == (float) -Math.PI)
-					matcher = either(matcher).or(closeTo(-dataAngle, ELIPSON_ANGLE));
-
-				assertThat(vector.getAngle(), matcher);
+				assertThat(vector.getAngle(), closeToAngleMatcher());
 			}
+		}
+
+		@Test
+		public void testNormalize()
+		{
+			Vector2D normalized = vector.normalize();
+
+			assertThat(normalized.getLength(), closeTo(1));
+			assertThat(normalized.getAngle(), closeToAngleMatcher());
+		}
+
+		@Test
+		public void testChangeLength()
+		{
+			Vector2D newVector = vector.changeLength(50);
+
+			assertThat(newVector.getLength(), closeTo(50));
+			assertThat(newVector.getAngle(), closeToAngleMatcher());
+		}
+
+		@Test
+		public void testEqualsNull()
+		{
+			assertThat(vector, not(equalTo(null)));
 		}
 	}
 
@@ -127,8 +154,8 @@ public class Vector2DTest
 			Vector2D a = new Vector2D(3, 4);
 			Vector2D b = new Vector2D(5, -10);
 
-			assertThat(a.distanceTo(b), closeTo(correctValue, ELIPSON_LENGTH));
-			assertThat(b.distanceTo(a), closeTo(correctValue, ELIPSON_LENGTH));
+			assertThat(a.distanceTo(b), closeTo(correctValue));
+			assertThat(b.distanceTo(a), closeTo(correctValue));
 		}
 
 		@Test
@@ -137,10 +164,10 @@ public class Vector2DTest
 			Vector2D a = new Vector2D(3, 4);
 			Vector2D b = new Vector2D(5, -10);
 
-			assertThat(a.add(b).getX(), closeTo( 8, ELIPSON_LENGTH));
-			assertThat(a.add(b).getY(), closeTo(-6, ELIPSON_LENGTH));
-			assertThat(b.add(a).getX(), closeTo( 8, ELIPSON_LENGTH));
-			assertThat(b.add(a).getY(), closeTo(-6, ELIPSON_LENGTH));
+			assertThat(a.add(b).getX(), closeTo( 8));
+			assertThat(a.add(b).getY(), closeTo(-6));
+			assertThat(b.add(a).getX(), closeTo( 8));
+			assertThat(b.add(a).getY(), closeTo(-6));
 		}
 
 		@Test
@@ -149,10 +176,10 @@ public class Vector2DTest
 			Vector2D a = new Vector2D(3, 4);
 			Vector2D b = new Vector2D(5, -10);
 
-			assertThat(a.sub(b).getX(), closeTo( -2, ELIPSON_LENGTH));
-			assertThat(a.sub(b).getY(), closeTo( 14, ELIPSON_LENGTH));
-			assertThat(b.sub(a).getX(), closeTo(  2, ELIPSON_LENGTH));
-			assertThat(b.sub(a).getY(), closeTo(-14, ELIPSON_LENGTH));
+			assertThat(a.sub(b).getX(), closeTo( -2));
+			assertThat(a.sub(b).getY(), closeTo( 14));
+			assertThat(b.sub(a).getX(), closeTo(  2));
+			assertThat(b.sub(a).getY(), closeTo(-14));
 		}
 
 		@Test
@@ -161,10 +188,10 @@ public class Vector2DTest
 			Vector2D a = new Vector2D(5, -10);
 			float b = 42;
 
-			assertThat(a.multiply(b).getX(), closeTo( 210, ELIPSON_LENGTH));
-			assertThat(a.multiply(b).getY(), closeTo(-420, ELIPSON_LENGTH));
-			assertThat(a.multiply(-b).getX(), closeTo(-210, ELIPSON_LENGTH));
-			assertThat(a.multiply(-b).getY(), closeTo( 420, ELIPSON_LENGTH));
+			assertThat(a.multiply(b).getX(), closeTo( 210));
+			assertThat(a.multiply(b).getY(), closeTo(-420));
+			assertThat(a.multiply(-b).getX(), closeTo(-210));
+			assertThat(a.multiply(-b).getY(), closeTo( 420));
 		}
 
 		@Test
@@ -172,8 +199,8 @@ public class Vector2DTest
 		{
 			Vector2D a = new Vector2D(5, -10);
 
-			assertThat(a.multiply(0).getX(), closeTo(0, ELIPSON_LENGTH));
-			assertThat(a.multiply(0).getY(), closeTo(0, ELIPSON_LENGTH));
+			assertThat(a.multiply(0).getX(), closeTo(0));
+			assertThat(a.multiply(0).getY(), closeTo(0));
 		}
 
 		@Test
@@ -185,10 +212,10 @@ public class Vector2DTest
 			float ansX = (float) (-1 / Math.sqrt(2));
 			float ansY = (float) ( 7 / Math.sqrt(2));
 
-			assertThat(a.rotate( b).getX(), closeTo(ansX, ELIPSON_LENGTH));
-			assertThat(a.rotate( b).getY(), closeTo(ansY, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getX(), closeTo(ansY, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getY(), closeTo(-ansX, ELIPSON_LENGTH));
+			assertThat(a.rotate( b).getX(), closeTo(ansX));
+			assertThat(a.rotate( b).getY(), closeTo(ansY));
+			assertThat(a.rotate(-b).getX(), closeTo(ansY));
+			assertThat(a.rotate(-b).getY(), closeTo(-ansX));
 		}
 
 		@Test
@@ -197,10 +224,10 @@ public class Vector2DTest
 			Vector2D a = Vector2D.XAXIS;
 			float b = (float) (-Math.PI / 2);
 
-			assertThat(a.rotate( b).getX(), closeTo(0, ELIPSON_LENGTH));
-			assertThat(a.rotate( b).getY(), closeTo(-1, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getX(), closeTo(0, ELIPSON_LENGTH));
-			assertThat(a.rotate(-b).getY(), closeTo(1, ELIPSON_LENGTH));
+			assertThat(a.rotate( b).getX(), closeTo(0));
+			assertThat(a.rotate( b).getY(), closeTo(-1));
+			assertThat(a.rotate(-b).getX(), closeTo(0));
+			assertThat(a.rotate(-b).getY(), closeTo(1));
 		}
 
 		@Test
