@@ -36,8 +36,10 @@ public class Vector2DTest
 		private final float dataX, dataY, dataLength, dataAngle;
 		private final Vector2D vector;
 
-		public UnaryTests(boolean usePolar, float x, float y, float length, float angle)
+		public UnaryTests(boolean usePolar, float x, float y, float length, double angleDouble)
 		{
+			float angle = (float) angleDouble;
+
 			this.dataX = x;
 			this.dataY = y;
 			this.dataLength = length;
@@ -56,20 +58,20 @@ public class Vector2DTest
 			{
 				// Use Polar, X, Y, Length, Angle
 				{ true,     0,    0,    0, 0 },
-				{ true,     3,    4,    5, (float) Math.atan(4.0 / 3.0) },
-				{ true,    -3,   -4,    5, (float) (Math.atan(4.0 / 3.0) - Math.PI) },
-				{ true,     3,   -4,    5, (float) -Math.atan(4.0 / 3.0) },
-				{ true,     0,  100,  100, (float) (Math.PI / 2) },
+				{ true,     3,    4,    5, Math.atan(4.0 / 3.0) },
+				{ true,    -3,   -4,    5, (Math.atan(4.0 / 3.0) - Math.PI) },
+				{ true,     3,   -4,    5, -Math.atan(4.0 / 3.0) },
+				{ true,     0,  100,  100, (Math.PI / 2) },
 				{ true,   100,    0,  100, 0 },
-				{ true,  -100,    0,  100, (float) -Math.PI },
+				{ true,  -100,    0,  100, -Math.PI },
 
 				{ false,    0,    0,    0, 0 },
-				{ false,    3,    4,    5, (float) Math.atan(4.0 / 3.0) },
-				{ false,   -3,   -4,    5, (float) (Math.atan(4.0 / 3.0) - Math.PI) },
-				{ false,    3,   -4,    5, (float) -Math.atan(4.0 / 3.0) },
-				{ false,    0,  100,  100, (float) (Math.PI / 2) },
+				{ false,    3,    4,    5, Math.atan(4.0 / 3.0) },
+				{ false,   -3,   -4,    5, (Math.atan(4.0 / 3.0) - Math.PI) },
+				{ false,    3,   -4,    5, -Math.atan(4.0 / 3.0) },
+				{ false,    0,  100,  100, (Math.PI / 2) },
 				{ false,  100,    0,  100, 0 },
-				{ false, -100,    0,  100, (float) -Math.PI },
+				{ false, -100,    0,  100, -Math.PI },
 			});
 		}
 
