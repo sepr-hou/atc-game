@@ -52,8 +52,18 @@ public abstract class Aircraft extends AirspaceObject
 	{
 		return name;
 	}
-	
-	public int getBearing() {
+
+	/**
+	 * Returns this aircraft's bearing as calculated from its velocity
+	 *
+	 * <p>
+	 * This means that this method returns an angle from 0 to 360 where 0 degrees
+	 * points upwards (positive y direction).
+	 *
+	 * @return the bearing of this aircraft
+	 */
+	public float getBearing()
+	{
 		float angle = this.velocity.getAngle();
 		angle = angle * 180;
 		angle /= Math.PI;
@@ -62,8 +72,7 @@ public abstract class Aircraft extends AirspaceObject
 		if (angle < 0){
 			angle += 360;
 		}
-		int intAngle = Math.round(angle);
-		return intAngle;
+		return angle;
 	}
 
 	/** Returns this aircraft's weight */
