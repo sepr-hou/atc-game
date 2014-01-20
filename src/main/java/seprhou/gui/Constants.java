@@ -25,7 +25,7 @@ public final class Constants
 	/** Minimum lateral separation for collision warnings */
 	public static final float LATERAL_SEPARATION = 200.0f;
 	/** Minimum vertical separation for collision warnings */
-	public static final float VERTICAL_SEPARATION = 200.0f;
+	public static final float VERTICAL_SEPARATION = 1000.0f;
 
 	/** List of available waypoints */
 	public static final List<Vector2D> WAYPOINTS = constantList(
