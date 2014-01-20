@@ -12,8 +12,6 @@ import java.util.*;
  */
 public class FlightPlanGenerator
 {
-	private final Random random = new Random();
-
 	// Config options
 	//  Filled with some "sensibleish" default options
 	private List<Vector2D> waypoints;
@@ -111,7 +109,7 @@ public class FlightPlanGenerator
 			return null;
 
 		// Choose some waypoints + 2 entry and exit points
-		int waypointCount = random.nextInt(maxWaypoints - minWaypoints) + minWaypoints;
+		int waypointCount = Utils.getRandom().nextInt(maxWaypoints - minWaypoints) + minWaypoints;
 		List<Vector2D> myWaypoints = Utils.randomSubset(waypoints, waypointCount);
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
 		Vector2D exitPoint = Utils.randomItem(entryExitPoints, entryPoint);
@@ -146,7 +144,7 @@ public class FlightPlanGenerator
 			return null;
 
 		// Add some randomness
-		if (random.nextFloat() >= delta * aircraftPerSec)
+		if (Utils.getRandom().nextFloat() >= delta * aircraftPerSec)
 			return null;
 
 		// Try to generate an
