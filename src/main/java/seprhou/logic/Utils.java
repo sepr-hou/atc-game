@@ -33,6 +33,10 @@ public final class Utils
 	 */
 	public static <T> List<T> randomSubset(List<T> list, int n)
 	{
+		// Can't get more items than we actually have
+		if (n > list.size())
+			throw new IllegalArgumentException("n cannot be greater than the size of the list");
+
 		// Copy the list and shuffle it
 		List<T> result = new ArrayList<>(list);
 		Collections.shuffle(result, random);
@@ -65,7 +69,7 @@ public final class Utils
 	{
 		// Check for impossible situation
 		if (list.size() == 1 && list.get(0) == invalidItem)
-			throw new IllegalStateException("list given to randomItem contains no valid items!");
+			throw new IllegalArgumentException("list given to randomItem contains no valid items!");
 
 		// Choose one item and skip it if it's invalid
 		int item = random.nextInt(list.size());

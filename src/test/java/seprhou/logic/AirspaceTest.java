@@ -46,6 +46,7 @@ public class AirspaceTest
 	public void testActiveObjectsOrder()
 	{
 		Airspace airspace = generateAirspace(1, 4, 8, 0, 4);
+		airspace.refresh(1);
 
 		// Ensure objects are in order
 		Collection<AirspaceObject> activeObjects = airspace.getActiveObjects();
@@ -96,7 +97,7 @@ public class AirspaceTest
 	@Test
 	public void testGameOver()
 	{
-		Airspace airspace1 = generateAirspace(1, 2000);
+		Airspace airspace1 = generateAirspace(1, 5000);
 		Airspace airspace2 = generateAirspace(1, 2);
 
 		// Airspace 1 is bad, airspace 2 is good
@@ -122,7 +123,7 @@ public class AirspaceTest
 
 		// Test none in range
 		AirspaceObject found2 = airspace.findAircraft(new Vector2D(5000, 400));
-		assertThat(found, is(nullValue()));
+		assertThat(found2, is(nullValue()));
 
 		// Test circle
 		List<Vector2D> positions = objectsToPositions(airspace.findAircraft(obj3, 200));
@@ -181,6 +182,12 @@ public class AirspaceTest
 		for (int i = 0; i < objectCount; i++)
 			airspace.refresh(0);
 
+		// Solidify them
+		for (AirspaceObject object : airspace.getActiveObjects())
+			((AirspaceObjectMock) object).solid = true;
+
+		// The game should not be over
+		assertThat(airspace.isGameOver(), is(false));
 		return airspace;
 	}
 
@@ -201,15 +208,16 @@ public class AirspaceTest
 	}
 
 	/** Generates an airspace with some objects with the given altitudes */
-	private static Airspace generateAirspace(float... objects)
+	private static Airspace generateAirspace(float... altitudes)
 	{
-		Airspace airspace = generateAirspace(objects.length);
+		Airspace airspace = generateAirspace(altitudes.length);
 
 		// Set their positions
 		int i = 0;
 		for (AirspaceObject object : airspace.getActiveObjects())
 		{
-			object.altitude = objects[i];
+			object.altitude = altitudes[i];
+			object.setTargetAltitude(altitudes[i]);
 			i++;
 		}
 
@@ -219,6 +227,9 @@ public class AirspaceTest
 	/** Fake {@link AirspaceObject} class used for testing */
 	private static class AirspaceObjectMock extends AirspaceObject
 	{
+		public boolean solid;
+
+		@Override public boolean isSolid() { return solid; }
 		@Override public void draw(Object state) { }
 		@Override public float getSize() { return 64; }
 		@Override public float getAscentRate() { return 100; }

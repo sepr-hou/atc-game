@@ -175,7 +175,7 @@ public class Vector2D
 		float myLength = getLength();
 
 		if (myLength == 0)
-			return XAXIS;
+			return XAXIS.multiply(newLength);
 
 		return multiply(newLength / myLength);
 	}

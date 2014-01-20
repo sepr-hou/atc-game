@@ -23,7 +23,7 @@ public abstract class AirspaceObject
 	protected float altitude;
 
 	// Targets
-	protected Vector2D targetVelocity;
+	protected Vector2D targetVelocity = Vector2D.ZERO;
 	protected float targetAltitude;
 
 	/**
@@ -84,7 +84,7 @@ public abstract class AirspaceObject
 			else if (speed > maxSpeed)
 				speed = maxSpeed;
 
-			this.targetVelocity = targetVelocity.changeLength(speed);
+			this.targetVelocity = newVelocity.changeLength(speed);
 		}
 		else
 		{
