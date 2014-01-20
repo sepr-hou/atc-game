@@ -5,10 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class GameScreen extends AbstractScreen
 {
 	private static final FlightPlanGenerator flightPathGenerator;
