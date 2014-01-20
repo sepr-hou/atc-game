@@ -129,8 +129,8 @@ public class ControlPanel extends Group
 		if (selected != null){
 			valueFlightNo.setText(selected.getName());
 			valueAltitude.setText(Integer.toString(Math.round(selected.getAltitude())) + "ft");
-			valueBearing.setText(Integer.toString(selected.getBearing()) + " degrees");
-			valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength()))+ "Km/h");
+			valueBearing.setText(Integer.toString(Math.round(selected.getBearing())) + " degrees");
+			valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength()))+ "mph");
 			valueXPosition.setText("x = "+ Math.round(selected.getPosition().getX()));
 			valueYPosition.setText("y = "+ Math.round(selected.getPosition().getY()));
 			valueCrew.setText(Integer.toString(selected.getCrew()));
