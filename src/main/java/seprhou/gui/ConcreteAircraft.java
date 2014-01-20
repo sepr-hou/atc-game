@@ -12,10 +12,10 @@ public class ConcreteAircraft extends Aircraft
 {
 	// Derived constants
 	//  The +1 and -1 here are leeway needed due to float rounding errors
-	private static final int AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 1;
-	private static final int AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 1;
-	private static final int AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
-	private static final int AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
+	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 1;
+	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 1;
+	private static final float AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
+	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
 
 	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{

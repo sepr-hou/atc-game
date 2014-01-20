@@ -16,8 +16,8 @@ public class FlightPlanGenerator
 	//  Filled with some "sensibleish" default options
 	private List<Vector2D> waypoints;
 	private List<Vector2D> entryExitPoints;
-	private List<Integer> initialAltitudes = Arrays.asList(30000, 35000, 40000);
-	private List<Integer> initialSpeeds = Arrays.asList(50);
+	private List<Float> initialAltitudes = Arrays.asList(30000f, 35000f, 40000f);
+	private List<Float> initialSpeeds = Arrays.asList(50f);
 	private float minSafeEntryDistance = 200;
 	private float aircraftPerSec = 0.2f;
 	private int maxAircraft = 5;
@@ -31,10 +31,10 @@ public class FlightPlanGenerator
 	public void setEntryExitPoints(List<Vector2D> entryExitPoints) { this.entryExitPoints = entryExitPoints; }
 
 	/** Sets the list of initial altitudes */
-	public void setInitialAltitudes(List<Integer> initialAltitudes) { this.initialAltitudes = initialAltitudes; }
+	public void setInitialAltitudes(List<Float> initialAltitudes) { this.initialAltitudes = initialAltitudes; }
 
 	/** Sets the list of initial speeds */
-	public void setInitialSpeeds(List<Integer> initialSpeeds) { this.initialSpeeds = initialSpeeds; }
+	public void setInitialSpeeds(List<Float> initialSpeeds) { this.initialSpeeds = initialSpeeds; }
 
 	/** Sets the minimum free radius needed for an aircraft to enter at an entry point */
 	public void setMinSafeEntryDistance(float minSafeEntryDistance) { this.minSafeEntryDistance = minSafeEntryDistance; }
