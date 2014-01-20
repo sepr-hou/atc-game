@@ -63,6 +63,9 @@ public final class Constants
 	/** Minimum free radius needed for an aircraft to enter at an entry point */
 	public static final float MIN_SAFE_ENTY_DISTANCE = 200;
 
+	/** Minimum time between generated aircraft (seconds) */
+	public static final float MIN_TIME_BETWEEN_AIRCRAFT = 3;
+
 	/** Average number of aircraft generated per second */
 	public static final float AIRCRAFT_PER_SEC = 0.2f;
 

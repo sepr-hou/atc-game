@@ -19,10 +19,14 @@ public class FlightPlanGenerator
 	private List<Float> initialAltitudes = Arrays.asList(30000f, 35000f, 40000f);
 	private List<Float> initialSpeeds = Arrays.asList(50f);
 	private float minSafeEntryDistance = 200;
+	private float minTimeBetweenAircraft = 3;
 	private float aircraftPerSec = 0.2f;
 	private int maxAircraft = 5;
 	private int minWaypoints = 2;
 	private int maxWaypoints = 4;
+
+	// State (time since last aircraft)
+	private float timeSinceLastAircraft = Float.POSITIVE_INFINITY;
 
 	/** Sets the list of waypoints to choose from */
 	public void setWaypoints(List<Vector2D> waypoints) { this.waypoints = waypoints; }
@@ -38,6 +42,9 @@ public class FlightPlanGenerator
 
 	/** Sets the minimum free radius needed for an aircraft to enter at an entry point */
 	public void setMinSafeEntryDistance(float minSafeEntryDistance) { this.minSafeEntryDistance = minSafeEntryDistance; }
+
+	/** Sets the minimum number of seconds between aircraft being generated */
+	public void setMinTimeBetweenAircraft(float minTimeBetweenAircraft) { this.minTimeBetweenAircraft = minTimeBetweenAircraft; }
 
 	/** Sets the average number of aircraft to generate per second */
 	public void setAircraftPerSec(float aircraftPerSec) { this.aircraftPerSec = aircraftPerSec; }
@@ -123,6 +130,7 @@ public class FlightPlanGenerator
 		float initialAltitude = Utils.randomItem(initialAltitudes);
 
 		// Create flight plan
+		timeSinceLastAircraft = 0;
 		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude);
 	}
 
@@ -139,6 +147,12 @@ public class FlightPlanGenerator
 	 */
 	public FlightPlan makeFlightPlan(Airspace airspace, float delta)
 	{
+		timeSinceLastAircraft += delta;
+
+		// Check time since last aircraft
+		if (timeSinceLastAircraft < minTimeBetweenAircraft)
+			return null;
+
 		// Check max aircraft
 		if (airspace.getActiveObjects().size() >= maxAircraft)
 			return null;
