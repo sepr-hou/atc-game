@@ -16,12 +16,12 @@ This project uses Maven as its build system. If you have a copy of maven install
 and Maven will download and build everything for you - producing a nice JAR at the end.
 For most IDEs, you should be able to import this project as an existing Maven project.
 
-### Eclipse
-If you are using Eclipse, you must ensure you have the m2e plugin installed. The plugin comes with the "Eclipse IDE for Java Developers" but may not be available in other packages.
+### Eclipse on CS Machines
+If you downloaded Eclipse from the internet, then it should come with the Maven plugin (m2e). Unfortunately the CS machines do not have Maven installed.
 
-The plugin can be installed by going to Help -> Install New Software... Then select "--All Available Sites--" from the list of sites. The m2e plugin can be found under "General Purpose Tools" -> "m2e - Maven Integration for Eclipse".
+The plugin can be installed by going to Help -> Install New Software... In the "Worth with" box type http://download.eclipse.org/releases/juno/ and press enter. The m2e plugin can be found under "General Purpose Tools" -> "m2e - Maven Integration for Eclipse".
 
 Once the plugin is installed, simply import the project into Eclipse and it should build. The first time you do this, it may take some time since all the dependencies must be downloaded from the internet.
 
-## Bugs
-If you find any bugs in the program which you do not want to fix yourself (or don't know how to), please [create a new issue](https://github.com/sepr-hou/atc-game/issues) so someone else can have a look at it.
+## Bugs and Questions
+If you find any bugs or have any questions about the project,, please [create a new issue](https://github.com/sepr-hou/atc-game/issues) and someone from the team will respond.
