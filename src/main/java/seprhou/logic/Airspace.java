@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class Airspace
 {
-	private AircraftObjectFactory objectFactory;
+	private AirspaceObjectFactory objectFactory;
 	private Rectangle dimensions;
 	private float lateralSeparation, verticalSeparation;
 
@@ -25,7 +25,7 @@ public class Airspace
 	private boolean gameOver;
 
 	/** Returns the factory responsible for constructing airspace objects */
-	public AircraftObjectFactory getObjectFactory()
+	public AirspaceObjectFactory getObjectFactory()
 	{
 		return objectFactory;
 	}
@@ -35,7 +35,7 @@ public class Airspace
 	 *
 	 * @param factory new object factory (not null)
 	 */
-	public void setObjectFactory(AircraftObjectFactory factory)
+	public void setObjectFactory(AirspaceObjectFactory factory)
 	{
 		if (factory == null)
 			throw new IllegalArgumentException("factory cannot be null");

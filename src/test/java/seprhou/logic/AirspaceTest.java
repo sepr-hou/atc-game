@@ -161,7 +161,7 @@ public class AirspaceTest
 		airspace.setDimensions(DIMENSIONS);
 		airspace.setLateralSeparation(SEPARATION);
 		airspace.setVerticalSeparation(SEPARATION);
-		airspace.setObjectFactory(new AircraftObjectFactory()
+		airspace.setObjectFactory(new AirspaceObjectFactory()
 		{
 			private int objectsLeft = objectCount;
 

@@ -83,7 +83,7 @@ public class GameScreen extends AbstractScreen
 		airspace.setDimensions(new Rectangle(gameArea.getWidth(), gameArea.getHeight()));
 		airspace.setLateralSeparation(Constants.LATERAL_SEPARATION);
 		airspace.setVerticalSeparation(Constants.VERTICAL_SEPARATION);
-		airspace.setObjectFactory(new AircraftObjectFactory()
+		airspace.setObjectFactory(new AirspaceObjectFactory()
 		{
 			@Override
 			public AirspaceObject makeObject(Airspace airspace, float delta)

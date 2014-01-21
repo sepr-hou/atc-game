@@ -6,7 +6,7 @@ package seprhou.logic;
  * By implementing this class, you can control when all aircraft are generated,
  * what the aircraft are, and what their flight plans are.
  */
-public interface AircraftObjectFactory
+public interface AirspaceObjectFactory
 {
 	/**
 	 * Creates a new airspace object
