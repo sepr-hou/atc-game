@@ -1,16 +1,18 @@
 package seprhou.gui;
 
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import seprhou.logic.*;
+import seprhou.logic.Aircraft;
+import seprhou.logic.Airspace;
+import seprhou.logic.CollisionWarning;
+import seprhou.logic.Vector2D;
+
+import java.util.List;
 
 /**
  * Class which manages the entire game area

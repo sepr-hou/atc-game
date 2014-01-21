@@ -3,8 +3,8 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
-import seprhou.logic.*;
+import seprhou.logic.Aircraft;
+import seprhou.logic.Utils;
 
 /**
  * The actor which displays the control panel on the right of the game screen

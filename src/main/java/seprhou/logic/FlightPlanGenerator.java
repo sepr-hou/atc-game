@@ -1,6 +1,8 @@
 package seprhou.logic;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The default flight plan generator which controls introducing aircraft into the game
