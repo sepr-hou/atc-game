@@ -68,7 +68,7 @@ public class Vector2D
 	 */
 	public float getLengthSquared()
 	{
-		return (float) (this.getX() * this.getX() + this.getY() * this.getY());
+		return this.getX() * this.getX() + this.getY() * this.getY();
 	}
 
 	/**
@@ -98,8 +98,7 @@ public class Vector2D
 		float diffx = Math.max((this.getX() - other.x), (other.getX() - this.x));
 		float diffy = Math.max((this.getY() - other.y), (other.getY() - this.y));
 		float sumsqr = ((diffx * diffx) + (diffy * diffy));
-		float result = (float) Math.sqrt(sumsqr);
-		return result;
+		return  (float) Math.sqrt(sumsqr);
 	}
 
 	/**
@@ -110,8 +109,7 @@ public class Vector2D
 	 */
 	public Vector2D add(Vector2D other)
 	{
-		Vector2D result = new Vector2D((this.getX() + other.getX()),(this.getY() + other.getY()));
-		return result;
+		return new Vector2D((this.getX() + other.getX()),(this.getY() + other.getY()));
 	}
 
 	/**
@@ -122,8 +120,7 @@ public class Vector2D
 	 */
 	public Vector2D sub(Vector2D other)
 	{
-		Vector2D result = new Vector2D((this.getX() - other.getX()),(this.getY() - other.getY()));
-		return result;
+		return new Vector2D((this.getX() - other.getX()),(this.getY() - other.getY()));
 	}
 
 	/**
@@ -134,8 +131,7 @@ public class Vector2D
 	 */
 	public Vector2D multiply(float scalar)
 	{
-		Vector2D result = new Vector2D((this.getX() * scalar),(this.getY() * scalar));
-		return result;
+		return new Vector2D((this.getX() * scalar),(this.getY() * scalar));
 	}
 
 	/**
@@ -150,8 +146,7 @@ public class Vector2D
 	{
 		float cosang = (float) Math.cos(angle);
 		float sinang = (float) Math.sin(angle);
-		Vector2D result = new Vector2D((this.getX() * cosang) - (this.getY() * sinang),(this.getX() * sinang) + (this.getY() * cosang));
-		return result;
+		return new Vector2D((this.getX() * cosang) - (this.getY() * sinang),(this.getX() * sinang) + (this.getY() * cosang));
 	}
 
 	/**
@@ -212,8 +207,8 @@ public class Vector2D
 
 		if (other instanceof Vector2D)
 			return equals((Vector2D) other);
-		else
-			return false;
+
+		return false;
 	}
 
 	@Override

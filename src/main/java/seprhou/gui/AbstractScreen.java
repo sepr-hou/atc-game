@@ -18,7 +18,7 @@ public abstract class AbstractScreen implements Screen
 	private final AtcGame game;
 	private final Stage stage;
 	private final boolean enableEscape;
-	private FPSLogger logger = new FPSLogger();
+	private final FPSLogger logger = new FPSLogger();
 
 	/**
 	 * Creates a new AbstractScreen owned by a game

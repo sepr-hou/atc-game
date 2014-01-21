@@ -189,8 +189,7 @@ public class Rectangle
 
 		if (other instanceof Rectangle)
 			return equals((Rectangle) other);
-		else
-			return false;
+        return false;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class IsDistinct extends TypeSafeMatcher<Iterable>
 	@Override
 	protected boolean matchesSafely(Iterable iterable)
 	{
-		HashSet set = new HashSet();
+		HashSet<Object> set = new HashSet<Object>();
 
 		for (Object item : iterable)
 		{

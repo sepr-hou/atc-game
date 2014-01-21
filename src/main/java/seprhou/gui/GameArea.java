@@ -37,7 +37,8 @@ public class GameArea extends Actor
 		this.parent = parent;
 		this.addListener(new InputListener()
 		{
-			public boolean keyDown(InputEvent event, int keycode)
+			@Override
+            public boolean keyDown(InputEvent event, int keycode)
 			{
 				if (keycode == Input.Keys.UP || keycode == Input.Keys.W)
 				{
@@ -53,7 +54,8 @@ public class GameArea extends Actor
 				return false;
 			}
 
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+			@Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
 			{
 				if (button == Input.Buttons.LEFT)
 				{
