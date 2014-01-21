@@ -3,7 +3,6 @@ package seprhou.gui;
 import seprhou.logic.Vector2D;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
