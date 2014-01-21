@@ -23,5 +23,10 @@
  * Airspace class to introduce new aircraft into the airspace. Each time it is
  * called, you have the option of returning a new aircraft (or any subclass of
  * {@link seprhou.logic.AirspaceObject}).
+ *
+ * <h4>FlightPlanGenerator</h4>
+ * <p>The {@link seprhou.logic.FlightPlanGenerator} is an optional class which can
+ * generate flight plans according to some configuration options. Generally you would
+ * ask this class to create a flightplan in your implementation of AircraftObjectFactory.
  */
 package seprhou.logic;

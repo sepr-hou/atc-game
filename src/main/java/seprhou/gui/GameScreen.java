@@ -5,6 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
 
+/**
+ * The main game screen
+ *
+ * <p>
+ * The GameScreen consists of the GameArea (on the left) and the ControlPanel (on the right).
+ * These classes control drawing of the game itself and the GameArea controls updates due to
+ * interactions (clicking and key presses). The Airspace itself and the current game state is
+ * controlled from this class however.
+ */
 public class GameScreen extends AbstractScreen
 {
 	private static final FlightPlanGenerator flightPathGenerator;
