@@ -83,8 +83,10 @@ public class GameScreen extends AbstractScreen
 
 				if (flightPlan != null)
 				{
-					// TODO Possibly adjust / randomize these arguments
-					return new ConcreteAircraft("The Destroyer", 100000.0f, 5, flightPlan);
+					// Random flight number between YO000 and YO999
+					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
+
+					return new ConcreteAircraft(flightNumber, 100, 5, flightPlan);
 				}
 
 				return null;

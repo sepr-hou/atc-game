@@ -128,13 +128,13 @@ public class ControlPanel extends Group
 		Aircraft selected = this.parent.getSelectedAircraft();
 		if (selected != null){
 			valueFlightNo.setText(selected.getName());
-			valueAltitude.setText(Integer.toString(Math.round(selected.getAltitude())) + "ft");
+			valueAltitude.setText(Integer.toString(Math.round(selected.getAltitude())) + " ft");
 			valueBearing.setText(Integer.toString(Math.round(selected.getBearing())) + " degrees");
-			valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength()))+ "mph");
+			valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength() * 10))+ " mph");
 			valueXPosition.setText("x = "+ Math.round(selected.getPosition().getX()));
 			valueYPosition.setText("y = "+ Math.round(selected.getPosition().getY()));
 			valueCrew.setText(Integer.toString(selected.getCrew()));
-			valueWeight.setText(Float.toString(selected.getWeight()) + "kg");
+			valueWeight.setText(Integer.toString(Math.round(selected.getWeight())) + " tonnes");
 		} else {
 			valueFlightNo.setText("");
 			valueAltitude.setText("");
