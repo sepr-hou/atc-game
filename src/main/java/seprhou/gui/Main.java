@@ -10,19 +10,42 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		//Create configuration
+		boolean windowed = false;
+
+		// Check arguments
+		if (args.length >= 1)
+		{
+			if (args[0].equals("-windowed") || args[0].equals("-w"))
+			{
+				windowed = true;
+			}
+			else
+			{
+				System.err.println("Pass -w or -windowed to run the game in a window");
+				System.err.println();
+				return;
+			}
+		}
+
+		// Setup game config
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-
-		//Set configuration
 		cfg.title = "Airspace Frenzy 6";
-		cfg.width = 800;
-		cfg.height = 500;
-		cfg.resizable = true;
 		cfg.useGL20 = true;
-		cfg.vSyncEnabled = true;
-//		cfg.fullscreen = true;
 
-		//Create game
+		if (windowed)
+		{
+			cfg.width = 800;
+			cfg.height = 500;
+			cfg.fullscreen = false;
+		}
+		else
+		{
+			// Use whatever display mode we're currently on (hopefully it'll work)
+			cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
+			cfg.resizable = false;
+		}
+
+		// Run the game
 		new LwjglApplication(new AtcGame(), cfg);
 	}
 }
