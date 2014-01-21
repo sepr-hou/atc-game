@@ -70,7 +70,7 @@
           <target>1.7</target>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
-          <compilerArgument>-Xlint:unchecked</compilerArgument>
+          <compilerArgument>-Xlint</compilerArgument>
         </configuration>
       </plugin>
 
