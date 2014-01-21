@@ -9,14 +9,14 @@ import java.util.*;
 /**
  * Matcher which matches if all the items in a collection are distinct
  */
-public class IsDistinct extends TypeSafeMatcher<Iterable>
+public class IsDistinct extends TypeSafeMatcher<Iterable<?>>
 {
 	private static final IsDistinct INSTANCE = new IsDistinct();
 
 	@Override
-	protected boolean matchesSafely(Iterable iterable)
+	protected boolean matchesSafely(Iterable<?> iterable)
 	{
-		HashSet<Object> set = new HashSet<Object>();
+		HashSet<Object> set = new HashSet<>();
 
 		for (Object item : iterable)
 		{
@@ -38,7 +38,7 @@ public class IsDistinct extends TypeSafeMatcher<Iterable>
 	/**
 	 * Returns a matcher which matches collections containing no duplicates
 	 */
-	public static Matcher<Iterable> distinct()
+	public static Matcher<Iterable<?>> distinct()
 	{
 		return INSTANCE;
 	}

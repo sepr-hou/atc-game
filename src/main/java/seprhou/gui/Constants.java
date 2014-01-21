@@ -28,7 +28,7 @@ public final class Constants
 	public static final float VERTICAL_SEPARATION = 1000.0f;
 
 	/** List of available waypoints */
-	public static final List<Vector2D> WAYPOINTS = constantList(
+	public static final List<Vector2D> WAYPOINTS = Arrays.asList(
 			new Vector2D(280, 210),
 			new Vector2D(280, 420),
 			new Vector2D(280, 630),
@@ -48,17 +48,17 @@ public final class Constants
 	);
 
 	/** List of available entry and exit points */
-	public static final List<Vector2D> ENTRY_EXIT_POINTS = constantList(
+	public static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(
 			new Vector2D(100, 0),
 			new Vector2D(0, 800),
 			new Vector2D(1000, 0)
 	);
 
 	/** Set of altitudes new flights are generated using */
-	public static final List<Float> INITIAL_ALTITUDES = constantList(30000f, 35000f, 40000f);
+	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(30000f, 35000f, 40000f);
 
 	/** Set of speeds new flights are generated using */
-	public static final List<Float> INITIAL_SPEEDS = constantList(50f);
+	public static final List<Float> INITIAL_SPEEDS = Arrays.asList(50f);
 
 	/** Minimum free radius needed for an aircraft to enter at an entry point */
 	public static final float MIN_SAFE_ENTY_DISTANCE = 200;
@@ -90,13 +90,6 @@ public final class Constants
 
 	/** Maximum turn rate of the aircraft (radians per second) */
 	public static final float AIRCRAFT_TURN_RATE = 1;
-
-	/** Returns a constant list from some arguments */
-	@SafeVarargs
-	private static <T> List<T> constantList(T... a)
-	{
-		return Collections.unmodifiableList(Arrays.asList(a));
-	}
 
 	private Constants()
 	{
