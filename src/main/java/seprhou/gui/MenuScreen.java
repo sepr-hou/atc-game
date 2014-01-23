@@ -1,5 +1,6 @@
 package seprhou.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -82,5 +83,20 @@ public class MenuScreen extends AbstractScreen
 			}
 		});
 		stage.addActor(highScoresButton);
+
+		// button "Exit"
+		TextButton exitButton = new TextButton("Exit", Assets.SKIN);
+		exitButton.setX(buttonX);
+		exitButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
+		exitButton.setWidth(BUTTON_WIDTH);
+		exitButton.setHeight(BUTTON_HEIGHT);
+		exitButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				Gdx.app.exit();
+			}
+		});
+		stage.addActor(exitButton);
 	}
 }
