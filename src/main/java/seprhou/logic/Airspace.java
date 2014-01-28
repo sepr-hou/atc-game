@@ -282,8 +282,8 @@ public class Airspace
 					Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation)
 				{
 					// Add collision warning
-					((Aircraft) object1).setViolated(true);
-					((Aircraft) object2).setViolated(true);
+					object1.setViolated(true);
+					object2.setViolated(true);
 					
 					CollisionWarning warning = new CollisionWarning(object1, object2);
 					collisionWarnings.add(warning);

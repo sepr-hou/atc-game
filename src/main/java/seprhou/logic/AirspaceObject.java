@@ -144,6 +144,8 @@ public abstract class AirspaceObject
 
 		return value;
 	}
+	
+	public abstract void setViolated(boolean value);
 
 	/**
 	 * Called every game tick to update this object's position and other data

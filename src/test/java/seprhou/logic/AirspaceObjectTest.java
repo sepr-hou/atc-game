@@ -142,5 +142,6 @@ public class AirspaceObjectTest
 		@Override public float getMaxAltitude() { return 5000; }
 		@Override public float getMaxAcceleration() { return 100; }
 		@Override public float getMaxTurnRate() { return 1; }
+		@Override public void setViolated(boolean value) { }
 	}
 }
