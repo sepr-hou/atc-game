@@ -19,7 +19,7 @@ public class ConcreteAircraft extends Aircraft
 
 	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan)
 	{
-		super(name, weight, crew, flightPlan);
+		super(name, weight, crew, flightPlan, 1000);
 	}
 
 	@Override

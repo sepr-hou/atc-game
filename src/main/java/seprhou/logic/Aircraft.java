@@ -10,6 +10,12 @@ public abstract class Aircraft extends AirspaceObject
 	private final String name;
 	private final float weight;
 	private final int crew;
+	private float tickCount = 0;
+	
+	private boolean violated = false;
+	
+	private int score;
+	private int gracePeriod = 30;
 
 	private final FlightPlan flightPlan;
 
@@ -24,7 +30,7 @@ public abstract class Aircraft extends AirspaceObject
 	 * @param crew number of crew
 	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan)
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score)
 	{
 		if (flightPlan == null)
 			throw new IllegalArgumentException("flightPlan cannot be null");
@@ -37,6 +43,7 @@ public abstract class Aircraft extends AirspaceObject
 		this.weight = weight;
 		this.crew = crew;
 		this.flightPlan = flightPlan;
+		this.score = score;
 
 		// Setup initial object attributes
 		this.position = flightPlan.getWaypoints().get(0);
@@ -104,12 +111,46 @@ public abstract class Aircraft extends AirspaceObject
 	{
 		return waypointsHit;
 	}
+	
+	public float getTickCount(){
+		return this.tickCount;
+	}
+	
+	public void setTickCount(float count){
+		this.tickCount = count;
+	}
+	
+	public void decayScore(){
+		if(violated){
+			System.out.println("Score violated Deacying:" + score);
+			score -= 20;
+		} else {
+			if(gracePeriod > 0){
+				System.out.println("Grace Remaining:" + gracePeriod);
+				gracePeriod --;
+			}else{
+				System.out.println("Score Deacying:" + score);
+				score = score - 10;
+			}
+		}
+	}
+	
+	public void setViolated(boolean value){
+		this.violated = value;
+	}
 
 	@Override
 	public void refresh(float dt)
 	{
+		
 		super.refresh(dt);
-
+		tickCount += dt;
+		if( tickCount > 1 ){
+			this.decayScore();
+			this.setTickCount(0);
+		}
+		
+		violated = false;
 		// Test intersection with all remaining waypoints
 		List<Vector2D> waypoints = flightPlan.getWaypoints();
 
@@ -122,6 +163,7 @@ public abstract class Aircraft extends AirspaceObject
 				// Hit it!
 				lastWaypoint = i;
 				waypointsHit++;
+				gracePeriod += 5;
 				break;
 			}
 		}
