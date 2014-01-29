@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * An aircraft in the airspace
+ * 
  */
 public abstract class Aircraft extends AirspaceObject
 {
@@ -16,6 +17,7 @@ public abstract class Aircraft extends AirspaceObject
 	
 	private int score;
 	private int gracePeriod = 30;
+	private int decayRate = 10;
 
 	private final FlightPlan flightPlan;
 
@@ -119,18 +121,28 @@ public abstract class Aircraft extends AirspaceObject
 	public void setTickCount(float count){
 		this.tickCount = count;
 	}
-	
+	 /** Scoring
+	 * 
+	 * Each plane has a starting score, grace period and score decay rate.
+	 * Each second decayScore method is called, but while gracePeriod has not pass,
+	 * It keeps decreasing it, when it reaches zero, the method will start to decay score
+	 * by decayRate amount every second
+	 * 
+	 * If another plane breaches exclusion zone of a plane, its score will be decreased by
+	 * twice the decay rate and gracePeriod will be ignored.
+	 */
 	public void decayScore(){
 		if(violated){
 			System.out.println("Score violated Deacying:" + score);
-			score -= 20;
+			//This is executed when the exclusion zone of the plane is violated, regardless of gracePeriod
+			this.score -= this.decayRate * 2; 
 		} else {
 			if(gracePeriod > 0){
 				System.out.println("Grace Remaining:" + gracePeriod);
-				gracePeriod --;
+				this.gracePeriod --;
 			}else{
-				System.out.println("Score Deacying:" + score);
-				score = score - 10;
+				System.out.println("Score Decaying:" + score);
+				this.score = this.score - this.decayRate;
 			}
 		}
 	}
@@ -144,13 +156,15 @@ public abstract class Aircraft extends AirspaceObject
 	{
 		
 		super.refresh(dt);
-		tickCount += dt;
-		if( tickCount > 1 ){
+		
+		this.tickCount += dt;
+		if( this.tickCount > 1 ){
 			this.decayScore();
 			this.setTickCount(0);
 		}
 		
-		violated = false;
+		// Reset violated to false, for checking at the next tick.
+		this.violated = false;
 		// Test intersection with all remaining waypoints
 		List<Vector2D> waypoints = flightPlan.getWaypoints();
 
