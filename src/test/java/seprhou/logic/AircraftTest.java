@@ -88,17 +88,17 @@ public class AircraftTest {
 
 		@Test
 		public void testWaypointSkipping() {
-			// Jump straigt to exit point
+			// Jump straight to exit point should have no effect
 			this.aircraft.position = new Vector2D(200, 200);
 			this.aircraft.refresh(1);
-			Assert.assertThat(this.aircraft.getWaypointsHit(), Matchers.is(1));
-			Assert.assertThat(this.aircraft.getLastWaypoint(), Matchers.is(2));
+			Assert.assertThat(this.aircraft.getWaypointsHit(), Matchers.is(0));
+			Assert.assertThat(this.aircraft.getLastWaypoint(), Matchers.is(0));
 
-			// Jumping to previous waypoint should have no effect
+			// Jumping to next waypoint
 			this.aircraft.position = new Vector2D(100, 100);
 			this.aircraft.refresh(1);
 			Assert.assertThat(this.aircraft.getWaypointsHit(), Matchers.is(1));
-			Assert.assertThat(this.aircraft.getLastWaypoint(), Matchers.is(2));
+			Assert.assertThat(this.aircraft.getLastWaypoint(), Matchers.is(1));
 		}
 	}
 
