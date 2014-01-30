@@ -110,6 +110,21 @@ public class GameArea extends Actor {
 				// Note the rotation angle is NEGATIVE here
 				selected.setTargetVelocity(selected.getTargetVelocity().rotate(-selected.getMaxTurnRate() * delta));
 			}
+			else if (Gdx.input.isKeyPressed(Input.Keys.Q))
+			{
+				// Speed down
+				selected.setTargetVelocity(
+						selected.getTargetVelocity()
+								.sub(selected.getTargetVelocity().normalize().multiply(10)));
+			}
+
+			else if (Gdx.input.isKeyPressed(Input.Keys.E))
+			{
+				// Speed up
+				selected.setTargetVelocity(
+						selected.getTargetVelocity()
+							.add(selected.getTargetVelocity().normalize().multiply(10)));
+			}
 
 			// These keys are updated once - the Stage events handler works out
 			// when the down event occured

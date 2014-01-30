@@ -35,7 +35,7 @@ public final class Constants {
 	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(30000f, 35000f, 40000f);
 
 	/** Set of speeds new flights are generated using */
-	public static final List<Float> INITIAL_SPEEDS = Arrays.asList(50f);
+	public static final List<Float> INITIAL_SPEEDS = Arrays.asList(50f, 60f, 40f);
 
 	/** Minimum free radius needed for an aircraft to enter at an entry point */
 	public static final float MIN_SAFE_ENTY_DISTANCE = 200;
