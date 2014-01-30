@@ -12,8 +12,8 @@ import seprhou.logic.FlightPlan;
 public class ConcreteAircraft extends Aircraft {
 	// Derived constants
 	// The +1 and -1 here are leeway needed due to float rounding errors
-	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 1;
-	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 1;
+	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 10;
+	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 10;
 	private static final float AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
 	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
 
@@ -101,10 +101,9 @@ public class ConcreteAircraft extends Aircraft {
 		return ConcreteAircraft.AIRCRAFT_MAX_ALTITUDE;
 	}
 
-	// Note currently changing speed of active aircraft is disabled
-	// 1 used because of float rounding errors
+	//Change of speed now enabled!
 	@Override
 	public float getMaxAcceleration() {
-		return 1;
+		return 10;
 	}
 }
