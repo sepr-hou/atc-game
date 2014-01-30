@@ -13,6 +13,7 @@ public abstract class Aircraft extends AirspaceObject {
 	private float tickCount = 0;
 
 	private boolean violated = false;
+	private boolean finished = false;
 
 	private int score;
 	private int gracePeriod = 30;
@@ -114,6 +115,8 @@ public abstract class Aircraft extends AirspaceObject {
 	public void setTickCount(float count) {
 		this.tickCount = count;
 	}
+	
+	
 
 	/**
 	 * Scoring
@@ -164,17 +167,15 @@ public abstract class Aircraft extends AirspaceObject {
 		// Test intersection with all remaining waypoints
 		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
 
-		for (int i = this.lastWaypoint + 1; i < waypoints.size(); i++) {
-			Vector2D waypointPosition = waypoints.get(i);
+		Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
 
-			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
-				// Hit it!
-				this.lastWaypoint = i;
-				this.waypointsHit++;
-				this.gracePeriod += 5;
-				break;
-			}
-		}
+		if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
+			// Hit it!
+			this.lastWaypoint++;
+			this.waypointsHit++;
+			this.gracePeriod += 5;
+		}	
+
 	}
 
 }
