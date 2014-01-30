@@ -27,17 +27,12 @@ public abstract class Aircraft extends AirspaceObject {
 	/**
 	 * Constructs a new aircraft
 	 * 
-	 * @param name
-	 *            aircraft name (descriptive only)
-	 * @param weight
-	 *            aircraft weight
-	 * @param crew
-	 *            number of crew
-	 * @param flightPlan
-	 *            aircraft flight plan
+	 * @param name aircraft name (descriptive only)
+	 * @param weight aircraft weight
+	 * @param crew number of crew
+	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew,
-			FlightPlan flightPlan, int score) {
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score) {
 		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
 		}
@@ -107,8 +102,9 @@ public abstract class Aircraft extends AirspaceObject {
 	public int getLastWaypoint() {
 		return this.lastWaypoint;
 	}
-	
-	public boolean getFinished(){
+
+	@Override
+	public boolean getFinished() {
 		return this.finished;
 	}
 

@@ -229,4 +229,6 @@ public abstract class AirspaceObject {
 
 	/** Returns the maximum rate of change of angle (radians / sec) */
 	public abstract float getMaxTurnRate();
+
+	public abstract boolean getFinished();
 }

@@ -20,14 +20,14 @@ public class Airspace {
 	private Rectangle dimensions;
 	private float lateralSeparation, verticalSeparation;
 
-	private ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
-	private ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
+	private final ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
+	private final ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
 
 	/**
 	 * During the game refresh, this list is sorted so that LOWER planes
 	 * (altitude) are put FIRST
 	 */
-	private ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
+	private final ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
 
 	private boolean gameOver;
 
@@ -235,8 +235,8 @@ public class Airspace {
 		for (int i = this.activeObjects.size() - 1; i >= 0; i--) {
 			AirspaceObject object = this.activeObjects.get(i);
 
-			if ((!gameArea.intersects(object.getPosition(), object.getSize()) || ((Aircraft) object).getFinished())) {
-				//if((Aircraft) object.)
+			if (!gameArea.intersects(object.getPosition(), object.getSize()) || object.getFinished()) {
+				// if((Aircraft) object.)
 				this.activeObjects.remove(i);
 				this.culledObjects.add(object);
 			}

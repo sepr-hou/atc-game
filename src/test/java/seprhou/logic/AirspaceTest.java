@@ -257,5 +257,10 @@ public class AirspaceTest {
 
 		@Override
 		public void setViolated(boolean value) {}
+
+		@Override
+		public boolean getFinished() {
+			return false;
+		}
 	}
 }
