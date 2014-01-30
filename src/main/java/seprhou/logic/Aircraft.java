@@ -107,6 +107,10 @@ public abstract class Aircraft extends AirspaceObject {
 	public int getLastWaypoint() {
 		return this.lastWaypoint;
 	}
+	
+	public boolean getFinished(){
+		return this.finished;
+	}
 
 	/** Returns the total number of waypoints hit by this aircraft */
 	public int getWaypointsHit() {
@@ -172,11 +176,9 @@ public abstract class Aircraft extends AirspaceObject {
 
 		if (this.lastWaypoint + 1 >= waypoints.size()) {
 			this.finished = true;
-			System.out.println("Finished!");
 		} else {
 
 			Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
-			System.out.println("Waypoints Hit:" + this.waypointsHit);
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Hit it!

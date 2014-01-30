@@ -235,7 +235,7 @@ public class Airspace {
 		for (int i = this.activeObjects.size() - 1; i >= 0; i--) {
 			AirspaceObject object = this.activeObjects.get(i);
 
-			if (!gameArea.intersects(object.getPosition(), object.getSize())) {
+			if ((!gameArea.intersects(object.getPosition(), object.getSize()) || ((Aircraft) object).getFinished())) {
 				//if((Aircraft) object.)
 				this.activeObjects.remove(i);
 				this.culledObjects.add(object);
