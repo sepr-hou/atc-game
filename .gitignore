@@ -3,6 +3,8 @@
 
 # Eclipse settings
 /.settings/
+.classpath
+.project
 
 # Binary files
 *.jar
