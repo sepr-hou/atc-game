@@ -170,13 +170,20 @@ public abstract class Aircraft extends AirspaceObject {
 		// Test intersection with all remaining waypoints
 		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
 
-		Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
+		if (this.lastWaypoint + 1 >= waypoints.size()) {
+			this.finished = true;
+			System.out.println("Finished!");
+		} else {
 
-		if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
-			// Hit it!
-			this.lastWaypoint++;
-			this.waypointsHit++;
-			this.gracePeriod += 5;
+			Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
+			System.out.println("Waypoints Hit:" + this.waypointsHit);
+
+			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
+				// Hit it!
+				this.lastWaypoint++;
+				this.waypointsHit++;
+				this.gracePeriod += 5;
+			}
 		}
 
 	}
