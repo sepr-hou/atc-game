@@ -10,27 +10,26 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 /**
  * The screen displaying the main menu
  */
-public class MenuScreen extends AbstractScreen
-{
+public class MenuScreen extends AbstractScreen {
 	private static final float BUTTON_WIDTH = 300f;
 	private static final float BUTTON_HEIGHT = 60f;
 	private static final float BUTTON_SPACING = 10f;
 
 	/**
 	 * Initializes the menu screen
-	 *
+	 * 
 	 * @param game game which owns this screen
 	 */
-	public MenuScreen(AtcGame game)
-	{
+	public MenuScreen(AtcGame game) {
 		super(game, false);
-		Stage stage = getStage();
+		Stage stage = this.getStage();
 
 		// Put buttons in the middle of the screen in the x-axis
-		final float buttonX = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
+		final float buttonX = (AbstractScreen.SCREEN_WIDTH - MenuScreen.BUTTON_WIDTH) / 2;
 
-		// Start placing the label and buttons 100px above the centre of the screen in the y-axis
-		float currentY = ((SCREEN_HEIGHT - BUTTON_HEIGHT)/2);
+		// Start placing the label and buttons 100px above the centre of the
+		// screen in the y-axis
+		float currentY = (AbstractScreen.SCREEN_HEIGHT - MenuScreen.BUTTON_HEIGHT) / 2;
 
 		// Clear the stage
 		stage.clear();
@@ -43,13 +42,12 @@ public class MenuScreen extends AbstractScreen
 		TextButton startGameButton = new TextButton("Start game", Assets.SKIN);
 		startGameButton.setX(buttonX);
 		startGameButton.setY(currentY);
-		startGameButton.setWidth(BUTTON_WIDTH);
-		startGameButton.setHeight(BUTTON_HEIGHT);
+		startGameButton.setWidth(MenuScreen.BUTTON_WIDTH);
+		startGameButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		startGameButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y)
-			{
-				getGame().showGame();
+			public void clicked(InputEvent event, float x, float y) {
+				MenuScreen.this.getGame().showGame();
 			}
 		});
 		stage.addActor(startGameButton);
@@ -57,14 +55,13 @@ public class MenuScreen extends AbstractScreen
 		// button "Options"
 		TextButton optionsButton = new TextButton("Options", Assets.SKIN);
 		optionsButton.setX(buttonX);
-		optionsButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
-		optionsButton.setWidth(BUTTON_WIDTH);
-		optionsButton.setHeight(BUTTON_HEIGHT);
+		optionsButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		optionsButton.setWidth(MenuScreen.BUTTON_WIDTH);
+		optionsButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		optionsButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y)
-			{
-				getGame().showOptions();
+			public void clicked(InputEvent event, float x, float y) {
+				MenuScreen.this.getGame().showOptions();
 			}
 		});
 		stage.addActor(optionsButton);
@@ -72,14 +69,13 @@ public class MenuScreen extends AbstractScreen
 		// button "High Scores"
 		TextButton highScoresButton = new TextButton("High Scores", Assets.SKIN);
 		highScoresButton.setX(buttonX);
-		highScoresButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
-		highScoresButton.setWidth(BUTTON_WIDTH);
-		highScoresButton.setHeight(BUTTON_HEIGHT);
+		highScoresButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		highScoresButton.setWidth(MenuScreen.BUTTON_WIDTH);
+		highScoresButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		highScoresButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y)
-			{
-				getGame().showHighScores();
+			public void clicked(InputEvent event, float x, float y) {
+				MenuScreen.this.getGame().showHighScores();
 			}
 		});
 		stage.addActor(highScoresButton);
@@ -87,13 +83,12 @@ public class MenuScreen extends AbstractScreen
 		// button "Exit"
 		TextButton exitButton = new TextButton("Exit", Assets.SKIN);
 		exitButton.setX(buttonX);
-		exitButton.setY((currentY -= BUTTON_HEIGHT + BUTTON_SPACING));
-		exitButton.setWidth(BUTTON_WIDTH);
-		exitButton.setHeight(BUTTON_HEIGHT);
+		exitButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		exitButton.setWidth(MenuScreen.BUTTON_WIDTH);
+		exitButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		exitButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y)
-			{
+			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
 			}
 		});

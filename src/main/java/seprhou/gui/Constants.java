@@ -1,15 +1,14 @@
 package seprhou.gui;
 
-import seprhou.logic.Vector2D;
-
 import java.util.Arrays;
 import java.util.List;
+
+import seprhou.logic.Vector2D;
 
 /**
  * Class containing the game constants
  */
-public final class Constants
-{
+public final class Constants {
 	// #################
 	// GUI options
 	// #################
@@ -27,31 +26,10 @@ public final class Constants
 	public static final float VERTICAL_SEPARATION = 1000.0f;
 
 	/** List of available waypoints */
-	public static final List<Vector2D> WAYPOINTS = Arrays.asList(
-			new Vector2D(280, 210),
-			new Vector2D(280, 420),
-			new Vector2D(280, 630),
-			new Vector2D(280, 840),
-			new Vector2D(560, 210),
-			new Vector2D(560, 420),
-			new Vector2D(560, 630),
-			new Vector2D(560, 840),
-			new Vector2D(840, 210),
-			new Vector2D(840, 420),
-			new Vector2D(840, 630),
-			new Vector2D(840, 840),
-			new Vector2D(1120, 210),
-			new Vector2D(1120, 420),
-			new Vector2D(1120, 630),
-			new Vector2D(1120, 840)
-	);
+	public static final List<Vector2D> WAYPOINTS = Arrays.asList(new Vector2D(280, 210), new Vector2D(280, 420), new Vector2D(280, 630), new Vector2D(280, 840), new Vector2D(560, 210), new Vector2D(560, 420), new Vector2D(560, 630), new Vector2D(560, 840), new Vector2D(840, 210), new Vector2D(840, 420), new Vector2D(840, 630), new Vector2D(840, 840), new Vector2D(1120, 210), new Vector2D(1120, 420), new Vector2D(1120, 630), new Vector2D(1120, 840));
 
 	/** List of available entry and exit points */
-	public static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(
-			new Vector2D(100, 0),
-			new Vector2D(0, 800),
-			new Vector2D(1000, 0)
-	);
+	public static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(new Vector2D(100, 0), new Vector2D(0, 800), new Vector2D(1000, 0));
 
 	/** Set of altitudes new flights are generated using */
 	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(30000f, 35000f, 40000f);
@@ -78,10 +56,13 @@ public final class Constants
 	public static final int MAX_WAYPOINTS = 4;
 
 	// #################
-	// ConcreteAircraft options (some other options are derived from the above options)
+	// ConcreteAircraft options (some other options are derived from the above
+	// options)
 	// #################
 
-	/** Size of the aircraft (radius of the circle which represents the aircraft) */
+	/**
+	 * Size of the aircraft (radius of the circle which represents the aircraft)
+	 */
 	public static final float AIRCRAFT_SIZE = 32;
 
 	/** Ascent / decent rate of the aircraft (units per second) */
@@ -90,7 +71,5 @@ public final class Constants
 	/** Maximum turn rate of the aircraft (radians per second) */
 	public static final float AIRCRAFT_TURN_RATE = 1;
 
-	private Constants()
-	{
-	}
+	private Constants() {}
 }

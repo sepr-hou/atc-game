@@ -6,15 +6,14 @@ import java.util.List;
  * An aircraft in the airspace
  * 
  */
-public abstract class Aircraft extends AirspaceObject
-{
+public abstract class Aircraft extends AirspaceObject {
 	private final String name;
 	private final float weight;
 	private final int crew;
 	private float tickCount = 0;
-	
+
 	private boolean violated = false;
-	
+
 	private int score;
 	private int gracePeriod = 30;
 	private int decayRate = 10;
@@ -26,19 +25,20 @@ public abstract class Aircraft extends AirspaceObject
 
 	/**
 	 * Constructs a new aircraft
-	 *
+	 * 
 	 * @param name aircraft name (descriptive only)
 	 * @param weight aircraft weight
 	 * @param crew number of crew
 	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score)
-	{
-		if (flightPlan == null)
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score) {
+		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
+		}
 
-		if (name == null)
+		if (name == null) {
 			name = "";
+		}
 
 		// Setup my attributes
 		this.name = name;
@@ -57,131 +57,124 @@ public abstract class Aircraft extends AirspaceObject
 	}
 
 	/** Returns this aircraft's name */
-	public String getName()
-	{
-		return name;
+	public String getName() {
+		return this.name;
 	}
 
 	/**
 	 * Returns this aircraft's bearing as calculated from its velocity
-	 *
+	 * 
 	 * <p>
-	 * This means that this method returns an angle from 0 to 360 where 0 degrees
-	 * points upwards (positive y direction).
-	 *
+	 * This means that this method returns an angle from 0 to 360 where 0
+	 * degrees points upwards (positive y direction).
+	 * 
 	 * @return the bearing of this aircraft
 	 */
-	public float getBearing()
-	{
+	public float getBearing() {
 		float angle = this.velocity.getAngle();
 		angle = angle * 180;
 		angle /= Math.PI;
 		angle = -angle;
 		angle += 90;
-		if (angle < 0){
+		if (angle < 0) {
 			angle += 360;
 		}
 		return angle;
 	}
 
 	/** Returns this aircraft's weight */
-	public float getWeight()
-	{
-		return weight;
+	public float getWeight() {
+		return this.weight;
 	}
 
 	/** Returns this aircraft's crew */
-	public int getCrew()
-	{
-		return crew;
+	public int getCrew() {
+		return this.crew;
 	}
 
 	/** Returns this aircraft's flight plan (unmodifiable) */
-	public FlightPlan getFlightPlan()
-	{
-		return flightPlan;
+	public FlightPlan getFlightPlan() {
+		return this.flightPlan;
 	}
 
 	/** Returns the last waypoint hit by this aircraft */
-	public int getLastWaypoint()
-	{
-		return lastWaypoint;
+	public int getLastWaypoint() {
+		return this.lastWaypoint;
 	}
 
 	/** Returns the total number of waypoints hit by this aircraft */
-	public int getWaypointsHit()
-	{
-		return waypointsHit;
+	public int getWaypointsHit() {
+		return this.waypointsHit;
 	}
-	
-	public float getTickCount(){
+
+	public float getTickCount() {
 		return this.tickCount;
 	}
-	
-	public void setTickCount(float count){
+
+	public void setTickCount(float count) {
 		this.tickCount = count;
 	}
-	 /** Scoring
+
+	/**
+	 * Scoring
 	 * 
-	 * Each plane has a starting score, grace period and score decay rate.
-	 * Each second decayScore method is called, but while gracePeriod has not pass,
-	 * It keeps decreasing it, when it reaches zero, the method will start to decay score
-	 * by decayRate amount every second
+	 * Each plane has a starting score, grace period and score decay rate. Each
+	 * second decayScore method is called, but while gracePeriod has not pass,
+	 * It keeps decreasing it, when it reaches zero, the method will start to
+	 * decay score by decayRate amount every second
 	 * 
-	 * If another plane breaches exclusion zone of a plane, its score will be decreased by
-	 * twice the decay rate and gracePeriod will be ignored.
+	 * If another plane breaches exclusion zone of a plane, its score will be
+	 * decreased by twice the decay rate and gracePeriod will be ignored.
 	 */
-	public void decayScore(){
-		if(violated){
-			System.out.println("Score violated Deacying:" + score);
-			//This is executed when the exclusion zone of the plane is violated, regardless of gracePeriod
-			this.score -= this.decayRate * 2; 
+	public void decayScore() {
+		if (this.violated) {
+			System.out.println("Score violated Deacying:" + this.score);
+			// This is executed when the exclusion zone of the plane is
+			// violated, regardless of gracePeriod
+			this.score -= this.decayRate * 2;
 		} else {
-			if(gracePeriod > 0){
-				System.out.println("Grace Remaining:" + gracePeriod);
-				this.gracePeriod --;
-			}else{
-				System.out.println("Score Decaying:" + score);
+			if (this.gracePeriod > 0) {
+				System.out.println("Grace Remaining:" + this.gracePeriod);
+				this.gracePeriod--;
+			} else {
+				System.out.println("Score Decaying:" + this.score);
 				this.score = this.score - this.decayRate;
 			}
 		}
 	}
-	
-	public void setViolated(boolean value){
+
+	@Override
+	public void setViolated(boolean value) {
 		this.violated = value;
 	}
 
 	@Override
-	public void refresh(float dt)
-	{
-		
+	public void refresh(float dt) {
+
 		super.refresh(dt);
-		
+
 		this.tickCount += dt;
-		if( this.tickCount > 1 ){
+		if (this.tickCount > 1) {
 			this.decayScore();
 			this.setTickCount(0);
 		}
-		
+
 		// Reset violated to false, for checking at the next tick.
 		this.violated = false;
 		// Test intersection with all remaining waypoints
-		List<Vector2D> waypoints = flightPlan.getWaypoints();
+		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
 
-		for (int i = lastWaypoint + 1; i < waypoints.size(); i++)
-		{
+		for (int i = this.lastWaypoint + 1; i < waypoints.size(); i++) {
 			Vector2D waypointPosition = waypoints.get(i);
 
-			if (position.distanceTo(waypointPosition) <= getSize())
-			{
+			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Hit it!
-				lastWaypoint = i;
-				waypointsHit++;
-				gracePeriod += 5;
+				this.lastWaypoint = i;
+				this.waypointsHit++;
+				this.gracePeriod += 5;
 				break;
 			}
 		}
 	}
 
-	
 }

@@ -2,21 +2,21 @@ package seprhou.logic;
 
 /**
  * An object residing in the airspace (which can move and collide with things)
- *
+ * 
  * <p>
- * The current state of an object is contained within its 2d position, 2d velocity and altitude.
- * Each refresh, the object's position is updated according to its velocity.
- * In addition to this, object's also have a target velocity and altitude.
- * Each refresh, the object's velocity and altitude are updated to get closer to the targets at a
- * rate specified by some of the abstract getters.
- *
+ * The current state of an object is contained within its 2d position, 2d
+ * velocity and altitude. Each refresh, the object's position is updated
+ * according to its velocity. In addition to this, object's also have a target
+ * velocity and altitude. Each refresh, the object's velocity and altitude are
+ * updated to get closer to the targets at a rate specified by some of the
+ * abstract getters.
+ * 
  * <p>
- * This class contains lots of abstract methods. These all specify various physics properties
- * about the object, and are used in the refresh method to control how the position and velocity
- * are updated.
+ * This class contains lots of abstract methods. These all specify various
+ * physics properties about the object, and are used in the refresh method to
+ * control how the position and velocity are updated.
  */
-public abstract class AirspaceObject
-{
+public abstract class AirspaceObject {
 	// Current state of the motion of the aircraft (position + 2d velocity)
 	protected Vector2D position = Vector2D.ZERO;
 	protected Vector2D velocity = Vector2D.ZERO;
@@ -29,184 +29,176 @@ public abstract class AirspaceObject
 	/**
 	 * Constructs a new AirspaceObject with 0 initial values
 	 */
-	protected AirspaceObject()
-	{
-	}
+	protected AirspaceObject() {}
 
 	/** Returns this aircraft's current position */
-	public Vector2D getPosition()
-	{
-		return position;
+	public Vector2D getPosition() {
+		return this.position;
 	}
 
 	/** Returns this aircraft's current velocity */
-	public Vector2D getVelocity()
-	{
-		return velocity;
+	public Vector2D getVelocity() {
+		return this.velocity;
 	}
 
 	/** Returns this aircraft's current altitude */
-	public float getAltitude()
-	{
-		return altitude;
+	public float getAltitude() {
+		return this.altitude;
 	}
 
 	/** Returns this aircraft's target velocity */
-	public Vector2D getTargetVelocity()
-	{
-		return targetVelocity;
+	public Vector2D getTargetVelocity() {
+		return this.targetVelocity;
 	}
 
 	/** Returns this aircraft's target altitude */
-	public float getTargetAltitude()
-	{
-		return targetAltitude;
+	public float getTargetAltitude() {
+		return this.targetAltitude;
 	}
 
 	/**
 	 * Sets a new target velocity for this object
-	 *
-	 * <p>The object will rotate and change speed towards its new target velocity
-	 *
+	 * 
+	 * <p>
+	 * The object will rotate and change speed towards its new target velocity
+	 * 
 	 * @param newVelocity new target velocity
 	 */
-	public void setTargetVelocity(Vector2D newVelocity)
-	{
+	public void setTargetVelocity(Vector2D newVelocity) {
 		// Apply speed clamps
-		float maxSpeed = getMaxSpeed();
-		float minSpeed = getMinSpeed();
+		float maxSpeed = this.getMaxSpeed();
+		float minSpeed = this.getMinSpeed();
 		float speed = newVelocity.getLength();
 
-		if (speed < minSpeed || speed > maxSpeed)
-		{
-			if (speed < minSpeed)
+		if (speed < minSpeed || speed > maxSpeed) {
+			if (speed < minSpeed) {
 				speed = minSpeed;
-			else if (speed > maxSpeed)
+			} else if (speed > maxSpeed) {
 				speed = maxSpeed;
+			}
 
 			this.targetVelocity = newVelocity.changeLength(speed);
-		}
-		else
-		{
+		} else {
 			this.targetVelocity = newVelocity;
 		}
 	}
 
 	/**
 	 * Sets a new target altitude for this object
-	 *
-	 * <p>The object will start climbing / falling towards its target altitude
-	 *
+	 * 
+	 * <p>
+	 * The object will start climbing / falling towards its target altitude
+	 * 
 	 * @param newAltitude new target altitude
 	 */
-	public void setTargetAltitude(float newAltitude)
-	{
+	public void setTargetAltitude(float newAltitude) {
 		// Apply altitude clamps
-		float minAltitude = getMinAltitude();
-		float maxAltitude = getMaxAltitude();
+		float minAltitude = this.getMinAltitude();
+		float maxAltitude = this.getMaxAltitude();
 
-		if (newAltitude < minAltitude)
+		if (newAltitude < minAltitude) {
 			newAltitude = minAltitude;
-		else if (newAltitude > maxAltitude)
+		} else if (newAltitude > maxAltitude) {
 			newAltitude = maxAltitude;
+		}
 
 		this.targetAltitude = newAltitude;
 	}
 
 	/** Moves value towards target in one step of size change */
-	private static float floatMoveTowards(float value, float target, float change)
-	{
-		if (target < value)
-		{
+	private static float floatMoveTowards(float value, float target, float change) {
+		if (target < value) {
 			value -= change;
-			if (target > value)
+			if (target > value) {
 				value = target;
-		}
-		else if (target > value)
-		{
+			}
+		} else if (target > value) {
 			value += change;
-			if (target < value)
+			if (target < value) {
 				value = target;
+			}
 		}
 
 		return value;
 	}
 
-	/** As floatMoveTowards, followed by clamping the result to maximum and minimum values */
-	private static float floatMoveAndClamp(float value, float target, float change, float min, float max)
-	{
-		value = floatMoveTowards(value, target, change);
+	/**
+	 * As floatMoveTowards, followed by clamping the result to maximum and
+	 * minimum values
+	 */
+	private static float floatMoveAndClamp(float value, float target, float change, float min, float max) {
+		value = AirspaceObject.floatMoveTowards(value, target, change);
 
-		if (value < min)
+		if (value < min) {
 			value = min;
-		if (value > max)
+		}
+		if (value > max) {
 			value = max;
+		}
 
 		return value;
 	}
-	
+
 	public abstract void setViolated(boolean value);
 
 	/**
 	 * Called every game tick to update this object's position and other data
-	 *
+	 * 
 	 * @param dt number of seconds elapsed since the last call to this method
 	 * @see Airspace#refresh(float)
 	 */
-	public void refresh(float dt)
-	{
+	public void refresh(float dt) {
 		// Update altitude
-		if (altitude != targetAltitude)
-		{
-			float minAltitude = getMinAltitude();
-			float maxAltitude = getMaxAltitude();
-			float ascentAmount = getAscentRate() * dt;
+		if (this.altitude != this.targetAltitude) {
+			float minAltitude = this.getMinAltitude();
+			float maxAltitude = this.getMaxAltitude();
+			float ascentAmount = this.getAscentRate() * dt;
 
-			altitude = floatMoveAndClamp(altitude, targetAltitude, ascentAmount, minAltitude, maxAltitude);
+			this.altitude = AirspaceObject.floatMoveAndClamp(this.altitude, this.targetAltitude, ascentAmount, minAltitude, maxAltitude);
 		}
 
 		// Update velocity
-		if (!velocity.equals(targetVelocity))
-		{
-			float minSpeed = getMinSpeed();
-			float maxSpeed = getMaxSpeed();
-			float acceleration = getMaxAcceleration() * dt;
-			float turnRate = getMaxTurnRate() * dt;
+		if (!this.velocity.equals(this.targetVelocity)) {
+			float minSpeed = this.getMinSpeed();
+			float maxSpeed = this.getMaxSpeed();
+			float acceleration = this.getMaxAcceleration() * dt;
+			float turnRate = this.getMaxTurnRate() * dt;
 
 			// Process speed value
-			float speed = velocity.getLength();
-			float targetSpeed = targetVelocity.getLength();
+			float speed = this.velocity.getLength();
+			float targetSpeed = this.targetVelocity.getLength();
 
-			speed = floatMoveAndClamp(speed, targetSpeed, acceleration, minSpeed, maxSpeed);
+			speed = AirspaceObject.floatMoveAndClamp(speed, targetSpeed, acceleration, minSpeed, maxSpeed);
 
 			// Process angle value
-			float angle = velocity.getAngle();
-			float targetAngle = targetVelocity.getAngle();
+			float angle = this.velocity.getAngle();
+			float targetAngle = this.targetVelocity.getAngle();
 
-			// Adjust turn direction so the angle moves around the discontinuity properly
-			if (Math.abs(angle - targetAngle) > Math.PI)
+			// Adjust turn direction so the angle moves around the discontinuity
+			// properly
+			if (Math.abs(angle - targetAngle) > Math.PI) {
 				turnRate = -turnRate;
+			}
 
-			angle = floatMoveTowards(angle, targetAngle, turnRate);
+			angle = AirspaceObject.floatMoveTowards(angle, targetAngle, turnRate);
 
 			// Reconstruct velocity vector
-			velocity = Vector2D.fromPolar(speed, angle);
+			this.velocity = Vector2D.fromPolar(speed, angle);
 		}
 
 		// Update position
-		position = position.add(velocity.multiply(dt));
+		this.position = this.position.add(this.velocity.multiply(dt));
 	}
 
 	/**
 	 * Draws this object
-	 *
+	 * 
 	 * @param state any state information to be passed to the drawer
 	 */
 	public abstract void draw(Object state);
 
 	/** Returns true if this object is solid (can collide with anything) */
-	public boolean isSolid()
-	{
+	public boolean isSolid() {
 		return true;
 	}
 
