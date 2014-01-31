@@ -231,4 +231,6 @@ public abstract class AirspaceObject {
 	public abstract float getMaxTurnRate();
 
 	public abstract boolean getFinished();
+
+	public abstract boolean getViolated();
 }

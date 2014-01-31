@@ -115,5 +115,10 @@ public class CollisionWarningTest {
 		public boolean getFinished() {
 			return false;
 		}
+
+		@Override
+		public boolean getViolated() {
+			return false;
+		}
 	}
 }

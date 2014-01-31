@@ -194,9 +194,9 @@ public class GameArea extends Actor {
 			for (CollisionWarning collision : airspace.getCollisionWarnings()) {
 				Vector2D position = collision.getObject1().getPosition();
 				Vector2D position2 = collision.getObject2().getPosition();
-				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
-				batch.draw(Assets.CIRCLE_TEXTURE, this.getX() + position.getX() - circleRadius, this.getY() + position.getY() - circleRadius);
-				batch.draw(Assets.CIRCLE_TEXTURE, this.getX() + position2.getX() - circleRadius, this.getY() + position2.getY() - circleRadius);
+				float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
+				batch.draw(Assets.VIOLATED_TEXTURE, this.getX() + position.getX() - circleRadius, this.getY() + position.getY() - circleRadius);
+				batch.draw(Assets.VIOLATED_TEXTURE, this.getX() + position2.getX() - circleRadius, this.getY() + position2.getY() - circleRadius);
 			}
 
 			// End clipping

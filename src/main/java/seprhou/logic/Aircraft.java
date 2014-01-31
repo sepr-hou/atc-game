@@ -155,6 +155,11 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	@Override
+	public boolean getViolated() {
+		return this.violated;
+	}
+
+	@Override
 	public void refresh(float dt) {
 
 		super.refresh(dt);

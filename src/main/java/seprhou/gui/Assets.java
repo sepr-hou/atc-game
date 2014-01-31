@@ -19,6 +19,7 @@ public final class Assets {
 	public static final Texture AIRCRAFT_TEXTURE = Assets.loadTextureFromFile("airplane.png");
 	public static final Texture MENU_BACKGROUND_TEXTURE = Assets.loadTextureFromFile("menubackground.png");
 	public static final Texture CIRCLE_TEXTURE = Assets.loadTextureFromFile("circle.png");
+	public static final Texture VIOLATED_TEXTURE = Assets.loadTextureFromFile("violated.png");
 	public static final Texture GAMEOVER_TEXTURE = Assets.loadTextureFromFile("gameoverbackground.png");
 	public static final Texture AIRCRAFT_SELECTED = Assets.loadTextureFromFile("airplaneselected.png");
 	public static final Texture GAME_TITLE = Assets.loadTextureFromFile("title.gif");

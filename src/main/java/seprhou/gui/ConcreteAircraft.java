@@ -39,6 +39,11 @@ public class ConcreteAircraft extends Aircraft {
 		// If selected, use different colour plane
 		if (this == gameArea.getGameScreen().getSelectedAircraft()) {
 			aircraftTexture = Assets.AIRCRAFT_SELECTED;
+
+			if (!this.getViolated()) {
+				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
+				batch.draw(Assets.CIRCLE_TEXTURE, gameArea.getX() + this.getPosition().getX() - circleRadius, gameArea.getY() + this.getPosition().getY() - circleRadius);
+			}
 		} else {
 			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
 		}
@@ -101,7 +106,7 @@ public class ConcreteAircraft extends Aircraft {
 		return ConcreteAircraft.AIRCRAFT_MAX_ALTITUDE;
 	}
 
-	//Change of speed now enabled!
+	// Change of speed now enabled!
 	@Override
 	public float getMaxAcceleration() {
 		return 10;
