@@ -30,6 +30,7 @@ public class Airspace {
 	private final ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
 
 	private boolean gameOver;
+	private int score = 0;
 
 	/** Returns the factory responsible for constructing airspace objects */
 	public AirspaceObjectFactory getObjectFactory() {
@@ -235,8 +236,12 @@ public class Airspace {
 		for (int i = this.activeObjects.size() - 1; i >= 0; i--) {
 			AirspaceObject object = this.activeObjects.get(i);
 
-			if (!gameArea.intersects(object.getPosition(), object.getSize()) || object.getFinished()) {
-				// if((Aircraft) object.)
+			if (!gameArea.intersects(object.getPosition(), object.getSize())) {
+				// If plane, which has just left the screen, had completed it's flight plan
+				// Add its score to score.
+				 if(object.isFinished()){
+					 this.score += object.getScore();
+				 }
 				this.activeObjects.remove(i);
 				this.culledObjects.add(object);
 			}
@@ -357,4 +362,13 @@ public class Airspace {
 			return Float.compare(o1.getAltitude(), o2.getAltitude());
 		}
 	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 }

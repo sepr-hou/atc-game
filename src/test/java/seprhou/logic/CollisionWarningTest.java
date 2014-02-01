@@ -112,13 +112,19 @@ public class CollisionWarningTest {
 		public void setViolated(boolean value) {}
 
 		@Override
-		public boolean getFinished() {
+		public boolean isFinished() {
 			return false;
 		}
 
 		@Override
-		public boolean getViolated() {
+		public boolean isViolated() {
 			return false;
+		}
+
+		@Override
+		public int getScore() {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 	}
 }

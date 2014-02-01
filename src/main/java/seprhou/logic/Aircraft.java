@@ -46,7 +46,7 @@ public abstract class Aircraft extends AirspaceObject {
 		this.weight = weight;
 		this.crew = crew;
 		this.flightPlan = flightPlan;
-		this.score = score;
+		this.setScore(score);
 
 		// Setup initial object attributes
 		this.position = flightPlan.getWaypoints().get(0);
@@ -104,7 +104,7 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	@Override
-	public boolean getFinished() {
+	public boolean isFinished() {
 		return this.finished;
 	}
 
@@ -120,6 +120,14 @@ public abstract class Aircraft extends AirspaceObject {
 	public void setTickCount(float count) {
 		this.tickCount = count;
 	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 	/**
 	 * Scoring
@@ -134,17 +142,17 @@ public abstract class Aircraft extends AirspaceObject {
 	 */
 	public void decayScore() {
 		if (this.violated) {
-			System.out.println("Score violated Deacying:" + this.score);
+			System.out.println("Score violated Deacying:" + this.getScore());
 			// This is executed when the exclusion zone of the plane is
 			// violated, regardless of gracePeriod
-			this.score -= this.decayRate * 2;
+			this.setScore(this.getScore() - this.decayRate * 2);
 		} else {
 			if (this.gracePeriod > 0) {
 				System.out.println("Grace Remaining:" + this.gracePeriod);
 				this.gracePeriod--;
 			} else {
-				System.out.println("Score Decaying:" + this.score);
-				this.score = this.score - this.decayRate;
+				System.out.println("Score Decaying:" + this.getScore());
+				this.setScore(this.getScore() - this.decayRate);
 			}
 		}
 	}
@@ -155,7 +163,7 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	@Override
-	public boolean getViolated() {
+	public boolean isViolated() {
 		return this.violated;
 	}
 
@@ -190,5 +198,6 @@ public abstract class Aircraft extends AirspaceObject {
 		}
 
 	}
+
 
 }

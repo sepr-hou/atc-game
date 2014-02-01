@@ -12,7 +12,8 @@ import seprhou.logic.Utils;
  */
 public class ControlPanel extends Group {
 	private final GameScreen parent;
-	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed, valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel;
+	private final float titleAlign = 50.0f, valueAlign = 80.0f, titleScale = 1.3f;;
+	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed, valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel, valueScore;
 
 	/**
 	 * Creates a new ControlPanel
@@ -21,10 +22,6 @@ public class ControlPanel extends Group {
 	 */
 	public ControlPanel(GameScreen parent) {
 		this.parent = parent;
-
-		float titleAlign = 50.0f;
-		float valueAlign = 80.0f;
-		float titleScale = 1.3f;
 
 		Image gamelogo = new Image(Assets.GAME_TITLE);
 		gamelogo.setX(titleAlign);
@@ -110,6 +107,17 @@ public class ControlPanel extends Group {
 		this.timerLabel.setY(160.0f);
 		this.timerLabel.setFontScale(2.0f);
 		this.addActor(this.timerLabel);
+		
+		Label nameScore = new Label("Score:", Assets.SKIN);
+		nameScore.setX(titleScale);
+		nameScore.setY(100.0f);
+		nameScore.setFontScale(titleScale);
+		this.addActor(nameScore);
+		this.valueScore = new Label("", Assets.SKIN);
+		this.valueScore.setX(valueAlign);
+		this.valueScore.setY(70.0f);
+		this.valueScore.setFontScale(2.0f);
+		this.addActor(this.valueScore);
 	}
 
 	/**
@@ -131,6 +139,7 @@ public class ControlPanel extends Group {
 			this.valueYPosition.setText("y = " + Math.round(selected.getPosition().getY()));
 			this.valueCrew.setText(Integer.toString(selected.getCrew()));
 			this.valueWeight.setText(Integer.toString(Math.round(selected.getWeight())) + " tonnes");
+
 		} else {
 			this.valueFlightNo.setText("");
 			this.valueAltitude.setText("");
@@ -144,5 +153,7 @@ public class ControlPanel extends Group {
 
 		// Update timer
 		this.timerLabel.setText(Utils.formatTime(this.parent.getSecondsSinceStart()));
+		// Update score
+		this.valueScore.setText(Integer.toString(this.parent.getScore()));
 	}
 }

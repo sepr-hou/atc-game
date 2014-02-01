@@ -33,6 +33,7 @@ public class GameScreen extends AbstractScreen {
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
 
+
 	static {
 		flightPathGenerator = new FlightPlanGenerator();
 		GameScreen.flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
@@ -136,4 +137,14 @@ public class GameScreen extends AbstractScreen {
 	public void setSelectedAircraft(Aircraft selectedAircraft) {
 		this.selectedAircraft = selectedAircraft;
 	}
+	
+	/**
+	 * Shorthand method to retrieve score
+	 * @return current score
+	 */
+	public int getScore(){
+		return getAirspace().getScore();
+	}
+
+
 }

@@ -160,13 +160,18 @@ public class AirspaceObjectTest {
 		public void setViolated(boolean value) {}
 
 		@Override
-		public boolean getFinished() {
+		public boolean isFinished() {
 			return false;
 		}
 
 		@Override
-		public boolean getViolated() {
+		public boolean isViolated() {
 			return false;
+		}
+		
+		@Override
+		public int getScore() {
+			return 100;
 		}
 	}
 }

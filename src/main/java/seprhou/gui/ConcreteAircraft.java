@@ -40,7 +40,7 @@ public class ConcreteAircraft extends Aircraft {
 		if (this == gameArea.getGameScreen().getSelectedAircraft()) {
 			aircraftTexture = Assets.AIRCRAFT_SELECTED;
 
-			if (!this.getViolated()) {
+			if (!this.isViolated()) {
 				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
 				batch.draw(Assets.CIRCLE_TEXTURE, gameArea.getX() + this.getPosition().getX() - circleRadius, gameArea.getY() + this.getPosition().getY() - circleRadius);
 			}
