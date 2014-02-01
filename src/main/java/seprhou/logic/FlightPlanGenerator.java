@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seprhou.gui.Constants;
+
 /**
  * The default flight plan generator which controls introducing aircraft into
  * the game
@@ -18,14 +20,14 @@ public class FlightPlanGenerator {
 	// Filled with some "sensibleish" default options
 	private List<Vector2D> waypoints;
 	private List<Vector2D> entryExitPoints;
-	private List<Float> initialAltitudes = Arrays.asList(30000f, 35000f, 40000f);
-	private List<Float> initialSpeeds = Arrays.asList(50f);
-	private float minSafeEntryDistance = 200;
-	private float minTimeBetweenAircraft = 3;
-	private float aircraftPerSec = 0.2f;
-	private int maxAircraft = 5;
-	private int minWaypoints = 2;
-	private int maxWaypoints = 4;
+	private List<Float> initialAltitudes = Constants.INITIAL_ALTITUDES;
+	private List<Float> initialSpeeds = Constants.INITIAL_SPEEDS;
+	private float minSafeEntryDistance = Constants.MIN_SAFE_ENTRY_DISTANCE;
+	private float minTimeBetweenAircraft = Constants.MIN_TIME_BETWEEN_AIRCRAFT;
+	private float aircraftPerSec = Constants.AIRCRAFT_PER_SEC;
+	private int maxAircraft = Constants.MAX_AIRCRAFT;
+	private int minWaypoints = Constants.MIN_WAYPOINTS;
+	private int maxWaypoints = Constants.MAX_WAYPOINTS;
 
 	// State (time since last aircraft)
 	private float timeSinceLastAircraft = Float.POSITIVE_INFINITY;

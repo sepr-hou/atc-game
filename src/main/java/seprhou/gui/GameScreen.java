@@ -39,7 +39,7 @@ public class GameScreen extends AbstractScreen {
 		GameScreen.flightPathGenerator.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
 		GameScreen.flightPathGenerator.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
 		GameScreen.flightPathGenerator.setInitialSpeeds(Constants.INITIAL_SPEEDS);
-		GameScreen.flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTY_DISTANCE);
+		GameScreen.flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
 		GameScreen.flightPathGenerator.setMinTimeBetweenAircraft(Constants.MIN_TIME_BETWEEN_AIRCRAFT);
 		GameScreen.flightPathGenerator.setAircraftPerSec(Constants.AIRCRAFT_PER_SEC);
 		GameScreen.flightPathGenerator.setMaxAircraft(Constants.MAX_AIRCRAFT);
