@@ -23,6 +23,7 @@ public final class Assets {
 	public static final Texture GAMEOVER_TEXTURE = Assets.loadTextureFromFile("gameoverbackground.png");
 	public static final Texture AIRCRAFT_SELECTED = Assets.loadTextureFromFile("airplaneselected.png");
 	public static final Texture GAME_TITLE = Assets.loadTextureFromFile("title.gif");
+	public static final Texture AIRCRAFT_SHADOW = Assets.loadTextureFromFile("airplaneshadow.png");
 	public static final Texture BLANK;
 
 	// Game cursor

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
+import seprhou.logic.Vector2D;
 
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft {
@@ -16,6 +17,9 @@ public class ConcreteAircraft extends Aircraft {
 	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 10;
 	private static final float AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
 	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
+	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.003f;
+	private static final float SHADOW_ANGLE = 0.4f;
+	private static final Vector2D SHADOW_DIRECTION = new Vector2D((float) Math.sin(SHADOW_ANGLE), (float) Math.cos(SHADOW_ANGLE));
 
 	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan) {
 		super(name, weight, crew, flightPlan, 1000);
@@ -47,6 +51,24 @@ public class ConcreteAircraft extends Aircraft {
 		} else {
 			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
 		}
+
+		batch.draw(Assets.AIRCRAFT_SHADOW, // Aircraft shadow texture
+				xPos + SHADOW_DIRECTION.getX()*(SHADOW_HEIGHT_MULTIPLIER*altitude), // X position (bottom left)
+				yPos + SHADOW_DIRECTION.getY()*(SHADOW_HEIGHT_MULTIPLIER*altitude), // Y position (bottom right)
+				this.getSize(), // X rotation origin
+				this.getSize(), // Y rotation origin
+				this.getSize() * 2, // Width
+				this.getSize() * 2, // Height
+				1.0f, // X scaling
+				1.0f, // Y scaling
+				angleDegrees, // Rotation
+				0, // X position in texture
+				0, // Y position in texture
+				Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source texture
+				Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source texture
+				false, // Flip in X axis
+				false // Flip in Y axis
+		);
 
 		batch.draw(aircraftTexture, // Aircraft texture
 				xPos, // X position (bottom left)
