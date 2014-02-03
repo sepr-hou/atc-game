@@ -109,7 +109,7 @@ public class ControlPanel extends Group {
 		this.addActor(this.timerLabel);
 		
 		Label nameScore = new Label("Score:", Assets.SKIN);
-		nameScore.setX(titleScale);
+		nameScore.setX(titleAlign);
 		nameScore.setY(100.0f);
 		nameScore.setFontScale(titleScale);
 		this.addActor(nameScore);
