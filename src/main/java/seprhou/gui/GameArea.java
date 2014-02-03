@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import seprhou.logic.Aircraft;
 import seprhou.logic.Airspace;
 import seprhou.logic.CollisionWarning;
+import seprhou.logic.Runway;
 import seprhou.logic.Vector2D;
 
 /**
@@ -95,6 +96,7 @@ public class GameArea extends Actor {
 		}
 		// Selecting new aircraft
 		if (this.clickPosition != null) {
+			System.out.println(this.clickPosition);
 			// Someone clicked on something - update selected aircraft
 			this.parent.setSelectedAircraft((Aircraft) airspace.findAircraft(this.clickPosition));
 			this.clickPosition = null;
@@ -160,6 +162,11 @@ public class GameArea extends Actor {
 			for (Vector2D point : Constants.WAYPOINTS) {
 				batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + point.getX() - waypointOffset, this.getY() + point.getY() - waypointOffset);
 			}
+
+			//for (Runway runway : Constants.RUNWAYS) {
+			//	batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + runway.getStart().getX() - waypointOffset, this.getY() + runway.getStart().getY() - waypointOffset);
+			//	batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + runway.getEnd().getX() - waypointOffset, this.getY() + runway.getEnd().getY() - waypointOffset);
+			//}
 
 			// Draw flight path + highlighted waypoints
 			if (selected != null) {

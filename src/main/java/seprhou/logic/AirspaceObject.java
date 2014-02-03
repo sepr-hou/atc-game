@@ -126,6 +126,7 @@ public abstract class AirspaceObject {
 	 * As floatMoveTowards, followed by clamping the result to maximum and
 	 * minimum values
 	 */
+	@SuppressWarnings("unused")
 	private static float floatMoveAndClamp(float value, float target, float change, float min, float max) {
 		value = AirspaceObject.floatMoveTowards(value, target, change);
 
@@ -150,17 +151,17 @@ public abstract class AirspaceObject {
 	public void refresh(float dt) {
 		// Update altitude
 		if (this.altitude != this.targetAltitude) {
-			float minAltitude = this.getMinAltitude();
-			float maxAltitude = this.getMaxAltitude();
+			this.getMinAltitude();
+			this.getMaxAltitude();
 			float ascentAmount = this.getAscentRate() * dt;
 
-			this.altitude = AirspaceObject.floatMoveAndClamp(this.altitude, this.targetAltitude, ascentAmount, minAltitude, maxAltitude);
+			this.altitude = AirspaceObject.floatMoveTowards(this.altitude, this.targetAltitude, ascentAmount);
 		}
 
 		// Update velocity
 		if (!this.velocity.equals(this.targetVelocity)) {
-			float minSpeed = this.getMinSpeed();
-			float maxSpeed = this.getMaxSpeed();
+			this.getMinSpeed();
+			this.getMaxSpeed();
 			float acceleration = this.getMaxAcceleration() * dt;
 			float turnRate = this.getMaxTurnRate() * dt;
 
@@ -168,7 +169,7 @@ public abstract class AirspaceObject {
 			float speed = this.velocity.getLength();
 			float targetSpeed = this.targetVelocity.getLength();
 
-			speed = AirspaceObject.floatMoveAndClamp(speed, targetSpeed, acceleration, minSpeed, maxSpeed);
+			speed = AirspaceObject.floatMoveTowards(speed, targetSpeed, acceleration);
 
 			// Process angle value
 			float angle = this.velocity.getAngle();

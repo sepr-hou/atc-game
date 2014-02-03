@@ -2,6 +2,8 @@ package seprhou.logic;
 
 import java.util.List;
 
+import seprhou.gui.Constants;
+
 /**
  * An aircraft in the airspace
  * 
@@ -32,7 +34,7 @@ public abstract class Aircraft extends AirspaceObject {
 	 * @param crew number of crew
 	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score) {
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score, boolean startOnRunway) {
 		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
 		}
@@ -51,10 +53,18 @@ public abstract class Aircraft extends AirspaceObject {
 		// Setup initial object attributes
 		this.position = flightPlan.getWaypoints().get(0);
 		this.velocity = flightPlan.getInitialVelocity();
-		this.altitude = flightPlan.getInitialAltitude();
 
-		this.targetVelocity = this.velocity;
-		this.targetAltitude = this.altitude;
+		if (startOnRunway) {
+			this.altitude = 0;
+			this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils.getRandom().nextInt(Constants.INITIAL_ALTITUDES.size()));
+			Vector2D direction = flightPlan.getWaypoints().get(1).sub(flightPlan.getWaypoints().get(0)).normalize();
+			this.velocity = direction;
+			this.targetVelocity = direction.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom().nextInt(Constants.INITIAL_SPEEDS.size())));
+		} else {
+			this.altitude = flightPlan.getInitialAltitude();
+			this.targetAltitude = this.altitude;
+			this.targetVelocity = this.velocity;
+		}
 	}
 
 	/** Returns this aircraft's name */

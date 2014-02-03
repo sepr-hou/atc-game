@@ -1,7 +1,6 @@
 package seprhou.logic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import seprhou.gui.Constants;
@@ -20,6 +19,7 @@ public class FlightPlanGenerator {
 	// Filled with some "sensibleish" default options
 	private List<Vector2D> waypoints;
 	private List<Vector2D> entryExitPoints;
+	private List<Runway> runways;
 	private List<Float> initialAltitudes = Constants.INITIAL_ALTITUDES;
 	private List<Float> initialSpeeds = Constants.INITIAL_SPEEDS;
 	private float minSafeEntryDistance = Constants.MIN_SAFE_ENTRY_DISTANCE;
@@ -190,5 +190,13 @@ public class FlightPlanGenerator {
 
 		// Try to generate an
 		return this.makeFlightPlanNow(airspace);
+	}
+
+	public List<Runway> getRunways() {
+		return runways;
+	}
+
+	public void setRunways(List<Runway> runways) {
+		this.runways = runways;
 	}
 }

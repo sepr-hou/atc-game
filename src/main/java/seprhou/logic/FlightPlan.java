@@ -1,6 +1,5 @@
 package seprhou.logic;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class FlightPlan {
 			throw new IllegalArgumentException("waypoints must have at least 2 items");
 		}
 
-		this.waypoints = Collections.unmodifiableList(waypoints);
+		this.waypoints = waypoints;
 		this.initialSpeed = initialSpeed;
 		this.initialAltitude = initialAltitude;
 	}

@@ -21,8 +21,8 @@ public class ConcreteAircraft extends Aircraft {
 	private static final float SHADOW_ANGLE = 0.4f;
 	private static final Vector2D SHADOW_DIRECTION = new Vector2D((float) Math.sin(SHADOW_ANGLE), (float) Math.cos(SHADOW_ANGLE));
 
-	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan) {
-		super(name, weight, crew, flightPlan, 1000);
+	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan, boolean startOnRunway) {
+		super(name, weight, crew, flightPlan, 1000, startOnRunway);
 	}
 
 	@Override

@@ -109,7 +109,7 @@ public class AircraftTest {
 		}
 
 		public AircraftMock(FlightPlan flightPlan) {
-			super("Test", 0, 0, flightPlan, 1000);
+			super("Test", 0, 0, flightPlan, 1000, false);
 		}
 
 		@Override

@@ -11,6 +11,7 @@ import seprhou.logic.AirspaceObjectFactory;
 import seprhou.logic.FlightPlan;
 import seprhou.logic.FlightPlanGenerator;
 import seprhou.logic.Rectangle;
+import seprhou.logic.Runway;
 import seprhou.logic.Utils;
 
 /**
@@ -38,6 +39,7 @@ public class GameScreen extends AbstractScreen {
 		flightPathGenerator = new FlightPlanGenerator();
 		GameScreen.flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
 		GameScreen.flightPathGenerator.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
+		GameScreen.flightPathGenerator.setRunways(Constants.RUNWAYS);
 		GameScreen.flightPathGenerator.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
 		GameScreen.flightPathGenerator.setInitialSpeeds(Constants.INITIAL_SPEEDS);
 		GameScreen.flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
@@ -94,10 +96,20 @@ public class GameScreen extends AbstractScreen {
 				FlightPlan flightPlan = GameScreen.flightPathGenerator.makeFlightPlan(airspace, delta);
 
 				if (flightPlan != null) {
+					boolean startOnRunway = false;
+
+					// Take off from runway instead.
+					if (Utils.getRandom().nextInt(1) == 0) {
+						startOnRunway = true;
+						Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(Constants.RUNWAYS.size()));
+						flightPlan.getWaypoints().add(0, runway.getStart());
+						flightPlan.getWaypoints().add(1, runway.getEnd());
+					}
+	
 					// Random flight number between YO000 and YO999
 					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
 
-					return new ConcreteAircraft(flightNumber, 100, 5, flightPlan);
+					return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, startOnRunway);
 				}
 
 				return null;
