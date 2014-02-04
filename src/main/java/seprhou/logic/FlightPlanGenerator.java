@@ -113,6 +113,11 @@ public class FlightPlanGenerator {
 		return safePoints;
 	}
 
+	
+	public FlightPlan makeFlightPlanNow(Airspace airspace) {
+		return makeFlightPlanNow(airspace, true);
+	}
+	
 	/**
 	 * Creates a new flight plan immediately (without taking timers into
 	 * account)
@@ -124,10 +129,11 @@ public class FlightPlanGenerator {
 	 * without impossible to avoid collisions.
 	 * 
 	 * @param airspace the airspace the aircraft will be created in
+	 * @param canLand 
 	 * @return the new flight plan or null if no aircraft should be created now
 	 * @see #makeFlightPlan(Airspace, float)
 	 */
-	public FlightPlan makeFlightPlanNow(Airspace airspace) {
+	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand) {
 		// Sanity check at least the basic options
 		if (this.waypoints == null || this.entryExitPoints == null) {
 			throw new IllegalStateException("FlightPlanGenerator has not been setup correctly\n" + "  You must call at least setWaypoints and setEntryExitPoints on it");
@@ -147,15 +153,14 @@ public class FlightPlanGenerator {
 		List<Vector2D> myWaypoints = Utils.randomSubset(this.waypoints, waypointCount);
 		boolean landing;
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
-		if(Utils.getRandom().nextInt(4) != 3)
-		{
+		if(Utils.getRandom().nextInt(4) != 3 && canLand) {
 			Runway landingStrip = Utils.randomItem(this.runways);
 			Vector2D landingPoint = landingStrip.getEnd();
 			Vector2D exitPoint = landingStrip.getStart();
 			myWaypoints.add(landingPoint);
 			myWaypoints.add(exitPoint);
 			landing = true;
-		} else{
+		} else {
 			Vector2D exitPoint = Utils.randomItem(this.entryExitPoints, entryPoint);
 			myWaypoints.add(exitPoint);
 			landing = false;
