@@ -104,7 +104,7 @@ public class GameArea extends Actor {
 
 		// Keyboard controls
 		Aircraft selected = this.parent.getSelectedAircraft();
-		if (selected != null) {
+		if (selected != null && selected.isActive()) {
 			// These keys are updated each frame so they're checked here
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 				selected.setTargetVelocity(selected.getTargetVelocity().rotate(selected.getMaxTurnRate() * delta));

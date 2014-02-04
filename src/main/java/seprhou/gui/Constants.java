@@ -32,7 +32,7 @@ public final class Constants {
 	/** List of available entry and exit points */
 	public static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(new Vector2D(100, 0), new Vector2D(0, 800), new Vector2D(1000, 0));
 
-	public static final List<Runway> RUNWAYS = Arrays.asList(new Runway(new Vector2D(766.5f, 682.5f), new Vector2D(1018.5f, 426.3f)), new Runway(new Vector2D(877.8f, 663.6f), new Vector2D(722.4f, 508.2f)));
+	public static final List<Runway> RUNWAYS = Arrays.asList(new Runway(new Vector2D(766.5f, 682.5f), new Vector2D(1018.5f, 426.3f)), new Runway(new Vector2D(722.4f, 508.2f), new Vector2D(877.8f, 663.6f)));
 
 	/** Set of altitudes new flights are generated using */
 	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(30000f, 35000f, 40000f);
@@ -50,7 +50,7 @@ public final class Constants {
 	public static final float AIRCRAFT_PER_SEC = 0.2f;
 
 	/** Maximum number of on screen aircraft */
-	public static final int MAX_AIRCRAFT = 5;
+	public static final int MAX_AIRCRAFT = 1;
 
 	/** Minimum number of waypoints in each flight plan */
 	public static final int MIN_WAYPOINTS = 2;

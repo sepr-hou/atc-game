@@ -99,12 +99,12 @@ public class GameScreen extends AbstractScreen {
 					boolean startOnRunway = false;
 
 					// Take off from runway instead.
-					if (Utils.getRandom().nextInt(1) == 0) {
-						startOnRunway = true;
-						Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(Constants.RUNWAYS.size()));
-						flightPlan.getWaypoints().add(0, runway.getStart());
-						flightPlan.getWaypoints().add(1, runway.getEnd());
-					}
+//					if (Utils.getRandom().nextInt(2) == 0) {
+//						startOnRunway = true;
+//						Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(Constants.RUNWAYS.size()));
+//						flightPlan.getWaypoints().add(0, runway.getStart());
+//						flightPlan.getWaypoints().add(1, runway.getEnd());
+//					}
 	
 					// Random flight number between YO000 and YO999
 					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));

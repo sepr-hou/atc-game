@@ -237,13 +237,18 @@ public class Airspace {
 			AirspaceObject object = this.activeObjects.get(i);
 
 			if (!gameArea.intersects(object.getPosition(), object.getSize())) {
-				// If plane, which has just left the screen, had completed it's flight plan
-				// Add its score to score.
-				 if(object.isFinished()){
-					 this.score += object.getScore();
-				 }
+				// If plane has just left the screen delete
 				this.activeObjects.remove(i);
 				this.culledObjects.add(object);
+			}else{
+				//If plane has finished flight plan
+				// Add its score to score,
+				//Then delete.
+				if(object.isFinished()){
+					 this.score += object.getScore();
+					 this.activeObjects.remove(i);
+					 this.culledObjects.add(object);	 
+				 }
 			}
 		}
 	}

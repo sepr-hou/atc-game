@@ -16,6 +16,7 @@ public abstract class Aircraft extends AirspaceObject {
 
 	private boolean violated = false;
 	private boolean finished = false;
+	private boolean active;
 
 	private int score;
 	private int gracePeriod = 30;
@@ -60,10 +61,12 @@ public abstract class Aircraft extends AirspaceObject {
 			Vector2D direction = flightPlan.getWaypoints().get(1).sub(flightPlan.getWaypoints().get(0)).normalize();
 			this.velocity = direction;
 			this.targetVelocity = direction.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom().nextInt(Constants.INITIAL_SPEEDS.size())));
+			this.active = false;
 		} else {
 			this.altitude = flightPlan.getInitialAltitude();
 			this.targetAltitude = this.altitude;
 			this.targetVelocity = this.velocity;
+			this.active = true;
 		}
 	}
 
@@ -83,6 +86,18 @@ public abstract class Aircraft extends AirspaceObject {
 	 */
 	public float getBearing() {
 		float angle = this.velocity.getAngle();
+		angle = angle * 180;
+		angle /= Math.PI;
+		angle = -angle;
+		angle += 90;
+		if (angle < 0) {
+			angle += 360;
+		}
+		return angle;
+	}
+	
+	public float calculateAngle(Vector2D vector) {
+		float angle = vector.getAngle();
 		angle = angle * 180;
 		angle /= Math.PI;
 		angle = -angle;
@@ -138,6 +153,19 @@ public abstract class Aircraft extends AirspaceObject {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	public boolean isActive(){
+		return this.active;
+	}
+	
+	public void setBearing(float bearing){
+		float delta = (float) ((this.getBearing() - bearing) * Math.PI / 180); 
+		if(delta > 0){
+		this.velocity = (this.velocity.rotate(delta));
+		} else {
+		this.velocity = (this.velocity.rotate(-delta));
+		}
+	}
 
 	/**
 	 * Scoring
@@ -152,16 +180,16 @@ public abstract class Aircraft extends AirspaceObject {
 	 */
 	public void decayScore() {
 		if (this.violated) {
-			System.out.println("Score violated Deacying:" + this.getScore());
+			//System.out.println("Score violated Deacying:" + this.getScore());
 			// This is executed when the exclusion zone of the plane is
 			// violated, regardless of gracePeriod
 			this.setScore(this.getScore() - this.decayRate * 2);
 		} else {
 			if (this.gracePeriod > 0) {
-				System.out.println("Grace Remaining:" + this.gracePeriod);
+				//System.out.println("Grace Remaining:" + this.gracePeriod);
 				this.gracePeriod--;
 			} else {
-				System.out.println("Score Decaying:" + this.getScore());
+				//System.out.println("Score Decaying:" + this.getScore());
 				this.setScore(this.getScore() - this.decayRate);
 			}
 		}
@@ -201,6 +229,24 @@ public abstract class Aircraft extends AirspaceObject {
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Hit it!
+				if (this.lastWaypoint + 3 >= waypoints.size()
+						&& this.flightPlan.isLanding()) {
+					System.out.println("bearing = " + this.getBearing());
+					double angle = this.calculateAngle(waypoints.get(
+							waypoints.size() - 1).sub(
+							waypoints.get(waypoints.size() - 2)));
+					System.out.println("runways angle =" + angle);
+
+					if (this.getBearing() > angle - 5
+							&& this.getBearing() < angle + 5) {
+						this.setBearing((float) angle);
+						this.active = false;
+
+					} else {
+						return;
+					}
+				}
+
 				this.lastWaypoint++;
 				this.waypointsHit++;
 				this.gracePeriod += 5;
