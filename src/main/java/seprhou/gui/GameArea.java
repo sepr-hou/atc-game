@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import seprhou.logic.Aircraft;
 import seprhou.logic.Airspace;
 import seprhou.logic.CollisionWarning;
-import seprhou.logic.Runway;
 import seprhou.logic.Vector2D;
 
 /**

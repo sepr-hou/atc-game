@@ -11,7 +11,6 @@ import seprhou.logic.AirspaceObjectFactory;
 import seprhou.logic.FlightPlan;
 import seprhou.logic.FlightPlanGenerator;
 import seprhou.logic.Rectangle;
-import seprhou.logic.Runway;
 import seprhou.logic.Utils;
 
 /**
