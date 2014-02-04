@@ -95,7 +95,7 @@ public abstract class Aircraft extends AirspaceObject {
 		}
 		return angle;
 	}
-	
+
 	public float calculateAngle(Vector2D vector) {
 		float angle = vector.getAngle();
 		angle = angle * 180;
@@ -145,25 +145,26 @@ public abstract class Aircraft extends AirspaceObject {
 	public void setTickCount(float count) {
 		this.tickCount = count;
 	}
-	
+
+	@Override
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	public boolean isActive(){
+
+	public boolean isActive() {
 		return this.active;
 	}
-	
-	public void setBearing(float bearing){
-		float delta = (float) ((this.getBearing() - bearing) * Math.PI / 180); 
-		if(delta > 0){
-		this.velocity = (this.velocity.rotate(delta));
+
+	public void setBearing(float bearing) {
+		float delta = (float) ((this.getBearing() - bearing) * Math.PI / 180);
+		if (delta > 0) {
+			this.velocity = this.velocity.rotate(delta);
 		} else {
-		this.velocity = (this.velocity.rotate(-delta));
+			this.velocity = this.velocity.rotate(-delta);
 		}
 	}
 
@@ -180,16 +181,16 @@ public abstract class Aircraft extends AirspaceObject {
 	 */
 	public void decayScore() {
 		if (this.violated) {
-			//System.out.println("Score violated Deacying:" + this.getScore());
+			// System.out.println("Score violated Deacying:" + this.getScore());
 			// This is executed when the exclusion zone of the plane is
 			// violated, regardless of gracePeriod
 			this.setScore(this.getScore() - this.decayRate * 2);
 		} else {
 			if (this.gracePeriod > 0) {
-				//System.out.println("Grace Remaining:" + this.gracePeriod);
+				// System.out.println("Grace Remaining:" + this.gracePeriod);
 				this.gracePeriod--;
 			} else {
-				//System.out.println("Score Decaying:" + this.getScore());
+				// System.out.println("Score Decaying:" + this.getScore());
 				this.setScore(this.getScore() - this.decayRate);
 			}
 		}
@@ -254,6 +255,5 @@ public abstract class Aircraft extends AirspaceObject {
 		}
 
 	}
-
 
 }

@@ -9,10 +9,10 @@ public final class Runway {
 	}
 
 	public Vector2D getStart() {
-		return start;
+		return this.start;
 	}
 
 	public Vector2D getEnd() {
-		return end;
+		return this.end;
 	}
 }

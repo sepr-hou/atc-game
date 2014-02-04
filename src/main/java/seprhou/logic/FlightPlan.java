@@ -54,8 +54,8 @@ public class FlightPlan {
 	public float getInitialAltitude() {
 		return this.initialAltitude;
 	}
-	
-	public boolean isLanding(){
+
+	public boolean isLanding() {
 		return this.landing;
 	}
 }

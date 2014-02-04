@@ -234,6 +234,6 @@ public abstract class AirspaceObject {
 	public abstract boolean isFinished();
 
 	public abstract boolean isViolated();
-	
+
 	public abstract int getScore();
 }

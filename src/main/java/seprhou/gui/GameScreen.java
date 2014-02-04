@@ -33,7 +33,6 @@ public class GameScreen extends AbstractScreen {
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
 
-
 	static {
 		flightPathGenerator = new FlightPlanGenerator();
 		GameScreen.flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
@@ -104,7 +103,7 @@ public class GameScreen extends AbstractScreen {
 //						flightPlan.getWaypoints().add(0, runway.getStart());
 //						flightPlan.getWaypoints().add(1, runway.getEnd());
 //					}
-	
+
 					// Random flight number between YO000 and YO999
 					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
 
@@ -148,14 +147,14 @@ public class GameScreen extends AbstractScreen {
 	public void setSelectedAircraft(Aircraft selectedAircraft) {
 		this.selectedAircraft = selectedAircraft;
 	}
-	
+
 	/**
 	 * Shorthand method to retrieve score
+	 * 
 	 * @return current score
 	 */
-	public int getScore(){
-		return getAirspace().getScore();
+	public int getScore() {
+		return this.getAirspace().getScore();
 	}
-
 
 }

@@ -24,97 +24,97 @@ public class ControlPanel extends Group {
 		this.parent = parent;
 
 		Image gamelogo = new Image(Assets.GAME_TITLE);
-		gamelogo.setX(titleAlign);
+		gamelogo.setX(this.titleAlign);
 		gamelogo.setY(850.0f);
 		this.addActor(gamelogo);
 
 		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
-		nameFlightNo.setX(titleAlign);
+		nameFlightNo.setX(this.titleAlign);
 		nameFlightNo.setY(800.0f);
-		nameFlightNo.setFontScale(titleScale);
+		nameFlightNo.setFontScale(this.titleScale);
 		this.addActor(nameFlightNo);
 		this.valueFlightNo = new Label("", Assets.SKIN);
-		this.valueFlightNo.setX(valueAlign);
+		this.valueFlightNo.setX(this.valueAlign);
 		this.valueFlightNo.setY(780.0f);
 		this.addActor(this.valueFlightNo);
 
 		Label nameAltitude = new Label("Altitude:", Assets.SKIN);
-		nameAltitude.setX(titleAlign);
+		nameAltitude.setX(this.titleAlign);
 		nameAltitude.setY(720.0f);
-		nameAltitude.setFontScale(titleScale);
+		nameAltitude.setFontScale(this.titleScale);
 		this.addActor(nameAltitude);
 		this.valueAltitude = new Label("", Assets.SKIN);
-		this.valueAltitude.setX(valueAlign);
+		this.valueAltitude.setX(this.valueAlign);
 		this.valueAltitude.setY(700.0f);
 		this.addActor(this.valueAltitude);
 
 		Label nameBearing = new Label("Bearing:", Assets.SKIN);
-		nameBearing.setX(titleAlign);
+		nameBearing.setX(this.titleAlign);
 		nameBearing.setY(640.0f);
-		nameBearing.setFontScale(titleScale);
+		nameBearing.setFontScale(this.titleScale);
 		this.addActor(nameBearing);
 		this.valueBearing = new Label("", Assets.SKIN);
-		this.valueBearing.setX(valueAlign);
+		this.valueBearing.setX(this.valueAlign);
 		this.valueBearing.setY(620.0f);
 		this.addActor(this.valueBearing);
 
 		Label nameAirspeed = new Label("Airspeed:", Assets.SKIN);
-		nameAirspeed.setX(titleAlign);
+		nameAirspeed.setX(this.titleAlign);
 		nameAirspeed.setY(560.0f);
-		nameAirspeed.setFontScale(titleScale);
+		nameAirspeed.setFontScale(this.titleScale);
 		this.addActor(nameAirspeed);
 		this.valueAirspeed = new Label("", Assets.SKIN);
-		this.valueAirspeed.setX(valueAlign);
+		this.valueAirspeed.setX(this.valueAlign);
 		this.valueAirspeed.setY(540.0f);
 		this.addActor(this.valueAirspeed);
 
 		Label namePosition = new Label("Position:", Assets.SKIN);
-		namePosition.setX(titleAlign);
+		namePosition.setX(this.titleAlign);
 		namePosition.setY(480.0f);
-		namePosition.setFontScale(titleScale);
+		namePosition.setFontScale(this.titleScale);
 		this.addActor(namePosition);
 		this.valueXPosition = new Label("", Assets.SKIN);
-		this.valueXPosition.setX(valueAlign);
+		this.valueXPosition.setX(this.valueAlign);
 		this.valueXPosition.setY(460.0f);
 		this.addActor(this.valueXPosition);
 		this.valueYPosition = new Label("", Assets.SKIN);
-		this.valueYPosition.setX(valueAlign);
+		this.valueYPosition.setX(this.valueAlign);
 		this.valueYPosition.setY(440.0f);
 		this.addActor(this.valueYPosition);
 
 		Label nameCrew = new Label("Crew:", Assets.SKIN);
-		nameCrew.setX(titleAlign);
+		nameCrew.setX(this.titleAlign);
 		nameCrew.setY(380.0f);
-		nameCrew.setFontScale(titleScale);
+		nameCrew.setFontScale(this.titleScale);
 		this.addActor(nameCrew);
 		this.valueCrew = new Label("", Assets.SKIN);
-		this.valueCrew.setX(valueAlign);
+		this.valueCrew.setX(this.valueAlign);
 		this.valueCrew.setY(360.0f);
 		this.addActor(this.valueCrew);
 
 		Label nameWeight = new Label("Weight:", Assets.SKIN);
-		nameWeight.setX(titleAlign);
+		nameWeight.setX(this.titleAlign);
 		nameWeight.setY(300.0f);
-		nameWeight.setFontScale(titleScale);
+		nameWeight.setFontScale(this.titleScale);
 		this.addActor(nameWeight);
 		this.valueWeight = new Label("", Assets.SKIN);
-		this.valueWeight.setX(valueAlign);
+		this.valueWeight.setX(this.valueAlign);
 		this.valueWeight.setY(280.0f);
 		this.addActor(this.valueWeight);
 
 		this.timerLabel = new Label("", Assets.SKIN);
-		this.timerLabel.setX(valueAlign);
+		this.timerLabel.setX(this.valueAlign);
 		this.timerLabel.setY(160.0f);
 		this.timerLabel.setFontScale(2.0f);
 		this.addActor(this.timerLabel);
-		
+
 		Label nameScore = new Label("Score:", Assets.SKIN);
-		nameScore.setX(titleAlign);
+		nameScore.setX(this.titleAlign);
 		nameScore.setY(100.0f);
-		nameScore.setFontScale(titleScale);
+		nameScore.setFontScale(this.titleScale);
 		this.addActor(nameScore);
 		this.valueScore = new Label("", Assets.SKIN);
-		this.valueScore.setX(valueAlign);
+		this.valueScore.setX(this.valueAlign);
 		this.valueScore.setY(70.0f);
 		this.valueScore.setFontScale(2.0f);
 		this.addActor(this.valueScore);

@@ -240,15 +240,15 @@ public class Airspace {
 				// If plane has just left the screen delete
 				this.activeObjects.remove(i);
 				this.culledObjects.add(object);
-			}else{
-				//If plane has finished flight plan
+			} else {
+				// If plane has finished flight plan
 				// Add its score to score,
-				//Then delete.
-				if(object.isFinished()){
-					 this.score += object.getScore();
-					 this.activeObjects.remove(i);
-					 this.culledObjects.add(object);	 
-				 }
+				// Then delete.
+				if (object.isFinished()) {
+					this.score += object.getScore();
+					this.activeObjects.remove(i);
+					this.culledObjects.add(object);
+				}
 			}
 		}
 	}
@@ -367,13 +367,13 @@ public class Airspace {
 			return Float.compare(o1.getAltitude(), o2.getAltitude());
 		}
 	}
-	
+
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
 }

@@ -113,11 +113,10 @@ public class FlightPlanGenerator {
 		return safePoints;
 	}
 
-	
 	public FlightPlan makeFlightPlanNow(Airspace airspace) {
-		return makeFlightPlanNow(airspace, true);
+		return this.makeFlightPlanNow(airspace, true);
 	}
-	
+
 	/**
 	 * Creates a new flight plan immediately (without taking timers into
 	 * account)
@@ -129,7 +128,7 @@ public class FlightPlanGenerator {
 	 * without impossible to avoid collisions.
 	 * 
 	 * @param airspace the airspace the aircraft will be created in
-	 * @param canLand 
+	 * @param canLand
 	 * @return the new flight plan or null if no aircraft should be created now
 	 * @see #makeFlightPlan(Airspace, float)
 	 */
@@ -146,14 +145,13 @@ public class FlightPlanGenerator {
 			return null;
 		}
 
-		
-		
-		// Choose some waypoints + 2 entry and exit points, also determines whether a plane ius landing or not.
+		// Choose some waypoints + 2 entry and exit points, also determines
+		// whether a plane ius landing or not.
 		int waypointCount = Utils.getRandom().nextInt(this.maxWaypoints - this.minWaypoints) + this.minWaypoints;
 		List<Vector2D> myWaypoints = Utils.randomSubset(this.waypoints, waypointCount);
 		boolean landing;
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
-		if(Utils.getRandom().nextInt(4) != 3 && canLand) {
+		if (Utils.getRandom().nextInt(4) != 3 && canLand) {
 			Runway landingStrip = Utils.randomItem(this.runways);
 			Vector2D landingPoint = landingStrip.getEnd();
 			Vector2D exitPoint = landingStrip.getStart();
@@ -165,12 +163,9 @@ public class FlightPlanGenerator {
 			myWaypoints.add(exitPoint);
 			landing = false;
 		}
-		
 
-		
 		// Insert entry + exit points into the list
 		myWaypoints.add(0, entryPoint);
-		
 
 		// Choose initial speed and altitude
 		float initialSpeed = Utils.randomItem(this.initialSpeeds);
@@ -215,7 +210,7 @@ public class FlightPlanGenerator {
 	}
 
 	public List<Runway> getRunways() {
-		return runways;
+		return this.runways;
 	}
 
 	public void setRunways(List<Runway> runways) {
