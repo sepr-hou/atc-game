@@ -229,20 +229,14 @@ public abstract class Aircraft extends AirspaceObject {
 			Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
-				// Hit it!
-				if (this.lastWaypoint + 3 >= waypoints.size()
-						&& this.flightPlan.isLanding()) {
-					System.out.println("bearing = " + this.getBearing());
-					double angle = this.calculateAngle(waypoints.get(
-							waypoints.size() - 1).sub(
-							waypoints.get(waypoints.size() - 2)));
-					System.out.println("runways angle =" + angle);
+				// Landing on runway
+				if (this.lastWaypoint + 3 >= waypoints.size() && this.flightPlan.isLanding()) {
+					double angle = this.calculateAngle(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)));
 
-					if (this.getBearing() > angle - 5
-							&& this.getBearing() < angle + 5) {
-						this.setBearing((float) angle);
+
+					if (this.getBearing() > angle - 5 && this.getBearing() < angle + 5) {
 						this.active = false;
-
+						this.setTargetVelocity(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)).changeLength(this.getVelocity().getLength()));
 					} else {
 						return;
 					}
