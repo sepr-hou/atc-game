@@ -30,12 +30,17 @@ public abstract class Aircraft extends AirspaceObject {
 	/**
 	 * Constructs a new aircraft
 	 * 
-	 * @param name aircraft name (descriptive only)
-	 * @param weight aircraft weight
-	 * @param crew number of crew
-	 * @param flightPlan aircraft flight plan
+	 * @param name
+	 *            aircraft name (descriptive only)
+	 * @param weight
+	 *            aircraft weight
+	 * @param crew
+	 *            number of crew
+	 * @param flightPlan
+	 *            aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score, boolean startOnRunway) {
+	protected Aircraft(String name, float weight, int crew,
+			FlightPlan flightPlan, int score, boolean startOnRunway) {
 		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
 		}
@@ -57,10 +62,14 @@ public abstract class Aircraft extends AirspaceObject {
 
 		if (startOnRunway) {
 			this.altitude = 0;
-			this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils.getRandom().nextInt(Constants.INITIAL_ALTITUDES.size()));
-			Vector2D direction = flightPlan.getWaypoints().get(1).sub(flightPlan.getWaypoints().get(0)).normalize();
+			this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils
+					.getRandom().nextInt(Constants.INITIAL_ALTITUDES.size()));
+			Vector2D direction = flightPlan.getWaypoints().get(1)
+					.sub(flightPlan.getWaypoints().get(0)).normalize();
 			this.velocity = direction;
-			this.targetVelocity = direction.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom().nextInt(Constants.INITIAL_SPEEDS.size())));
+			this.targetVelocity = direction.multiply(Constants.INITIAL_SPEEDS
+					.get(Utils.getRandom().nextInt(
+							Constants.INITIAL_SPEEDS.size())));
 			this.active = false;
 		} else {
 			this.altitude = flightPlan.getInitialAltitude();
@@ -230,13 +239,23 @@ public abstract class Aircraft extends AirspaceObject {
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Landing on runway
-				if (this.lastWaypoint + 3 >= waypoints.size() && this.flightPlan.isLanding()) {
-					double angle = this.calculateAngle(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)));
+				if (this.lastWaypoint + 3 >= waypoints.size()
+						&& this.flightPlan.isLanding()) {
+					double angle = this.calculateAngle(waypoints.get(
+							waypoints.size() - 1).sub(
+							waypoints.get(waypoints.size() - 2)));
 
-
-					if (this.getBearing() > angle - 5 && this.getBearing() < angle + 5) {
+					if (this.getBearing() > angle - 5
+							&& this.getBearing() < angle + 5
+							&& Math.abs(this.getAltitude()
+									- this.getMinAltitude()) < 1
+							&& Math.abs(this.getVelocity().getLength()
+									- this.getMinSpeed()) < 1) {
 						this.active = false;
-						this.setTargetVelocity(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)).changeLength(this.getVelocity().getLength()));
+						this.setTargetVelocity(waypoints
+								.get(waypoints.size() - 1)
+								.sub(waypoints.get(waypoints.size() - 2))
+								.changeLength(this.getVelocity().getLength()));
 					} else {
 						return;
 					}
