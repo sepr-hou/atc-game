@@ -15,7 +15,7 @@ public class ConcreteAircraft extends Aircraft {
 	// The +1 and -1 here are leeway needed due to float rounding errors
 	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 10;
 	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 10;
-	private static final float AIRCRAFT_MIN_ALTITUDE = Collections.min(Constants.INITIAL_ALTITUDES);
+	private static final float AIRCRAFT_MIN_ALTITUDE = 5000f;
 	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
 	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.003f;
 	private static final float SHADOW_ANGLE = 0.4f;

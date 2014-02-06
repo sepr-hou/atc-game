@@ -225,7 +225,6 @@ public abstract class Aircraft extends AirspaceObject {
 		if (this.lastWaypoint + 1 >= waypoints.size()) {
 			this.finished = true;
 		} else {
-
 			Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
@@ -233,10 +232,10 @@ public abstract class Aircraft extends AirspaceObject {
 				if (this.lastWaypoint + 3 >= waypoints.size() && this.flightPlan.isLanding()) {
 					double angle = this.calculateAngle(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)));
 
-
 					if (this.getBearing() > angle - 5 && this.getBearing() < angle + 5) {
 						this.active = false;
-						this.setTargetVelocity(waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2)).changeLength(this.getVelocity().getLength()));
+						this.setTargetVelocityNoClamping(waypoints.get(waypoints.size() - 1).sub(this.position).changeLength(10f));
+						this.setTargetAltitudeNoClamping(0);
 					} else {
 						return;
 					}
