@@ -16,6 +16,20 @@ public class OptionsScreen extends AbstractScreen {
 	private static final float BUTTON_WIDTH = 300f;
 	private static final float BUTTON_HEIGHT = 60f;
 	
+	/** Minimum lateral separation for collision warnings */
+	private static float LATERAL_SEPARATION = 200.0f;
+	/** Minimum vertical separation for collision warnings */
+	private static float VERTICAL_SEPARATION = 1000.0f;
+	
+	public static float getLateral() {
+		return LATERAL_SEPARATION;
+	}
+	
+	public static float getVertical() {
+		return VERTICAL_SEPARATION;
+	}
+	
+	
 	public OptionsScreen(AtcGame game) {
 		super(game);
 		
@@ -42,7 +56,8 @@ public class OptionsScreen extends AbstractScreen {
 		easyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//null;
+				LATERAL_SEPARATION = 100.0f;
+				VERTICAL_SEPARATION = 500.0f;
 			}
 		});
 		
@@ -55,7 +70,8 @@ public class OptionsScreen extends AbstractScreen {
 		mediumButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//null;
+				LATERAL_SEPARATION = 200.0f;
+				VERTICAL_SEPARATION = 1000.0f;
 			}
 		});
 		
@@ -68,7 +84,8 @@ public class OptionsScreen extends AbstractScreen {
 		hardButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//null;
+				LATERAL_SEPARATION = 300.0f;
+				VERTICAL_SEPARATION = 1500.0f;
 			}
 		});
 		stage.addActor(easyButton);

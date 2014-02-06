@@ -87,8 +87,8 @@ public class GameScreen extends AbstractScreen {
 		// Create the airspace
 		this.airspace = new Airspace();
 		this.airspace.setDimensions(new Rectangle(this.gameArea.getWidth(), this.gameArea.getHeight()));
-		this.airspace.setLateralSeparation(Constants.LATERAL_SEPARATION);
-		this.airspace.setVerticalSeparation(Constants.VERTICAL_SEPARATION);
+		this.airspace.setLateralSeparation(OptionsScreen.getLateral());
+		this.airspace.setVerticalSeparation(OptionsScreen.getVertical());
 		this.airspace.setObjectFactory(new AirspaceObjectFactory() {
 			@Override
 			public AirspaceObject makeObject(Airspace airspace, float delta) {
