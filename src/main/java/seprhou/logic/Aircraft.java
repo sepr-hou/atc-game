@@ -252,10 +252,8 @@ public abstract class Aircraft extends AirspaceObject {
 							&& Math.abs(this.getVelocity().getLength()
 									- this.getMinSpeed()) < 1) {
 						this.active = false;
-						this.setTargetVelocity(waypoints
-								.get(waypoints.size() - 1)
-								.sub(waypoints.get(waypoints.size() - 2))
-								.changeLength(this.getVelocity().getLength()));
+						this.setTargetVelocityNoClamping(waypoints.get(waypoints.size() - 1).sub(this.position).changeLength(10f));
+						this.setTargetAltitudeNoClamping(0);
 					} else {
 						return;
 					}

@@ -84,6 +84,18 @@ public abstract class AirspaceObject {
 	}
 
 	/**
+	 * Sets a new target velocity for this object without range clamping
+	 * 
+	 * <p>
+	 * The object will rotate and change speed towards its new target velocity
+	 * 
+	 * @param newVelocity new target velocity
+	 */
+	public void setTargetVelocityNoClamping(Vector2D newVelocity) {
+		this.targetVelocity = newVelocity;
+	}
+
+	/**
 	 * Sets a new target altitude for this object
 	 * 
 	 * <p>
@@ -102,6 +114,18 @@ public abstract class AirspaceObject {
 			newAltitude = maxAltitude;
 		}
 
+		this.targetAltitude = newAltitude;
+	}
+
+	/**
+	 * Sets a new target altitude for this object without range clamping
+	 * 
+	 * <p>
+	 * The object will start climbing / falling towards its target altitude
+	 * 
+	 * @param newAltitude new target altitude
+	 */
+	public void setTargetAltitudeNoClamping(float newAltitude) {
 		this.targetAltitude = newAltitude;
 	}
 
