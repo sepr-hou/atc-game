@@ -72,7 +72,7 @@ public final class Constants {
 	public static final float AIRCRAFT_ASCENT_RATE = 1000;
 
 	/** Maximum turn rate of the aircraft (radians per second) */
-	public static final float AIRCRAFT_TURN_RATE = 1;
+	public static final float AIRCRAFT_TURN_RATE = 2.5f;
 
 	private Constants() {}
 }
