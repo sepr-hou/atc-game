@@ -110,12 +110,12 @@ public class GameArea extends Actor {
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
 				// Note the rotation angle is NEGATIVE here
 				selected.setTargetVelocity(selected.getTargetVelocity().rotate(-selected.getMaxTurnRate() * delta));
-			} else if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-				// Speed down
-				selected.setTargetVelocity(selected.getTargetVelocity().sub(selected.getTargetVelocity().normalize().multiply(10)));
 			}
 
-			else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+			if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+				// Speed down
+				selected.setTargetVelocity(selected.getTargetVelocity().sub(selected.getTargetVelocity().normalize().multiply(10)));
+			} else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
 				// Speed up
 				selected.setTargetVelocity(selected.getTargetVelocity().add(selected.getTargetVelocity().normalize().multiply(10)));
 			}
