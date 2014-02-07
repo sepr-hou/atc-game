@@ -101,6 +101,7 @@ public class GameScreen extends AbstractScreen {
 					if (Utils.getRandom().nextInt(2) == 0) {
 						startOnRunway = true;
 						Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(Constants.RUNWAYS.size()));
+						flightPlan.getWaypoints().remove(0);
 						flightPlan.getWaypoints().add(0, runway.getStart());
 						flightPlan.getWaypoints().add(1, runway.getEnd());
 					}

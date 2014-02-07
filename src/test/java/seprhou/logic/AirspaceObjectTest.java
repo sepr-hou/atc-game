@@ -168,7 +168,7 @@ public class AirspaceObjectTest {
 		public boolean isViolated() {
 			return false;
 		}
-		
+
 		@Override
 		public int getScore() {
 			return 100;

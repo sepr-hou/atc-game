@@ -53,8 +53,14 @@ public class ConcreteAircraft extends Aircraft {
 		}
 
 		batch.draw(Assets.AIRCRAFT_SHADOW, // Aircraft shadow texture
-				xPos + SHADOW_DIRECTION.getX()*(SHADOW_HEIGHT_MULTIPLIER*altitude), // X position (bottom left)
-				yPos + SHADOW_DIRECTION.getY()*(SHADOW_HEIGHT_MULTIPLIER*altitude), // Y position (bottom right)
+				xPos + SHADOW_DIRECTION.getX() * (SHADOW_HEIGHT_MULTIPLIER * altitude), // X
+																						// position
+																						// (bottom
+																						// left)
+				yPos + SHADOW_DIRECTION.getY() * (SHADOW_HEIGHT_MULTIPLIER * altitude), // Y
+																						// position
+																						// (bottom
+																						// right)
 				this.getSize(), // X rotation origin
 				this.getSize(), // Y rotation origin
 				this.getSize() * 2, // Width

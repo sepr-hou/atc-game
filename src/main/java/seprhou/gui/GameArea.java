@@ -162,10 +162,14 @@ public class GameArea extends Actor {
 				batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + point.getX() - waypointOffset, this.getY() + point.getY() - waypointOffset);
 			}
 
-			//for (Runway runway : Constants.RUNWAYS) {
-			//	batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + runway.getStart().getX() - waypointOffset, this.getY() + runway.getStart().getY() - waypointOffset);
-			//	batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() + runway.getEnd().getX() - waypointOffset, this.getY() + runway.getEnd().getY() - waypointOffset);
-			//}
+			// for (Runway runway : Constants.RUNWAYS) {
+			// batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() +
+			// runway.getStart().getX() - waypointOffset, this.getY() +
+			// runway.getStart().getY() - waypointOffset);
+			// batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() +
+			// runway.getEnd().getX() - waypointOffset, this.getY() +
+			// runway.getEnd().getY() - waypointOffset);
+			// }
 
 			// Draw flight path + highlighted waypoints
 			if (selected != null) {

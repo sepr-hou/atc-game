@@ -16,6 +16,7 @@ public abstract class Aircraft extends AirspaceObject {
 
 	private boolean violated = false;
 	private boolean finished = false;
+	private boolean startOnRunway = false;
 	private boolean active;
 
 	private int score;
@@ -30,14 +31,10 @@ public abstract class Aircraft extends AirspaceObject {
 	/**
 	 * Constructs a new aircraft
 	 * 
-	 * @param name
-	 *            aircraft name (descriptive only)
-	 * @param weight
-	 *            aircraft weight
-	 * @param crew
-	 *            number of crew
-	 * @param flightPlan
-	 *            aircraft flight plan
+	 * @param name aircraft name (descriptive only)
+	 * @param weight aircraft weight
+	 * @param crew number of crew
+	 * @param flightPlan aircraft flight plan
 	 */
 	protected Aircraft(String name, float weight, int crew,
 			FlightPlan flightPlan, int score, boolean startOnRunway) {
@@ -71,6 +68,7 @@ public abstract class Aircraft extends AirspaceObject {
 					.get(Utils.getRandom().nextInt(
 							Constants.INITIAL_SPEEDS.size())));
 			this.active = false;
+			this.startOnRunway = true;
 		} else {
 			this.altitude = flightPlan.getInitialAltitude();
 			this.targetAltitude = this.altitude;
@@ -230,7 +228,9 @@ public abstract class Aircraft extends AirspaceObject {
 		this.violated = false;
 		// Test intersection with all remaining waypoints
 		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
-
+		if (this.startOnRunway && this.lastWaypoint == 1) {
+			this.active = true;
+		}
 		if (this.lastWaypoint + 1 >= waypoints.size()) {
 			this.finished = true;
 		} else {
@@ -239,7 +239,7 @@ public abstract class Aircraft extends AirspaceObject {
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Landing on runway
-				if (this.lastWaypoint + 3 >= waypoints.size()
+				if (this.lastWaypoint + 3 == waypoints.size()
 						&& this.flightPlan.isLanding()) {
 					double angle = this.calculateAngle(waypoints.get(
 							waypoints.size() - 1).sub(
@@ -252,7 +252,7 @@ public abstract class Aircraft extends AirspaceObject {
 							&& Math.abs(this.getVelocity().getLength()
 									- this.getMinSpeed()) < 1) {
 						this.active = false;
-						this.setTargetVelocityNoClamping(waypoints.get(waypoints.size() - 1).sub(this.position).changeLength(10f));
+						this.setTargetVelocityNoClamping(waypoints.get(waypoints.size() - 1).sub(this.position).changeLength(30f));
 						this.setTargetAltitudeNoClamping(0);
 					} else {
 						return;
