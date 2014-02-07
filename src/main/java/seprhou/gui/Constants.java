@@ -27,7 +27,7 @@ public final class Constants {
 	// public static final float VERTICAL_SEPARATION = 1000.0f;
 
 	/** List of available waypoints */
-	public static final List<Vector2D> WAYPOINTS = Arrays.asList(new Vector2D(280, 210), new Vector2D(280, 420), new Vector2D(280, 630), new Vector2D(280, 840), new Vector2D(560, 210), new Vector2D(560, 420), new Vector2D(560, 630), new Vector2D(560, 840), new Vector2D(840, 210), new Vector2D(840, 420), new Vector2D(840, 630), new Vector2D(840, 840), new Vector2D(1120, 210), new Vector2D(1120, 420), new Vector2D(1120, 630), new Vector2D(1120, 840));
+	public static final List<Vector2D> WAYPOINTS = Arrays.asList(new Vector2D(280, 210), new Vector2D(280, 420), new Vector2D(280, 630), new Vector2D(280, 840), new Vector2D(560, 210), new Vector2D(560, 420), new Vector2D(560, 630), new Vector2D(560, 840), new Vector2D(840, 210), new Vector2D(840, 420), new Vector2D(840, 840), new Vector2D(1120, 210), new Vector2D(1120, 420), new Vector2D(1120, 630), new Vector2D(1120, 840));
 
 	/** List of available entry and exit points */
 	public static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(new Vector2D(100, 0), new Vector2D(0, 800), new Vector2D(1000, 0));
