@@ -9,6 +9,7 @@ public class FlightPlan {
 	private final List<Vector2D> waypoints;
 	private final float initialSpeed, initialAltitude;
 	private final boolean landing;
+	private final boolean startOnRunway;
 
 	/**
 	 * Creates a new flight plan
@@ -17,7 +18,7 @@ public class FlightPlan {
 	 * @param initialSpeed initial speed of the flight
 	 * @param initialAltitude initial altitude of the flight
 	 */
-	public FlightPlan(List<Vector2D> waypoints, float initialSpeed, float initialAltitude, boolean landing) {
+	public FlightPlan(List<Vector2D> waypoints, float initialSpeed, float initialAltitude, boolean landing, boolean startOnRunway) {
 		if (waypoints == null) {
 			throw new IllegalArgumentException("waypoints cannot be null");
 		}
@@ -29,6 +30,7 @@ public class FlightPlan {
 		this.initialSpeed = initialSpeed;
 		this.initialAltitude = initialAltitude;
 		this.landing = landing;
+		this.startOnRunway = startOnRunway;
 	}
 
 	/** Returns the list of waypoints */
@@ -57,5 +59,9 @@ public class FlightPlan {
 
 	public boolean isLanding() {
 		return this.landing;
+	}
+
+	public boolean isStartOnRunway() {
+		return startOnRunway;
 	}
 }

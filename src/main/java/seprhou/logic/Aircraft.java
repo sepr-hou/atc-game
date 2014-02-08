@@ -37,7 +37,7 @@ public abstract class Aircraft extends AirspaceObject {
 	 * @param flightPlan aircraft flight plan
 	 */
 	protected Aircraft(String name, float weight, int crew,
-			FlightPlan flightPlan, int score, boolean startOnRunway) {
+			FlightPlan flightPlan, int score) {
 		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
 		}
@@ -57,7 +57,7 @@ public abstract class Aircraft extends AirspaceObject {
 		this.position = flightPlan.getWaypoints().get(0);
 		this.velocity = flightPlan.getInitialVelocity();
 
-		if (startOnRunway) {
+		if (this.flightPlan.isStartOnRunway()) {
 			this.altitude = 0;
 			this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils
 					.getRandom().nextInt(Constants.INITIAL_ALTITUDES.size()));

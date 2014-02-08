@@ -42,7 +42,7 @@ public class AircraftTest {
 	@RunWith(JUnit4.class)
 	public static class WaypointCollisionTests {
 		// Flight plan used for testing
-		private static final FlightPlan FLIGHT_PLAN = new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(100, 100), new Vector2D(200, 200)), 0, 100, false);
+		private static final FlightPlan FLIGHT_PLAN = new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(100, 100), new Vector2D(200, 200)), 0, 100, false, false);
 
 		private Aircraft aircraft;
 
@@ -105,11 +105,11 @@ public class AircraftTest {
 	/** Fake {@link Aircraft} class used for testing */
 	private static class AircraftMock extends Aircraft {
 		public AircraftMock() {
-			this(new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0, 0, false));
+			this(new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0, 0, false, false));
 		}
 
 		public AircraftMock(FlightPlan flightPlan) {
-			super("Test", 0, 0, flightPlan, 1000, false);
+			super("Test", 0, 0, flightPlan, 1000);
 		}
 
 		@Override
