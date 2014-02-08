@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Controls an entire air space and all the aircraft in it
@@ -22,6 +24,7 @@ public class Airspace {
 
 	private final ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
 	private final ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
+	private final Queue<AirspaceObject> landedObjects = new LinkedList<AirspaceObject>();
 
 	/**
 	 * During the game refresh, this list is sorted so that LOWER planes
@@ -89,7 +92,8 @@ public class Airspace {
 	 */
 	public void setLateralSeparation(float separation) {
 		if (separation <= 0) {
-			throw new IllegalArgumentException("separation must be greater than 0");
+			throw new IllegalArgumentException(
+					"separation must be greater than 0");
 		}
 
 		this.lateralSeparation = separation;
@@ -116,7 +120,8 @@ public class Airspace {
 	 */
 	public void setVerticalSeparation(float separation) {
 		if (separation <= 0) {
-			throw new IllegalArgumentException("separation must be greater than 0");
+			throw new IllegalArgumentException(
+					"separation must be greater than 0");
 		}
 
 		this.verticalSeparation = separation;
@@ -126,8 +131,10 @@ public class Airspace {
 	 * Throws an exception if the class has not been initialized properly
 	 */
 	private void ensureInitialized() {
-		if (this.objectFactory == null || this.dimensions == null || this.lateralSeparation == 0 || this.verticalSeparation == 0) {
-			throw new IllegalStateException("The Airspace class must be initialized before use");
+		if (this.objectFactory == null || this.dimensions == null
+				|| this.lateralSeparation == 0 || this.verticalSeparation == 0) {
+			throw new IllegalStateException(
+					"The Airspace class must be initialized before use");
 		}
 	}
 
@@ -144,6 +151,10 @@ public class Airspace {
 	 */
 	public Collection<AirspaceObject> getCulledObjects() {
 		return Collections.unmodifiableCollection(this.culledObjects);
+	}
+
+	public Queue<AirspaceObject> getLandedObjects() {
+		return this.landedObjects;
 	}
 
 	/**
@@ -245,9 +256,15 @@ public class Airspace {
 				// Add its score to score,
 				// Then delete.
 				if (object.isFinished()) {
-					this.score += object.getScore();
-					this.activeObjects.remove(i);
-					this.culledObjects.add(object);
+					if (object.getFlightPlan().isLanding()) {
+						this.score += object.getScore();
+						this.activeObjects.remove(i);
+						this.landedObjects.add(object);
+					} else {
+						this.score += object.getScore();
+						this.activeObjects.remove(i);
+						this.culledObjects.add(object);
+					}
 				}
 			}
 		}
@@ -287,12 +304,14 @@ public class Airspace {
 				}
 
 				// Test collision
-				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation && Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation) {
+				if (object1Position.distanceTo(object2.getPosition()) < lateralSeparation
+						&& Math.abs(object1Altitude - object2.getAltitude()) < vertSeparation) {
 					// Add collision warning
 					object1.setViolated(true);
 					object2.setViolated(true);
 
-					CollisionWarning warning = new CollisionWarning(object1, object2);
+					CollisionWarning warning = new CollisionWarning(object1,
+							object2);
 					this.collisionWarnings.add(warning);
 
 					if (warning.hasCollided()) {
@@ -330,7 +349,8 @@ public class Airspace {
 		this.cullObjects();
 
 		// Add new aircraft
-		AirspaceObject newObject = this.getObjectFactory().makeObject(this, delta);
+		AirspaceObject newObject = this.getObjectFactory().makeObject(this,
+				delta);
 		if (newObject != null) {
 			this.activeObjects.add(newObject);
 		}
@@ -359,7 +379,8 @@ public class Airspace {
 	}
 
 	/** Comparator comparing by altitude */
-	private static class AltitudeComparator implements Comparator<AirspaceObject> {
+	private static class AltitudeComparator implements
+			Comparator<AirspaceObject> {
 		public static final AltitudeComparator INSTANCE = new AltitudeComparator();
 
 		@Override

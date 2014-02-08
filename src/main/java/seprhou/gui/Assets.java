@@ -13,21 +13,33 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public final class Assets {
 	// Textures
-	public static final Texture BACKGROUND_TEXTURE = Assets.loadTextureFromFile("backgroundimage.png");
-	public static final Texture WAYPOINT_TEXTURE = Assets.loadTextureFromFile("waypoint.png");
-	public static final Texture NEXT_WAYPOINT_TEXTURE = Assets.loadTextureFromFile("nextwaypoint.png");
-	public static final Texture AIRCRAFT_TEXTURE = Assets.loadTextureFromFile("airplane.png");
-	public static final Texture MENU_BACKGROUND_TEXTURE = Assets.loadTextureFromFile("menubackground.png");
-	public static final Texture CIRCLE_TEXTURE = Assets.loadTextureFromFile("circle.png");
-	public static final Texture VIOLATED_TEXTURE = Assets.loadTextureFromFile("violated.png");
-	public static final Texture GAMEOVER_TEXTURE = Assets.loadTextureFromFile("gameoverbackground.png");
-	public static final Texture AIRCRAFT_SELECTED = Assets.loadTextureFromFile("airplaneselected.png");
-	public static final Texture GAME_TITLE = Assets.loadTextureFromFile("title.gif");
-	public static final Texture AIRCRAFT_SHADOW = Assets.loadTextureFromFile("airplaneshadow.png");
+	public static final Texture BACKGROUND_TEXTURE = Assets
+			.loadTextureFromFile("backgroundimage.png");
+	public static final Texture WAYPOINT_TEXTURE = Assets
+			.loadTextureFromFile("waypoint.png");
+	public static final Texture NEXT_WAYPOINT_TEXTURE = Assets
+			.loadTextureFromFile("nextwaypoint.png");
+	public static final Texture AIRCRAFT_TEXTURE = Assets
+			.loadTextureFromFile("airplane.png");
+	public static final Texture MENU_BACKGROUND_TEXTURE = Assets
+			.loadTextureFromFile("menubackground.png");
+	public static final Texture CIRCLE_TEXTURE = Assets
+			.loadTextureFromFile("circle.png");
+	public static final Texture VIOLATED_TEXTURE = Assets
+			.loadTextureFromFile("violated.png");
+	public static final Texture GAMEOVER_TEXTURE = Assets
+			.loadTextureFromFile("gameoverbackground.png");
+	public static final Texture AIRCRAFT_SELECTED = Assets
+			.loadTextureFromFile("airplaneselected.png");
+	public static final Texture GAME_TITLE = Assets
+			.loadTextureFromFile("title.gif");
+	public static final Texture AIRCRAFT_SHADOW = Assets
+			.loadTextureFromFile("airplaneshadow.png");
 	public static final Texture BLANK;
 
 	// Game cursor
-	public static final Pixmap CURSOR_IMAGE = new Pixmap(Assets.getDataFile("cursor.png"));
+	public static final Pixmap CURSOR_IMAGE = new Pixmap(
+			Assets.getDataFile("cursor.png"));
 
 	// Skin (used for menu gui)
 	public static final Skin SKIN = new Skin(Assets.getDataFile("uiskin.json"));
@@ -35,14 +47,19 @@ public final class Assets {
 
 	static {
 		// Make the font linear (looks a bit nicer on smaller screens)
-		Assets.FONT.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		Assets.FONT
+				.getRegion()
+				.getTexture()
+				.setFilter(Texture.TextureFilter.Linear,
+						Texture.TextureFilter.Linear);
 
 		// Create blank texture (white 1x1 square)
 		Pixmap blackPixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 		blackPixmap.setColor(Color.WHITE);
 		blackPixmap.fill();
 		BLANK = new Texture(blackPixmap);
-		Assets.BLANK.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		Assets.BLANK.setFilter(Texture.TextureFilter.Linear,
+				Texture.TextureFilter.Linear);
 	}
 
 	/**
@@ -53,7 +70,8 @@ public final class Assets {
 	 */
 	private static Texture loadTextureFromFile(String name) {
 		Texture texture = new Texture(Assets.getDataFile(name));
-		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		texture.setFilter(Texture.TextureFilter.Linear,
+				Texture.TextureFilter.Linear);
 		return texture;
 	}
 

@@ -30,16 +30,19 @@ public class CollisionWarning {
 	/** returns whether or not the aircraft have collided */
 	public boolean hasCollided() {
 		float threshold = this.object1.getSize() + this.object2.getSize();
-		return this.getLateralDistance() < threshold && this.getVerticalDistance() < threshold;
+		return this.getLateralDistance() < threshold
+				&& this.getVerticalDistance() < threshold;
 	}
 
 	/** returns the horizontal distance between the objects */
 	public float getLateralDistance() {
-		return this.object1.getPosition().distanceTo(this.object2.getPosition());
+		return this.object1.getPosition()
+				.distanceTo(this.object2.getPosition());
 	}
 
 	/** returns the vertical distance between the objects (altitudes) */
 	public float getVerticalDistance() {
-		return Math.abs(this.object1.getAltitude() - this.object2.getAltitude());
+		return Math
+				.abs(this.object1.getAltitude() - this.object2.getAltitude());
 	}
 }

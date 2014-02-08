@@ -33,6 +33,8 @@ public class GameOverScreen extends AbstractScreen {
 	 */
 	public void setTimerValue(float value) {
 		// Update timer label
-		this.timerLabel.setText("Your final time was: " + Utils.formatTime(value) + "\n" + "Press escape to return to the main menu");
+		this.timerLabel.setText("Your final time was: "
+				+ Utils.formatTime(value) + "\n"
+				+ "Press escape to return to the main menu");
 	}
 }

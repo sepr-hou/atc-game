@@ -24,7 +24,7 @@ import seprhou.logic.Utils;
  * however.
  */
 public class GameScreen extends AbstractScreen {
-	private static final FlightPlanGenerator flightPathGenerator;
+	public static final FlightPlanGenerator flightPlanGenerator;
 
 	private final GameArea gameArea;
 	private final ControlPanel controlPanel;
@@ -34,18 +34,24 @@ public class GameScreen extends AbstractScreen {
 	private float secondsSinceStart;
 
 	static {
-		flightPathGenerator = new FlightPlanGenerator();
-		GameScreen.flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
-		GameScreen.flightPathGenerator.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
-		GameScreen.flightPathGenerator.setRunways(Constants.RUNWAYS);
-		GameScreen.flightPathGenerator.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
-		GameScreen.flightPathGenerator.setInitialSpeeds(Constants.INITIAL_SPEEDS);
-		GameScreen.flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
-		GameScreen.flightPathGenerator.setMinTimeBetweenAircraft(Constants.MIN_TIME_BETWEEN_AIRCRAFT);
-		GameScreen.flightPathGenerator.setAircraftPerSec(Constants.AIRCRAFT_PER_SEC);
-		GameScreen.flightPathGenerator.setMaxAircraft(Constants.MAX_AIRCRAFT);
-		GameScreen.flightPathGenerator.setMinWaypoints(Constants.MIN_WAYPOINTS);
-		GameScreen.flightPathGenerator.setMaxWaypoints(Constants.MAX_WAYPOINTS);
+		flightPlanGenerator = new FlightPlanGenerator();
+		GameScreen.flightPlanGenerator.setWaypoints(Constants.WAYPOINTS);
+		GameScreen.flightPlanGenerator
+				.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
+		GameScreen.flightPlanGenerator.setRunways(Constants.RUNWAYS);
+		GameScreen.flightPlanGenerator
+				.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
+		GameScreen.flightPlanGenerator
+				.setInitialSpeeds(Constants.INITIAL_SPEEDS);
+		GameScreen.flightPlanGenerator
+				.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
+		GameScreen.flightPlanGenerator
+				.setMinTimeBetweenAircraft(Constants.MIN_TIME_BETWEEN_AIRCRAFT);
+		GameScreen.flightPlanGenerator
+				.setAircraftPerSec(Constants.AIRCRAFT_PER_SEC);
+		GameScreen.flightPlanGenerator.setMaxAircraft(Constants.MAX_AIRCRAFT);
+		GameScreen.flightPlanGenerator.setMinWaypoints(Constants.MIN_WAYPOINTS);
+		GameScreen.flightPlanGenerator.setMaxWaypoints(Constants.MAX_WAYPOINTS);
 	}
 
 	public GameScreen(AtcGame game) {
@@ -85,21 +91,24 @@ public class GameScreen extends AbstractScreen {
 
 		// Create the airspace
 		this.airspace = new Airspace();
-		this.airspace.setDimensions(new Rectangle(this.gameArea.getWidth(), this.gameArea.getHeight()));
+		this.airspace.setDimensions(new Rectangle(this.gameArea.getWidth(),
+				this.gameArea.getHeight()));
 		this.airspace.setLateralSeparation(OptionsScreen.getLateral());
 		this.airspace.setVerticalSeparation(OptionsScreen.getVertical());
 		this.airspace.setObjectFactory(new AirspaceObjectFactory() {
 			@Override
 			public AirspaceObject makeObject(Airspace airspace, float delta) {
-				FlightPlan flightPlan = GameScreen.flightPathGenerator.makeFlightPlan(airspace, delta);
+				FlightPlan flightPlan = GameScreen.flightPlanGenerator
+						.makeFlightPlan(airspace, delta);
 
 				if (flightPlan != null) {
 
-
 					// Random flight number between YO000 and YO999
-					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
+					String flightNumber = String.format("YO%03d", Utils
+							.getRandom().nextInt(1000));
 
-					return new ConcreteAircraft(flightNumber, 100, 5, flightPlan);
+					return new ConcreteAircraft(flightNumber, 100, 5,
+							flightPlan);
 				}
 
 				return null;

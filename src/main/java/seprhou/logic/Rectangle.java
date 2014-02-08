@@ -43,14 +43,17 @@ public class Rectangle {
 			// Already ok
 			this.p1 = point1;
 			this.p2 = point2;
-		} else if (point2.getX() >= point1.getX() && point2.getY() >= point1.getY()) {
+		} else if (point2.getX() >= point1.getX()
+				&& point2.getY() >= point1.getY()) {
 			// Reversed points
 			this.p1 = point2;
 			this.p2 = point1;
 		} else {
 			// New vectors
-			this.p1 = new Vector2D(Math.min(point1.getX(), point2.getX()), Math.min(point1.getY(), point2.getY()));
-			this.p2 = new Vector2D(Math.max(point1.getX(), point2.getX()), Math.max(point1.getY(), point2.getY()));
+			this.p1 = new Vector2D(Math.min(point1.getX(), point2.getX()),
+					Math.min(point1.getY(), point2.getY()));
+			this.p2 = new Vector2D(Math.max(point1.getX(), point2.getX()),
+					Math.max(point1.getY(), point2.getY()));
 		}
 	}
 
@@ -86,7 +89,8 @@ public class Rectangle {
 		float maxX = this.p2.getX();
 		float minX = this.p1.getX();
 
-		return minY <= point.getY() && point.getY() < maxY && minX <= point.getX() && point.getX() < maxX;
+		return minY <= point.getY() && point.getY() < maxY
+				&& minX <= point.getX() && point.getX() < maxX;
 	}
 
 	/**
@@ -97,7 +101,10 @@ public class Rectangle {
 	 */
 	public boolean intersects(Rectangle other) {
 		// Basic bounding box intersection
-		return other.p1.getX() < this.p2.getX() && other.p2.getX() > this.p1.getX() && other.p1.getY() < this.p2.getY() && other.p2.getY() > this.p1.getY();
+		return other.p1.getX() < this.p2.getX()
+				&& other.p2.getX() > this.p1.getX()
+				&& other.p1.getY() < this.p2.getY()
+				&& other.p2.getY() > this.p1.getY();
 	}
 
 	/**
@@ -141,9 +148,11 @@ public class Rectangle {
 
 		if (this.contains(center)) {
 			return true;
-		} else if (distance1 < radius || distance2 < radius || distance3 < radius || distance4 < radius) {
+		} else if (distance1 < radius || distance2 < radius
+				|| distance3 < radius || distance4 < radius) {
 			return true;
-		} else if (this.contains(northpoint) || this.contains(eastpoint) || this.contains(southpoint) || this.contains(westpoint)) {
+		} else if (this.contains(northpoint) || this.contains(eastpoint)
+				|| this.contains(southpoint) || this.contains(westpoint)) {
 			return true;
 		} else {
 			return false;
@@ -188,6 +197,9 @@ public class Rectangle {
 
 	@Override
 	public String toString() {
-		return "Rectangle: ((" + this.p1.getX() + ", " + this.p1.getY() + ") -> (" + this.p2.getX() + ", " + this.p2.getY() + ")) \n" + "Height = " + this.getHeight() + "\n" + "Width =" + this.getWidth();
+		return "Rectangle: ((" + this.p1.getX() + ", " + this.p1.getY()
+				+ ") -> (" + this.p2.getX() + ", " + this.p2.getY() + ")) \n"
+				+ "Height = " + this.getHeight() + "\n" + "Width ="
+				+ this.getWidth();
 	}
 }

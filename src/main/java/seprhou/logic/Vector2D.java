@@ -48,7 +48,8 @@ public class Vector2D {
 
 	/** Returns the length (euclidean norm) of this vector */
 	public float getLength() {
-		return (float) Math.sqrt(this.getX() * this.getX() + this.getY() * this.getY());
+		return (float) Math.sqrt(this.getX() * this.getX() + this.getY()
+				* this.getY());
 	}
 
 	/**
@@ -104,7 +105,8 @@ public class Vector2D {
 	 * @return a new vector containing the result
 	 */
 	public Vector2D add(Vector2D other) {
-		return new Vector2D(this.getX() + other.getX(), this.getY() + other.getY());
+		return new Vector2D(this.getX() + other.getX(), this.getY()
+				+ other.getY());
 	}
 
 	/**
@@ -114,7 +116,8 @@ public class Vector2D {
 	 * @return a new vector containing the result
 	 */
 	public Vector2D sub(Vector2D other) {
-		return new Vector2D(this.getX() - other.getX(), this.getY() - other.getY());
+		return new Vector2D(this.getX() - other.getX(), this.getY()
+				- other.getY());
 	}
 
 	/**
@@ -139,7 +142,8 @@ public class Vector2D {
 	public Vector2D rotate(float angle) {
 		float cosang = (float) Math.cos(angle);
 		float sinang = (float) Math.sin(angle);
-		return new Vector2D(this.getX() * cosang - this.getY() * sinang, this.getX() * sinang + this.getY() * cosang);
+		return new Vector2D(this.getX() * cosang - this.getY() * sinang,
+				this.getX() * sinang + this.getY() * cosang);
 	}
 
 	/**
@@ -185,7 +189,10 @@ public class Vector2D {
 			return false;
 		}
 
-		return Float.floatToIntBits(this.getX()) == Float.floatToIntBits(other.getX()) && Float.floatToIntBits(this.getY()) == Float.floatToIntBits(other.getY());
+		return Float.floatToIntBits(this.getX()) == Float.floatToIntBits(other
+				.getX())
+				&& Float.floatToIntBits(this.getY()) == Float
+						.floatToIntBits(other.getY());
 	}
 
 	@Override
@@ -216,6 +223,8 @@ public class Vector2D {
 		float angle = this.getAngle();
 		float angleDegrees = angle * (float) (180.0 / Math.PI);
 
-		return "Vector2D: (" + this.getX() + ", " + this.getY() + ") \n" + " r = " + this.getLength() + ", θ = " + angle + ", " + angleDegrees + "°";
+		return "Vector2D: (" + this.getX() + ", " + this.getY() + ") \n"
+				+ " r = " + this.getLength() + ", θ = " + angle + ", "
+				+ angleDegrees + "°";
 	}
 }

@@ -99,7 +99,8 @@ public class FlightPlanGenerator {
 
 			// Test all aircraft against this point
 			for (AirspaceObject object : airspace.getActiveObjects()) {
-				if (object.isSolid() && object.getPosition().distanceTo(point) < this.minSafeEntryDistance) {
+				if (object.isSolid()
+						&& object.getPosition().distanceTo(point) < this.minSafeEntryDistance) {
 					ok = false;
 					break;
 				}
@@ -114,7 +115,11 @@ public class FlightPlanGenerator {
 	}
 
 	public FlightPlan makeFlightPlanNow(Airspace airspace) {
-		return this.makeFlightPlanNow(airspace, true);
+		return this.makeFlightPlanNow(airspace, true, false);
+	}
+
+	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand) {
+		return this.makeFlightPlanNow(airspace, canLand, false);
 	}
 
 	/**
@@ -132,38 +137,46 @@ public class FlightPlanGenerator {
 	 * @return the new flight plan or null if no aircraft should be created now
 	 * @see #makeFlightPlan(Airspace, float)
 	 */
-	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand) {
+	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand,
+			boolean isOnRunway) {
 		// Sanity check at least the basic options
 		if (this.waypoints == null || this.entryExitPoints == null) {
-			throw new IllegalStateException("FlightPlanGenerator has not been setup correctly\n" + "  You must call at least setWaypoints and setEntryExitPoints on it");
+			throw new IllegalStateException(
+					"FlightPlanGenerator has not been setup correctly\n"
+							+ "  You must call at least setWaypoints and setEntryExitPoints on it");
 		}
 
 		// Generate a subset of entryExitPoints which contains the points which
 		// we can enter from
-		List<Vector2D> entryPointSubset = this.generateEntryPointSubset(airspace);
+		List<Vector2D> entryPointSubset = this
+				.generateEntryPointSubset(airspace);
 		if (entryPointSubset.size() == 0) {
 			return null;
 		}
 
 		// Choose some waypoints + 2 entry and exit points, also determines
 		// whether a plane is landing or not.
-		int waypointCount = Utils.getRandom().nextInt(this.maxWaypoints - this.minWaypoints) + this.minWaypoints;
-		List<Vector2D> myWaypoints = Utils.randomSubset(this.waypoints, waypointCount);
+		int waypointCount = Utils.getRandom().nextInt(
+				this.maxWaypoints - this.minWaypoints)
+				+ this.minWaypoints;
+		List<Vector2D> myWaypoints = Utils.randomSubset(this.waypoints,
+				waypointCount);
 		boolean landing;
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
-		boolean startOnRunway = false;
+		boolean startOnRunway = isOnRunway;
 
-		// Take off from runway instead.
-		if (Utils.getRandom().nextInt(2) == 0) {
-			startOnRunway = true;
-			Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(Constants.RUNWAYS.size()));
+		/* Take off from runway instead. */
+		if (startOnRunway) {
+			System.out.println("Starts on runway");
+			Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(
+					Constants.RUNWAYS.size()));
 			myWaypoints.add(0, runway.getStart());
 			myWaypoints.add(1, runway.getEnd());
 		} else {
 			// Insert entry + exit points into the list
 			myWaypoints.add(0, entryPoint);
 		}
-		
+
 		if (Utils.getRandom().nextInt(4) != 3 && canLand && !startOnRunway) {
 			Runway landingStrip = Utils.randomItem(this.runways);
 			Vector2D landingPoint = landingStrip.getEnd();
@@ -172,11 +185,11 @@ public class FlightPlanGenerator {
 			myWaypoints.add(exitPoint);
 			landing = true;
 		} else {
-			Vector2D exitPoint = Utils.randomItem(this.entryExitPoints, entryPoint);
+			Vector2D exitPoint = Utils.randomItem(this.entryExitPoints,
+					entryPoint);
 			myWaypoints.add(exitPoint);
 			landing = false;
 		}
-
 
 		// Choose initial speed and altitude
 		float initialSpeed = Utils.randomItem(this.initialSpeeds);
@@ -184,7 +197,8 @@ public class FlightPlanGenerator {
 
 		// Create flight plan
 		this.timeSinceLastAircraft = 0;
-		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude, landing, startOnRunway);
+		return new FlightPlan(myWaypoints, initialSpeed, initialAltitude,
+				landing, startOnRunway);
 	}
 
 	/**

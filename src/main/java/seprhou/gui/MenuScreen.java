@@ -55,7 +55,8 @@ public class MenuScreen extends AbstractScreen {
 		// button "Options"
 		TextButton optionsButton = new TextButton("Options", Assets.SKIN);
 		optionsButton.setX(buttonX);
-		optionsButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		optionsButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT
+				+ MenuScreen.BUTTON_SPACING);
 		optionsButton.setWidth(MenuScreen.BUTTON_WIDTH);
 		optionsButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		optionsButton.addListener(new ClickListener() {
@@ -69,7 +70,8 @@ public class MenuScreen extends AbstractScreen {
 		// button "High Scores"
 		TextButton highScoresButton = new TextButton("High Scores", Assets.SKIN);
 		highScoresButton.setX(buttonX);
-		highScoresButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		highScoresButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT
+				+ MenuScreen.BUTTON_SPACING);
 		highScoresButton.setWidth(MenuScreen.BUTTON_WIDTH);
 		highScoresButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		highScoresButton.addListener(new ClickListener() {
@@ -83,7 +85,8 @@ public class MenuScreen extends AbstractScreen {
 		// button "Exit"
 		TextButton exitButton = new TextButton("Exit", Assets.SKIN);
 		exitButton.setX(buttonX);
-		exitButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT + MenuScreen.BUTTON_SPACING);
+		exitButton.setY(currentY -= MenuScreen.BUTTON_HEIGHT
+				+ MenuScreen.BUTTON_SPACING);
 		exitButton.setWidth(MenuScreen.BUTTON_WIDTH);
 		exitButton.setHeight(MenuScreen.BUTTON_HEIGHT);
 		exitButton.addListener(new ClickListener() {

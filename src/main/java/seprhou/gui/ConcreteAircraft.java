@@ -13,15 +13,21 @@ import seprhou.logic.Vector2D;
 public class ConcreteAircraft extends Aircraft {
 	// Derived constants
 	// The +1 and -1 here are leeway needed due to float rounding errors
-	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 10;
-	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 10;
+	private static final float AIRCRAFT_MIN_SPEED = Collections
+			.min(Constants.INITIAL_SPEEDS) - 10;
+	private static final float AIRCRAFT_MAX_SPEED = Collections
+			.max(Constants.INITIAL_SPEEDS) + 10;
 	private static final float AIRCRAFT_MIN_ALTITUDE = 5000f;
-	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
+	private static final float AIRCRAFT_MAX_ALTITUDE = Collections
+			.max(Constants.INITIAL_ALTITUDES);
 	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.003f;
 	private static final float SHADOW_ANGLE = 0.4f;
-	private static final Vector2D SHADOW_DIRECTION = new Vector2D((float) Math.sin(ConcreteAircraft.SHADOW_ANGLE), (float) Math.cos(ConcreteAircraft.SHADOW_ANGLE));
+	private static final Vector2D SHADOW_DIRECTION = new Vector2D(
+			(float) Math.sin(ConcreteAircraft.SHADOW_ANGLE),
+			(float) Math.cos(ConcreteAircraft.SHADOW_ANGLE));
 
-	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan) {
+	public ConcreteAircraft(String name, float weight, int crew,
+			FlightPlan flightPlan) {
 		super(name, weight, crew, flightPlan, 1000);
 	}
 
@@ -30,12 +36,15 @@ public class ConcreteAircraft extends Aircraft {
 		GameArea gameArea = (GameArea) state;
 		SpriteBatch batch = gameArea.getBatch();
 
-		float angleDegrees = this.getVelocity().getAngle() * (float) (180.0 / Math.PI);
+		float angleDegrees = this.getVelocity().getAngle()
+				* (float) (180.0 / Math.PI);
 
 		// Add parent X and Y since SpriteBatch does not adjust coordinates for
 		// the Actor
-		float xPos = gameArea.getX() + this.getPosition().getX() - this.getSize();
-		float yPos = gameArea.getY() + this.getPosition().getY() - this.getSize();
+		float xPos = gameArea.getX() + this.getPosition().getX()
+				- this.getSize();
+		float yPos = gameArea.getY() + this.getPosition().getY()
+				- this.getSize();
 
 		// Draw the aircraft
 		Texture aircraftTexture;
@@ -46,21 +55,26 @@ public class ConcreteAircraft extends Aircraft {
 
 			if (!this.isViolated()) {
 				float circleRadius = Assets.CIRCLE_TEXTURE.getWidth() / 2;
-				batch.draw(Assets.CIRCLE_TEXTURE, gameArea.getX() + this.getPosition().getX() - circleRadius, gameArea.getY() + this.getPosition().getY() - circleRadius);
+				batch.draw(Assets.CIRCLE_TEXTURE, gameArea.getX()
+						+ this.getPosition().getX() - circleRadius,
+						gameArea.getY() + this.getPosition().getY()
+								- circleRadius);
 			}
 		} else {
 			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
 		}
 
 		batch.draw(Assets.AIRCRAFT_SHADOW, // Aircraft shadow texture
-				xPos + SHADOW_DIRECTION.getX() * (SHADOW_HEIGHT_MULTIPLIER * altitude), // X
-																						// position
-																						// (bottom
-																						// left)
-				yPos + SHADOW_DIRECTION.getY() * (SHADOW_HEIGHT_MULTIPLIER * altitude), // Y
-																						// position
-																						// (bottom
-																						// right)
+				xPos + SHADOW_DIRECTION.getX()
+						* (SHADOW_HEIGHT_MULTIPLIER * altitude), // X
+																	// position
+																	// (bottom
+																	// left)
+				yPos + SHADOW_DIRECTION.getY()
+						* (SHADOW_HEIGHT_MULTIPLIER * altitude), // Y
+																	// position
+																	// (bottom
+																	// right)
 				this.getSize(), // X rotation origin
 				this.getSize(), // Y rotation origin
 				this.getSize() * 2, // Width
@@ -96,7 +110,8 @@ public class ConcreteAircraft extends Aircraft {
 
 		// Draw altitude in top right
 		String str = (int) this.getAltitude() + "ft";
-		Assets.FONT.draw(batch, str, xPos + this.getSize() * 2, yPos + this.getSize() * 2);
+		Assets.FONT.draw(batch, str, xPos + this.getSize() * 2,
+				yPos + this.getSize() * 2);
 	}
 
 	@Override

@@ -33,7 +33,8 @@ public class Vector2DTest {
 		private final float dataX, dataY, dataLength, dataAngle;
 		private final Vector2D vector;
 
-		public UnaryTests(boolean usePolar, float x, float y, float length, double angleDouble) {
+		public UnaryTests(boolean usePolar, float x, float y, float length,
+				double angleDouble) {
 			float angle = (float) angleDouble;
 
 			this.dataX = x;
@@ -52,9 +53,20 @@ public class Vector2DTest {
 		public static Collection<Object[]> data() {
 			return Arrays.asList(new Object[][] {
 					// Use Polar, X, Y, Length, Angle
-					{ true, 0, 0, 0, 0 }, { true, 3, 4, 5, Math.atan(4.0 / 3.0) }, { true, -3, -4, 5, Math.atan(4.0 / 3.0) - Math.PI }, { true, 3, -4, 5, -Math.atan(4.0 / 3.0) }, { true, 0, 100, 100, Math.PI / 2 }, { true, 100, 0, 100, 0 }, { true, -100, 0, 100, -Math.PI },
+					{ true, 0, 0, 0, 0 },
+					{ true, 3, 4, 5, Math.atan(4.0 / 3.0) },
+					{ true, -3, -4, 5, Math.atan(4.0 / 3.0) - Math.PI },
+					{ true, 3, -4, 5, -Math.atan(4.0 / 3.0) },
+					{ true, 0, 100, 100, Math.PI / 2 },
+					{ true, 100, 0, 100, 0 }, { true, -100, 0, 100, -Math.PI },
 
-					{ false, 0, 0, 0, 0 }, { false, 3, 4, 5, Math.atan(4.0 / 3.0) }, { false, -3, -4, 5, Math.atan(4.0 / 3.0) - Math.PI }, { false, 3, -4, 5, -Math.atan(4.0 / 3.0) }, { false, 0, 100, 100, Math.PI / 2 }, { false, 100, 0, 100, 0 }, { false, -100, 0, 100, -Math.PI }, });
+					{ false, 0, 0, 0, 0 },
+					{ false, 3, 4, 5, Math.atan(4.0 / 3.0) },
+					{ false, -3, -4, 5, Math.atan(4.0 / 3.0) - Math.PI },
+					{ false, 3, -4, 5, -Math.atan(4.0 / 3.0) },
+					{ false, 0, 100, 100, Math.PI / 2 },
+					{ false, 100, 0, 100, 0 },
+					{ false, -100, 0, 100, -Math.PI }, });
 		}
 
 		/** Returns a matcher which matches a value close to dataAngle */
@@ -62,8 +74,10 @@ public class Vector2DTest {
 			Matcher<Float> matcher = IsCloseToFloat.closeTo(this.dataAngle);
 
 			// If the angle is PI, allow +/- values for it
-			if (this.dataAngle == (float) Math.PI || this.dataAngle == (float) -Math.PI) {
-				matcher = Matchers.either(matcher).or(IsCloseToFloat.closeTo(-this.dataAngle));
+			if (this.dataAngle == (float) Math.PI
+					|| this.dataAngle == (float) -Math.PI) {
+				matcher = Matchers.either(matcher).or(
+						IsCloseToFloat.closeTo(-this.dataAngle));
 			}
 
 			return matcher;
@@ -71,25 +85,30 @@ public class Vector2DTest {
 
 		@Test
 		public void testXYValues() {
-			Assert.assertThat(this.vector.getX(), IsCloseToFloat.closeTo(this.dataX));
-			Assert.assertThat(this.vector.getY(), IsCloseToFloat.closeTo(this.dataY));
+			Assert.assertThat(this.vector.getX(),
+					IsCloseToFloat.closeTo(this.dataX));
+			Assert.assertThat(this.vector.getY(),
+					IsCloseToFloat.closeTo(this.dataY));
 		}
 
 		@Test
 		public void testLength() {
-			Assert.assertThat(this.vector.getLength(), IsCloseToFloat.closeTo(this.dataLength));
+			Assert.assertThat(this.vector.getLength(),
+					IsCloseToFloat.closeTo(this.dataLength));
 		}
 
 		@Test
 		public void testLengthSquared() {
-			Assert.assertThat(this.vector.getLengthSquared(), IsCloseToFloat.closeTo(this.dataLength * this.dataLength));
+			Assert.assertThat(this.vector.getLengthSquared(),
+					IsCloseToFloat.closeTo(this.dataLength * this.dataLength));
 		}
 
 		@Test
 		public void testAngle() {
 			// For the zero vector, any angle is valid
 			if (!this.vector.equals(Vector2D.ZERO)) {
-				Assert.assertThat(this.vector.getAngle(), this.closeToAngleMatcher());
+				Assert.assertThat(this.vector.getAngle(),
+						this.closeToAngleMatcher());
 			}
 		}
 
@@ -126,8 +145,10 @@ public class Vector2DTest {
 			Vector2D a = new Vector2D(3, 4);
 			Vector2D b = new Vector2D(5, -10);
 
-			Assert.assertThat(a.distanceTo(b), IsCloseToFloat.closeTo(correctValue));
-			Assert.assertThat(b.distanceTo(a), IsCloseToFloat.closeTo(correctValue));
+			Assert.assertThat(a.distanceTo(b),
+					IsCloseToFloat.closeTo(correctValue));
+			Assert.assertThat(b.distanceTo(a),
+					IsCloseToFloat.closeTo(correctValue));
 		}
 
 		@Test
@@ -158,9 +179,12 @@ public class Vector2DTest {
 			float b = 42;
 
 			Assert.assertThat(a.multiply(b).getX(), IsCloseToFloat.closeTo(210));
-			Assert.assertThat(a.multiply(b).getY(), IsCloseToFloat.closeTo(-420));
-			Assert.assertThat(a.multiply(-b).getX(), IsCloseToFloat.closeTo(-210));
-			Assert.assertThat(a.multiply(-b).getY(), IsCloseToFloat.closeTo(420));
+			Assert.assertThat(a.multiply(b).getY(),
+					IsCloseToFloat.closeTo(-420));
+			Assert.assertThat(a.multiply(-b).getX(),
+					IsCloseToFloat.closeTo(-210));
+			Assert.assertThat(a.multiply(-b).getY(),
+					IsCloseToFloat.closeTo(420));
 		}
 
 		@Test
@@ -182,7 +206,8 @@ public class Vector2DTest {
 			Assert.assertThat(a.rotate(b).getX(), IsCloseToFloat.closeTo(ansX));
 			Assert.assertThat(a.rotate(b).getY(), IsCloseToFloat.closeTo(ansY));
 			Assert.assertThat(a.rotate(-b).getX(), IsCloseToFloat.closeTo(ansY));
-			Assert.assertThat(a.rotate(-b).getY(), IsCloseToFloat.closeTo(-ansX));
+			Assert.assertThat(a.rotate(-b).getY(),
+					IsCloseToFloat.closeTo(-ansX));
 		}
 
 		@Test

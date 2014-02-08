@@ -15,7 +15,8 @@ public class Main {
 			if (args[0].equals("-windowed") || args[0].equals("-w")) {
 				windowed = true;
 			} else {
-				System.err.println("Pass -w or -windowed to run the game in a window");
+				System.err
+						.println("Pass -w or -windowed to run the game in a window");
 				System.err.println();
 				return;
 			}
@@ -33,7 +34,8 @@ public class Main {
 		} else {
 			// Use whatever display mode we're currently on (hopefully it'll
 			// work)
-			cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
+			cfg.setFromDisplayMode(LwjglApplicationConfiguration
+					.getDesktopDisplayMode());
 			cfg.resizable = false;
 		}
 

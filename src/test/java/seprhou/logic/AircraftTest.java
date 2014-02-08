@@ -30,19 +30,24 @@ public class AircraftTest {
 
 		@Parameterized.Parameters
 		public static Collection<Object[]> data() {
-			return Arrays.asList(new Object[][] { { 0, Math.PI / 2 }, { 90, 0 }, { 180, -Math.PI / 2 }, { 270, Math.PI }, { 270, -Math.PI }, { 359, Math.PI / 2 + Math.PI / 180 }, });
+			return Arrays.asList(new Object[][] { { 0, Math.PI / 2 },
+					{ 90, 0 }, { 180, -Math.PI / 2 }, { 270, Math.PI },
+					{ 270, -Math.PI }, { 359, Math.PI / 2 + Math.PI / 180 }, });
 		}
 
 		@Test
 		public void testBearing() {
-			Assert.assertThat(this.aircraft.getBearing(), Matchers.is(IsCloseToFloat.closeTo(this.correctBearing)));
+			Assert.assertThat(this.aircraft.getBearing(),
+					Matchers.is(IsCloseToFloat.closeTo(this.correctBearing)));
 		}
 	}
 
 	@RunWith(JUnit4.class)
 	public static class WaypointCollisionTests {
 		// Flight plan used for testing
-		private static final FlightPlan FLIGHT_PLAN = new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(100, 100), new Vector2D(200, 200)), 0, 100, false, false);
+		private static final FlightPlan FLIGHT_PLAN = new FlightPlan(
+				Arrays.asList(new Vector2D(0, 0), new Vector2D(100, 100),
+						new Vector2D(200, 200)), 0, 100, false, false);
 
 		private Aircraft aircraft;
 
@@ -105,7 +110,8 @@ public class AircraftTest {
 	/** Fake {@link Aircraft} class used for testing */
 	private static class AircraftMock extends Aircraft {
 		public AircraftMock() {
-			this(new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0, 0, false, false));
+			this(new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0,
+					0, false, false));
 		}
 
 		public AircraftMock(FlightPlan flightPlan) {

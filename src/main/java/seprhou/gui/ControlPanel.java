@@ -12,8 +12,11 @@ import seprhou.logic.Utils;
  */
 public class ControlPanel extends Group {
 	private final GameScreen parent;
-	private final float titleAlign = 50.0f, valueAlign = 80.0f, titleScale = 1.3f;;
-	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed, valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel, valueScore;
+	private final float titleAlign = 50.0f, valueAlign = 80.0f,
+			titleScale = 1.3f;;
+	private final Label valueFlightNo, valueAltitude, valueBearing,
+			valueAirspeed, valueXPosition, valueYPosition, valueCrew,
+			valueWeight, timerLabel, valueScore;
 
 	/**
 	 * Creates a new ControlPanel
@@ -132,13 +135,19 @@ public class ControlPanel extends Group {
 		Aircraft selected = this.parent.getSelectedAircraft();
 		if (selected != null) {
 			this.valueFlightNo.setText(selected.getName());
-			this.valueAltitude.setText(Integer.toString(Math.round(selected.getAltitude())) + " ft");
-			this.valueBearing.setText(Integer.toString(Math.round(selected.getBearing())) + " degrees");
-			this.valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength() * 10)) + " mph");
-			this.valueXPosition.setText("x = " + Math.round(selected.getPosition().getX()));
-			this.valueYPosition.setText("y = " + Math.round(selected.getPosition().getY()));
+			this.valueAltitude.setText(Integer.toString(Math.round(selected
+					.getAltitude())) + " ft");
+			this.valueBearing.setText(Integer.toString(Math.round(selected
+					.getBearing())) + " degrees");
+			this.valueAirspeed.setText(Integer.toString(Math.round(selected
+					.getVelocity().getLength() * 10)) + " mph");
+			this.valueXPosition.setText("x = "
+					+ Math.round(selected.getPosition().getX()));
+			this.valueYPosition.setText("y = "
+					+ Math.round(selected.getPosition().getY()));
 			this.valueCrew.setText(Integer.toString(selected.getCrew()));
-			this.valueWeight.setText(Integer.toString(Math.round(selected.getWeight())) + " tonnes");
+			this.valueWeight.setText(Integer.toString(Math.round(selected
+					.getWeight())) + " tonnes");
 
 		} else {
 			this.valueFlightNo.setText("");
@@ -152,7 +161,8 @@ public class ControlPanel extends Group {
 		}
 
 		// Update timer
-		this.timerLabel.setText(Utils.formatTime(this.parent.getSecondsSinceStart()));
+		this.timerLabel.setText(Utils.formatTime(this.parent
+				.getSecondsSinceStart()));
 		// Update score
 		this.valueScore.setText(Integer.toString(this.parent.getScore()));
 	}

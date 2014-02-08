@@ -130,7 +130,8 @@ public abstract class AirspaceObject {
 	}
 
 	/** Moves value towards target in one step of size change */
-	private static float floatMoveTowards(float value, float target, float change) {
+	private static float floatMoveTowards(float value, float target,
+			float change) {
 		if (target < value) {
 			value -= change;
 			if (target > value) {
@@ -151,7 +152,8 @@ public abstract class AirspaceObject {
 	 * minimum values
 	 */
 	@SuppressWarnings("unused")
-	private static float floatMoveAndClamp(float value, float target, float change, float min, float max) {
+	private static float floatMoveAndClamp(float value, float target,
+			float change, float min, float max) {
 		value = AirspaceObject.floatMoveTowards(value, target, change);
 
 		if (value < min) {
@@ -179,7 +181,8 @@ public abstract class AirspaceObject {
 			this.getMaxAltitude();
 			float ascentAmount = this.getAscentRate() * dt;
 
-			this.altitude = AirspaceObject.floatMoveTowards(this.altitude, this.targetAltitude, ascentAmount);
+			this.altitude = AirspaceObject.floatMoveTowards(this.altitude,
+					this.targetAltitude, ascentAmount);
 		}
 
 		// Update velocity
@@ -193,7 +196,8 @@ public abstract class AirspaceObject {
 			float speed = this.velocity.getLength();
 			float targetSpeed = this.targetVelocity.getLength();
 
-			speed = AirspaceObject.floatMoveTowards(speed, targetSpeed, acceleration);
+			speed = AirspaceObject.floatMoveTowards(speed, targetSpeed,
+					acceleration);
 
 			// Process angle value
 			float angle = this.velocity.getAngle();
@@ -205,7 +209,8 @@ public abstract class AirspaceObject {
 				turnRate = -turnRate;
 			}
 
-			angle = AirspaceObject.floatMoveTowards(angle, targetAngle, turnRate);
+			angle = AirspaceObject.floatMoveTowards(angle, targetAngle,
+					turnRate);
 
 			// Reconstruct velocity vector
 			this.velocity = Vector2D.fromPolar(speed, angle);
@@ -260,4 +265,10 @@ public abstract class AirspaceObject {
 	public abstract boolean isViolated();
 
 	public abstract int getScore();
+
+	public abstract FlightPlan getFlightPlan();
+
+	public abstract void setFlightPlan(FlightPlan flightPlan);
+
+	public abstract void resetRunwayPlane();
 }

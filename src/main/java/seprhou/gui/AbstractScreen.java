@@ -40,7 +40,8 @@ public abstract class AbstractScreen implements Screen {
 		this.enableEscape = enableEscape;
 
 		// Create stage to draw everything with
-		this.stage = new Stage(AbstractScreen.SCREEN_WIDTH, AbstractScreen.SCREEN_HEIGHT);
+		this.stage = new Stage(AbstractScreen.SCREEN_WIDTH,
+				AbstractScreen.SCREEN_HEIGHT);
 	}
 
 	/** Returns the game which owns this screen */
@@ -93,7 +94,8 @@ public abstract class AbstractScreen implements Screen {
 	public void resize(int arg0, int arg1) {
 		// Makes the stage the same size as the camera and changes the actors'
 		// sizes in proportion
-		this.stage.setViewport(AbstractScreen.SCREEN_WIDTH, AbstractScreen.SCREEN_HEIGHT);
+		this.stage.setViewport(AbstractScreen.SCREEN_WIDTH,
+				AbstractScreen.SCREEN_HEIGHT);
 	}
 
 	// Empty methods

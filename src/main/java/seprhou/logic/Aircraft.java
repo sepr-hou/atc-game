@@ -23,7 +23,7 @@ public abstract class Aircraft extends AirspaceObject {
 	private int gracePeriod = 30;
 	private int decayRate = 10;
 
-	private final FlightPlan flightPlan;
+	private FlightPlan flightPlan;
 
 	private int lastWaypoint;
 	private int waypointsHit;
@@ -130,9 +130,37 @@ public abstract class Aircraft extends AirspaceObject {
 		return this.flightPlan;
 	}
 
+	/** Assigns this aircraft a new flight plan. **/
+	public void setFlightPlan(FlightPlan flightPlan) {
+		this.flightPlan = flightPlan;
+	}
+
 	/** Returns the last waypoint hit by this aircraft */
 	public int getLastWaypoint() {
 		return this.lastWaypoint;
+	}
+
+	public void resetRunwayPlane() {
+		this.lastWaypoint = 0;
+		this.waypointsHit = 0;
+		this.score = 1000;
+		this.gracePeriod = 30;
+		this.finished = false;
+		this.startOnRunway = true;
+		this.active = false;
+		this.tickCount = 0;
+		this.altitude = 0;
+		this.position = flightPlan.getWaypoints().get(0);
+		this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils.getRandom()
+				.nextInt(Constants.INITIAL_ALTITUDES.size()));
+		Vector2D direction = flightPlan.getWaypoints().get(1)
+				.sub(flightPlan.getWaypoints().get(0)).normalize();
+		this.velocity = direction;
+		this.targetVelocity = direction
+				.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom()
+						.nextInt(Constants.INITIAL_SPEEDS.size())));
+		this.active = false;
+		this.startOnRunway = true;
 	}
 
 	@Override
@@ -252,7 +280,9 @@ public abstract class Aircraft extends AirspaceObject {
 							&& Math.abs(this.getVelocity().getLength()
 									- this.getMinSpeed()) < 1) {
 						this.active = false;
-						this.setTargetVelocityNoClamping(waypoints.get(waypoints.size() - 1).sub(this.position).changeLength(30f));
+						this.setTargetVelocityNoClamping(waypoints
+								.get(waypoints.size() - 1).sub(this.position)
+								.changeLength(30f));
 						this.setTargetAltitudeNoClamping(0);
 					} else {
 						return;

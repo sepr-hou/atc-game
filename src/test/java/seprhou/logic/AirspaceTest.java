@@ -22,7 +22,8 @@ public class AirspaceTest {
 	public void testObjectCulling() {
 		Vector2D objectOk = new Vector2D(100, 100);
 		Vector2D objectCulled = new Vector2D(2000, 100);
-		Airspace airspace = AirspaceTest.generateAirspace(objectOk, objectCulled);
+		Airspace airspace = AirspaceTest.generateAirspace(objectOk,
+				objectCulled);
 
 		// Validate state before refresh
 		Assert.assertThat(airspace.getCulledObjects(), Matchers.hasSize(0));
@@ -58,7 +59,8 @@ public class AirspaceTest {
 
 	@Test
 	public void testCollisionWarningsAltitude() {
-		Airspace airspace = AirspaceTest.generateAirspace(100, 400, 800, 0, 400);
+		Airspace airspace = AirspaceTest
+				.generateAirspace(100, 400, 800, 0, 400);
 		airspace.refresh(1);
 
 		/*
@@ -72,12 +74,16 @@ public class AirspaceTest {
 		for (CollisionWarning warning : warnings) {
 			// Check which warning it is
 			if (warning.getObject1().getAltitude() == 400) {
-				Assert.assertThat(warning.getObject2().getAltitude(), Matchers.is(400f));
+				Assert.assertThat(warning.getObject2().getAltitude(),
+						Matchers.is(400f));
 			} else if (warning.getObject1().getAltitude() == 100) {
-				Assert.assertThat(warning.getObject2().getAltitude(), Matchers.is(0f));
+				Assert.assertThat(warning.getObject2().getAltitude(),
+						Matchers.is(0f));
 			} else {
-				Assert.assertThat(warning.getObject1().getAltitude(), Matchers.is(0f));
-				Assert.assertThat(warning.getObject2().getAltitude(), Matchers.is(100f));
+				Assert.assertThat(warning.getObject1().getAltitude(),
+						Matchers.is(0f));
+				Assert.assertThat(warning.getObject2().getAltitude(),
+						Matchers.is(100f));
 			}
 		}
 	}
@@ -112,7 +118,8 @@ public class AirspaceTest {
 		Assert.assertThat(found2, Matchers.is(Matchers.nullValue()));
 
 		// Test circle
-		List<Vector2D> positions = AirspaceTest.objectsToPositions(airspace.findAircraft(obj3, 200));
+		List<Vector2D> positions = AirspaceTest.objectsToPositions(airspace
+				.findAircraft(obj3, 200));
 		Assert.assertThat(positions, Matchers.containsInAnyOrder(obj2, obj3));
 	}
 
@@ -128,7 +135,8 @@ public class AirspaceTest {
 	}
 
 	/** Converts a list of objects to a list of positions */
-	private static List<Vector2D> objectsToPositions(Iterable<AirspaceObject> objects) {
+	private static List<Vector2D> objectsToPositions(
+			Iterable<AirspaceObject> objects) {
 		List<Vector2D> positions = new ArrayList<>();
 
 		for (AirspaceObject object : objects) {
@@ -272,6 +280,24 @@ public class AirspaceTest {
 		public int getScore() {
 			// TODO Auto-generated method stub
 			return 0;
+		}
+
+		@Override
+		public FlightPlan getFlightPlan() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setFlightPlan(FlightPlan flightPlan) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void resetRunwayPlane() {
+			// TODO Auto-generated method stub
+
 		}
 	}
 }

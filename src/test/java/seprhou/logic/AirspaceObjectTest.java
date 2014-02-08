@@ -23,11 +23,16 @@ public class AirspaceObjectTest {
 		public void testInitialValues() {
 			AirspaceObject object = new AirspaceObjectMock();
 
-			Assert.assertThat(object.getPosition(), Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
-			Assert.assertThat(object.getVelocity(), Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
-			Assert.assertThat(object.getAltitude(), Matchers.is(Matchers.equalTo(0f)));
-			Assert.assertThat(object.getTargetVelocity(), Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
-			Assert.assertThat(object.getTargetAltitude(), Matchers.is(Matchers.equalTo(0f)));
+			Assert.assertThat(object.getPosition(),
+					Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
+			Assert.assertThat(object.getVelocity(),
+					Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
+			Assert.assertThat(object.getAltitude(),
+					Matchers.is(Matchers.equalTo(0f)));
+			Assert.assertThat(object.getTargetVelocity(),
+					Matchers.is(Matchers.equalTo(Vector2D.ZERO)));
+			Assert.assertThat(object.getTargetAltitude(),
+					Matchers.is(Matchers.equalTo(0f)));
 		}
 	}
 
@@ -35,7 +40,8 @@ public class AirspaceObjectTest {
 	public static class RefreshTests {
 		private final AirspaceObject object = new AirspaceObjectMock();
 
-		public RefreshTests(Vector2D velocity, float altitude, Vector2D targetVelocity, float targetAltitude) {
+		public RefreshTests(Vector2D velocity, float altitude,
+				Vector2D targetVelocity, float targetAltitude) {
 			this.object.velocity = velocity;
 			this.object.altitude = altitude;
 			this.object.setTargetVelocity(targetVelocity);
@@ -44,15 +50,19 @@ public class AirspaceObjectTest {
 
 		@Parameterized.Parameters
 		public static Collection<Object[]> data() {
-			return Arrays.asList(new Object[][] {
-					// Normal
-					{ new Vector2D(10, 10), 1000, new Vector2D(50, 50), 5000 },
+			return Arrays
+					.asList(new Object[][] {
+							// Normal
+							{ new Vector2D(10, 10), 1000, new Vector2D(50, 50),
+									5000 },
 
-					// Extreme rates
-					{ new Vector2D(10, 10), 1000, new Vector2D(-1000, -1000), -5000 },
+							// Extreme rates
+							{ new Vector2D(10, 10), 1000,
+									new Vector2D(-1000, -1000), -5000 },
 
-					// No changes
-					{ new Vector2D(10, 10), 1000, new Vector2D(10, 10), 1000 }, });
+							// No changes
+							{ new Vector2D(10, 10), 1000, new Vector2D(10, 10),
+									1000 }, });
 		}
 
 		private void doRefreshTest(float delta) {
@@ -72,16 +82,30 @@ public class AirspaceObjectTest {
 			Vector2D targetVelocity = this.object.getTargetVelocity();
 
 			// abs(altitude - targetAltitude) must be lower or 0
-			Assert.assertThat(Math.abs(altitude - targetAltitude), Matchers.is(Matchers.either(IsCloseToFloat.closeTo(0)).or(Matchers.lessThan(Math.abs(prevAltitude - prevTargetAltitude)))));
+			Assert.assertThat(
+					Math.abs(altitude - targetAltitude),
+					Matchers.is(Matchers.either(IsCloseToFloat.closeTo(0)).or(
+							Matchers.lessThan(Math.abs(prevAltitude
+									- prevTargetAltitude)))));
 
 			// altitude must be between min and max
-			Assert.assertThat(altitude, Matchers.is(RefreshTests.between(this.object.getMinAltitude(), this.object.getMaxAltitude())));
+			Assert.assertThat(
+					altitude,
+					Matchers.is(RefreshTests.between(
+							this.object.getMinAltitude(),
+							this.object.getMaxAltitude())));
 
 			// abs(speed - targetSpeed) must be lower of 0
-			Assert.assertThat(Math.abs(velocity.getLength() - targetVelocity.getLength()), Matchers.is(Matchers.either(IsCloseToFloat.closeTo(0)).or(Matchers.lessThan(Math.abs(prevVelocity.getLength() - prevTargetVelocity.getLength())))));
+			Assert.assertThat(
+					Math.abs(velocity.getLength() - targetVelocity.getLength()),
+					Matchers.is(Matchers.either(IsCloseToFloat.closeTo(0)).or(
+							Matchers.lessThan(Math.abs(prevVelocity.getLength()
+									- prevTargetVelocity.getLength())))));
 
 			// speed must be between min and max
-			Assert.assertThat(velocity.getLength(), Matchers.is(RefreshTests.between(this.object.getMinSpeed(), this.object.getMaxSpeed())));
+			Assert.assertThat(velocity.getLength(), Matchers.is(RefreshTests
+					.between(this.object.getMinSpeed(),
+							this.object.getMaxSpeed())));
 		}
 
 		@Test
@@ -107,7 +131,8 @@ public class AirspaceObjectTest {
 
 		/** Inclusive between matcher */
 		private static Matcher<Float> between(float min, float max) {
-			return Matchers.both(Matchers.greaterThanOrEqualTo(min)).and(Matchers.lessThanOrEqualTo(max));
+			return Matchers.both(Matchers.greaterThanOrEqualTo(min)).and(
+					Matchers.lessThanOrEqualTo(max));
 		}
 	}
 
@@ -172,6 +197,24 @@ public class AirspaceObjectTest {
 		@Override
 		public int getScore() {
 			return 100;
+		}
+
+		@Override
+		public FlightPlan getFlightPlan() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setFlightPlan(FlightPlan flightPlan) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void resetRunwayPlane() {
+			// TODO Auto-generated method stub
+
 		}
 	}
 }

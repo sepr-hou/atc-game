@@ -18,12 +18,14 @@ public class FlightPlan {
 	 * @param initialSpeed initial speed of the flight
 	 * @param initialAltitude initial altitude of the flight
 	 */
-	public FlightPlan(List<Vector2D> waypoints, float initialSpeed, float initialAltitude, boolean landing, boolean startOnRunway) {
+	public FlightPlan(List<Vector2D> waypoints, float initialSpeed,
+			float initialAltitude, boolean landing, boolean startOnRunway) {
 		if (waypoints == null) {
 			throw new IllegalArgumentException("waypoints cannot be null");
 		}
 		if (waypoints.size() < 2) {
-			throw new IllegalArgumentException("waypoints must have at least 2 items");
+			throw new IllegalArgumentException(
+					"waypoints must have at least 2 items");
 		}
 
 		this.waypoints = waypoints;
@@ -46,7 +48,8 @@ public class FlightPlan {
 	/** Returns the flight's initial velocity calculated from its initial speed */
 	public Vector2D getInitialVelocity() {
 		// Get direction vector
-		Vector2D directionVector = this.waypoints.get(1).sub(this.waypoints.get(0));
+		Vector2D directionVector = this.waypoints.get(1).sub(
+				this.waypoints.get(0));
 
 		// Scale to match initial speed
 		return directionVector.changeLength(this.initialSpeed);

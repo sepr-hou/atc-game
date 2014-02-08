@@ -25,8 +25,10 @@ public class IsCloseToFloat extends TypeSafeMatcher<Float> {
 	}
 
 	@Override
-	public void describeMismatchSafely(Float item, Description mismatchDescription) {
-		this.proxyMatcher.describeMismatchSafely(item.doubleValue(), mismatchDescription);
+	public void describeMismatchSafely(Float item,
+			Description mismatchDescription) {
+		this.proxyMatcher.describeMismatchSafely(item.doubleValue(),
+				mismatchDescription);
 	}
 
 	@Override
