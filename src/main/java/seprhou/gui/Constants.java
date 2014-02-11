@@ -15,7 +15,7 @@ public final class Constants {
 	// #################
 
 	/** Amount the altitude jumps to when a key is pressed */
-	public static final float ALTITUDE_JUMP = 5000;
+	public static final float ALTITUDE_JUMP = 10000;
 
 	// #################
 	// Global game configuration options
@@ -45,8 +45,8 @@ public final class Constants {
 					663.6f)));
 
 	/** Set of altitudes new flights are generated using */
-	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(30000f,
-			35000f, 40000f);
+	public static final List<Float> INITIAL_ALTITUDES = Arrays.asList(10000f,
+			20000f, 30000f);
 
 	/** Set of speeds new flights are generated using */
 	public static final List<Float> INITIAL_SPEEDS = Arrays.asList(50f, 60f,
@@ -62,7 +62,7 @@ public final class Constants {
 	public static final float AIRCRAFT_PER_SEC = 0.2f;
 
 	/** Maximum number of on screen aircraft */
-	public static final int MAX_AIRCRAFT = 20;
+	public static final int MAX_AIRCRAFT = 10;
 
 	/** Minimum number of waypoints in each flight plan */
 	public static final int MIN_WAYPOINTS = 2;
@@ -81,7 +81,7 @@ public final class Constants {
 	public static final float AIRCRAFT_SIZE = 32;
 
 	/** Ascent / decent rate of the aircraft (units per second) */
-	public static final float AIRCRAFT_ASCENT_RATE = 1000;
+	public static final float AIRCRAFT_ASCENT_RATE = 2000;
 
 	/** Maximum turn rate of the aircraft (radians per second) */
 	public static final float AIRCRAFT_TURN_RATE = 1.25f;

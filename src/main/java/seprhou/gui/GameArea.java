@@ -149,11 +149,13 @@ public class GameArea extends Actor {
 		// Takes off landed airplanes.
 		if (this.spacePressed) {
 			AirspaceObject planeTakingOff = airspace.getLandedObjects().poll();
-			FlightPlan newFlightPlan = GameScreen.flightPlanGenerator
-					.makeFlightPlanNow(airspace, false, true);
-			planeTakingOff.setFlightPlan(newFlightPlan);
-			planeTakingOff.resetRunwayPlane();
-			airspace.getActiveObjects().add(planeTakingOff);
+			if (planeTakingOff != null) {
+				FlightPlan newFlightPlan = GameScreen.flightPlanGenerator
+						.makeFlightPlanNow(airspace, false, true);
+				planeTakingOff.setFlightPlan(newFlightPlan);
+				planeTakingOff.resetRunwayPlane();
+				airspace.getActiveObjects().add(planeTakingOff);
+			}
 		}
 
 		// Clear keypress events
