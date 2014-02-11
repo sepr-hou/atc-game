@@ -34,7 +34,7 @@ public class GameArea extends Actor {
 	private Vector2D clickPosition;
 
 	/** If true, a keydown event was received for the up / down buttons */
-	private boolean upPressed, downPressed, spacePressed;
+	private boolean upPressed, downPressed, spacePressed, qPressed, ePressed;
 
 	/**
 	 * Creates a new GameArea
@@ -53,6 +53,12 @@ public class GameArea extends Actor {
 					return true;
 				} else if (keycode == Input.Keys.SPACE) {
 					GameArea.this.spacePressed = true;
+					return true;
+				} else if (keycode == Input.Keys.E) {
+					GameArea.this.ePressed = true;
+					return true;
+				} else if (keycode == Input.Keys.Q) {
+					GameArea.this.qPressed = true;
 					return true;
 				}
 
@@ -125,14 +131,14 @@ public class GameArea extends Actor {
 						-selected.getMaxTurnRate() * delta));
 			}
 
-			if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-				// Speed down
+			if (this.qPressed){
+				// Slow down
 				selected.setTargetVelocity(selected.getTargetVelocity().sub(
-						selected.getTargetVelocity().normalize().multiply(10)));
-			} else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+						selected.getTargetVelocity().normalize().multiply(10f)));
+			} else if (this.ePressed) {
 				// Speed up
 				selected.setTargetVelocity(selected.getTargetVelocity().add(
-						selected.getTargetVelocity().normalize().multiply(10)));
+						selected.getTargetVelocity().normalize().multiply(10f)));
 			}
 
 			// These keys are updated once - the Stage events handler works out
@@ -162,6 +168,8 @@ public class GameArea extends Actor {
 		this.upPressed = false;
 		this.downPressed = false;
 		this.spacePressed = false;
+		this.qPressed = false;
+		this.ePressed = false;
 
 		// Refresh airspace
 		airspace.refresh(delta);
