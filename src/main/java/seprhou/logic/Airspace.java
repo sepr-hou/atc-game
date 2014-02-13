@@ -261,6 +261,7 @@ public class Airspace {
 						this.score += object.getScore();
 						this.activeObjects.remove(i);
 						this.landedObjects.add(object);
+						this.landingPlanes--;
 					} else {
 						this.score += object.getScore();
 						this.activeObjects.remove(i);
