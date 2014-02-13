@@ -34,6 +34,7 @@ public class Airspace {
 
 	private boolean gameOver;
 	private int score = 0;
+	private int landingPlanes = 0;
 
 	/** Returns the factory responsible for constructing airspace objects */
 	public AirspaceObjectFactory getObjectFactory() {
@@ -395,6 +396,14 @@ public class Airspace {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public int getLandingPlanes() {
+		return landingPlanes;
+	}
+
+	public void setLandingPlanes(int landingPlanes) {
+		this.landingPlanes = landingPlanes;
 	}
 
 }

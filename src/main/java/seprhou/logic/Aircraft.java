@@ -279,7 +279,10 @@ public abstract class Aircraft extends AirspaceObject {
 							&& Math.abs(this.getAltitude()
 									- this.getMinAltitude()) < 1
 							&& Math.abs(this.getVelocity().getLength()
-									- this.getMinSpeed()) < 1 && this.airspace.getLandedObjects().size() < 10) {
+									- this.getMinSpeed()) < 1 
+							&& this.airspace.getLandedObjects().size() 
+									+ this.airspace.getLandingPlanes() < 1) {
+						this.airspace.setLandingPlanes(this.airspace.getLandingPlanes() + 1);
 						this.active = false;
 						this.setTargetVelocityNoClamping(waypoints
 								.get(waypoints.size() - 1).sub(this.position)
