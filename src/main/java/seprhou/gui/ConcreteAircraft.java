@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import seprhou.logic.Aircraft;
+import seprhou.logic.Airspace;
 import seprhou.logic.FlightPlan;
 import seprhou.logic.Vector2D;
 
@@ -27,8 +28,8 @@ public class ConcreteAircraft extends Aircraft {
 			(float) Math.cos(ConcreteAircraft.SHADOW_ANGLE));
 
 	public ConcreteAircraft(String name, float weight, int crew,
-			FlightPlan flightPlan) {
-		super(name, weight, crew, flightPlan, 1000);
+			FlightPlan flightPlan, Airspace airspace) {
+		super(name, weight, crew, flightPlan, 1000, airspace);
 	}
 
 	@Override

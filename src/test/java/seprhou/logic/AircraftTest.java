@@ -53,7 +53,7 @@ public class AircraftTest {
 
 		@Before
 		public void setupAircraft() {
-			this.aircraft = new AircraftMock(WaypointCollisionTests.FLIGHT_PLAN);
+			this.aircraft = new AircraftMock(WaypointCollisionTests.FLIGHT_PLAN, null);
 		}
 
 		@Test
@@ -111,11 +111,11 @@ public class AircraftTest {
 	private static class AircraftMock extends Aircraft {
 		public AircraftMock() {
 			this(new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0,
-					0, false, false));
+					0, false, false), new Airspace());
 		}
 
-		public AircraftMock(FlightPlan flightPlan) {
-			super("Test", 0, 0, flightPlan, 1000);
+		public AircraftMock(FlightPlan flightPlan, Airspace airspace) {
+			super("Test", 0, 0, flightPlan, 1000, airspace);
 		}
 
 		@Override

@@ -131,7 +131,7 @@ public class GameArea extends Actor {
 						-selected.getMaxTurnRate() * delta));
 			}
 
-			if (this.qPressed){
+			if (this.qPressed) {
 				// Slow down
 				selected.setTargetVelocity(selected.getTargetVelocity().sub(
 						selected.getTargetVelocity().normalize().multiply(10f)));

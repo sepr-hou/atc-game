@@ -108,7 +108,7 @@ public class GameScreen extends AbstractScreen {
 							.getRandom().nextInt(1000));
 
 					return new ConcreteAircraft(flightNumber, 100, 5,
-							flightPlan);
+							flightPlan, airspace);
 				}
 
 				return null;

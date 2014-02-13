@@ -28,6 +28,7 @@ public class FlightPlanGenerator {
 	private int maxAircraft = Constants.MAX_AIRCRAFT;
 	private int minWaypoints = Constants.MIN_WAYPOINTS;
 	private int maxWaypoints = Constants.MAX_WAYPOINTS;
+	private int nextTakeOffRunway = 0;
 
 	// State (time since last aircraft)
 	private float timeSinceLastAircraft = Float.POSITIVE_INFINITY;
@@ -167,9 +168,13 @@ public class FlightPlanGenerator {
 
 		/* Take off from runway instead. */
 		if (startOnRunway) {
+			// Makes sure that aircrafts take off from alternating runways.
 			System.out.println("Starts on runway");
-			Runway runway = Constants.RUNWAYS.get(Utils.getRandom().nextInt(
-					Constants.RUNWAYS.size()));
+			Runway runway = Constants.RUNWAYS.get(this.nextTakeOffRunway);
+			if (this.nextTakeOffRunway == 1)
+				this.nextTakeOffRunway--;
+			else
+				this.nextTakeOffRunway++;
 			myWaypoints.add(0, runway.getStart());
 			myWaypoints.add(1, runway.getEnd());
 		} else {

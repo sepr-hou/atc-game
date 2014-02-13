@@ -13,6 +13,7 @@ public abstract class Aircraft extends AirspaceObject {
 	private final float weight;
 	private final int crew;
 	private float tickCount = 0;
+	private final Airspace airspace;
 
 	private boolean violated = false;
 	private boolean finished = false;
@@ -37,7 +38,7 @@ public abstract class Aircraft extends AirspaceObject {
 	 * @param flightPlan aircraft flight plan
 	 */
 	protected Aircraft(String name, float weight, int crew,
-			FlightPlan flightPlan, int score) {
+			FlightPlan flightPlan, int score, Airspace airspace) {
 		if (flightPlan == null) {
 			throw new IllegalArgumentException("flightPlan cannot be null");
 		}
@@ -52,6 +53,7 @@ public abstract class Aircraft extends AirspaceObject {
 		this.crew = crew;
 		this.flightPlan = flightPlan;
 		this.setScore(score);
+		this.airspace = airspace;
 
 		// Setup initial object attributes
 		this.position = flightPlan.getWaypoints().get(0);
@@ -272,13 +274,12 @@ public abstract class Aircraft extends AirspaceObject {
 					double angle = this.calculateAngle(waypoints.get(
 							waypoints.size() - 1).sub(
 							waypoints.get(waypoints.size() - 2)));
-
 					if (this.getBearing() > angle - 5
 							&& this.getBearing() < angle + 5
 							&& Math.abs(this.getAltitude()
 									- this.getMinAltitude()) < 1
 							&& Math.abs(this.getVelocity().getLength()
-									- this.getMinSpeed()) < 1) {
+									- this.getMinSpeed()) < 1 && this.airspace.getLandedObjects().size() < 10) {
 						this.active = false;
 						this.setTargetVelocityNoClamping(waypoints
 								.get(waypoints.size() - 1).sub(this.position)
