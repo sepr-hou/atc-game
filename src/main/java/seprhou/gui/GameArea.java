@@ -36,8 +36,6 @@ public class GameArea extends Actor {
 	/** If true, a keydown event was received for the up / down buttons */
 	private boolean upPressed, downPressed, spacePressed, qPressed, ePressed, tabPressed;
 
-	
-
 	/**
 	 * Creates a new GameArea
 	 */
@@ -119,13 +117,13 @@ public class GameArea extends Actor {
 					.findAircraft(this.clickPosition));
 			this.clickPosition = null;
 		}
-		
+
 		// Tab Cycling through aircraft
 		if (this.tabPressed) {
-			this.parent.setSelectedAircraft((Aircraft) airspace 
+			this.parent.setSelectedAircraft((Aircraft) airspace
 					.cycleAircraft());
 		}
-		
+
 		// Keyboard controls
 		Aircraft selected = this.parent.getSelectedAircraft();
 		if (selected != null && selected.isActive()) {
@@ -278,25 +276,29 @@ public class GameArea extends Actor {
 						this.getX() + position2.getX() - circleRadius,
 						this.getY() + position2.getY() - circleRadius);
 			}
-			
+
 			// Draw landed planes
-			for(int i = 0; i < 4; i++ ){//airspace.getLandedObjects().size(); i++ ){
+			for (int i = 0; i < airspace.getLandedObjects().size(); i++) {
 				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(i);
 				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(i);
 				batch.draw(Assets.AIRCRAFT_TEXTURE, // Aircraft texture
 						pos.getX(), // X position (bottom left)
 						pos.getY(), // Y position (bottom right)
-						Assets.AIRCRAFT_TEXTURE.getWidth()/2, // X rotation origin
-						Assets.AIRCRAFT_TEXTURE.getHeight()/2, // Y rotation origin
+						Assets.AIRCRAFT_TEXTURE.getWidth() / 2, // X rotation
+																// origin
+						Assets.AIRCRAFT_TEXTURE.getHeight() / 2, // Y rotation
+																	// origin
 						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width
 						Assets.AIRCRAFT_TEXTURE.getHeight(), // Height
-						1.0f, // X scaling
-						1.0f, // Y scaling
+						0.8f, // X scaling
+						0.8f, // Y scaling
 						rot, // Rotation
 						0, // X position in texture
 						0, // Y position in texture
-						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source texture
-						Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source texture
+						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source
+															// texture
+						Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source
+															// texture
 						false, // Flip in X axis
 						false // Flip in Y axis
 				);

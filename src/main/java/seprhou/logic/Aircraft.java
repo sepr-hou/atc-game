@@ -104,7 +104,7 @@ public abstract class Aircraft extends AirspaceObject {
 		}
 		return angle;
 	}
-	
+
 	/**
 	 * Returns this vector's angle
 	 * 
@@ -150,8 +150,9 @@ public abstract class Aircraft extends AirspaceObject {
 	public int getLastWaypoint() {
 		return this.lastWaypoint;
 	}
-	//Prepares the plane for taking off.
-	//Resets all of its values, and assigns a new flightplan
+
+	// Prepares the plane for taking off.
+	// Resets all of its values, and assigns a new flightplan
 	public void resetRunwayPlane() {
 		this.lastWaypoint = 0;
 		this.waypointsHit = 0;
@@ -205,6 +206,7 @@ public abstract class Aircraft extends AirspaceObject {
 	public boolean isActive() {
 		return this.active;
 	}
+
 	// Convenience function to change the plane bearing
 	// Without having to manually modify velocity
 	public void setBearing(float bearing) {
@@ -285,21 +287,21 @@ public abstract class Aircraft extends AirspaceObject {
 					double angle = this.calculateAngle(waypoints.get(
 							waypoints.size() - 1).sub(
 							waypoints.get(waypoints.size() - 2)));
-					//Checks that the plane is approaching airport
-					//at correct angle, altitude and speed
+					// Checks that the plane is approaching airport
+					// at correct angle, altitude and speed
 					if (this.getBearing() > angle - 5
 							&& this.getBearing() < angle + 5
 							&& Math.abs(this.getAltitude()
 									- this.getMinAltitude()) < 1
 							&& Math.abs(this.getVelocity().getLength()
-									- this.getMinSpeed()) < 1 
-							&& this.airspace.getLandedObjects().size() 
+									- this.getMinSpeed()) < 1
+							&& this.airspace.getLandedObjects().size()
 									+ this.airspace.getLandingPlanes() < 10) {
-						//Increment the counter of landing planes.
+						// Increment the counter of landing planes.
 						this.airspace.setLandingPlanes(this.airspace.getLandingPlanes() + 1);
-						//Remove control of the plane from the player.
+						// Remove control of the plane from the player.
 						this.active = false;
-						//Land the plane automatically.
+						// Land the plane automatically.
 						this.setTargetVelocityNoClamping(waypoints
 								.get(waypoints.size() - 1).sub(this.position)
 								.changeLength(30f));

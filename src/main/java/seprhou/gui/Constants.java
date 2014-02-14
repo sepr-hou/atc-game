@@ -85,10 +85,10 @@ public final class Constants {
 
 	/** Maximum turn rate of the aircraft (radians per second) */
 	public static final float AIRCRAFT_TURN_RATE = 1.25f;
-	
-	public static final List<Vector2D> LANDED_AIRCRAFT_POSITIONS = Arrays.asList(new Vector2D(885, 390), new Vector2D(855, 420), new Vector2D(825, 450), new Vector2D(795, 480));//Arrays.asList(new Vector2D(885, 390), new Vector2D(850, 425), new Vector2D(815, 460), new Vector2D(780, 495));
-	
-	public static final List<Float> LANDED_AIRCRAFT_ANGLES = Arrays.asList(45f, 225f, 45f, 225f);//Arrays.asList(45f, 225f, 45f, 225f);
+
+	public static final List<Vector2D> LANDED_AIRCRAFT_POSITIONS = Arrays.asList(new Vector2D(885, 385), new Vector2D(862.5f, 415), new Vector2D(840, 445), new Vector2D(817.5f, 475), new Vector2D(795, 505), new Vector2D(688, 570), new Vector2D(718, 598), new Vector2D(877.5f, 590f), new Vector2D(925f, 542.5f), new Vector2D(972.5f, 495f));
+
+	public static final List<Float> LANDED_AIRCRAFT_ANGLES = Arrays.asList(45f, 45f, 45f, 45f, 45f, 315f, 315f, 315f, 315f, 315f);
 
 	private Constants() {}
 }

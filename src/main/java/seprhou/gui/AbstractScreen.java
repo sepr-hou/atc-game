@@ -87,7 +87,7 @@ public abstract class AbstractScreen implements Screen {
 		this.stage.draw();
 
 		// Record frames per second and output to console
-		this.logger.log();
+		// this.logger.log();
 	}
 
 	@Override

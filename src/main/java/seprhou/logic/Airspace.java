@@ -205,18 +205,18 @@ public class Airspace {
 
 		return null;
 	}
-	
+
 	public AirspaceObject cycleAircraft() {
 		AirspaceObject current;
-		if(cycleCount + 1 < this.activeObjects.size()){	
+		if (cycleCount + 1 < this.activeObjects.size()) {
 			cycleCount += 1;
 			current = this.activeObjects.get(cycleCount);
 			return current;
-		}else if(cycleCount + 1 == this.activeObjects.size()){
+		} else if (cycleCount + 1 == this.activeObjects.size()) {
 			cycleCount = 0;
 			current = this.activeObjects.get(cycleCount);
 			return current;
-		}else {
+		} else {
 			return null;
 		}
 	}
