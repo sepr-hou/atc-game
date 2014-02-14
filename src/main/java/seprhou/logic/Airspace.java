@@ -34,6 +34,7 @@ public class Airspace {
 
 	private boolean gameOver;
 	private int score = 0;
+	// Needed to prevent more planes than allowed from landing.
 	private int landingPlanes = 0;
 
 	/** Returns the factory responsible for constructing airspace objects */
@@ -257,6 +258,8 @@ public class Airspace {
 				// Add its score to score,
 				// Then delete.
 				if (object.isFinished()) {
+					// If a plane is landing, add it to the airport
+					// Add its score to score.
 					if (object.getFlightPlan().isLanding()) {
 						this.score += object.getScore();
 						this.activeObjects.remove(i);
