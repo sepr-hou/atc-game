@@ -280,9 +280,9 @@ public class GameArea extends Actor {
 			}
 			
 			// Draw landed planes
-			for(int i = 0; i < airspace.getLandedObjects().size(); i++ ){
-				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(0);
-				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(0);
+			for(int i = 0; i < 4; i++ ){//airspace.getLandedObjects().size(); i++ ){
+				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(i);
+				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(i);
 				batch.draw(Assets.AIRCRAFT_TEXTURE, // Aircraft texture
 						pos.getX(), // X position (bottom left)
 						pos.getY(), // Y position (bottom right)
