@@ -267,6 +267,29 @@ public class GameArea extends Actor {
 						this.getX() + position2.getX() - circleRadius,
 						this.getY() + position2.getY() - circleRadius);
 			}
+			
+			// Draw landed planes
+			for(int i = 0; i < airspace.getLandedObjects().size(); i++ ){
+				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(0);
+				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(0);
+				batch.draw(Assets.AIRCRAFT_TEXTURE, // Aircraft texture
+						pos.getX(), // X position (bottom left)
+						pos.getY(), // Y position (bottom right)
+						Assets.AIRCRAFT_TEXTURE.getWidth()/2, // X rotation origin
+						Assets.AIRCRAFT_TEXTURE.getHeight()/2, // Y rotation origin
+						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width
+						Assets.AIRCRAFT_TEXTURE.getHeight(), // Height
+						1.0f, // X scaling
+						1.0f, // Y scaling
+						rot, // Rotation
+						0, // X position in texture
+						0, // Y position in texture
+						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source texture
+						Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source texture
+						false, // Flip in X axis
+						false // Flip in Y axis
+				);
+			}
 
 			// End clipping
 			batch.flush();
