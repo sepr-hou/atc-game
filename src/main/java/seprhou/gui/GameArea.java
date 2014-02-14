@@ -34,7 +34,9 @@ public class GameArea extends Actor {
 	private Vector2D clickPosition;
 
 	/** If true, a keydown event was received for the up / down buttons */
-	private boolean upPressed, downPressed, spacePressed, qPressed, ePressed;
+	private boolean upPressed, downPressed, spacePressed, qPressed, ePressed, tabPressed;
+
+	
 
 	/**
 	 * Creates a new GameArea
@@ -60,6 +62,8 @@ public class GameArea extends Actor {
 				} else if (keycode == Input.Keys.Q) {
 					GameArea.this.qPressed = true;
 					return true;
+				} else if (keycode == Input.Keys.TAB) {
+					GameArea.this.tabPressed = true;
 				}
 
 				return false;
@@ -115,7 +119,13 @@ public class GameArea extends Actor {
 					.findAircraft(this.clickPosition));
 			this.clickPosition = null;
 		}
-
+		
+		// Tab Cycling through aircraft
+		if (this.tabPressed) {
+			this.parent.setSelectedAircraft((Aircraft) airspace 
+					.cycleAircraft());
+		}
+		
 		// Keyboard controls
 		Aircraft selected = this.parent.getSelectedAircraft();
 		if (selected != null && selected.isActive()) {
@@ -170,6 +180,7 @@ public class GameArea extends Actor {
 		this.spacePressed = false;
 		this.qPressed = false;
 		this.ePressed = false;
+		this.tabPressed = false;
 
 		// Refresh airspace
 		airspace.refresh(delta);
