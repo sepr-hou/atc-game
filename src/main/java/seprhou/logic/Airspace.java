@@ -21,6 +21,7 @@ public class Airspace {
 	private AirspaceObjectFactory objectFactory;
 	private Rectangle dimensions;
 	private float lateralSeparation, verticalSeparation;
+	private int cycleCount = 0;
 
 	private final ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
 	private final ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
@@ -203,6 +204,21 @@ public class Airspace {
 		}
 
 		return null;
+	}
+	
+	public AirspaceObject cycleAircraft() {
+		AirspaceObject current;
+		if(cycleCount + 1 < this.activeObjects.size()){	
+			cycleCount += 1;
+			current = this.activeObjects.get(cycleCount);
+			return current;
+		}else if(cycleCount + 1 == this.activeObjects.size()){
+			cycleCount = 0;
+			current = this.activeObjects.get(cycleCount);
+			return current;
+		}else {
+			return null;
+		}
 	}
 
 	/**
