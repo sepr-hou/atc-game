@@ -289,8 +289,8 @@ public abstract class Aircraft extends AirspaceObject {
 							waypoints.get(waypoints.size() - 2)));
 					// Checks that the plane is approaching airport
 					// at correct angle, altitude and speed
-					if (this.getBearing() > angle - 5
-							&& this.getBearing() < angle + 5
+					if (this.getBearing() > angle - 25
+							&& this.getBearing() < angle + 25
 							&& Math.abs(this.getAltitude()
 									- this.getMinAltitude()) < 1
 							&& Math.abs(this.getVelocity().getLength()
