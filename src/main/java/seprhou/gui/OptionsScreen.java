@@ -54,6 +54,7 @@ public class OptionsScreen extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				LATERAL_SEPARATION = 100.0f;
 				VERTICAL_SEPARATION = 500.0f;
+				OptionsScreen.this.getGame().showMenu();
 			}
 		});
 
@@ -68,6 +69,7 @@ public class OptionsScreen extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				LATERAL_SEPARATION = 200.0f;
 				VERTICAL_SEPARATION = 1000.0f;
+				OptionsScreen.this.getGame().showMenu();
 			}
 		});
 
@@ -82,6 +84,8 @@ public class OptionsScreen extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				LATERAL_SEPARATION = 300.0f;
 				VERTICAL_SEPARATION = 1500.0f;
+				OptionsScreen.this.getGame().showMenu();
+
 			}
 		});
 		stage.addActor(easyButton);
