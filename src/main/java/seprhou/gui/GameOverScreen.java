@@ -31,10 +31,11 @@ public class GameOverScreen extends AbstractScreen {
 	 * 
 	 * @param value time to show in seconds
 	 */
-	public void setTimerValue(float value) {
+	public void setTimerValue(float time, int score) {
 		// Update timer label
 		this.timerLabel.setText("Your final time was: "
-				+ Utils.formatTime(value) + "\n"
+				+ Utils.formatTime(time) + "\n"
+				+ "Your final score was: " + score + "\n"
 				+ "Press escape to return to the main menu");
 	}
 }

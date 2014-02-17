@@ -59,12 +59,12 @@ public class AtcGame extends Game {
 	 * 
 	 * @param time the number of seconds elapsed when the game finished
 	 */
-	public void showGameOver(float time) {
+	public void showGameOver(float time, int score) {
 		if (this.gameOverScreen == null) {
 			this.gameOverScreen = new GameOverScreen(this);
 		}
 
-		this.gameOverScreen.setTimerValue(time);
+		this.gameOverScreen.setTimerValue(time, score);
 		this.setScreen(this.gameOverScreen);
 	}
 }

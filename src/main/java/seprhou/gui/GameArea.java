@@ -106,7 +106,8 @@ public class GameArea extends Actor {
 		// Die if the game is over
 		if (airspace.isGameOver()) {
 			this.parent.getGame().showGameOver(
-					this.parent.getSecondsSinceStart());
+					this.parent.getSecondsSinceStart(),
+					this.parent.getScore());
 			return;
 		}
 		// Selecting new aircraft
