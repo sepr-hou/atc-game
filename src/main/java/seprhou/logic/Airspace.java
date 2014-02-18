@@ -156,6 +156,11 @@ public class Airspace {
 		return Collections.unmodifiableCollection(this.culledObjects);
 	}
 
+	
+	/** Returns the list of Objects "landed" in the game area
+	 * List works on a FIFO basis,
+	 * Objects take off in the order they were landed and not in any other way
+	 */
 	public Queue<AirspaceObject> getLandedObjects() {
 		return this.landedObjects;
 	}
@@ -206,6 +211,7 @@ public class Airspace {
 		return null;
 	}
 
+	// Iterates a pointer through all Objects, returning the value of whichever object is currently beign pointed at
 	public AirspaceObject cycleAircraft() {
 		AirspaceObject current;
 		if (cycleCount + 1 < this.activeObjects.size()) {
@@ -410,18 +416,22 @@ public class Airspace {
 		}
 	}
 
+	/** Returns the current Score */
 	public int getScore() {
 		return this.score;
 	}
 
+	/** Sets the Score to an integer provided*/
 	public void setScore(int score) {
 		this.score = score;
 	}
 
+	/** Returns the list of all Planes landed in the Airspace */
 	public int getLandingPlanes() {
 		return landingPlanes;
 	}
-
+ 
+	/** Sets the List of all Planes that have landed in the Airspace*/
 	public void setLandingPlanes(int landingPlanes) {
 		this.landingPlanes = landingPlanes;
 	}
