@@ -24,7 +24,7 @@ public class Main {
 
 		// Setup game config
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "Airspace Frenzy 6";
+		cfg.title = "Airspace Frenzy 7";
 		cfg.useGL20 = true;
 
 		if (windowed) {
