@@ -260,24 +260,6 @@ public class GameArea extends Actor {
 				}
 			}
 
-			// Draw all aircraft
-			this.batch = batch;
-			airspace.draw(this);
-			this.batch = null;
-
-			// Draw collision warnings
-			for (CollisionWarning collision : airspace.getCollisionWarnings()) {
-				Vector2D position = collision.getObject1().getPosition();
-				Vector2D position2 = collision.getObject2().getPosition();
-				float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
-				batch.draw(Assets.VIOLATED_TEXTURE,
-						this.getX() + position.getX() - circleRadius,
-						this.getY() + position.getY() - circleRadius);
-				batch.draw(Assets.VIOLATED_TEXTURE,
-						this.getX() + position2.getX() - circleRadius,
-						this.getY() + position2.getY() - circleRadius);
-			}
-
 			// Draw landed planes
 			for (int i = 0; i < airspace.getLandedObjects().size(); i++) {
 				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(i);
@@ -309,6 +291,24 @@ public class GameArea extends Actor {
 			batch.flush();
 			this.clipEnd();
 		}
+
+			// Draw all aircraft
+			this.batch = batch;
+			airspace.draw(this);
+			this.batch = null;
+
+			// Draw collision warnings
+			for (CollisionWarning collision : airspace.getCollisionWarnings()) {
+				Vector2D position = collision.getObject1().getPosition();
+				Vector2D position2 = collision.getObject2().getPosition();
+				float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
+				batch.draw(Assets.VIOLATED_TEXTURE,
+						this.getX() + position.getX() - circleRadius,
+						this.getY() + position.getY() - circleRadius);
+				batch.draw(Assets.VIOLATED_TEXTURE,
+						this.getX() + position2.getX() - circleRadius,
+						this.getY() + position2.getY() - circleRadius);
+			}
 	}
 
 	/**
