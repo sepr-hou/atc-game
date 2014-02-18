@@ -1,9 +1,13 @@
 package seprhou.gui;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
+import seprhou.logic.HighscoresDB;
 import seprhou.logic.Utils;
 
 /**
@@ -37,5 +41,13 @@ public class GameOverScreen extends AbstractScreen {
 				+ Utils.formatTime(time) + "\n"
 				+ "Your final score was: " + score + "\n"
 				+ "Press escape to return to the main menu");
+
+		try {
+			PreparedStatement s = HighscoresDB.getConnection().prepareStatement("INSERT INTO highscores (score) VALUES (?)");
+			s.setInt(1, score);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
