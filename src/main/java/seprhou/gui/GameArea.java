@@ -162,7 +162,9 @@ public class GameArea extends Actor {
 		}
 
 		// Takes off landed airplanes.
-		if (this.spacePressed) {
+		// Additional check, to make sure, that it is impossible to have more
+		// than MAX_AIRCRAFT planes in the airspace.
+		if (this.spacePressed && airspace.getLandedObjects().size() < Constants.MAX_AIRCRAFT) {
 			AirspaceObject planeTakingOff = airspace.getLandedObjects().poll();
 			if (planeTakingOff != null) {
 				FlightPlan newFlightPlan = GameScreen.flightPlanGenerator
@@ -292,23 +294,23 @@ public class GameArea extends Actor {
 			this.clipEnd();
 		}
 
-			// Draw all aircraft
-			this.batch = batch;
-			airspace.draw(this);
-			this.batch = null;
+		// Draw all aircraft
+		this.batch = batch;
+		airspace.draw(this);
+		this.batch = null;
 
-			// Draw collision warnings
-			for (CollisionWarning collision : airspace.getCollisionWarnings()) {
-				Vector2D position = collision.getObject1().getPosition();
-				Vector2D position2 = collision.getObject2().getPosition();
-				float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
-				batch.draw(Assets.VIOLATED_TEXTURE,
-						this.getX() + position.getX() - circleRadius,
-						this.getY() + position.getY() - circleRadius);
-				batch.draw(Assets.VIOLATED_TEXTURE,
-						this.getX() + position2.getX() - circleRadius,
-						this.getY() + position2.getY() - circleRadius);
-			}
+		// Draw collision warnings
+		for (CollisionWarning collision : airspace.getCollisionWarnings()) {
+			Vector2D position = collision.getObject1().getPosition();
+			Vector2D position2 = collision.getObject2().getPosition();
+			float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
+			batch.draw(Assets.VIOLATED_TEXTURE,
+					this.getX() + position.getX() - circleRadius,
+					this.getY() + position.getY() - circleRadius);
+			batch.draw(Assets.VIOLATED_TEXTURE,
+					this.getX() + position2.getX() - circleRadius,
+					this.getY() + position2.getY() - circleRadius);
+		}
 	}
 
 	/**

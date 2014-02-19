@@ -114,7 +114,7 @@ public class ConcreteAircraft extends Aircraft {
 		Assets.FONT.draw(batch, str, xPos + this.getSize() * 2,
 				yPos + this.getSize() * 2);
 
-		String str2 = Math.round(this.getVelocity().getLength()*10) + "mph";
+		String str2 = Math.round(this.getVelocity().getLength() * 10) + "mph";
 		Assets.FONT.draw(batch, str2, xPos + this.getSize() * 2, yPos + this.getSize() * 2 - 16);
 	}
 

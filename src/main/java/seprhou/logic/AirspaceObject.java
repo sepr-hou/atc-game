@@ -259,13 +259,19 @@ public abstract class AirspaceObject {
 
 	/** Returns the maximum rate of change of angle (radians / sec) */
 	public abstract float getMaxTurnRate();
-	
-	/** Returns a check on whether an Object has completed it's flight plan or not */
+
+	/**
+	 * Returns a check on whether an Object has completed it's flight plan or
+	 * not
+	 */
 	public abstract boolean isFinished();
-	
-	/** Returns a check on whether an Object has violated an exclusion zone or not */
+
+	/**
+	 * Returns a check on whether an Object has violated an exclusion zone or
+	 * not
+	 */
 	public abstract boolean isViolated();
-	
+
 	/** Returns the Score of the Object */
 	public abstract int getScore();
 
