@@ -182,7 +182,7 @@ public class FlightPlanGenerator {
 			myWaypoints.add(0, entryPoint);
 		}
 
-		if (Utils.getRandom().nextInt(4) != 3 && canLand && !startOnRunway) {
+		if (Utils.getRandom().nextInt(2) != 1 && canLand && !startOnRunway) {
 			Runway landingStrip = Utils.randomItem(this.runways);
 			Vector2D landingPoint = landingStrip.getEnd();
 			Vector2D exitPoint = landingStrip.getStart();
