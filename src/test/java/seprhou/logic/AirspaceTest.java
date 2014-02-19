@@ -134,6 +134,16 @@ public class AirspaceTest {
 		Assert.assertThat(found.getAltitude(), Matchers.is(3f));
 	}
 
+	@Test
+	public void testCycleAircraft() {
+		Airspace airspace = AirspaceTest.generateAirspace(2);
+		airspace.cycleAircraft();
+		AirspaceObject obj1 = airspace.cycleAircraft();
+		AirspaceObject obj2 = airspace.cycleAircraft();
+		Assert.assertThat(obj1, Matchers.equalTo(airspace.cycleAircraft()));
+		Assert.assertThat(obj2, Matchers.equalTo(airspace.cycleAircraft()));
+	}
+
 	/** Converts a list of objects to a list of positions */
 	private static List<Vector2D> objectsToPositions(
 			Iterable<AirspaceObject> objects) {
