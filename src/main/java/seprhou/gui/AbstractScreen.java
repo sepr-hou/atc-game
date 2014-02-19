@@ -18,6 +18,8 @@ public abstract class AbstractScreen implements Screen {
 	private final AtcGame game;
 	private final Stage stage;
 	private final boolean enableEscape;
+
+	@SuppressWarnings("unused")
 	private final FPSLogger logger = new FPSLogger();
 
 	/**
