@@ -43,6 +43,8 @@ public class GameArea extends Actor {
 		this.parent = parent;
 		this.addListener(new InputListener() {
 			@Override
+			// New keys should be added here if it is important that the keypress
+			// is only registered a single time.
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
 					GameArea.this.upPressed = true;
@@ -103,7 +105,7 @@ public class GameArea extends Actor {
 	public void act(float delta) {
 		Airspace airspace = this.parent.getAirspace();
 
-		// Die if the game is over
+		// Switch to GameOver screen if the game is over
 		if (airspace.isGameOver()) {
 			this.parent.getGame().showGameOver(
 					this.parent.getSecondsSinceStart(),
@@ -112,8 +114,9 @@ public class GameArea extends Actor {
 		}
 		// Selecting new aircraft
 		if (this.clickPosition != null) {
-			System.out.println(this.clickPosition);
-			// Someone clicked on something - update selected aircraft
+			if(Constants.DEBUG)
+				System.out.println(this.clickPosition);
+			// Mouse click registered - update selected aircraft
 			this.parent.setSelectedAircraft((Aircraft) airspace
 					.findAircraft(this.clickPosition));
 			this.clickPosition = null;
@@ -141,11 +144,11 @@ public class GameArea extends Actor {
 			}
 
 			if (this.qPressed) {
-				// Slow down
+				// Slow down by 100mph
 				selected.setTargetVelocity(selected.getTargetVelocity().sub(
 						selected.getTargetVelocity().normalize().multiply(10f)));
 			} else if (this.ePressed) {
-				// Speed up
+				// Speed up by 100mph
 				selected.setTargetVelocity(selected.getTargetVelocity().add(
 						selected.getTargetVelocity().normalize().multiply(10f)));
 			}
