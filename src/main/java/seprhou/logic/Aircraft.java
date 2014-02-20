@@ -312,6 +312,9 @@ public abstract class Aircraft extends AirspaceObject {
 								.changeLength(30f));
 						this.setTargetAltitudeNoClamping(0);
 					} else {
+						//If the next waypoint of the plane is start of runway,
+						//but the plane is approaching the airport at wrong parameters
+						//return without incrementing pointers.
 						return;
 					}
 				}
