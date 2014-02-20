@@ -32,7 +32,7 @@ public class GameScreen extends AbstractScreen {
 	private Airspace airspace;
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
-
+	// Initialises flight plan generator
 	static {
 		flightPlanGenerator = new FlightPlanGenerator();
 		GameScreen.flightPlanGenerator.setWaypoints(Constants.WAYPOINTS);

@@ -168,7 +168,7 @@ public class FlightPlanGenerator {
 
 		/* Take off from runway instead. */
 		if (startOnRunway) {
-			if(Constants.DEBUG)
+			if (Constants.DEBUG)
 				System.out.println("Starts on runway");
 			// Makes sure that aircrafts take off from alternating runways.
 			Runway runway = Constants.RUNWAYS.get(this.nextTakeOffRunway);
@@ -180,9 +180,12 @@ public class FlightPlanGenerator {
 			myWaypoints.add(1, runway.getEnd());
 		} else {
 			// Insert entry point into the list
+			// if the plane is not taking off from the runway
 			myWaypoints.add(0, entryPoint);
 		}
-
+		// If the plane has not started on runway,
+		// Randomly picks wether the plane should land
+		// Or leave through exit point.
 		if (Utils.getRandom().nextInt(2) != 1 && canLand && !startOnRunway) {
 			Runway landingStrip = Utils.randomItem(this.runways);
 			Vector2D landingPoint = landingStrip.getEnd();

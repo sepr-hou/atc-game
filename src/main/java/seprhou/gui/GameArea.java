@@ -41,7 +41,8 @@ public class GameArea extends Actor {
 		this.parent = parent;
 		this.addListener(new InputListener() {
 			@Override
-			// New keys should be added here if it is important that the keypress
+			// New keys should be added here if it is important that the
+			// keypress
 			// is only registered a single time.
 			public boolean keyDown(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
@@ -112,7 +113,7 @@ public class GameArea extends Actor {
 		}
 		// Selecting new aircraft
 		if (this.clickPosition != null) {
-			if(Constants.DEBUG)
+			if (Constants.DEBUG)
 				System.out.println(this.clickPosition);
 			// Mouse click registered - update selected aircraft
 			this.parent.setSelectedAircraft((Aircraft) airspace
@@ -214,15 +215,6 @@ public class GameArea extends Actor {
 						- waypointOffset, this.getY() + point.getY()
 						- waypointOffset);
 			}
-
-			// for (Runway runway : Constants.RUNWAYS) {
-			// batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() +
-			// runway.getStart().getX() - waypointOffset, this.getY() +
-			// runway.getStart().getY() - waypointOffset);
-			// batch.draw(Assets.WAYPOINT_TEXTURE, this.getX() +
-			// runway.getEnd().getX() - waypointOffset, this.getY() +
-			// runway.getEnd().getY() - waypointOffset);
-			// }
 
 			// Draw flight path + highlighted waypoints
 			if (selected != null) {
