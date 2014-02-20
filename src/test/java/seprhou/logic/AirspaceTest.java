@@ -1,6 +1,7 @@
 package seprhou.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import seprhou.gui.ConcreteAircraft;
 
 /**
  * Tests for {@link Airspace}
@@ -132,6 +135,34 @@ public class AirspaceTest {
 		AirspaceObject found = airspace.findAircraft(Vector2D.ZERO);
 		Assert.assertThat(found, Matchers.is(Matchers.notNullValue()));
 		Assert.assertThat(found.getAltitude(), Matchers.is(3f));
+	}
+
+	@Test
+	public void testCycleAircraft() {
+		Airspace airspace = AirspaceTest.generateAirspace(2);
+		airspace.cycleAircraft();
+		AirspaceObject obj1 = airspace.cycleAircraft();
+		AirspaceObject obj2 = airspace.cycleAircraft();
+		Assert.assertThat(obj1, Matchers.equalTo(airspace.cycleAircraft()));
+		Assert.assertThat(obj2, Matchers.equalTo(airspace.cycleAircraft()));
+	}
+
+	@Test
+	public void testTakeOff() {
+		Airspace airspace = AirspaceTest.generateAirspace(0);
+		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 1337)), 0, 0, false, true), airspace);
+		airspace.getLandedObjects().add(aircraft);
+		airspace.takeOff();
+		Assert.assertTrue(airspace.getActiveObjects().contains(aircraft));
+	}
+
+	@Test
+	public void testLanding() {
+		Airspace airspace = AirspaceTest.generateAirspace(0);
+		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 0)), 0, 0, true, false), airspace);
+		aircraft.refresh(10);
+		airspace.cullObjects();
+		Assert.assertFalse(airspace.getActiveObjects().contains(aircraft));
 	}
 
 	/** Converts a list of objects to a list of positions */

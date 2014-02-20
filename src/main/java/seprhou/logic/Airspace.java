@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import seprhou.gui.GameScreen;
+
 /**
  * Controls an entire air space and all the aircraft in it
  * 
@@ -165,6 +167,17 @@ public class Airspace {
 		return this.landedObjects;
 	}
 
+	public void takeOff() {
+		AirspaceObject planeTakingOff = this.getLandedObjects().poll();
+		if (planeTakingOff != null) {
+			FlightPlan newFlightPlan = GameScreen.flightPlanGenerator
+					.makeFlightPlanNow(this, false, true);
+			planeTakingOff.setFlightPlan(newFlightPlan);
+			planeTakingOff.resetRunwayPlane();
+			this.getActiveObjects().add(planeTakingOff);
+		}
+	}
+
 	/**
 	 * Returns the list of active aircraft
 	 * 
@@ -254,7 +267,7 @@ public class Airspace {
 	}
 
 	/** Culls objects outside the game area */
-	private void cullObjects() {
+	public void cullObjects() {
 		Rectangle gameArea = this.getDimensions();
 
 		this.culledObjects.clear();

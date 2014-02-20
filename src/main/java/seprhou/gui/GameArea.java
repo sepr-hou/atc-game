@@ -12,9 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import seprhou.logic.Aircraft;
 import seprhou.logic.Airspace;
-import seprhou.logic.AirspaceObject;
 import seprhou.logic.CollisionWarning;
-import seprhou.logic.FlightPlan;
 import seprhou.logic.Vector2D;
 
 /**
@@ -168,14 +166,7 @@ public class GameArea extends Actor {
 		// Additional check, to make sure, that it is impossible to have more
 		// than MAX_AIRCRAFT planes in the airspace.
 		if (this.spacePressed && airspace.getActiveObjects().size() < Constants.MAX_AIRCRAFT) {
-			AirspaceObject planeTakingOff = airspace.getLandedObjects().poll();
-			if (planeTakingOff != null) {
-				FlightPlan newFlightPlan = GameScreen.flightPlanGenerator
-						.makeFlightPlanNow(airspace, false, true);
-				planeTakingOff.setFlightPlan(newFlightPlan);
-				planeTakingOff.resetRunwayPlane();
-				airspace.getActiveObjects().add(planeTakingOff);
-			}
+			airspace.takeOff();
 		}
 
 		// Clear keypress events
