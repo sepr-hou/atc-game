@@ -98,6 +98,6 @@ public final class Constants {
 	public static final List<Float> LANDED_AIRCRAFT_ANGLES = Arrays.asList(45f, 45f, 45f, 45f, 45f, 315f, 315f, 315f, 315f, 315f);
 	/** When true, turns on debug mode */
 	public static final boolean DEBUG = false;
-	
+
 	private Constants() {}
 }

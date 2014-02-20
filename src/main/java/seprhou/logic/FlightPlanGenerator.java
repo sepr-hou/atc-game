@@ -168,8 +168,9 @@ public class FlightPlanGenerator {
 
 		/* Take off from runway instead. */
 		if (startOnRunway) {
+			if(Constants.DEBUG)
+				System.out.println("Starts on runway");
 			// Makes sure that aircrafts take off from alternating runways.
-			System.out.println("Starts on runway");
 			Runway runway = Constants.RUNWAYS.get(this.nextTakeOffRunway);
 			if (this.nextTakeOffRunway == 1)
 				this.nextTakeOffRunway--;
@@ -178,7 +179,7 @@ public class FlightPlanGenerator {
 			myWaypoints.add(0, runway.getStart());
 			myWaypoints.add(1, runway.getEnd());
 		} else {
-			// Insert entry + exit points into the list
+			// Insert entry point into the list
 			myWaypoints.add(0, entryPoint);
 		}
 

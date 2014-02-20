@@ -47,7 +47,7 @@ public abstract class Aircraft extends AirspaceObject {
 			name = "";
 		}
 
-		// Setup my attributes
+		// Setup initial general attributes
 		this.name = name;
 		this.weight = weight;
 		this.crew = crew;
@@ -55,7 +55,7 @@ public abstract class Aircraft extends AirspaceObject {
 		this.setScore(score);
 		this.airspace = airspace;
 
-		// Setup initial object attributes
+		// Setup initial flightplan related attributes
 		this.position = flightPlan.getWaypoints().get(0);
 		this.velocity = flightPlan.getInitialVelocity();
 
@@ -172,8 +172,6 @@ public abstract class Aircraft extends AirspaceObject {
 		this.targetVelocity = direction
 				.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom()
 						.nextInt(Constants.INITIAL_SPEEDS.size())));
-		this.active = false;
-		this.startOnRunway = true;
 	}
 
 	@Override
@@ -231,16 +229,19 @@ public abstract class Aircraft extends AirspaceObject {
 	 */
 	public void decayScore() {
 		if (this.violated) {
-			// System.out.println("Score violated Deacying:" + this.getScore());
+			if (Constants.DEBUG)
+				System.out.println("Score violated Deacying:" + this.getScore());
 			// This is executed when the exclusion zone of the plane is
 			// violated, regardless of gracePeriod
 			this.setScore(this.getScore() - this.decayRate * 2);
 		} else {
 			if (this.gracePeriod > 0) {
-				// System.out.println("Grace Remaining:" + this.gracePeriod);
+				if (Constants.DEBUG)
+					System.out.println("Grace Remaining:" + this.gracePeriod);
 				this.gracePeriod--;
 			} else {
-				// System.out.println("Score Decaying:" + this.getScore());
+				if (Constants.DEBUG)
+					System.out.println("Score Decaying:" + this.getScore());
 				this.setScore(this.getScore() - this.decayRate);
 			}
 		}
@@ -260,7 +261,8 @@ public abstract class Aircraft extends AirspaceObject {
 	public void refresh(float dt) {
 
 		super.refresh(dt);
-
+		// Used for precisely measuring the passed time
+		// to decrease score only every second
 		this.tickCount += dt;
 		if (this.tickCount > 1) {
 			this.decayScore();
@@ -269,11 +271,14 @@ public abstract class Aircraft extends AirspaceObject {
 
 		// Reset violated to false, for checking at the next tick.
 		this.violated = false;
-		// Test intersection with all remaining waypoints
+
 		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
+		// If the plane start on runway, return control to player after the
+		// plane takes off from airport.
 		if (this.startOnRunway && this.lastWaypoint == 1) {
 			this.active = true;
 		}
+		// Test intersection with all remaining waypoints
 		if (this.lastWaypoint + 1 >= waypoints.size()) {
 			this.finished = true;
 		} else {
@@ -310,9 +315,10 @@ public abstract class Aircraft extends AirspaceObject {
 						return;
 					}
 				}
-
+				// Increment the pointer to the waypoints list
 				this.lastWaypoint++;
 				this.waypointsHit++;
+				// Increase the grace period of the plane for hitting a waypoint
 				this.gracePeriod += 5;
 			}
 		}

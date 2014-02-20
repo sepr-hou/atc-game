@@ -19,7 +19,6 @@ public abstract class AbstractScreen implements Screen {
 	private final Stage stage;
 	private final boolean enableEscape;
 
-	@SuppressWarnings("unused")
 	private final FPSLogger logger = new FPSLogger();
 
 	/**
@@ -89,7 +88,8 @@ public abstract class AbstractScreen implements Screen {
 		this.stage.draw();
 
 		// Record frames per second and output to console
-		// this.logger.log();
+		if(Constants.DEBUG)
+			this.logger.log();
 	}
 
 	@Override

@@ -31,8 +31,9 @@ public class GameOverScreen extends AbstractScreen {
 	}
 
 	/**
-	 * Sets the number of seconds to show on the game screen as the final time
-	 * 
+	 * Sets the number of seconds and score to show on the game screen as the
+	 * final time 
+	 * Also writes the current score to the high score database.
 	 * @param value time to show in seconds
 	 */
 	public void setTimerValue(float time, int score) {

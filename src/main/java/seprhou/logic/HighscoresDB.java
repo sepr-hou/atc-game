@@ -9,11 +9,12 @@ public class HighscoresDB {
 	private static HighscoresDB instance;
 	private Connection connection = null;
 
+	/** Sets up the sqlite database for highscores */
 	private HighscoresDB() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			this.connection = DriverManager.getConnection("jdbc:sqlite:highscores");
-
+			// If the database does not exist, creates a new one.
 			Statement stmt = this.connection.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS `highscores` (	`id` integer primary key,	`name` VARCHAR(50),	`time` integer,	`score` integer, t TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
 			stmt.executeUpdate(sql);

@@ -33,7 +33,7 @@ public class HighScoresScreen extends AbstractScreen {
 		// Set background image
 		Image backgroundImage = new Image(Assets.MENU_BACKGROUND_TEXTURE);
 		this.stage.addActor(backgroundImage);
-
+		// Tries to read and display scores from the database
 		try {
 			PreparedStatement p = HighscoresDB.getConnection().prepareStatement("SELECT * FROM highscores ORDER BY score DESC, t ASC LIMIT 10");
 			ResultSet scores = p.executeQuery();

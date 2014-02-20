@@ -227,7 +227,8 @@ public class Airspace {
 	// Iterates a pointer through all Objects, returning the value of whichever
 	// object is currently beign pointed at
 	public AirspaceObject cycleAircraft() {
-		if (this.activeObjects.size() == 0) return null;
+		if (this.activeObjects.size() == 0)
+			return null;
 		cycleCount++;
 		cycleCount %= this.activeObjects.size();
 		return this.activeObjects.get(cycleCount);
