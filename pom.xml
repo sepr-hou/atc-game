@@ -5,9 +5,11 @@
   <artifactId>atc-game</artifactId>
   <version>3.0-SNAPSHOT</version>
 
-  <name>Airspace Frenzy 6</name>
+  <name>Airspace Frenzy 8</name>
   <inceptionYear>2013</inceptionYear>
-  <organization><name>SEPR HOU</name></organization>
+  <organization><name>SEPR HOU</name>
+  	<url>http://sepr-hou.github.io/</url>
+  </organization>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -118,4 +120,5 @@
       </plugin>
     </plugins>
   </build>
+  <url>http://sepr-hou.github.io/</url>
 </project>
