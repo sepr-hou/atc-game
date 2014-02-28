@@ -11,10 +11,11 @@ import seprhou.logic.Utils;
  */
 public class ControlPanel extends Group
 {
+	private static final float TITLE_ALIGN = 50.0f;
+	private static final float VALUE_ALIGN = 80.0f;
+	private static final float TITLE_SCALE = 1.3f;
+
 	private final GameScreen parent;
-	private final float titleAlign = 50.0f;
-	private final float valueAlign = 80.0f;
-	private final float titleScale = 1.3f;
 
 	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed,
 			valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel, valueScore;
@@ -29,106 +30,52 @@ public class ControlPanel extends Group
 		this.parent = parent;
 
 		Image gamelogo = new Image(Assets.GAME_TITLE);
-		gamelogo.setX(this.titleAlign);
-		gamelogo.setY(850.0f);
-		this.addActor(gamelogo);
+		gamelogo.setPosition(TITLE_ALIGN, 850);
+		addActor(gamelogo);
 
-		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
-		nameFlightNo.setX(this.titleAlign);
-		nameFlightNo.setY(800.0f);
-		nameFlightNo.setFontScale(this.titleScale);
-		this.addActor(nameFlightNo);
-		valueFlightNo = new Label("", Assets.SKIN);
-		valueFlightNo.setX(valueAlign);
-		valueFlightNo.setY(780.0f);
-		this.addActor(valueFlightNo);
+		valueFlightNo = createTitleAndValue(800, "Flight Number");
+		valueAltitude = createTitleAndValue(720, "Altitude");
+		valueBearing  = createTitleAndValue(640, "Bearing");
+		valueAirspeed = createTitleAndValue(560, "Airspeed");
 
-		Label nameAltitude = new Label("Altitude:", Assets.SKIN);
-		nameAltitude.setX(this.titleAlign);
-		nameAltitude.setY(720.0f);
-		nameAltitude.setFontScale(this.titleScale);
-		this.addActor(nameAltitude);
+		createTitleLabel(480, "Position");
+		valueXPosition = createValueLabel(460);
+		valueYPosition = createValueLabel(440);
 
-		valueAltitude = new Label("", Assets.SKIN);
-		valueAltitude.setX(valueAlign);
-		valueAltitude.setY(700.0f);
-		this.addActor(valueAltitude);
+		valueCrew = createTitleAndValue(380, "Crew");
+		valueWeight = createTitleAndValue(300, "Weight");
 
-		Label nameBearing = new Label("Bearing:", Assets.SKIN);
-		nameBearing.setX(this.titleAlign);
-		nameBearing.setY(640.0f);
-		nameBearing.setFontScale(this.titleScale);
-		this.addActor(nameBearing);
+		timerLabel = createValueLabel(160);
+		timerLabel.setFontScale(2);
 
-		valueBearing = new Label("", Assets.SKIN);
-		valueBearing.setX(valueAlign);
-		valueBearing.setY(620.0f);
-		this.addActor(valueBearing);
+		valueScore = createTitleAndValue(100, "Score");
+		valueScore.setFontScale(2);
+	}
 
-		Label nameAirspeed = new Label("Airspeed:", Assets.SKIN);
-		nameAirspeed.setX(this.titleAlign);
-		nameAirspeed.setY(560.0f);
-		nameAirspeed.setFontScale(this.titleScale);
-		this.addActor(nameAirspeed);
+	/** Creates a new label for a value */
+	private Label createValueLabel(float y)
+	{
+		Label label = new Label("", Assets.SKIN);
+		label.setPosition(VALUE_ALIGN, y);
+		addActor(label);
+		return label;
+	}
 
-		valueAirspeed = new Label("", Assets.SKIN);
-		valueAirspeed.setX(valueAlign);
-		valueAirspeed.setY(540.0f);
-		this.addActor(valueAirspeed);
+	/** Creates a new label for a title (to show what a value means) */
+	private Label createTitleLabel(float y, String name)
+	{
+		Label label = new Label(name + ":", Assets.SKIN);
+		label.setPosition(TITLE_ALIGN, y);
+		label.setFontScale(TITLE_SCALE);
+		addActor(label);
+		return label;
+	}
 
-		Label namePosition = new Label("Position:", Assets.SKIN);
-		namePosition.setX(this.titleAlign);
-		namePosition.setY(480.0f);
-		namePosition.setFontScale(this.titleScale);
-		this.addActor(namePosition);
-
-		valueXPosition = new Label("", Assets.SKIN);
-		valueXPosition.setX(valueAlign);
-		valueXPosition.setY(460.0f);
-		this.addActor(valueXPosition);
-		valueYPosition = new Label("", Assets.SKIN);
-		valueYPosition.setX(valueAlign);
-		valueYPosition.setY(440.0f);
-		this.addActor(valueYPosition);
-
-		Label nameCrew = new Label("Crew:", Assets.SKIN);
-		nameCrew.setX(this.titleAlign);
-		nameCrew.setY(380.0f);
-		nameCrew.setFontScale(this.titleScale);
-		this.addActor(nameCrew);
-
-		valueCrew = new Label("", Assets.SKIN);
-		valueCrew.setX(valueAlign);
-		valueCrew.setY(360.0f);
-		this.addActor(valueCrew);
-
-		Label nameWeight = new Label("Weight:", Assets.SKIN);
-		nameWeight.setX(this.titleAlign);
-		nameWeight.setY(300.0f);
-		nameWeight.setFontScale(this.titleScale);
-		this.addActor(nameWeight);
-
-		valueWeight = new Label("", Assets.SKIN);
-		valueWeight.setX(valueAlign);
-		valueWeight.setY(280.0f);
-		this.addActor(valueWeight);
-
-		timerLabel = new Label("", Assets.SKIN);
-		timerLabel.setX(valueAlign);
-		timerLabel.setY(160.0f);
-		timerLabel.setFontScale(2.0f);
-		this.addActor(timerLabel);
-
-		Label nameScore = new Label("Score:", Assets.SKIN);
-		nameScore.setX(this.titleAlign);
-		nameScore.setY(100.0f);
-		nameScore.setFontScale(this.titleScale);
-		this.addActor(nameScore);
-		this.valueScore = new Label("", Assets.SKIN);
-		this.valueScore.setX(this.valueAlign);
-		this.valueScore.setY(70.0f);
-		this.valueScore.setFontScale(2.0f);
-		this.addActor(this.valueScore);
+	/** Combined function to create both a title and value label. */
+	private Label createTitleAndValue(float titleY, String name)
+	{
+		createTitleLabel(titleY, name);
+		return createValueLabel(titleY - 20);
 	}
 
 	/**
