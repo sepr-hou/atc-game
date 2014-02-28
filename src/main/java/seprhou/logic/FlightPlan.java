@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * Class which stores the flight plan of an aircraft and its initial trajectory
  */
-public class FlightPlan {
+public class FlightPlan
+{
 	private final List<Vector2D> waypoints;
 	private final float initialSpeed, initialAltitude;
 	private final boolean landing;
@@ -13,20 +14,18 @@ public class FlightPlan {
 
 	/**
 	 * Creates a new flight plan
-	 * 
+	 *
 	 * @param waypoints list of waypoint positions
 	 * @param initialSpeed initial speed of the flight
 	 * @param initialAltitude initial altitude of the flight
 	 */
 	public FlightPlan(List<Vector2D> waypoints, float initialSpeed,
-			float initialAltitude, boolean landing, boolean startOnRunway) {
-		if (waypoints == null) {
+			float initialAltitude, boolean landing, boolean startOnRunway)
+	{
+		if (waypoints == null)
 			throw new IllegalArgumentException("waypoints cannot be null");
-		}
-		if (waypoints.size() < 2) {
-			throw new IllegalArgumentException(
-					"waypoints must have at least 2 items");
-		}
+		if (waypoints.size() < 2)
+			throw new IllegalArgumentException("waypoints must have at least 2 items");
 
 		this.waypoints = waypoints;
 		this.initialSpeed = initialSpeed;
@@ -36,28 +35,31 @@ public class FlightPlan {
 	}
 
 	/** Returns the list of waypoints */
-	public List<Vector2D> getWaypoints() {
-		return this.waypoints;
+	public List<Vector2D> getWaypoints()
+	{
+		return waypoints;
 	}
 
 	/** Returns the initial speed */
-	public float getInitialSpeed() {
-		return this.initialSpeed;
+	public float getInitialSpeed()
+	{
+		return initialSpeed;
 	}
 
 	/** Returns the flight's initial velocity calculated from its initial speed */
-	public Vector2D getInitialVelocity() {
+	public Vector2D getInitialVelocity()
+	{
 		// Get direction vector
-		Vector2D directionVector = this.waypoints.get(1).sub(
-				this.waypoints.get(0));
+		Vector2D directionVector = waypoints.get(1).sub(waypoints.get(0));
 
 		// Scale to match initial speed
-		return directionVector.changeLength(this.initialSpeed);
+		return directionVector.changeLength(initialSpeed);
 	}
 
 	/** Returns the initial altitude */
-	public float getInitialAltitude() {
-		return this.initialAltitude;
+	public float getInitialAltitude()
+	{
+		return initialAltitude;
 	}
 
 	public boolean isLanding() {
