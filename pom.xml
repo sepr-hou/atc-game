@@ -7,8 +7,10 @@
 
   <name>Airspace Frenzy 8</name>
   <inceptionYear>2013</inceptionYear>
-  <organization><name>SEPR HOU</name>
-  	<url>http://sepr-hou.github.io/</url>
+  <url>http://sepr-hou.github.io/</url>
+  <organization>
+    <name>SEPR HOU</name>
+    <url>http://sepr-hou.github.io/</url>
   </organization>
 
   <properties>
@@ -120,5 +122,4 @@
       </plugin>
     </plugins>
   </build>
-  <url>http://sepr-hou.github.io/</url>
 </project>
