@@ -259,26 +259,23 @@ public class GameArea extends Actor
 			{
 				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(i);
 				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(i);
-				batch.draw(Assets.AIRCRAFT_TEXTURE, // Aircraft texture
-						pos.getX(), // X position (bottom left)
-						pos.getY(), // Y position (bottom right)
-						Assets.AIRCRAFT_TEXTURE.getWidth() / 2, // X rotation
-																// origin
-						Assets.AIRCRAFT_TEXTURE.getHeight() / 2, // Y rotation
-																	// origin
-						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width
-						Assets.AIRCRAFT_TEXTURE.getHeight(), // Height
-						0.8f, // X scaling
-						0.8f, // Y scaling
-						rot, // Rotation
-						0, // X position in texture
-						0, // Y position in texture
-						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source
-															// texture
-						Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source
-															// texture
-						false, // Flip in X axis
-						false // Flip in Y axis
+
+				batch.draw(Assets.AIRCRAFT_TEXTURE,         // Aircraft texture
+						pos.getX(),                         // X position (bottom left)
+						pos.getY(),                         // Y position (bottom right)
+						Constants.AIRCRAFT_SIZE,            // X rotation origin
+						Constants.AIRCRAFT_SIZE,            // Y rotation origin
+						Constants.AIRCRAFT_SIZE * 2,        // Width
+						Constants.AIRCRAFT_SIZE * 2,        // Height
+						0.8f,                               // X scaling
+						0.8f,                               // Y scaling
+						rot,                                // Rotation
+						0,                                  // X position in texture
+						0,                                  // Y position in texture
+						Assets.AIRCRAFT_TEXTURE.getWidth(), // Width of source texture
+						Assets.AIRCRAFT_TEXTURE.getHeight(),// Height of source texture
+						false,                              // Flip in X axis
+						false                               // Flip in Y axis
 				);
 			}
 			
