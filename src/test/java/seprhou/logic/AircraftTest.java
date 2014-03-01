@@ -107,22 +107,6 @@ public class AircraftTest
 			assertThat(aircraft.getWaypointsHit(), is(2));
 			assertThat(aircraft.getLastWaypoint(), is(2));
 		}
-
-		@Test
-		public void testWaypointSkipping()
-		{
-			// Jump straigt to exit point
-			aircraft.position = new Vector2D(200, 200);
-			aircraft.refresh(1);
-			assertThat(aircraft.getWaypointsHit(), is(1));
-			assertThat(aircraft.getLastWaypoint(), is(2));
-
-			// Jumping to previous waypoint should have no effect
-			aircraft.position = new Vector2D(100, 100);
-			aircraft.refresh(1);
-			assertThat(aircraft.getWaypointsHit(), is(1));
-			assertThat(aircraft.getLastWaypoint(), is(2));
-		}
 	}
 
 	/** Fake {@link Aircraft} class used for testing */
