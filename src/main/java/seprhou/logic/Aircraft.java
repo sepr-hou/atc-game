@@ -8,7 +8,8 @@ import seprhou.gui.Constants;
  * An aircraft in the airspace
  * 
  */
-public abstract class Aircraft extends AirspaceObject {
+public abstract class Aircraft extends AirspaceObject
+{
 	private final String name;
 	private final float weight;
 	private final int crew;
@@ -31,21 +32,19 @@ public abstract class Aircraft extends AirspaceObject {
 
 	/**
 	 * Constructs a new aircraft
-	 * 
+	 *
 	 * @param name aircraft name (descriptive only)
 	 * @param weight aircraft weight
 	 * @param crew number of crew
 	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew,
-			FlightPlan flightPlan, int score, Airspace airspace) {
-		if (flightPlan == null) {
+	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score, Airspace airspace)
+	{
+		if (flightPlan == null)
 			throw new IllegalArgumentException("flightPlan cannot be null");
-		}
 
-		if (name == null) {
+		if (name == null)
 			name = "";
-		}
 
 		// Setup initial general attributes
 		this.name = name;
@@ -80,26 +79,28 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	/** Returns this aircraft's name */
-	public String getName() {
-		return this.name;
+	public String getName()
+	{
+		return name;
 	}
 
 	/**
 	 * Returns this aircraft's bearing as calculated from its velocity
-	 * 
+	 *
 	 * <p>
-	 * This means that this method returns an angle from 0 to 360 where 0
-	 * degrees points upwards (positive y direction).
-	 * 
+	 * This means that this method returns an angle from 0 to 360 where 0 degrees
+	 * points upwards (positive y direction).
+	 *
 	 * @return the bearing of this aircraft
 	 */
-	public float getBearing() {
+	public float getBearing()
+	{
 		float angle = this.velocity.getAngle();
 		angle = angle * 180;
 		angle /= Math.PI;
 		angle = -angle;
 		angle += 90;
-		if (angle < 0) {
+		if (angle < 0){
 			angle += 360;
 		}
 		return angle;
@@ -127,18 +128,21 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	/** Returns this aircraft's weight */
-	public float getWeight() {
-		return this.weight;
+	public float getWeight()
+	{
+		return weight;
 	}
 
 	/** Returns this aircraft's crew */
-	public int getCrew() {
-		return this.crew;
+	public int getCrew()
+	{
+		return crew;
 	}
 
 	/** Returns this aircraft's flight plan (unmodifiable) */
-	public FlightPlan getFlightPlan() {
-		return this.flightPlan;
+	public FlightPlan getFlightPlan()
+	{
+		return flightPlan;
 	}
 
 	/** Assigns this aircraft a new flight plan. **/
@@ -147,8 +151,9 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	/** Returns the last waypoint hit by this aircraft */
-	public int getLastWaypoint() {
-		return this.lastWaypoint;
+	public int getLastWaypoint()
+	{
+		return lastWaypoint;
 	}
 
 	// Prepares the plane for taking off.
@@ -180,15 +185,16 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	/** Returns the total number of waypoints hit by this aircraft */
-	public int getWaypointsHit() {
-		return this.waypointsHit;
+	public int getWaypointsHit()
+	{
+		return waypointsHit;
 	}
-
-	public float getTickCount() {
+	
+	public float getTickCount(){
 		return this.tickCount;
 	}
-
-	public void setTickCount(float count) {
+	
+	public void setTickCount(float count){
 		this.tickCount = count;
 	}
 
@@ -207,7 +213,8 @@ public abstract class Aircraft extends AirspaceObject {
 
 	// Convenience function to change the plane bearing
 	// Without having to manually modify velocity
-	public void setBearing(float bearing) {
+	public void setBearing(float bearing)
+	{
 		float delta = (float) ((this.getBearing() - bearing) * Math.PI / 180);
 		if (delta > 0) {
 			this.velocity = this.velocity.rotate(delta);
@@ -219,15 +226,16 @@ public abstract class Aircraft extends AirspaceObject {
 	/**
 	 * Scoring
 	 * 
-	 * Each plane has a starting score, grace period and score decay rate. Each
-	 * second decayScore method is called, but while gracePeriod has not pass,
-	 * It keeps decreasing it, when it reaches zero, the method will start to
-	 * decay score by decayRate amount every second
+	 * Each plane has a starting score, grace period and score decay rate.
+	 * Each second decayScore method is called, but while gracePeriod has not pass,
+	 * It keeps decreasing it, when it reaches zero, the method will start to decay score
+	 * by decayRate amount every second
 	 * 
-	 * If another plane breaches exclusion zone of a plane, its score will be
-	 * decreased by twice the decay rate and gracePeriod will be ignored.
+	 * If another plane breaches exclusion zone of a plane, its score will be decreased by
+	 * twice the decay rate and gracePeriod will be ignored.
 	 */
-	public void decayScore() {
+	public void decayScore()
+	{
 		if (this.violated) {
 			if (Constants.DEBUG)
 				System.out.println("Score violated Deacying:" + this.getScore());
@@ -246,9 +254,8 @@ public abstract class Aircraft extends AirspaceObject {
 			}
 		}
 	}
-
-	@Override
-	public void setViolated(boolean value) {
+	
+	public void setViolated(boolean value){
 		this.violated = value;
 	}
 
@@ -258,37 +265,41 @@ public abstract class Aircraft extends AirspaceObject {
 	}
 
 	@Override
-	public void refresh(float dt) {
-
+	public void refresh(float dt)
+	{
 		super.refresh(dt);
+
 		// Used for precisely measuring the passed time
 		// to decrease score only every second
 		this.tickCount += dt;
-		if (this.tickCount > 1) {
+		if( this.tickCount > 1 ){
 			this.decayScore();
 			this.setTickCount(0);
 		}
-
+		
 		// Reset violated to false, for checking at the next tick.
 		this.violated = false;
 
 		List<Vector2D> waypoints = this.flightPlan.getWaypoints();
 		// If the plane start on runway, return control to player after the
 		// plane takes off from airport.
-		if (this.startOnRunway && this.lastWaypoint == 1) {
+		if (this.startOnRunway && this.lastWaypoint == 1)
 			this.active = true;
-		}
-		// Test intersection with all remaining waypoints
-		if (this.lastWaypoint + 1 >= waypoints.size()) {
-			this.finished = true;
-		} else {
 
+		// Test intersection with all remaining waypoints
+		if (this.lastWaypoint + 1 >= waypoints.size())
+		{
+			this.finished = true;
+		}
+		else
+		{
 			Vector2D waypointPosition = waypoints.get(this.lastWaypoint + 1);
 
 			if (this.position.distanceTo(waypointPosition) <= this.getSize()) {
 				// Landing on runway
 				if (this.lastWaypoint + 3 == waypoints.size()
-						&& this.flightPlan.isLanding()) {
+						&& this.flightPlan.isLanding())
+				{
 					double angle = this.calculateAngle(waypoints.get(
 							waypoints.size() - 1).sub(
 							waypoints.get(waypoints.size() - 2)));
@@ -301,7 +312,8 @@ public abstract class Aircraft extends AirspaceObject {
 							&& Math.abs(this.getVelocity().getLength()
 									- this.getMinSpeed()) < 1
 							&& this.airspace.getLandedObjects().size()
-									+ this.airspace.getLandingPlanes() < 10) {
+									+ this.airspace.getLandingPlanes() < 10)
+					{
 						// Increment the counter of landing planes.
 						this.airspace.setLandingPlanes(this.airspace.getLandingPlanes() + 1);
 						// Remove control of the plane from the player.
@@ -311,13 +323,16 @@ public abstract class Aircraft extends AirspaceObject {
 								.get(waypoints.size() - 1).sub(this.position)
 								.changeLength(30f));
 						this.setTargetAltitudeNoClamping(0);
-					} else {
+					}
+					else
+					{
 						//If the next waypoint of the plane is start of runway,
 						//but the plane is approaching the airport at wrong parameters
 						//return without incrementing pointers.
 						return;
 					}
 				}
+
 				// Increment the pointer to the waypoints list
 				this.lastWaypoint++;
 				this.waypointsHit++;
@@ -328,4 +343,5 @@ public abstract class Aircraft extends AirspaceObject {
 
 	}
 
+	
 }

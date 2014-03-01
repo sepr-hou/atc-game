@@ -3,167 +3,118 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
 import seprhou.logic.Aircraft;
 import seprhou.logic.Utils;
 
 /**
  * The actor which displays the control panel on the right of the game screen
  */
-public class ControlPanel extends Group {
+public class ControlPanel extends Group
+{
+	private static final float TITLE_ALIGN = 50.0f;
+	private static final float VALUE_ALIGN = 80.0f;
+	private static final float TITLE_SCALE = 1.3f;
+
 	private final GameScreen parent;
-	private final float titleAlign = 50.0f, valueAlign = 80.0f,
-			titleScale = 1.3f;;
-	private final Label valueFlightNo, valueAltitude, valueBearing,
-			valueAirspeed, valueXPosition, valueYPosition, valueCrew,
-			valueWeight, timerLabel, valueScore;
+
+	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed,
+			valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel, valueScore;
 
 	/**
 	 * Creates a new ControlPanel
-	 * 
+	 *
 	 * @param parent parent GameScreen
 	 */
-	public ControlPanel(GameScreen parent) {
+	public ControlPanel(GameScreen parent)
+	{
 		this.parent = parent;
 
 		Image gamelogo = new Image(Assets.GAME_TITLE);
-		gamelogo.setX(this.titleAlign);
-		gamelogo.setY(850.0f);
-		this.addActor(gamelogo);
+		gamelogo.setPosition(TITLE_ALIGN, 850);
+		addActor(gamelogo);
 
-		Label nameFlightNo = new Label("Flight Number:", Assets.SKIN);
-		nameFlightNo.setX(this.titleAlign);
-		nameFlightNo.setY(800.0f);
-		nameFlightNo.setFontScale(this.titleScale);
-		this.addActor(nameFlightNo);
-		this.valueFlightNo = new Label("", Assets.SKIN);
-		this.valueFlightNo.setX(this.valueAlign);
-		this.valueFlightNo.setY(780.0f);
-		this.addActor(this.valueFlightNo);
+		valueFlightNo = createTitleAndValue(800, "Flight Number");
+		valueAltitude = createTitleAndValue(720, "Altitude");
+		valueBearing  = createTitleAndValue(640, "Bearing");
+		valueAirspeed = createTitleAndValue(560, "Airspeed");
 
-		Label nameAltitude = new Label("Altitude:", Assets.SKIN);
-		nameAltitude.setX(this.titleAlign);
-		nameAltitude.setY(720.0f);
-		nameAltitude.setFontScale(this.titleScale);
-		this.addActor(nameAltitude);
-		this.valueAltitude = new Label("", Assets.SKIN);
-		this.valueAltitude.setX(this.valueAlign);
-		this.valueAltitude.setY(700.0f);
-		this.addActor(this.valueAltitude);
+		createTitleLabel(480, "Position");
+		valueXPosition = createValueLabel(460);
+		valueYPosition = createValueLabel(440);
 
-		Label nameBearing = new Label("Bearing:", Assets.SKIN);
-		nameBearing.setX(this.titleAlign);
-		nameBearing.setY(640.0f);
-		nameBearing.setFontScale(this.titleScale);
-		this.addActor(nameBearing);
-		this.valueBearing = new Label("", Assets.SKIN);
-		this.valueBearing.setX(this.valueAlign);
-		this.valueBearing.setY(620.0f);
-		this.addActor(this.valueBearing);
+		valueCrew = createTitleAndValue(380, "Crew");
+		valueWeight = createTitleAndValue(300, "Weight");
 
-		Label nameAirspeed = new Label("Airspeed:", Assets.SKIN);
-		nameAirspeed.setX(this.titleAlign);
-		nameAirspeed.setY(560.0f);
-		nameAirspeed.setFontScale(this.titleScale);
-		this.addActor(nameAirspeed);
-		this.valueAirspeed = new Label("", Assets.SKIN);
-		this.valueAirspeed.setX(this.valueAlign);
-		this.valueAirspeed.setY(540.0f);
-		this.addActor(this.valueAirspeed);
+		timerLabel = createValueLabel(160);
+		timerLabel.setFontScale(2);
 
-		Label namePosition = new Label("Position:", Assets.SKIN);
-		namePosition.setX(this.titleAlign);
-		namePosition.setY(480.0f);
-		namePosition.setFontScale(this.titleScale);
-		this.addActor(namePosition);
-		this.valueXPosition = new Label("", Assets.SKIN);
-		this.valueXPosition.setX(this.valueAlign);
-		this.valueXPosition.setY(460.0f);
-		this.addActor(this.valueXPosition);
-		this.valueYPosition = new Label("", Assets.SKIN);
-		this.valueYPosition.setX(this.valueAlign);
-		this.valueYPosition.setY(440.0f);
-		this.addActor(this.valueYPosition);
+		valueScore = createTitleAndValue(100, "Score");
+		valueScore.setFontScale(2);
+	}
 
-		Label nameCrew = new Label("Crew:", Assets.SKIN);
-		nameCrew.setX(this.titleAlign);
-		nameCrew.setY(380.0f);
-		nameCrew.setFontScale(this.titleScale);
-		this.addActor(nameCrew);
-		this.valueCrew = new Label("", Assets.SKIN);
-		this.valueCrew.setX(this.valueAlign);
-		this.valueCrew.setY(360.0f);
-		this.addActor(this.valueCrew);
+	/** Creates a new label for a value */
+	private Label createValueLabel(float y)
+	{
+		Label label = new Label("", Assets.SKIN);
+		label.setPosition(VALUE_ALIGN, y);
+		addActor(label);
+		return label;
+	}
 
-		Label nameWeight = new Label("Weight:", Assets.SKIN);
-		nameWeight.setX(this.titleAlign);
-		nameWeight.setY(300.0f);
-		nameWeight.setFontScale(this.titleScale);
-		this.addActor(nameWeight);
-		this.valueWeight = new Label("", Assets.SKIN);
-		this.valueWeight.setX(this.valueAlign);
-		this.valueWeight.setY(280.0f);
-		this.addActor(this.valueWeight);
+	/** Creates a new label for a title (to show what a value means) */
+	private Label createTitleLabel(float y, String name)
+	{
+		Label label = new Label(name + ":", Assets.SKIN);
+		label.setPosition(TITLE_ALIGN, y);
+		label.setFontScale(TITLE_SCALE);
+		addActor(label);
+		return label;
+	}
 
-		this.timerLabel = new Label("", Assets.SKIN);
-		this.timerLabel.setX(this.valueAlign);
-		this.timerLabel.setY(160.0f);
-		this.timerLabel.setFontScale(2.0f);
-		this.addActor(this.timerLabel);
-
-		Label nameScore = new Label("Score:", Assets.SKIN);
-		nameScore.setX(this.titleAlign);
-		nameScore.setY(100.0f);
-		nameScore.setFontScale(this.titleScale);
-		this.addActor(nameScore);
-		this.valueScore = new Label("", Assets.SKIN);
-		this.valueScore.setX(this.valueAlign);
-		this.valueScore.setY(70.0f);
-		this.valueScore.setFontScale(2.0f);
-		this.addActor(this.valueScore);
+	/** Combined function to create both a title and value label. */
+	private Label createTitleAndValue(float titleY, String name)
+	{
+		createTitleLabel(titleY, name);
+		return createValueLabel(titleY - 20);
 	}
 
 	/**
 	 * Returns the game screen used by the panel
 	 */
-	public GameScreen getGameScreen() {
-		return this.parent;
+	public GameScreen getGameScreen()
+	{
+		return parent;
 	}
 
 	@Override
-	public void act(float delta) {
-		Aircraft selected = this.parent.getSelectedAircraft();
-		if (selected != null) {
-			this.valueFlightNo.setText(selected.getName());
-			this.valueAltitude.setText(Integer.toString(Math.round(selected
-					.getAltitude())) + " ft");
-			this.valueBearing.setText(Integer.toString(Math.round(selected
-					.getBearing())) + " degrees");
-			this.valueAirspeed.setText(Integer.toString(Math.round(selected
-					.getVelocity().getLength() * 10)) + " mph");
-			this.valueXPosition.setText("x = "
-					+ Math.round(selected.getPosition().getX()));
-			this.valueYPosition.setText("y = "
-					+ Math.round(selected.getPosition().getY()));
-			this.valueCrew.setText(Integer.toString(selected.getCrew()));
-			this.valueWeight.setText(Integer.toString(Math.round(selected
-					.getWeight())) + " tonnes");
+	public void act(float delta)
+	{
+		Aircraft selected = parent.getSelectedAircraft();
 
+		if (selected != null){
+			valueFlightNo.setText(selected.getName());
+			valueAltitude.setText(Integer.toString(Math.round(selected.getAltitude())) + " ft");
+			valueBearing.setText(Integer.toString(Math.round(selected.getBearing())) + " degrees");
+			valueAirspeed.setText(Integer.toString(Math.round(selected.getVelocity().getLength() * 10))+ " mph");
+			valueXPosition.setText("x = "+ Math.round(selected.getPosition().getX()));
+			valueYPosition.setText("y = "+ Math.round(selected.getPosition().getY()));
+			valueCrew.setText(Integer.toString(selected.getCrew()));
+			valueWeight.setText(Integer.toString(Math.round(selected.getWeight())) + " tonnes");
 		} else {
-			this.valueFlightNo.setText("");
-			this.valueAltitude.setText("");
-			this.valueBearing.setText("");
-			this.valueAirspeed.setText("");
-			this.valueXPosition.setText("");
-			this.valueYPosition.setText("");
-			this.valueCrew.setText("");
-			this.valueWeight.setText("");
+			valueFlightNo.setText("");
+			valueAltitude.setText("");
+			valueBearing.setText("");
+			valueAirspeed.setText("");
+			valueXPosition.setText("");
+			valueYPosition.setText("");
+			valueCrew.setText("");
+			valueWeight.setText("");
 		}
 
 		// Update timer
-		this.timerLabel.setText(Utils.formatTime(this.parent
-				.getSecondsSinceStart()));
+		timerLabel.setText(Utils.formatTime(parent.getSecondsSinceStart()));
+
 		// Update score
-		this.valueScore.setText(Integer.toString(this.parent.getScore()));
+		valueScore.setText(Integer.toString(parent.getScore()));
 	}
 }
