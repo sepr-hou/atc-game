@@ -75,16 +75,16 @@ public abstract class AbstractScreen implements Screen
 	@Override
 	public void render(float delta)
 	{
-		// Clears the screen with the given RGB colour (black)
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		// If escape is pressed, go back to the menu
 		if (enableEscape && Gdx.input.isKeyPressed(Keys.ESCAPE))
 		{
 			game.showMenu();
 			return;
 		}
+
+		// Clears the screen with the given RGB colour (black)
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Update game state
 		stage.act(delta);
