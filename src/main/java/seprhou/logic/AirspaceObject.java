@@ -155,19 +155,6 @@ public abstract class AirspaceObject
 
 		return value;
 	}
-
-	/** As floatMoveTowards, followed by clamping the result to maximum and minimum values */
-	private static float floatMoveAndClamp(float value, float target, float change, float min, float max)
-	{
-		value = floatMoveTowards(value, target, change);
-
-		if (value < min)
-			value = min;
-		if (value > max)
-			value = max;
-
-		return value;
-	}
 	
 	public abstract void setViolated(boolean value);
 
@@ -182,8 +169,6 @@ public abstract class AirspaceObject
 		// Update altitude
 		if (altitude != targetAltitude)
 		{
-			this.getMinAltitude();
-			this.getMaxAltitude();
 			float ascentAmount = getAscentRate() * dt;
 
 			altitude = floatMoveTowards(altitude, targetAltitude, ascentAmount);
@@ -192,8 +177,6 @@ public abstract class AirspaceObject
 		// Update velocity
 		if (!velocity.equals(targetVelocity))
 		{
-			float minSpeed = getMinSpeed();
-			float maxSpeed = getMaxSpeed();
 			float acceleration = getMaxAcceleration() * dt;
 			float turnRate = getMaxTurnRate() * dt;
 
