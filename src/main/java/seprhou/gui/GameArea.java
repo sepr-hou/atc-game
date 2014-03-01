@@ -278,29 +278,30 @@ public class GameArea extends Actor
 						false                               // Flip in Y axis
 				);
 			}
-			
+
+			// Draw all aircraft
+			this.batch = batch;
+			airspace.draw(this);
+			this.batch = null;
+
+			// Draw collision warnings
+			for (CollisionWarning collision : airspace.getCollisionWarnings())
+			{
+				Vector2D position = collision.getObject1().getPosition();
+				Vector2D position2 = collision.getObject2().getPosition();
+				float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
+
+				batch.draw(Assets.VIOLATED_TEXTURE,
+						getX() + position.getX() - circleRadius,
+						getY() + position.getY() - circleRadius);
+				batch.draw(Assets.VIOLATED_TEXTURE,
+						getX() + position2.getX() - circleRadius,
+						getY() + position2.getY() - circleRadius);
+			}
 			
 			// End clipping
 			batch.flush();
 			clipEnd();
-		}
-
-		// Draw all aircraft
-		this.batch = batch;
-		airspace.draw(this);
-		this.batch = null;
-
-		// Draw collision warnings
-		for (CollisionWarning collision : airspace.getCollisionWarnings()) {
-			Vector2D position = collision.getObject1().getPosition();
-			Vector2D position2 = collision.getObject2().getPosition();
-			float circleRadius = Assets.VIOLATED_TEXTURE.getWidth() / 2;
-			batch.draw(Assets.VIOLATED_TEXTURE,
-					this.getX() + position.getX() - circleRadius,
-					this.getY() + position.getY() - circleRadius);
-			batch.draw(Assets.VIOLATED_TEXTURE,
-					this.getX() + position2.getX() - circleRadius,
-					this.getY() + position2.getY() - circleRadius);
 		}
 	}
 
