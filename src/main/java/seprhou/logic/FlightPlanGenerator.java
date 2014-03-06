@@ -131,10 +131,24 @@ public class FlightPlanGenerator
 
 		// Choose some waypoints + 2 entry and exit points, also determines
 		// whether a plane is landing or not.
-		int waypointCount = Utils.getRandom().nextInt(maxWaypoints - minWaypoints) + minWaypoints;
-		List<Vector2D> myWaypoints = Utils.randomSubset(waypoints, waypointCount);
+		
+		// CHANGE THIS TO DO #25
+
 		boolean landing;
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
+		//int waypointCount = Utils.getRandom().nextInt(maxWaypoints - minWaypoints) + minWaypoints;
+		//List<Vector2D> myWaypoints = Utils.randomSubset(waypoints, waypointCount);
+		List<Vector2D> myWaypoints = new ArrayList<Vector2D>();
+		List<Vector2D> firstWaypoints = new ArrayList<Vector2D>();
+		for (int i=0; i<16; i++){
+			if (entryPoint.distanceTo(waypoints.get(i)) < 400){
+				firstWaypoints.add(waypoints.get(i));
+			}
+		}
+		Vector2D firstWaypoint = Utils.randomItem(firstWaypoints);
+		myWaypoints.add(firstWaypoint);
+		
+		
 		boolean startOnRunway = isOnRunway;
 
 		/* Take off from runway instead. */
