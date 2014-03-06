@@ -24,6 +24,10 @@
       <id>gdx-nightlies</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>sepr-hou</id>
+      <url>https://raw.github.com/sepr-hou/mvn-repo/master/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -51,6 +55,13 @@
         <groupId>org.xerial</groupId>
         <artifactId>sqlite-jdbc</artifactId>
         <version>3.7.2</version>
+    </dependency>
+
+    <!-- KryoNet -->
+    <dependency>
+        <groupId>com.esotericsoftware</groupId>
+        <artifactId>kryonet</artifactId>
+        <version>2.21</version>
     </dependency>
 
     <!-- JUnit and Hamcrest for tests -->
