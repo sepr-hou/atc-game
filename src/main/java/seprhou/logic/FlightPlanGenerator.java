@@ -155,7 +155,7 @@ public class FlightPlanGenerator
 			myWaypoints.add(0, entryPoint);
 		}
 		// If the plane has not started on runway,
-		// Randomly picks wether the plane should land
+		// Randomly picks whether the plane should land
 		// Or leave through exit point.
 		if (Utils.getRandom().nextInt(2) != 1 && canLand && !startOnRunway) {
 			Runway landingStrip = Utils.randomItem(this.runways);
@@ -184,7 +184,7 @@ public class FlightPlanGenerator
 	 *
 	 * <p>
 	 * This method uses all its various configuration settings to create a
-	 * sutible flight plan. It does not generate a flight plan every time it
+	 * suitable flight plan. It does not generate a flight plan every time it
 	 * is called however.
 	 *
 	 * @param airspace the airspace the aircraft will be created in
