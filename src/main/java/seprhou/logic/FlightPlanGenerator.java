@@ -148,6 +148,19 @@ public class FlightPlanGenerator
 		Vector2D firstWaypoint = Utils.randomItem(firstWaypoints);
 		myWaypoints.add(firstWaypoint);
 		
+		Vector2D currentWaypoint = firstWaypoint;
+
+		for (int i=0; i<16; i++){
+			Vector2D newWaypoint = waypoints.get(i);
+			if ((currentWaypoint.distanceTo(newWaypoint)) < 600)
+			{
+				if (!waypoints.contains(newWaypoint)){
+					myWaypoints.add(newWaypoint);
+					currentWaypoint = newWaypoint;
+				}
+
+			}
+		}
 		
 		boolean startOnRunway = isOnRunway;
 
