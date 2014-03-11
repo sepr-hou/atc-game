@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static seprhou.logic.IsDistinct.distinct;
+import static seprhou.logic.LogicConstants.*;
 
 /**
  * Tests for {@link FlightPlanGenerator}
@@ -24,38 +25,6 @@ import static seprhou.logic.IsDistinct.distinct;
 @RunWith(Parameterized.class)
 public class FlightPlanGeneratorTest
 {
-	// Some lists used for testing
-	private static final List<Float> SPEEDS = Arrays.asList(20f, 30f, 60f, 80f);
-
-	private static final List<Float> ALTITUDES = Arrays.asList(120f, 130f, 160f, 180f);
-
-	private static final List<Vector2D> WAYPOINTS = Arrays.asList(
-			new Vector2D(280, 210),
-			new Vector2D(280, 420),
-			new Vector2D(280, 630),
-			new Vector2D(280, 840),
-			new Vector2D(560, 210),
-			new Vector2D(560, 420),
-			new Vector2D(560, 630),
-			new Vector2D(560, 840),
-			new Vector2D(840, 210),
-			new Vector2D(840, 420)
-	);
-
-	private static final List<Vector2D> ENTRY_EXIT_POINTS = Arrays.asList(
-			new Vector2D(100, 0),
-			new Vector2D(0, 800),
-			new Vector2D(1000, 0)
-	);
-
-	private static final List<Runway> RUNWAYS = Arrays.asList(
-			new Runway(new Vector2D(766.5f, 682.5f), new Vector2D(1018.5f, 426.3f)),
-			new Runway(new Vector2D(722.4f, 508.2f), new Vector2D(877.8f, 663.6f))
-	);
-
-	private static final int MIN_WAYPOINTS = 0;
-	private static final int MAX_WAYPOINTS = 4;
-
 	// The generator
 	private FlightPlanGenerator generator;
 
@@ -70,13 +39,6 @@ public class FlightPlanGeneratorTest
 	public void resetGenerator()
 	{
 		generator = new FlightPlanGenerator();
-		generator.setRunways(FlightPlanGeneratorTest.RUNWAYS);
-		generator.setWaypoints(WAYPOINTS);
-		generator.setEntryExitPoints(ENTRY_EXIT_POINTS);
-		generator.setInitialSpeeds(SPEEDS);
-		generator.setInitialAltitudes(ALTITUDES);
-		generator.setMinWaypoints(MIN_WAYPOINTS);
-		generator.setMaxWaypoints(MAX_WAYPOINTS);
 	}
 
 	@Test
@@ -104,8 +66,8 @@ public class FlightPlanGeneratorTest
 		List<Vector2D> waypoints = plan.getWaypoints();
 
 		// Initial speed + altitude
-		assertThat(plan.getInitialSpeed(), isIn(SPEEDS));
-		assertThat(plan.getInitialAltitude(), isIn(ALTITUDES));
+		assertThat(plan.getInitialSpeed(), isIn(INITIAL_SPEEDS));
+		assertThat(plan.getInitialAltitude(), isIn(INITIAL_ALTITUDES));
 
 		// Size of waypoints list
 		Matcher<Integer> sizeMatcher =
