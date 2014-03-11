@@ -260,10 +260,10 @@ public class GameArea extends Actor
 				batch.draw(Assets.AIRCRAFT_TEXTURE,         // Aircraft texture
 						pos.getX(),                         // X position (bottom left)
 						pos.getY(),                         // Y position (bottom right)
-						LogicConstants.AIRCRAFT_SIZE,            // X rotation origin
-						LogicConstants.AIRCRAFT_SIZE,            // Y rotation origin
-						LogicConstants.AIRCRAFT_SIZE * 2,        // Width
-						LogicConstants.AIRCRAFT_SIZE * 2,        // Height
+						LogicConstants.AIRCRAFT_SIZE,       // X rotation origin
+						LogicConstants.AIRCRAFT_SIZE,       // Y rotation origin
+						LogicConstants.AIRCRAFT_SIZE * 2,   // Width
+						LogicConstants.AIRCRAFT_SIZE * 2,   // Height
 						0.8f,                               // X scaling
 						0.8f,                               // Y scaling
 						rot,                                // Rotation
