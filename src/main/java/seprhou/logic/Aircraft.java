@@ -2,8 +2,6 @@ package seprhou.logic;
 
 import java.util.List;
 
-import seprhou.gui.Constants;
-
 /**
  * An aircraft in the airspace
  * 
@@ -60,14 +58,14 @@ public abstract class Aircraft extends AirspaceObject
 
 		if (this.flightPlan.isStartOnRunway()) {
 			this.altitude = 0;
-			this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils
-					.getRandom().nextInt(Constants.INITIAL_ALTITUDES.size()));
+			this.targetAltitude = LogicConstants.INITIAL_ALTITUDES.get(Utils
+					.getRandom().nextInt(LogicConstants.INITIAL_ALTITUDES.size()));
 			Vector2D direction = flightPlan.getWaypoints().get(1)
 					.sub(flightPlan.getWaypoints().get(0)).normalize();
 			this.velocity = direction;
-			this.targetVelocity = direction.multiply(Constants.INITIAL_SPEEDS
+			this.targetVelocity = direction.multiply(LogicConstants.INITIAL_SPEEDS
 					.get(Utils.getRandom().nextInt(
-							Constants.INITIAL_SPEEDS.size())));
+							LogicConstants.INITIAL_SPEEDS.size())));
 			this.active = false;
 			this.startOnRunway = true;
 		} else {
@@ -169,14 +167,14 @@ public abstract class Aircraft extends AirspaceObject
 		this.tickCount = 0;
 		this.altitude = 0;
 		this.position = flightPlan.getWaypoints().get(0);
-		this.targetAltitude = Constants.INITIAL_ALTITUDES.get(Utils.getRandom()
-				.nextInt(Constants.INITIAL_ALTITUDES.size()));
+		this.targetAltitude = LogicConstants.INITIAL_ALTITUDES.get(Utils.getRandom()
+				.nextInt(LogicConstants.INITIAL_ALTITUDES.size()));
 		Vector2D direction = flightPlan.getWaypoints().get(1)
 				.sub(flightPlan.getWaypoints().get(0)).normalize();
 		this.velocity = direction;
 		this.targetVelocity = direction
-				.multiply(Constants.INITIAL_SPEEDS.get(Utils.getRandom()
-						.nextInt(Constants.INITIAL_SPEEDS.size())));
+				.multiply(LogicConstants.INITIAL_SPEEDS.get(Utils.getRandom()
+						.nextInt(LogicConstants.INITIAL_SPEEDS.size())));
 	}
 
 	@Override
@@ -237,18 +235,18 @@ public abstract class Aircraft extends AirspaceObject
 	public void decayScore()
 	{
 		if (this.violated) {
-			if (Constants.DEBUG)
+			if (LogicConstants.DEBUG)
 				System.out.println("Score violated Deacying:" + this.getScore());
 			// This is executed when the exclusion zone of the plane is
 			// violated, regardless of gracePeriod
 			this.setScore(this.getScore() - this.decayRate * 2);
 		} else {
 			if (this.gracePeriod > 0) {
-				if (Constants.DEBUG)
+				if (LogicConstants.DEBUG)
 					System.out.println("Grace Remaining:" + this.gracePeriod);
 				this.gracePeriod--;
 			} else {
-				if (Constants.DEBUG)
+				if (LogicConstants.DEBUG)
 					System.out.println("Score Decaying:" + this.getScore());
 				this.setScore(this.getScore() - this.decayRate);
 			}

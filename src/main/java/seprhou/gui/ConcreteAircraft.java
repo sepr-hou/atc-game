@@ -2,10 +2,7 @@ package seprhou.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import seprhou.logic.Aircraft;
-import seprhou.logic.Airspace;
-import seprhou.logic.FlightPlan;
-import seprhou.logic.Vector2D;
+import seprhou.logic.*;
 
 import java.util.Collections;
 
@@ -14,10 +11,10 @@ public class ConcreteAircraft extends Aircraft
 {
 	// Derived constants
 	// The +1 and -1 here are leeway needed due to float rounding errors
-	private static final float AIRCRAFT_MIN_SPEED = Collections.min(Constants.INITIAL_SPEEDS) - 10;
-	private static final float AIRCRAFT_MAX_SPEED = Collections.max(Constants.INITIAL_SPEEDS) + 10;
+	private static final float AIRCRAFT_MIN_SPEED = Collections.min(LogicConstants.INITIAL_SPEEDS) - 10;
+	private static final float AIRCRAFT_MAX_SPEED = Collections.max(LogicConstants.INITIAL_SPEEDS) + 10;
 	private static final float AIRCRAFT_MIN_ALTITUDE = 5000f;
-	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(Constants.INITIAL_ALTITUDES);
+	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(LogicConstants.INITIAL_ALTITUDES);
 	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.003f;
 	private static final float SHADOW_ANGLE = 0.4f;
 	private static final Vector2D SHADOW_DIRECTION = Vector2D.fromPolar(SHADOW_HEIGHT_MULTIPLIER, SHADOW_ANGLE);
@@ -99,9 +96,9 @@ public class ConcreteAircraft extends Aircraft
 		);
 	}
 
-	@Override public float getSize()             { return Constants.AIRCRAFT_SIZE; }
-	@Override public float getAscentRate()       { return Constants.AIRCRAFT_ASCENT_RATE; }
-	@Override public float getMaxTurnRate()      { return Constants.AIRCRAFT_TURN_RATE; }
+	@Override public float getSize()             { return LogicConstants.AIRCRAFT_SIZE; }
+	@Override public float getAscentRate()       { return LogicConstants.AIRCRAFT_ASCENT_RATE; }
+	@Override public float getMaxTurnRate()      { return LogicConstants.AIRCRAFT_TURN_RATE; }
 
 	@Override public float getMinSpeed()         { return AIRCRAFT_MIN_SPEED; }
 	@Override public float getMaxSpeed()         { return AIRCRAFT_MAX_SPEED; }

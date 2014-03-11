@@ -1,17 +1,12 @@
-package seprhou.gui;
-
-import seprhou.logic.Vector2D;
+package seprhou.logic;
 
 import java.util.Arrays;
 import java.util.List;
 
-import seprhou.logic.Runway;
-import seprhou.logic.Vector2D;
-
 /**
  * Class containing the game constants
  */
-public final class Constants
+public final class LogicConstants
 {
 	// #################
 	// GUI options
@@ -124,7 +119,7 @@ public final class Constants
 	/** When true, turns on debug mode */
 	public static final boolean DEBUG = false;
 
-	private Constants()
+	private LogicConstants()
 	{
 	}
 }

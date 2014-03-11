@@ -16,7 +16,7 @@ import seprhou.logic.*;
  */
 public class GameScreen extends AbstractScreen
 {
-	public static final FlightPlanGenerator flightPathGenerator;
+	public static final FlightPlanGenerator flightPathGenerator = new FlightPlanGenerator();
 
 	private final GameArea gameArea;
 	private final ControlPanel controlPanel;
@@ -24,23 +24,6 @@ public class GameScreen extends AbstractScreen
 	private Airspace airspace;
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
-
-	// Initialises flight plan generator
-	static
-	{
-		flightPathGenerator = new FlightPlanGenerator();
-		flightPathGenerator.setRunways(Constants.RUNWAYS);
-		flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
-		flightPathGenerator.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
-		flightPathGenerator.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
-		flightPathGenerator.setInitialSpeeds(Constants.INITIAL_SPEEDS);
-		flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
-		flightPathGenerator.setMinTimeBetweenAircraft(Constants.MIN_TIME_BETWEEN_AIRCRAFT);
-		flightPathGenerator.setAircraftPerSec(Constants.AIRCRAFT_PER_SEC);
-		flightPathGenerator.setMaxAircraft(Constants.MAX_AIRCRAFT);
-		flightPathGenerator.setMinWaypoints(Constants.MIN_WAYPOINTS);
-		flightPathGenerator.setMaxWaypoints(Constants.MAX_WAYPOINTS);
-	}
 
 	public GameScreen(AtcGame game)
 	{
