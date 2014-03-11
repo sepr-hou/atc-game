@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import seprhou.logic.LogicConstants;
 
 /**
  * Implementation of the Screen interface which sets up classes common to all screens
@@ -93,7 +94,7 @@ public abstract class AbstractScreen implements Screen
 		stage.draw();
 		
 		// Record frames per second and output to console
-		if(Constants.DEBUG)
+		if(LogicConstants.DEBUG)
 			logger.log();
 	}
 

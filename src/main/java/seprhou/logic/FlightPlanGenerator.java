@@ -3,8 +3,6 @@ package seprhou.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import seprhou.gui.Constants;
-
 /**
  * The default flight plan generator which controls introducing aircraft into the game
  *
@@ -20,14 +18,14 @@ public class FlightPlanGenerator
 	private List<Vector2D> waypoints;
 	private List<Vector2D> entryExitPoints;
 	private List<Runway> runways;
-	private List<Float> initialAltitudes = Constants.INITIAL_ALTITUDES;
-	private List<Float> initialSpeeds = Constants.INITIAL_SPEEDS;
-	private float minSafeEntryDistance = Constants.MIN_SAFE_ENTRY_DISTANCE;
-	private float minTimeBetweenAircraft = Constants.MIN_TIME_BETWEEN_AIRCRAFT;
-	private float aircraftPerSec = Constants.AIRCRAFT_PER_SEC;
-	private int maxAircraft = Constants.MAX_AIRCRAFT;
-	private int minWaypoints = Constants.MIN_WAYPOINTS;
-	private int maxWaypoints = Constants.MAX_WAYPOINTS;
+	private List<Float> initialAltitudes = LogicConstants.INITIAL_ALTITUDES;
+	private List<Float> initialSpeeds = LogicConstants.INITIAL_SPEEDS;
+	private float minSafeEntryDistance = LogicConstants.MIN_SAFE_ENTRY_DISTANCE;
+	private float minTimeBetweenAircraft = LogicConstants.MIN_TIME_BETWEEN_AIRCRAFT;
+	private float aircraftPerSec = LogicConstants.AIRCRAFT_PER_SEC;
+	private int maxAircraft = LogicConstants.MAX_AIRCRAFT;
+	private int minWaypoints = LogicConstants.MIN_WAYPOINTS;
+	private int maxWaypoints = LogicConstants.MAX_WAYPOINTS;
 	private int nextTakeOffRunway = 0;
 
 	// State (time since last aircraft)
@@ -166,10 +164,10 @@ public class FlightPlanGenerator
 
 		/* Take off from runway instead. */
 		if (startOnRunway) {
-			if (Constants.DEBUG)
+			if (LogicConstants.DEBUG)
 				System.out.println("Starts on runway");
 			// Makes sure that aircrafts take off from alternating runways.
-			Runway runway = Constants.RUNWAYS.get(this.nextTakeOffRunway);
+			Runway runway = LogicConstants.RUNWAYS.get(this.nextTakeOffRunway);
 			if (this.nextTakeOffRunway == 1)
 				this.nextTakeOffRunway--;
 			else

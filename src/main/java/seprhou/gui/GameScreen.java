@@ -29,17 +29,17 @@ public class GameScreen extends AbstractScreen
 	static
 	{
 		flightPathGenerator = new FlightPlanGenerator();
-		flightPathGenerator.setRunways(Constants.RUNWAYS);
-		flightPathGenerator.setWaypoints(Constants.WAYPOINTS);
-		flightPathGenerator.setEntryExitPoints(Constants.ENTRY_EXIT_POINTS);
-		flightPathGenerator.setInitialAltitudes(Constants.INITIAL_ALTITUDES);
-		flightPathGenerator.setInitialSpeeds(Constants.INITIAL_SPEEDS);
-		flightPathGenerator.setMinSafeEntryDistance(Constants.MIN_SAFE_ENTRY_DISTANCE);
-		flightPathGenerator.setMinTimeBetweenAircraft(Constants.MIN_TIME_BETWEEN_AIRCRAFT);
-		flightPathGenerator.setAircraftPerSec(Constants.AIRCRAFT_PER_SEC);
-		flightPathGenerator.setMaxAircraft(Constants.MAX_AIRCRAFT);
-		flightPathGenerator.setMinWaypoints(Constants.MIN_WAYPOINTS);
-		flightPathGenerator.setMaxWaypoints(Constants.MAX_WAYPOINTS);
+		flightPathGenerator.setRunways(LogicConstants.RUNWAYS);
+		flightPathGenerator.setWaypoints(LogicConstants.WAYPOINTS);
+		flightPathGenerator.setEntryExitPoints(LogicConstants.ENTRY_EXIT_POINTS);
+		flightPathGenerator.setInitialAltitudes(LogicConstants.INITIAL_ALTITUDES);
+		flightPathGenerator.setInitialSpeeds(LogicConstants.INITIAL_SPEEDS);
+		flightPathGenerator.setMinSafeEntryDistance(LogicConstants.MIN_SAFE_ENTRY_DISTANCE);
+		flightPathGenerator.setMinTimeBetweenAircraft(LogicConstants.MIN_TIME_BETWEEN_AIRCRAFT);
+		flightPathGenerator.setAircraftPerSec(LogicConstants.AIRCRAFT_PER_SEC);
+		flightPathGenerator.setMaxAircraft(LogicConstants.MAX_AIRCRAFT);
+		flightPathGenerator.setMinWaypoints(LogicConstants.MIN_WAYPOINTS);
+		flightPathGenerator.setMaxWaypoints(LogicConstants.MAX_WAYPOINTS);
 	}
 
 	public GameScreen(AtcGame game)

@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import seprhou.logic.Aircraft;
-import seprhou.logic.Airspace;
-import seprhou.logic.CollisionWarning;
-import seprhou.logic.Vector2D;
+import seprhou.logic.*;
 
 import java.util.List;
 
@@ -118,7 +115,7 @@ public class GameArea extends Actor
 		// Selecting new aircraft
 		if (clickPosition != null)
 		{
-			if (Constants.DEBUG)
+			if (LogicConstants.DEBUG)
 				System.out.println(this.clickPosition);
 
 			// Mouse click registered - update selected aircraft
@@ -166,15 +163,15 @@ public class GameArea extends Actor
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
 			if (upPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() + Constants.ALTITUDE_JUMP);
+				selected.setTargetAltitude(selected.getTargetAltitude() + LogicConstants.ALTITUDE_JUMP);
 			else if (downPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() - Constants.ALTITUDE_JUMP);
+				selected.setTargetAltitude(selected.getTargetAltitude() - LogicConstants.ALTITUDE_JUMP);
 		}
 
 		// Takes off landed airplanes.
 		// Additional check, to make sure, that it is impossible to have more
 		// than MAX_AIRCRAFT planes in the airspace.
-		if (this.spacePressed && airspace.getActiveObjects().size() < Constants.MAX_AIRCRAFT) {
+		if (this.spacePressed && airspace.getActiveObjects().size() < LogicConstants.MAX_AIRCRAFT) {
 			airspace.takeOff();
 		}
 
@@ -215,7 +212,7 @@ public class GameArea extends Actor
 			// Draw all waypoints
 			int waypointOffset = Assets.WAYPOINT_TEXTURE.getWidth() / 2;
 
-			for (Vector2D point : Constants.WAYPOINTS)
+			for (Vector2D point : LogicConstants.WAYPOINTS)
 			{
 				batch.draw(Assets.WAYPOINT_TEXTURE,
 						getX() + point.getX() - waypointOffset,
@@ -257,16 +254,16 @@ public class GameArea extends Actor
 			// Draw landed planes
 			for (int i = 0; i < airspace.getLandedObjects().size(); i++)
 			{
-				Vector2D pos = Constants.LANDED_AIRCRAFT_POSITIONS.get(i);
-				float rot = Constants.LANDED_AIRCRAFT_ANGLES.get(i);
+				Vector2D pos = LogicConstants.LANDED_AIRCRAFT_POSITIONS.get(i);
+				float rot = LogicConstants.LANDED_AIRCRAFT_ANGLES.get(i);
 
 				batch.draw(Assets.AIRCRAFT_TEXTURE,         // Aircraft texture
 						pos.getX(),                         // X position (bottom left)
 						pos.getY(),                         // Y position (bottom right)
-						Constants.AIRCRAFT_SIZE,            // X rotation origin
-						Constants.AIRCRAFT_SIZE,            // Y rotation origin
-						Constants.AIRCRAFT_SIZE * 2,        // Width
-						Constants.AIRCRAFT_SIZE * 2,        // Height
+						LogicConstants.AIRCRAFT_SIZE,            // X rotation origin
+						LogicConstants.AIRCRAFT_SIZE,            // Y rotation origin
+						LogicConstants.AIRCRAFT_SIZE * 2,        // Width
+						LogicConstants.AIRCRAFT_SIZE * 2,        // Height
 						0.8f,                               // X scaling
 						0.8f,                               // Y scaling
 						rot,                                // Rotation
