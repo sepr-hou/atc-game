@@ -16,7 +16,7 @@ public class MPServer {
 		server = new Server();
 		register();
 		server.addListener(new MPSNetworkListener());
-		server.bind(54555);
+		server.bind(54556);
 		server.start();
 	}
 	

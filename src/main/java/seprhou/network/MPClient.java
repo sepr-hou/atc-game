@@ -28,7 +28,7 @@ public class MPClient {
 			// TODO Change these values!!
 			// timeout, host IP, tcpPort
 			Log.info("Please enter the IP address");
-			client.connect(60000, scanner.nextLine(), 54555);
+			client.connect(60000, scanner.nextLine(), 54556);
 		} catch (IOException e) {
 			e.printStackTrace();
 			client.stop();
