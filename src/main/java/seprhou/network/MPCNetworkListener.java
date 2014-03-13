@@ -7,7 +7,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 
-public class NetworkListener extends Listener{
+public class MPCNetworkListener extends Listener{
 	private Client client;
 	
 	public void init(Client client) {
