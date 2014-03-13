@@ -131,7 +131,7 @@ public class HighscoresFile
 	/**
 	 * Reads a highscores file from the default highscores file
 	 */
-	public static HighscoresFile readFromDefaultFile() throws IOException
+	public static HighscoresFile readFromDefaultFile()
 	{
 		return readFromFile(getDefaultFilename());
 	}
@@ -140,7 +140,7 @@ public class HighscoresFile
 	 * Reads a highscores file
 	 * @param file filename
 	 */
-	public static HighscoresFile readFromFile(String file) throws IOException
+	public static HighscoresFile readFromFile(String file)
 	{
 		// Create + reload highscores object
 		HighscoresFile highscoresFile = new HighscoresFile(file);
