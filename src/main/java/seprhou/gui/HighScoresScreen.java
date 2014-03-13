@@ -1,56 +1,56 @@
 package seprhou.gui;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
-import seprhou.logic.HighscoresDB;
+import seprhou.highscores.HighscoreEntry;
 
 /**
- * Empty class which could be used to show the high scores
+ * Class which shows the highscores
  */
 public class HighScoresScreen extends AbstractScreen {
 
-	private final float titleScale = 1.3f;
-	private Stage stage;
+	private final static float SCORE_SCALE = 1.3f;
 
-	public HighScoresScreen(AtcGame game) {
+	private final com.badlogic.gdx.scenes.scene2d.ui.List onScreenList;
+
+	public HighScoresScreen(AtcGame game)
+	{
 		super(game);
 
-		this.stage = this.getStage();
+		Stage stage = getStage();
+
+		// Set background image
+		stage.addActor(new Image(Assets.MENU_BACKGROUND_TEXTURE));
+
+		// Create on screen list
+		onScreenList = new com.badlogic.gdx.scenes.scene2d.ui.List(new Object[0], Assets.SKIN);
+		stage.addActor(onScreenList);
 	}
 
 	@Override
-	public void show() {
+	public void show()
+	{
 		super.show();
 
-		this.stage.clear();
-		// Set background image
-		Image backgroundImage = new Image(Assets.MENU_BACKGROUND_TEXTURE);
-		this.stage.addActor(backgroundImage);
-		// Tries to read and display scores from the database
-		try {
-			PreparedStatement p = HighscoresDB.getConnection().prepareStatement("SELECT * FROM highscores ORDER BY score DESC, t ASC LIMIT 10");
-			ResultSet scores = p.executeQuery();
+		// Generate labels for all the scores
+		List<HighscoreEntry> scores = getGame().getGlobalScores().getScores();
+		Label[] labels = new Label[scores.size()];
 
-			Label scoreLbl;
-			float y = 600.0f;
-			while (scores.next()) {
-				scoreLbl = new Label(scores.getInt("score") + ", " + scores.getString("t"), Assets.SKIN);
-				scoreLbl.setFontScale(this.titleScale);
-				scoreLbl.setAlignment(Align.center);
-				scoreLbl.setX((AbstractScreen.SCREEN_WIDTH - scoreLbl.getWidth()) / 2);
-				scoreLbl.setY(y);
-				this.stage.addActor(scoreLbl);
-				y -= 40.0f;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		for (int i = 0; i < labels.length; i++)
+		{
+			HighscoreEntry entry = scores.get(i);
+
+			labels[i] = new Label(entry.getScore() + ", " + entry.getDate(), Assets.SKIN);
+			labels[i].setFontScale(SCORE_SCALE);
+			labels[i].setAlignment(Align.center);
 		}
+
+		// Write list to stage
+		onScreenList.setItems(labels);
 	}
 }

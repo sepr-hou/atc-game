@@ -2,6 +2,7 @@ package seprhou.gui;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import seprhou.highscores.HighscoresFile;
 
 /**
  * The main class of the game
@@ -13,6 +14,8 @@ import com.badlogic.gdx.Screen;
  */
 public class AtcGame extends Game
 {
+	private HighscoresFile globalScores;
+
 	private Screen menuScreen, gameScreen, optionsScreen, scoresScreen;
 	private GameOverScreen gameOverScreen;
 
@@ -21,6 +24,17 @@ public class AtcGame extends Game
 	{
 		// Set initial screen
 		showMenu();
+
+		// Read highscores
+		globalScores = HighscoresFile.readFromDefaultFile();
+	}
+
+	/**
+	 * Returns the global highscores file
+	 */
+	public HighscoresFile getGlobalScores()
+	{
+		return globalScores;
 	}
 
 	/** Show the menu screen */

@@ -1,13 +1,10 @@
 package seprhou.gui;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-import seprhou.logic.HighscoresDB;
+import seprhou.highscores.HighscoreEntry;
 import seprhou.logic.Utils;
 
 /**
@@ -36,7 +33,9 @@ public class GameOverScreen extends AbstractScreen
 	 * Sets the number of seconds and score to show on the game screen as the
 	 * final time
 	 * Also writes the current score to the high score database.
-	 * @param value time to show in seconds
+	 *
+	 * @param time the final time of the player (in seconds)
+	 * @param score the final score of the player
 	 */
 	public void setTimerValue(float time, int score) {
 		// Update timer label
@@ -45,12 +44,7 @@ public class GameOverScreen extends AbstractScreen
 				+ "Your final score was: " + score + "\n"
 				+ "Press escape to return to the main menu");
 
-		try {
-			PreparedStatement s = HighscoresDB.getConnection().prepareStatement("INSERT INTO highscores (score) VALUES (?)");
-			s.setInt(1, score);
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		// Write to highscores
+		getGame().getGlobalScores().addScore(new HighscoreEntry(score));
 	}
 }
