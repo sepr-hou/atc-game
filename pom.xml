@@ -51,12 +51,6 @@
       <classifier>natives-desktop</classifier>
     </dependency>
 
-    <dependency>
-        <groupId>org.xerial</groupId>
-        <artifactId>sqlite-jdbc</artifactId>
-        <version>3.7.2</version>
-    </dependency>
-
     <!-- KryoNet -->
     <dependency>
         <groupId>com.esotericsoftware</groupId>

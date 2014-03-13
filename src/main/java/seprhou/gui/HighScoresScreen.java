@@ -1,56 +1,70 @@
 package seprhou.gui;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
-import seprhou.logic.HighscoresDB;
+import seprhou.highscores.HighscoreEntry;
 
 /**
- * Empty class which could be used to show the high scores
+ * Class which shows the highscores
  */
 public class HighScoresScreen extends AbstractScreen {
 
-	private final float titleScale = 1.3f;
-	private Stage stage;
+	private final static float SCORE_SCALE = 1.3f;
 
-	public HighScoresScreen(AtcGame game) {
+	private final static float TABLE_WIDTH = 600;
+	private final static float TABLE_PADDING = 10;
+
+	private final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	private final Table scoresTable;
+
+	public HighScoresScreen(AtcGame game)
+	{
 		super(game);
 
-		this.stage = this.getStage();
+		Stage stage = getStage();
+
+		// Set background image
+		stage.addActor(new Image(Assets.MENU_BACKGROUND_TEXTURE));
+
+		// Create table to store labels into
+		scoresTable = new Table(Assets.SKIN);
+		scoresTable.setBounds((SCREEN_WIDTH - TABLE_WIDTH) / 2, 400, TABLE_WIDTH, 500);
+		stage.addActor(scoresTable);
 	}
 
 	@Override
-	public void show() {
+	public void show()
+	{
 		super.show();
+		scoresTable.clear();
 
-		this.stage.clear();
-		// Set background image
-		Image backgroundImage = new Image(Assets.MENU_BACKGROUND_TEXTURE);
-		this.stage.addActor(backgroundImage);
-		// Tries to read and display scores from the database
-		try {
-			PreparedStatement p = HighscoresDB.getConnection().prepareStatement("SELECT * FROM highscores ORDER BY score DESC, t ASC LIMIT 10");
-			ResultSet scores = p.executeQuery();
+		// Add headings
+		scoresTable.add("Score");
+		scoresTable.add("Date");
+		scoresTable.row();
 
-			Label scoreLbl;
-			float y = 600.0f;
-			while (scores.next()) {
-				scoreLbl = new Label(scores.getInt("score") + ", " + scores.getString("t"), Assets.SKIN);
-				scoreLbl.setFontScale(this.titleScale);
-				scoreLbl.setAlignment(Align.center);
-				scoreLbl.setX((AbstractScreen.SCREEN_WIDTH - scoreLbl.getWidth()) / 2);
-				scoreLbl.setY(y);
-				this.stage.addActor(scoreLbl);
-				y -= 40.0f;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		// Add scores to the table
+		for (HighscoreEntry entry : getGame().getGlobalScores().getScores())
+		{
+			addTableLabel(entry.getScore() + "");
+			addTableLabel(DATE_FORMAT.format(entry.getDate()));
+			scoresTable.row();
 		}
+	}
+
+	private void addTableLabel(String str)
+	{
+		Label label = new Label(str, Assets.SKIN);
+		label.setFontScale(SCORE_SCALE);
+		scoresTable.add(label).pad(TABLE_PADDING);
 	}
 }
