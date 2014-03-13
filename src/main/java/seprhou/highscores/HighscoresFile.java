@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class HighscoresFile
 {
-	private static final String DEFAULT_FILE = File.pathSeparator + ".atc-game-scores";
+	private static final String DEFAULT_FILE = File.separator + ".atc-game-scores";
 
 	private final String filename;
 	private final Kryo kryo;
@@ -72,14 +72,16 @@ public class HighscoresFile
 
 		try
 		{
-			try (FileInputStream in = new FileInputStream(filename))
+			try (Input in = new Input(new FileInputStream(filename)))
 			{
 				// Read list of objects via kryo
-				HighscoreEntry[] entries = kryo.readObject(new Input(in), HighscoreEntry[].class);
+				HighscoreEntry[] entries = kryo.readObject(in, HighscoreEntry[].class);
 
 				// Sort list and save into entries arraylist
 				Arrays.sort(entries);
 				scores.addAll(Arrays.asList(entries));
+
+				Log.debug("Read highscores file");
 				return true;
 			}
 		}
@@ -88,7 +90,7 @@ public class HighscoresFile
 			Log.info("No highscores file found - creating empty file");
 			return true;
 		}
-		catch (IOException | KryoException e)
+		catch (KryoException e)
 		{
 			Log.error("Error reading highscores file", e);
 		}
@@ -104,14 +106,16 @@ public class HighscoresFile
 	{
 		try
 		{
-			try (FileOutputStream out = new FileOutputStream(filename))
+			try (Output out = new Output(new FileOutputStream(filename)))
 			{
 				// Write list of scores via kryo
-				kryo.writeObject(new Output(out), scores.toArray());
+				kryo.writeObject(out, scores.toArray(new HighscoreEntry[scores.size()]));
+
+				Log.debug("Written highscores file");
 				return true;
 			}
 		}
-		catch (IOException | KryoException e)
+		catch (FileNotFoundException | KryoException e)
 		{
 			Log.error("Error writing highscores file", e);
 		}

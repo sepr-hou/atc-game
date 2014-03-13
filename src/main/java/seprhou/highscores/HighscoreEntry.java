@@ -9,6 +9,15 @@ public final class HighscoreEntry implements Comparable<HighscoreEntry>
 	private final int score;
 
 	/**
+	 * Private constructor used by kryo when creating instances of this object
+	 */
+	private HighscoreEntry()
+	{
+		date = 0;
+		score = 0;
+	}
+
+	/**
 	 * Creates a new highscore entry using the current date
 	 *
 	 * @param score the final score
