@@ -16,15 +16,15 @@ public class MPServer {
 		server = new Server();
 		register();
 		server.addListener(new MPSNetworkListener());
-		server.bind(54556);
+		server.bind(54558);
 		server.start();
 	}
 	
 	private void register() {
 		Kryo kryo = server.getKryo();
-		kryo.register(PacketType1.class);
-		kryo.register(PacketType2.class);
-		kryo.register(PacketType3.class);
+		kryo.register(PacketType1Request.class);
+		kryo.register(PacketType2Answer.class);
+		kryo.register(PacketType3Message.class);
 	}
 	
 	public static void main(String[] args) {

@@ -1,8 +1,6 @@
 package seprhou.network;
 
-import seprhou.network.Packet.PacketType1;
-import seprhou.network.Packet.PacketType2;
-import seprhou.network.Packet.PacketType3;
+import seprhou.network.Packet.*;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -20,16 +18,16 @@ public class MPSNetworkListener extends Listener{
 	}
 	
 	public void received(Connection c, Object o){
-		if (o instanceof PacketType1) {
-			PacketType2 answer = new PacketType2();
+		if (o instanceof PacketType1Request) {
+			PacketType2Answer answer = new PacketType2Answer();
 			answer.accepted = true;
 			c.sendTCP(answer);
 		}
-		if (o instanceof PacketType2) {
+		if (o instanceof PacketType2Answer) {
 			//do something
 		}
-		if (o instanceof PacketType3) {
-			String message = ((PacketType3) o).message;
+		if (o instanceof PacketType3Message) {
+			String message = ((PacketType3Message) o).message;
 			Log.info(message);
 		}
 	}

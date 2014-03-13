@@ -1,5 +1,7 @@
 package seprhou.network;
 
+import seprhou.network.Packet.PacketType2Answer;
+import seprhou.network.Packet.PacketType3Message;
 import seprhou.network.Packet.*;
 
 import com.esotericsoftware.kryonet.Client;
@@ -17,7 +19,7 @@ public class MPCNetworkListener extends Listener{
 	//examples
 	public void connected(Connection arg0) {
 		Log.info("[Client] You have connected");
-		client.sendTCP(new PacketType1());
+		client.sendTCP(new PacketType1Request());
 	}
 	
 	public void disconnected(Connection arg0) {
@@ -25,18 +27,17 @@ public class MPCNetworkListener extends Listener{
 	}
 	
 	public void received(Connection c, Object o){
-		if (o instanceof PacketType1) {
+		if (o instanceof PacketType1Request) {
 			//do something
 		}
-		if (o instanceof PacketType2) {
-			boolean answer = ((PacketType2) o).accepted;
-			
+		if (o instanceof PacketType2Answer) {
+			boolean answer = ((PacketType2Answer) o).accepted;
 			if (answer){
 				Log.info("Please enter you message for the server:");
 				
 				while(true){
 					if(MPClient.scanner.hasNext()){
-						PacketType3 mpacket = new PacketType3();
+						PacketType3Message mpacket = new PacketType3Message();
 						mpacket.message = MPClient.scanner.nextLine();
 						client.sendTCP(mpacket);
 						Log.info("Please enter another message:");
@@ -46,7 +47,7 @@ public class MPCNetworkListener extends Listener{
 				c.close();
 			}
 		}
-		if (o instanceof PacketType3) {
+		if (o instanceof PacketType3Message) {
 			//do something
 		}
 	}

@@ -28,7 +28,7 @@ public class MPClient {
 			// TODO Change these values!!
 			// timeout, host IP, tcpPort
 			Log.info("Please enter the IP address");
-			client.connect(60000, scanner.nextLine(), 54556);
+			client.connect(60000, scanner.nextLine(), 54558);
 		} catch (IOException e) {
 			e.printStackTrace();
 			client.stop();
@@ -37,9 +37,9 @@ public class MPClient {
 	
 	private void register() {
 		Kryo kryo = client.getKryo();
-		kryo.register(PacketType1.class);
-		kryo.register(PacketType2.class);
-		kryo.register(PacketType3.class);
+		kryo.register(PacketType1Request.class);
+		kryo.register(PacketType2Answer.class);
+		kryo.register(PacketType3Message.class);
 	}
 
 	public static void main(String[] args) {
