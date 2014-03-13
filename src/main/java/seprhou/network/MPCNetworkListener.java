@@ -29,7 +29,22 @@ public class MPCNetworkListener extends Listener{
 			//do something
 		}
 		if (o instanceof PacketType2) {
-			//do something
+			boolean answer = ((PacketType2) o).accepted;
+			
+			if (answer){
+				Log.info("Please enter you message for the server:");
+				
+				while(true){
+					if(MPClient.scanner.hasNext()){
+						PacketType3 mpacket = new PacketType3();
+						mpacket.message = MPClient.scanner.nextLine();
+						client.sendTCP(mpacket);
+						Log.info("Please enter another message:");
+					}
+				}
+			} else {
+				c.close();
+			}
 		}
 		if (o instanceof PacketType3) {
 			//do something

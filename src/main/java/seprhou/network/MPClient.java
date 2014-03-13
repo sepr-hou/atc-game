@@ -11,7 +11,7 @@ import com.esotericsoftware.minlog.Log;
 
 public class MPClient {
 	public Client client;
-	public Scanner scanner;
+	public static Scanner scanner;
 	
 	public MPClient() {
 		client = new Client();
@@ -28,7 +28,7 @@ public class MPClient {
 			// TODO Change these values!!
 			// timeout, host IP, tcpPort
 			Log.info("Please enter the IP address");
-			client.connect(60000, scanner.nextLine(), 12345);
+			client.connect(60000, scanner.nextLine(), 54555);
 		} catch (IOException e) {
 			e.printStackTrace();
 			client.stop();
