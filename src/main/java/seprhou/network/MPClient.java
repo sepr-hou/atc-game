@@ -18,7 +18,7 @@ public class MPClient {
 		scanner = new Scanner(System.in);
 		register();
 		
-		NetworkListener nl = new NetworkListener();
+		MPCNetworkListener nl = new MPCNetworkListener();
 		nl.init(client);
 		client.addListener(nl);
 		
