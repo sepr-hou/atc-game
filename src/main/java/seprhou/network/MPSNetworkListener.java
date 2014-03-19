@@ -10,7 +10,7 @@ public class MPSNetworkListener extends Listener{
 	
 	//examples
 	public void connected(Connection arg0) {
-		Log.info("[Server] Someone had connected");
+		Log.info("[Server] Someone has connected");
 	}
 	
 	public void disconnected(Connection arg0) {
