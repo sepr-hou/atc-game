@@ -36,7 +36,6 @@ public final class LogicConstants
 			new Vector2D(560, 840),
 			new Vector2D(840, 210),
 			new Vector2D(840, 420),
-			//new Vector2D(840, 630),
 			new Vector2D(840, 840),
 			new Vector2D(1120, 210),
 			new Vector2D(1120, 420),
