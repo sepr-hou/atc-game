@@ -76,7 +76,7 @@ public final class LogicConstants
 	public static final int MAX_AIRCRAFT = 10;
 
 	/** Minimum number of waypoints in each flight plan */
-	public static final int MIN_WAYPOINTS = 2;
+	public static final int MIN_WAYPOINTS = 1;
 
 	/** Maximum number of waypoints in each flight plan */
 	public static final int MAX_WAYPOINTS = 4;
