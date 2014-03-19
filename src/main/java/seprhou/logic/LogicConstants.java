@@ -36,7 +36,7 @@ public final class LogicConstants
 			new Vector2D(560, 840),
 			new Vector2D(840, 210),
 			new Vector2D(840, 420),
-			new Vector2D(840, 630),
+			//new Vector2D(840, 630),
 			new Vector2D(840, 840),
 			new Vector2D(1120, 210),
 			new Vector2D(1120, 420),
@@ -80,6 +80,9 @@ public final class LogicConstants
 
 	/** Maximum number of waypoints in each flight plan */
 	public static final int MAX_WAYPOINTS = 4;
+	
+	/** Chance of having to land (1 in x chance) */
+	public static final int LANDING_CHANCE = 3;
 
 	// #################
 	// ConcreteAircraft options (some other options are derived from the above options)
@@ -117,7 +120,7 @@ public final class LogicConstants
 			Arrays.asList(45f, 45f, 45f, 45f, 45f, 315f, 315f, 315f, 315f, 315f);
 
 	/** When true, turns on debug mode */
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	private LogicConstants()
 	{
