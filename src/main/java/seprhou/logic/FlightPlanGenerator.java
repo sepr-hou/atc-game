@@ -75,16 +75,15 @@ public class FlightPlanGenerator
 		if (entryPointSubset.size() == 0)
 			return null;
 
-		// Choose some waypoints + 2 entry and exit points, also determines
+		// Choose some waypoints + an entry and exit point, also determines
 		// whether a plane is landing or not.
-		
-		// CHANGE THIS TO DO #25
 
 		boolean landing;
 		Vector2D entryPoint = Utils.randomItem(entryPointSubset);
-		//int waypointCount = Utils.getRandom().nextInt(maxWaypoints - minWaypoints) + minWaypoints;
-		//List<Vector2D> myWaypoints = Utils.randomSubset(waypoints, waypointCount);
 		List<Vector2D> myWaypoints = new ArrayList<Vector2D>();
+		
+		
+		//Creates list of eligible first waypoints and chooses a random one to be added
 		List<Vector2D> firstWaypoints = new ArrayList<Vector2D>();
 		for (int i=0; i<16; i++){
 			if (entryPoint.distanceTo(WAYPOINTS.get(i)) < 400){
@@ -95,17 +94,23 @@ public class FlightPlanGenerator
 		myWaypoints.add(firstWaypoint);
 		
 		Vector2D currentWaypoint = firstWaypoint;
-
-		for (int i=0; i<16; i++){
-			Vector2D newWaypoint = WAYPOINTS.get(i);
-			if ((currentWaypoint.distanceTo(newWaypoint)) < 600)
-			{
-				if (!WAYPOINTS.contains(newWaypoint)){
-					myWaypoints.add(newWaypoint);
-					currentWaypoint = newWaypoint;
+		int flightPlanLength = Utils.getRandom().nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
+		
+		for (int i = 0; i < flightPlanLength; i++){
+			List<Vector2D> nextWaypoints = new ArrayList<Vector2D>();
+			for (int j=0; j<16; j++){
+				Vector2D newWaypoint = WAYPOINTS.get(j);
+				if ((currentWaypoint.distanceTo(newWaypoint)) < 600)
+				{
+					System.out.println("Waypoint eligable");
+					if (!myWaypoints.contains(newWaypoint)){
+						nextWaypoints.add(newWaypoint);
+						System.out.println("Waypoint chosen");
+						currentWaypoint = newWaypoint;
+					}
 				}
-
 			}
+			myWaypoints.add(Utils.randomItem(nextWaypoints));
 		}
 		
 		boolean startOnRunway = isOnRunway;

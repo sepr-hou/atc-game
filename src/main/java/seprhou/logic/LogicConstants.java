@@ -117,7 +117,7 @@ public final class LogicConstants
 			Arrays.asList(45f, 45f, 45f, 45f, 45f, 315f, 315f, 315f, 315f, 315f);
 
 	/** When true, turns on debug mode */
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	private LogicConstants()
 	{
