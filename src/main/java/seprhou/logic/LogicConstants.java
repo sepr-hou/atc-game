@@ -66,10 +66,10 @@ public final class LogicConstants
 	public static final float MIN_SAFE_ENTRY_DISTANCE = 200;
 
 	/** Minimum time between generated aircraft (seconds) */
-	public static final float MIN_TIME_BETWEEN_AIRCRAFT = 3;
+	public static final float MIN_TIME_BETWEEN_AIRCRAFT = 4;
 
 	/** Average number of aircraft generated per second */
-	public static final float AIRCRAFT_PER_SEC = 0.2f;
+	public static final float AIRCRAFT_PER_SEC = 1f;
 
 	/** Maximum number of on screen aircraft */
 	public static final int MAX_AIRCRAFT = 10;
