@@ -81,7 +81,7 @@ public class FlightPlanGenerator
 		List<Vector2D> myWaypoints = new ArrayList<Vector2D>();
 
 		if (isOnRunway) {
-			// Makes sure that aircrafts take off from alternating runways.
+			// Makes sure that aircraft take off from alternating runways.
 			Runway runway = RUNWAYS.get(this.nextTakeOffRunway);
 			if (this.nextTakeOffRunway == 1)
 				this.nextTakeOffRunway--;
@@ -115,7 +115,7 @@ public class FlightPlanGenerator
 		}
 
 
-		//Creates list of eligible first waypoints and chooses a random one to be added
+		// Create list of eligible first waypoints and chooses a random one to be added
 		List<Vector2D> firstWaypoints = new ArrayList<Vector2D>();
 		for (int i=0; i<WAYPOINTS.size(); i++){
 			if (entryPoint.distanceTo(WAYPOINTS.get(i)) < 400){
@@ -126,16 +126,18 @@ public class FlightPlanGenerator
 		myWaypoints.add(firstWaypoint);
 		Vector2D currentWaypoint = firstWaypoint;
 
-		//Chooses a random flightplan length between Min and Max constants
+		// Choose a random flightplan length between Min and Max constants
 		int flightPlanLength = Utils.getRandom().nextInt(MAX_WAYPOINTS - MIN_WAYPOINTS) + MIN_WAYPOINTS;
 		
-		//adds flightplanlength number of waypoints to the flightplan
+		// Add flightplanlength number of waypoints to the flightplan
 		for (int i = 0; i < flightPlanLength; i++){
-			//List of eligible waypoints
+			// List of eligible waypoints
 			List<Vector2D> nextWaypoints = new ArrayList<Vector2D>();
-			//checks each waypoint to see if eligible and adds to list
+			// Check each waypoint to see if eligible and add to list
 			for (int j=0; j < WAYPOINTS.size(); j++){
 				Vector2D newWaypoint = WAYPOINTS.get(j);
+				// Check each waypoint to see whether it is closer to the exit/landing point than the previous
+				// waypoint in the flightplan
 				if (landing){
 					if ((newWaypoint.distanceTo(landingPoint)) < (currentWaypoint.distanceTo(landingPoint)))
 					{
@@ -154,7 +156,7 @@ public class FlightPlanGenerator
 					}
 				}
 			}
-			//chooses random waypoint from list of eligibles and adds to flightplan
+			// Choose random waypoint from list of eligibles and add to flightplan
 			if (nextWaypoints.size() != 0){
 				Vector2D waypointAdded = Utils.randomItem(nextWaypoints);
 				myWaypoints.add(waypointAdded);
@@ -162,15 +164,13 @@ public class FlightPlanGenerator
 				}
 		}
 
-		//adds the exitpoint(s) to flightplan.
+		// Add the exitpoint(s) to flightplan.
 		if (landing){
 			myWaypoints.add(landingPoint);
 			myWaypoints.add(exitPoint);
 		} else {
 			myWaypoints.add(exitPoint);
 		}
-
-
 
 		// Choose initial speed and altitude
 		float initialSpeed = Utils.randomItem(INITIAL_SPEEDS);
