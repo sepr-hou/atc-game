@@ -1,14 +1,11 @@
 package seprhou.gui;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import seprhou.highscores.HighscoreEntry;
 
