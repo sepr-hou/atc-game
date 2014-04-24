@@ -1,5 +1,8 @@
 package seprhou.network.message;
 
+import seprhou.logic.Aircraft;
+import seprhou.logic.FlightPlan;
+
 /**
  * New aircraft message
  *
@@ -7,6 +10,28 @@ package seprhou.network.message;
  */
 public class SMsgAircraftCreate implements ServerMessage
 {
+	private int id;
+	private String name;
+	private FlightPlan flightPlan;
+
+	/**
+	 * Create a new aircraft create message
+	 *
+	 * @param id id of new aircraft
+	 * @param aircraft aircraft which was created
+	 */
+	public SMsgAircraftCreate(int id, Aircraft aircraft)
+	{
+		this.id = id;
+		this.name = aircraft.getName();
+		this.flightPlan = aircraft.getFlightPlan();
+	}
+
+	/** Private constructor for Kryo */
+	private SMsgAircraftCreate()
+	{
+	}
+
 	@Override
 	public void receivedFromServer()
 	{

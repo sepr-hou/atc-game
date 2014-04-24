@@ -1,29 +1,29 @@
 package seprhou.network.message;
 
 /**
- * Ask the server to set the altitude of an aircraft
+ * Ask the server to set the speed of an aircraft
  *
  * <p>Invalid messages received (invalid aircraft id, target out of bounds) are ignored.
  */
-public class CMsgSetAltitude implements ClientMessage
+public class CMsgSetSpeed implements ClientMessage
 {
 	private int aircraftId;
 	private float newTarget;
 
 	/**
-	 * Creates a new set altitude message
+	 * Creates a new set speed message
 	 *
-	 * @param aircraftId aircraft to change altitude of
-	 * @param newTarget new target altitude
+	 * @param aircraftId aircraft to change speed of
+	 * @param newTarget new target speed
 	 */
-	public CMsgSetAltitude(int aircraftId, float newTarget)
+	public CMsgSetSpeed(int aircraftId, float newTarget)
 	{
 		this.aircraftId = aircraftId;
 		this.newTarget = newTarget;
 	}
 
 	/** Private constructor for Kryo */
-	private CMsgSetAltitude()
+	private CMsgSetSpeed()
 	{
 	}
 
