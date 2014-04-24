@@ -23,9 +23,24 @@ public class SMsgAircraftCreate implements ServerMessage
 	 */
 	public SMsgAircraftCreate(int id, Aircraft aircraft)
 	{
+		this(id, aircraft.getName(), aircraft.getFlightPlan());
+	}
+
+	/**
+	 * Create a new aircraft create message
+	 *
+	 * @param id id of new aircraft
+	 * @param name name of the aircraft
+	 * @param flightPlan flight plan of the aircraft
+	 */
+	public SMsgAircraftCreate(int id, String name, FlightPlan flightPlan)
+	{
+		if (name == null || flightPlan == null)
+			throw new IllegalArgumentException("name and flightPlan must be non-null");
+
 		this.id = id;
-		this.name = aircraft.getName();
-		this.flightPlan = aircraft.getFlightPlan();
+		this.name = name;
+		this.flightPlan = flightPlan;
 	}
 
 	/** Private constructor for Kryo */

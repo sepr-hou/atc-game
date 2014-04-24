@@ -47,7 +47,6 @@ public final class MessageSetup
 
 		kryo.register(SMsgAircraftCreate.class);
 		kryo.register(SMsgAircraftDestroy.class);
-		kryo.register(SMsgAircraftCreate.class);
 		kryo.register(SMsgAircraftUpdate.class);
 		kryo.register(SMsgGameEnd.class);
 		kryo.register(SMsgGameStart.class);
@@ -57,35 +56,12 @@ public final class MessageSetup
 		// Register extra classes (used by messages)
 		kryo.register(TurningState.class);
 		kryo.register(FlightPlan.class, new FlightPlanSerializer());
-		kryo.register(Vector2D.class, new Vector2DSerializer());
+		kryo.register(Vector2D.class);
 		kryo.register(Vector2D[].class);
 	}
 
 	private MessageSetup()
 	{
-	}
-
-	/** Manual serializer for Vector2D */
-	private static class Vector2DSerializer extends Serializer<Vector2D>
-	{
-		{
-			setImmutable(true);
-		}
-
-		@Override
-		public void write(Kryo kryo, Output output, Vector2D object)
-		{
-			output.writeFloat(object.getX());
-			output.writeFloat(object.getY());
-		}
-
-		@Override
-		public Vector2D read(Kryo kryo, Input input, Class<Vector2D> type)
-		{
-			float x = input.readFloat();
-			float y = input.readFloat();
-			return new Vector2D(x, y);
-		}
 	}
 
 	/** Manual serializer for FlightPlan */

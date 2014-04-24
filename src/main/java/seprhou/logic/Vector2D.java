@@ -23,6 +23,12 @@ public class Vector2D
 		this.y = y;
 	}
 
+	/** Private constructor for Kryo */
+	private Vector2D()
+	{
+		this(0, 0);
+	}
+
 	/**
 	 * Creates a new vector from the given polar coordinates
 	 *
