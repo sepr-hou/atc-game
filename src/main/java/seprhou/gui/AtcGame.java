@@ -16,7 +16,7 @@ public class AtcGame extends Game
 {
 	private HighscoresFile globalScores;
 
-	private Screen menuScreen, gameScreen, optionsScreen, scoresScreen;
+	private Screen menuScreen, gameScreen, optionsScreen, scoresScreen, netConfScreen;
 	private GameOverScreen gameOverScreen;
 
 	@Override
@@ -67,6 +67,14 @@ public class AtcGame extends Game
 		if (scoresScreen == null)
 			scoresScreen = new HighScoresScreen(this);
 		setScreen(scoresScreen);
+	}
+	
+	/** Show the network configuration screen */
+	public void showNetworkConfig()
+	{
+		if  (netConfScreen == null)
+			netConfScreen = new NetworkConfigScreen(this);
+		setScreen(netConfScreen);
 	}
 	
 	/**
