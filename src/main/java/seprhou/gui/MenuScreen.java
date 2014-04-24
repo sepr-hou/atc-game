@@ -25,11 +25,19 @@ public class MenuScreen extends AbstractScreen
 		// Add buttons
 		ButtonLayoutHelper layout = new ButtonLayoutHelper(getStage(), 10);
 
-		layout.createButton("Start game", new ClickListener() {
+		layout.createButton("Start single player game", new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
 				getGame().showGame();
+			}
+		});
+		
+		layout.createButton("Start multiplayer game", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				getGame().showNetworkConfig();
 			}
 		});
 
