@@ -1,5 +1,6 @@
 package seprhou.network.message;
 
+import com.esotericsoftware.kryo.NotNull;
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
 
@@ -11,8 +12,8 @@ import seprhou.logic.FlightPlan;
 public class SMsgAircraftCreate implements ServerMessage
 {
 	private int id;
-	private String name;
-	private FlightPlan flightPlan;
+	@NotNull private String name;
+	@NotNull private FlightPlan flightPlan;
 
 	/**
 	 * Create a new aircraft create message

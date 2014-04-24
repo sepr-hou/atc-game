@@ -1,5 +1,7 @@
 package seprhou.network.message;
 
+import com.esotericsoftware.kryo.NotNull;
+
 /**
  * Ask the server to begin / end turning of an aircraft
  *
@@ -8,7 +10,7 @@ package seprhou.network.message;
 public class CMsgSetTurning implements ClientMessage
 {
 	private int aircraftId;
-	private TurningState state;
+	@NotNull private TurningState state;
 
 	/**
 	 * Creates a new set turning message
@@ -18,6 +20,9 @@ public class CMsgSetTurning implements ClientMessage
 	 */
 	public CMsgSetTurning(int aircraftId, TurningState state)
 	{
+		if (state == null)
+			throw new IllegalArgumentException("state cannot be null");
+
 		this.aircraftId = aircraftId;
 		this.state = state;
 	}

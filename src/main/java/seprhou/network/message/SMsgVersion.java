@@ -7,13 +7,12 @@ package seprhou.network.message;
  */
 public class SMsgVersion implements ServerMessage
 {
-	private static final int PROTOCOL_VERSION = 1;
 	private int version;
 
 	/** Creates a new version message using my protocol version */
 	public SMsgVersion()
 	{
-		this.version = PROTOCOL_VERSION;
+		this.version = MessageSetup.PROTOCOL_VERSION;
 	}
 
 	@Override
