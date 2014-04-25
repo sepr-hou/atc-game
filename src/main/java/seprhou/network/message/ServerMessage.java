@@ -1,9 +1,16 @@
 package seprhou.network.message;
 
+import seprhou.network.MPClient;
+
 /**
  * Interface for messages which are sent by the server and received by the client
  */
 public interface ServerMessage
 {
-	void receivedFromServer();
+	/**
+	 * This message was received from the server
+	 *
+	 * @param client client object which received the message
+	 */
+	void receivedFromServer(MPClient client);
 }

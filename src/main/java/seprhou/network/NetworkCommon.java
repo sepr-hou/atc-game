@@ -1,19 +1,21 @@
-package seprhou.network.message;
+package seprhou.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.minlog.Log;
 import seprhou.logic.FlightPlan;
 import seprhou.logic.Vector2D;
+import seprhou.network.message.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Class which handles kryo message registration
+ * Class which handles common network initialization tasks
  */
-public final class MessageSetup
+public final class NetworkCommon
 {
 	/**
 	 * Version of the protocol
@@ -27,6 +29,24 @@ public final class MessageSetup
 	 * </ul>
 	 */
 	public static final int PROTOCOL_VERSION = 1;
+
+	/**
+	 * TCP port number to listen / connect on
+	 */
+	public static final int PORT = 59873;
+
+	/**
+	 * TCP connect timeout in milliseconds
+	 */
+	public static final int CONNECT_TIMEOUT = 5000;
+
+	/**
+	 * Setup the global kryo log level
+	 */
+	public static void setupLogger()
+	{
+		Log.set(Log.LEVEL_DEBUG);
+	}
 
 	/**
 	 * Registers messages with kryo
@@ -60,7 +80,7 @@ public final class MessageSetup
 		kryo.register(Vector2D[].class);
 	}
 
-	private MessageSetup()
+	private NetworkCommon()
 	{
 	}
 

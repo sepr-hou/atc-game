@@ -1,5 +1,8 @@
 package seprhou.network.message;
 
+import seprhou.network.MPClient;
+import seprhou.network.NetworkCommon;
+
 /**
  * Version message
  *
@@ -12,11 +15,11 @@ public class SMsgVersion implements ServerMessage
 	/** Creates a new version message using my protocol version */
 	public SMsgVersion()
 	{
-		this.version = MessageSetup.PROTOCOL_VERSION;
+		this.version = NetworkCommon.PROTOCOL_VERSION;
 	}
 
 	@Override
-	public void receivedFromServer()
+	public void receivedFromServer(MPClient client)
 	{
 		//
 	}

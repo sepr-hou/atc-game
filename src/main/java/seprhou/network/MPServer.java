@@ -1,39 +1,113 @@
 package seprhou.network;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
-import seprhou.network.Packet.*;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import seprhou.logic.Airspace;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import seprhou.network.message.ClientMessage;
 
+/**
+ * Class which implements the host side of the multiplayer game
+ */
+public class MPServer implements NetworkEndpoint
+{
+	private final Server server = new Server();
+	private final Queue<ClientMessage> messageQueue = new LinkedList<>();
 
-public class MPServer {
-	private Server server;
-	
-	public MPServer() throws IOException {
-		server = new Server();
-		register();
-		server.addListener(new MPSNetworkListener());
-		server.bind(54555);
-		server.start();
+	private Connection otherEndpoint;
+	private Airspace airspace;
+
+	/**
+	 * Creates and starts the server
+	 *
+	 * @throws IOException thrown if an IO error occurs
+	 */
+	public MPServer() throws IOException
+	{
+		NetworkCommon.register(server.getKryo());
+		server.addListener(new MyListener());
+		server.bind(NetworkCommon.PORT);
 	}
-	
-	private void register() {
-		Kryo kryo = server.getKryo();
-		kryo.register(PacketType1Request.class);
-		kryo.register(PacketType2Answer.class);
-		kryo.register(PacketType3Message.class);
-	}
-	
-	public static void main(String[] args) {
-		try {
-			new MPServer();
-			Log.set(Log.LEVEL_DEBUG);
-		} catch (IOException e) {
-			e.printStackTrace();
+
+	@Override
+	public void actBegin() throws IOException
+	{
+		// Update server
+		server.update(0);
+
+		// Process any messages in the queue
+		for (;;)
+		{
+			ClientMessage msg = messageQueue.poll();
+			if (msg == null)
+				break;
+
+			msg.receivedFromClient(this);
 		}
 	}
 
+	@Override
+	public void actEnd(float delta) throws IOException
+	{
+		// Ignore if not connected
+		if (otherEndpoint == null)
+			return;
+
+		// TODO send updates
+
+		// Update server
+		server.update(0);
+	}
+
+	@Override
+	public void close() throws IOException
+	{
+		server.close();
+	}
+
+	/** Listener for the server (single threaded) */
+	private class MyListener extends Listener
+	{
+		public void connected(Connection other)
+		{
+			// Reject multiple clients
+			if (otherEndpoint != null)
+			{
+				other.close();
+			}
+			else
+			{
+				Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
+				otherEndpoint = other;
+
+				// TODO handle this
+			}
+		}
+
+		public void disconnected(Connection other)
+		{
+			if (other == otherEndpoint)
+			{
+				Log.info("[Server] Client has disconnected");
+				otherEndpoint = null;
+
+				// TODO handle this
+			}
+
+			other.close();
+		}
+
+		public void received(Connection other, Object obj)
+		{
+			// Add to message queue
+			if (obj instanceof ClientMessage)
+				messageQueue.add((ClientMessage) obj);
+		}
+	}
 }

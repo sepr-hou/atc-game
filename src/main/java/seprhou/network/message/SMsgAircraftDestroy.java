@@ -1,5 +1,7 @@
 package seprhou.network.message;
 
+import seprhou.network.MPClient;
+
 /**
  * Aircraft destroyed message
  *
@@ -25,7 +27,7 @@ public class SMsgAircraftDestroy implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer()
+	public void receivedFromServer(MPClient client)
 	{
 
 	}

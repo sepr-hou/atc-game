@@ -1,5 +1,7 @@
 package seprhou.network.message;
 
+import seprhou.network.MPServer;
+
 /**
  * Ask the server to set the speed of an aircraft
  *
@@ -28,7 +30,7 @@ public class CMsgSetSpeed implements ClientMessage
 	}
 
 	@Override
-	public void receivedFromClient()
+	public void receivedFromClient(MPServer server)
 	{
 
 	}

@@ -2,6 +2,7 @@ package seprhou.network.message;
 
 import seprhou.logic.Aircraft;
 import seprhou.logic.Vector2D;
+import seprhou.network.MPClient;
 
 /**
  * Aircraft update
@@ -33,7 +34,7 @@ public class SMsgAircraftUpdate implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer()
+	public void receivedFromServer(MPClient client)
 	{
 
 	}
