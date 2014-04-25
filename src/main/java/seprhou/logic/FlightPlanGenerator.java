@@ -117,10 +117,10 @@ public class FlightPlanGenerator
 
 		// Create list of eligible first waypoints and chooses a random one to be added
 		List<Vector2D> firstWaypoints = new ArrayList<Vector2D>();
-		for (int i=0; i<WAYPOINTS.size(); i++){
-			if (entryPoint.distanceTo(WAYPOINTS.get(i)) < 400){
-				firstWaypoints.add(WAYPOINTS.get(i));
-			}
+		for (Vector2D waypoint : WAYPOINTS)
+		{
+			if (entryPoint.distanceTo(waypoint) < 400)
+				firstWaypoints.add(waypoint);
 		}
 		Vector2D firstWaypoint = Utils.randomItem(firstWaypoints);
 		myWaypoints.add(firstWaypoint);
@@ -134,8 +134,8 @@ public class FlightPlanGenerator
 			// List of eligible waypoints
 			List<Vector2D> nextWaypoints = new ArrayList<Vector2D>();
 			// Check each waypoint to see if eligible and add to list
-			for (int j=0; j < WAYPOINTS.size(); j++){
-				Vector2D newWaypoint = WAYPOINTS.get(j);
+			for (Vector2D newWaypoint : WAYPOINTS)
+			{
 				// Check each waypoint to see whether it is closer to the exit/landing point than the previous
 				// waypoint in the flightplan
 				if (landing){
