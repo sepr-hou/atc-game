@@ -16,8 +16,6 @@ import seprhou.logic.*;
  */
 public class GameScreen extends AbstractScreen
 {
-	public static final FlightPlanGenerator flightPathGenerator = new FlightPlanGenerator();
-
 	private final GameArea gameArea;
 	private final ControlPanel controlPanel;
 

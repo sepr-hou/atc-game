@@ -1,7 +1,6 @@
 package seprhou.logic;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Controls an entire air space and all the aircraft in it
