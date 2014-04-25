@@ -40,6 +40,18 @@ public class MPClient implements NetworkEndpoint
 	}
 
 	@Override
+	public boolean isConnected()
+	{
+		return otherEndpoint != null;
+	}
+
+	@Override
+	public Airspace getAirspace()
+	{
+		return airspace;
+	}
+
+	@Override
 	public void actBegin() throws IOException
 	{
 		// Update client
@@ -71,7 +83,7 @@ public class MPClient implements NetworkEndpoint
 	public void actEnd(float delta) throws IOException
 	{
 		// Ignore if not connected
-		if (otherEndpoint == null)
+		if (!isConnected())
 			return;
 
 		// TODO Send updates

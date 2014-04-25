@@ -36,6 +36,18 @@ public class MPServer implements NetworkEndpoint
 	}
 
 	@Override
+	public boolean isConnected()
+	{
+		return otherEndpoint != null;
+	}
+
+	@Override
+	public Airspace getAirspace()
+	{
+		return airspace;
+	}
+
+	@Override
 	public void actBegin() throws IOException
 	{
 		// Update server
@@ -56,7 +68,7 @@ public class MPServer implements NetworkEndpoint
 	public void actEnd(float delta) throws IOException
 	{
 		// Ignore if not connected
-		if (otherEndpoint == null)
+		if (!isConnected())
 			return;
 
 		// TODO send updates
@@ -77,7 +89,7 @@ public class MPServer implements NetworkEndpoint
 		public void connected(Connection other)
 		{
 			// Reject multiple clients
-			if (otherEndpoint != null)
+			if (isConnected())
 			{
 				other.close();
 			}
