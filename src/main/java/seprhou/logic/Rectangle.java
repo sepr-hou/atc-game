@@ -1,8 +1,11 @@
 package seprhou.logic;
 
-/** An immutable, mathematical 2D vector class */
+/** An immutable axis aligned 2D rectangle */
 public class Rectangle
 {
+	/** A rectange with both points set to zero */
+	public static final Rectangle ZERO = new Rectangle(Vector2D.ZERO, Vector2D.ZERO);
+
 	// Class invariant
 	//  p2.x >= p1.x && p2.y >= p1.y
 	private final Vector2D p1, p2;
