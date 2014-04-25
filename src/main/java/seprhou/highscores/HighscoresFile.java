@@ -57,6 +57,7 @@ public class HighscoresFile
 
 		scores.add(entry);
 		Collections.sort(scores);
+		Collections.reverse(scores);
 
 		return writeFile();
 	}
