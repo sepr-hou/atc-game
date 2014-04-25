@@ -89,27 +89,25 @@ public abstract class Aircraft extends AirspaceObject
 	 * This means that this method returns an angle from 0 to 360 where 0 degrees
 	 * points upwards (positive y direction).
 	 *
+	 * @see Vector2D.getBearing()
+	 *
 	 * @return the bearing of this aircraft
 	 */
 	public float getBearing()
 	{
-		float angle = this.velocity.getAngle();
-		angle = angle * 180;
-		angle /= Math.PI;
-		angle = -angle;
-		angle += 90;
-		if (angle < 0){
-			angle += 360;
-		}
+		float angle = this.velocity.getBearing();
 		return angle;
 	}
 
 	/**
-	 * Returns this vector's angle
+	 * Returns this aircraft's angle
 	 * 
-	 * <p>
-	 * This means that this method returns an angle from 0 to 360 where 0
-	 * degrees points upwards (positive y direction).
+	 * <p>This method always returns angles between -pi and pi.
+	 * <p>Positive angles are assigned to vectors with positive Y values.
+	 * This means that if the Y axis points down, increasing the angle moves clockwise.
+	 * If the Y axis points up, increasing the angle moves anticlockwise.
+	 * 
+	 * @see Vector2D.getAngle()
 	 * 
 	 * @return the angle of this vector
 	 */
