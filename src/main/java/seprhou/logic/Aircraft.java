@@ -88,41 +88,16 @@ public abstract class Aircraft extends AirspaceObject
 	 * This means that this method returns an angle from 0 to 360 where 0 degrees
 	 * points upwards (positive y direction).
 	 *
+	 * @see Vector2D.getBearing()
+	 *
 	 * @return the bearing of this aircraft
 	 */
 	public float getBearing()
 	{
-		float angle = this.velocity.getAngle();
-		angle = angle * 180;
-		angle /= Math.PI;
-		angle = -angle;
-		angle += 90;
-		if (angle < 0){
-			angle += 360;
-		}
+		float angle = this.velocity.getBearing();
 		return angle;
 	}
 
-	/**
-	 * Returns this vector's angle
-	 * 
-	 * <p>
-	 * This means that this method returns an angle from 0 to 360 where 0
-	 * degrees points upwards (positive y direction).
-	 * 
-	 * @return the angle of this vector
-	 */
-	public float calculateAngle(Vector2D vector) {
-		float angle = vector.getAngle();
-		angle = angle * 180;
-		angle /= Math.PI;
-		angle = -angle;
-		angle += 90;
-		if (angle < 0) {
-			angle += 360;
-		}
-		return angle;
-	}
 
 	/** Returns this aircraft's weight */
 	public float getWeight()
@@ -251,9 +226,7 @@ public abstract class Aircraft extends AirspaceObject
 				if (this.lastWaypoint + 3 == waypoints.size()
 						&& this.flightPlan.isLanding())
 				{
-					double angle = this.calculateAngle(waypoints.get(
-							waypoints.size() - 1).sub(
-							waypoints.get(waypoints.size() - 2)));
+					double angle = (waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2))).getBearing();
 					// Checks that the plane is approaching airport
 					// at correct angle, altitude and speed
 					if (this.getBearing() > angle - 25

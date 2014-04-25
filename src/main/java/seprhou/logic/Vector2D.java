@@ -92,7 +92,30 @@ public class Vector2D
 	{
 		return (float) Math.atan2(this.getY(), this.getX());
 	}
-
+	
+	/**
+	 * Returns the bearing of the vector
+	 * <p>
+	 * This means that this method returns an angle from 0 to 360 where 0 degrees
+	 * points upwards (positive y direction).
+	 *
+	 * @return the bearing of this vector
+	 * 
+	 */
+	public float getBearing()
+	{
+		float angle = this.getAngle();
+		angle = angle * 180;
+		angle /= Math.PI;
+		angle = -angle;
+		angle += 90;
+		if (angle < 0){
+			angle += 360;
+		}
+		return angle;
+	}
+	
+	
 	/**
 	 * Returns the distance between this vector and another vector
 	 *
