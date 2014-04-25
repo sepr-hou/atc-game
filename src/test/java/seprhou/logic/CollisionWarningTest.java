@@ -98,13 +98,5 @@ public class CollisionWarningTest
 		@Override public float getMaxAltitude() { return 0; }
 		@Override public float getMaxAcceleration() { return 0; }
 		@Override public float getMaxTurnRate() { return 0; }
-
-		@Override public boolean isFinished() { return false; }
-		@Override public boolean isViolated() { return false; }
-		@Override public int getScore() { return 0; }
-		@Override public FlightPlan getFlightPlan() { return null; }
-		@Override public void setFlightPlan(FlightPlan flightPlan) { }
-		@Override public void resetRunwayPlane() { }
-		@Override public void setViolated(boolean value) { }
 	}
 }

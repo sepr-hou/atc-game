@@ -306,7 +306,7 @@ public class Airspace
 				if (object.isFinished())
 				{
 					score += object.getScore();
-					if (object.getFlightPlan().isLanding())
+					if (object.getFlightPlan() != null && object.getFlightPlan().isLanding())
 					{
 						landingPlanes--;
 						landedObjects++;

@@ -155,8 +155,6 @@ public abstract class AirspaceObject
 
 		return value;
 	}
-	
-	public abstract void setViolated(boolean value);
 
 	/**
 	 * Called every game tick to update this object's position and other data
@@ -249,23 +247,19 @@ public abstract class AirspaceObject
 	 * Returns a check on whether an Object has completed it's flight plan or
 	 * not
 	 */
-	public abstract boolean isFinished();
+	public boolean isFinished() { return false; }
+
+	public void setViolated(boolean value) { }
 
 	/**
 	 * Returns a check on whether an Object has violated an exclusion zone or
 	 * not
 	 */
-	public abstract boolean isViolated();
+	public boolean isViolated() { return false; }
 
 	/** Returns the Score of the Object */
-	public abstract int getScore();
+	public int getScore() { return 0; }
 
 	/** Returns the FLightPlan of an Object */
-	public abstract FlightPlan getFlightPlan();
-
-	/** Sets the flight plan of an Object */
-	public abstract void setFlightPlan(FlightPlan flightPlan);
-
-	/** Resets the details of a landed Plane */
-	public abstract void resetRunwayPlane();
+	public FlightPlan getFlightPlan() { return null; }
 }
