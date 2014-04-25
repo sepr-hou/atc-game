@@ -99,29 +99,6 @@ public abstract class Aircraft extends AirspaceObject
 		return angle;
 	}
 
-	/**
-	 * Returns this aircraft's angle
-	 * 
-	 * <p>This method always returns angles between -pi and pi.
-	 * <p>Positive angles are assigned to vectors with positive Y values.
-	 * This means that if the Y axis points down, increasing the angle moves clockwise.
-	 * If the Y axis points up, increasing the angle moves anticlockwise.
-	 * 
-	 * @see Vector2D.getAngle()
-	 * 
-	 * @return the angle of this vector
-	 */
-	public float calculateAngle(Vector2D vector) {
-		float angle = vector.getAngle();
-		angle = angle * 180;
-		angle /= Math.PI;
-		angle = -angle;
-		angle += 90;
-		if (angle < 0) {
-			angle += 360;
-		}
-		return angle;
-	}
 
 	/** Returns this aircraft's weight */
 	public float getWeight()
@@ -296,9 +273,7 @@ public abstract class Aircraft extends AirspaceObject
 				if (this.lastWaypoint + 3 == waypoints.size()
 						&& this.flightPlan.isLanding())
 				{
-					double angle = this.calculateAngle(waypoints.get(
-							waypoints.size() - 1).sub(
-							waypoints.get(waypoints.size() - 2)));
+					double angle = (waypoints.get(waypoints.size() - 1).sub(waypoints.get(waypoints.size() - 2))).getBearing();
 					// Checks that the plane is approaching airport
 					// at correct angle, altitude and speed
 					if (this.getBearing() > angle - 25
