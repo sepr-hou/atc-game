@@ -2,6 +2,7 @@ package seprhou.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
@@ -22,7 +23,7 @@ public class ButtonLayoutHelper
 	private final float buttonSpacing;
 
 	private float nextYPos = BUTTON_INITIAL_YPOS;
-
+	
 	/**
 	 * Initializes a new ButtonLayoutHelper
 	 * @param stage stage to add buttons to
@@ -53,4 +54,19 @@ public class ButtonLayoutHelper
 		stage.addActor(button);
 		return button;
 	}
+
+	public TextField createField(String name, ClickListener listener)
+	{
+		TextField field = new TextField(name, Assets.SKIN);
+
+		field.setBounds(BUTTON_XPOS, nextYPos, BUTTON_WIDTH, BUTTON_HEIGHT);
+		nextYPos -= BUTTON_HEIGHT + buttonSpacing;
+
+		if (listener != null)
+			field.addListener(listener);
+
+		stage.addActor(field);
+		return field;
+	}
+	
 }
