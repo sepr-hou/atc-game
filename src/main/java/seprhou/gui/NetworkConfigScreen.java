@@ -29,6 +29,14 @@ public class NetworkConfigScreen extends AbstractScreen{
 				// TODO
 			}
 		});
+		
+		layout.createButton("Back", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				getGame().showMenu();
+			}
+		});
 	}
 	
 	
