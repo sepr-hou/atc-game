@@ -15,7 +15,7 @@ import seprhou.network.message.ClientMessage;
 /**
  * Class which implements the host side of the multiplayer game
  */
-public class MPServer implements NetworkEndpoint
+public class MultiServer implements NetworkEndpoint
 {
 	private final Server server = new Server();
 	private final Queue<ClientMessage> messageQueue = new LinkedList<>();
@@ -28,7 +28,7 @@ public class MPServer implements NetworkEndpoint
 	 *
 	 * @throws IOException thrown if an IO error occurs
 	 */
-	public MPServer() throws IOException
+	public MultiServer() throws IOException
 	{
 		NetworkCommon.register(server.getKryo());
 		server.addListener(new MyListener());

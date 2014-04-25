@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPClient;
+import seprhou.network.MultiClient;
 
 /**
  * End game message
@@ -30,7 +30,7 @@ public class SMsgGameEnd implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer(MPClient client)
+	public void receivedFromServer(MultiClient client)
 	{
 		
 	}

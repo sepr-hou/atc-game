@@ -3,7 +3,7 @@ package seprhou.network.message;
 import com.esotericsoftware.kryo.NotNull;
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
-import seprhou.network.MPClient;
+import seprhou.network.MultiClient;
 
 /**
  * New aircraft message
@@ -50,7 +50,7 @@ public class SMsgAircraftCreate implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer(MPClient client)
+	public void receivedFromServer(MultiClient client)
 	{
 
 	}

@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPServer;
+import seprhou.network.MultiServer;
 
 /**
  * Ask the server to set the speed of an aircraft
@@ -30,7 +30,7 @@ public class CMsgSetSpeed implements ClientMessage
 	}
 
 	@Override
-	public void receivedFromClient(MPServer server)
+	public void receivedFromClient(MultiServer server)
 	{
 
 	}

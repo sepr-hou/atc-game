@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPClient;
+import seprhou.network.MultiClient;
 
 /**
  * Start game message
@@ -29,7 +29,7 @@ public class SMsgGameStart implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer(MPClient client)
+	public void receivedFromServer(MultiClient client)
 	{
 
 	}

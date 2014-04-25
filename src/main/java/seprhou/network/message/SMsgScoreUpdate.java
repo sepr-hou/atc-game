@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPClient;
+import seprhou.network.MultiClient;
 
 /**
  * Update the score
@@ -27,7 +27,7 @@ public class SMsgScoreUpdate implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer(MPClient client)
+	public void receivedFromServer(MultiClient client)
 	{
 
 	}

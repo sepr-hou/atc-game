@@ -1,7 +1,7 @@
 package seprhou.network.message;
 
 import com.esotericsoftware.kryo.NotNull;
-import seprhou.network.MPServer;
+import seprhou.network.MultiServer;
 
 /**
  * Ask the server to begin / end turning of an aircraft
@@ -34,7 +34,7 @@ public class CMsgSetTurning implements ClientMessage
 	}
 
 	@Override
-	public void receivedFromClient(MPServer server)
+	public void receivedFromClient(MultiServer server)
 	{
 
 	}

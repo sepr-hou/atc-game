@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPClient;
+import seprhou.network.MultiClient;
 import seprhou.network.NetworkCommon;
 
 /**
@@ -19,7 +19,7 @@ public class SMsgVersion implements ServerMessage
 	}
 
 	@Override
-	public void receivedFromServer(MPClient client)
+	public void receivedFromServer(MultiClient client)
 	{
 		//
 	}

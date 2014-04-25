@@ -1,6 +1,6 @@
 package seprhou.network.message;
 
-import seprhou.network.MPServer;
+import seprhou.network.MultiServer;
 
 /**
  * Interface for messages which are sent by the client and received by the server
@@ -12,5 +12,5 @@ public interface ClientMessage
 	 *
 	 * @param server server object which received the message
 	 */
-	void receivedFromClient(MPServer server);
+	void receivedFromClient(MultiServer server);
 }

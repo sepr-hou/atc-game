@@ -13,7 +13,7 @@ import java.util.Queue;
 /**
  * Class which implements the client side of the multiplayer game
  */
-public class MPClient implements NetworkEndpoint
+public class MultiClient implements NetworkEndpoint
 {
 	private final Client client = new Client();
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
@@ -29,7 +29,7 @@ public class MPClient implements NetworkEndpoint
 	 *
 	 * @param hostname name of the host to connect to
 	 */
-	public MPClient(String hostname)
+	public MultiClient(String hostname)
 	{
 		NetworkCommon.register(client.getKryo());
 		client.addListener(new MyListener());
