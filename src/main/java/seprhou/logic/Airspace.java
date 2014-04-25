@@ -1,7 +1,7 @@
 package seprhou.logic;
 
 import java.util.*;
-import seprhou.gui.GameScreen;
+import java.util.List;
 
 /**
  * Controls an entire air space and all the aircraft in it
@@ -13,40 +13,49 @@ import seprhou.gui.GameScreen;
  */
 public class Airspace
 {
-	private AirspaceObjectFactory objectFactory;
-	private Rectangle dimensions;
+	// Config variables
+	private final AirspaceObjectFactory objectFactory;
+	private final Rectangle dimensions;
+	private FlightPlanGenerator flightPlanGenerator = new FlightPlanGenerator();
 	private float lateralSeparation, verticalSeparation;
-	private int cycleCount = 0;
 
+	// Lists
 	private final ArrayList<AirspaceObject> culledObjects = new ArrayList<>();
 	private final ArrayList<CollisionWarning> collisionWarnings = new ArrayList<>();
-	private final Queue<AirspaceObject> landedObjects = new LinkedList<AirspaceObject>();
 
 	/** During the game refresh, this list is sorted so that LOWER planes (altitude) are put FIRST */
 	private final ArrayList<AirspaceObject> activeObjects = new ArrayList<>();
 
+	// Other variables
 	private boolean gameOver;
-	private int score = 0;
+	private int score;
 	// Needed to prevent more planes than allowed from landing.
-	private int landingPlanes = 0;
+	private int landingPlanes;
+	private int cycleCount;
+	private int landedObjects;
+
+	/**
+	 * Creates a new airspace
+	 *
+	 * <p>{@code null} is a valid value for the object factory but if specified,
+	 * no aircraft will be generated automatically and all takeoffs will fail.
+	 *
+	 * @param dimensions dimensions of the airspace
+	 * @param factory object factor used to generate aircraft
+	 */
+	public Airspace(Rectangle dimensions, AirspaceObjectFactory factory)
+	{
+		if (dimensions == null)
+			throw new IllegalArgumentException("dimensions cannot be null");
+
+		this.objectFactory = factory;
+		this.dimensions = dimensions;
+	}
 
 	/** Returns the factory responsible for constructing airspace objects */
 	public AirspaceObjectFactory getObjectFactory()
 	{
 		return objectFactory;
-	}
-
-	/**
-	 * Sets the class used by this airspace for creating aircraft
-	 *
-	 * @param factory new object factory (not null)
-	 */
-	public void setObjectFactory(AirspaceObjectFactory factory)
-	{
-		if (factory == null)
-			throw new IllegalArgumentException("factory cannot be null");
-
-		this.objectFactory = factory;
 	}
 
 	/** Returns the dimensions of the airspace */
@@ -55,17 +64,20 @@ public class Airspace
 		return dimensions;
 	}
 
-	/**
-	 * Sets the dimensions of the game area to the given rectangle
-	 *
-	 * @param dimensions new airspace dimensions
-	 */
-	public void setDimensions(Rectangle dimensions)
+	/** Returns the flight path generator used for new aircraft */
+	public FlightPlanGenerator getFlightPlanGenerator()
 	{
-		if (dimensions == null)
-			throw new IllegalArgumentException("dimensions cannot be null");
+		return flightPlanGenerator;
+	}
 
-		this.dimensions = dimensions;
+	/**
+	 * Sets a new flight path generator
+	 *
+	 * @param flightPlanGenerator new flight path generator
+	 */
+	public void setFlightPlanGenerator(FlightPlanGenerator flightPlanGenerator)
+	{
+		this.flightPlanGenerator = flightPlanGenerator;
 	}
 
 	/**
@@ -121,18 +133,6 @@ public class Airspace
 	}
 
 	/**
-	 * Throws an exception if the class has not been initialized properly
-	 */
-	private void ensureInitialized()
-	{
-		if (objectFactory == null || dimensions == null ||
-				lateralSeparation == 0 || verticalSeparation == 0)
-		{
-			throw new IllegalStateException("The Airspace class must be initialized before use");
-		}
-	}
-
-	/**
 	 * Returns the aircraft which were culled during the last refresh
 	 *
 	 * <p>
@@ -148,24 +148,10 @@ public class Airspace
 		return Collections.unmodifiableCollection(culledObjects);
 	}
 
-	/**
-	 * Returns the list of Objects "landed" in the game area List works on a
-	 * FIFO basis, Objects take off in the order they were landed and not in any
-	 * other way
-	 */
-	public Queue<AirspaceObject> getLandedObjects() {
-		return this.landedObjects;
-	}
-
-	public void takeOff() {
-		AirspaceObject planeTakingOff = this.getLandedObjects().poll();
-		if (planeTakingOff != null) {
-			FlightPlan newFlightPlan = GameScreen.flightPathGenerator
-					.makeFlightPlanNow(this, false, true);
-			planeTakingOff.setFlightPlan(newFlightPlan);
-			planeTakingOff.resetRunwayPlane();
-			this.getActiveObjects().add(planeTakingOff);
-		}
+	/** Returns the number of landed objects */
+	public int getLandedObjects()
+	{
+		return landedObjects;
 	}
 
 	/**
@@ -258,6 +244,46 @@ public class Airspace
 		return gameOver;
 	}
 
+	/**
+	 * Requests that a plane takes off
+	 *
+	 * <p>This method can fail if there are no landed planes or if the
+	 * {@link AirspaceObjectFactory} implementation returned null.
+	 *
+	 * @return true if a plane actually took off
+	 */
+	public boolean takeOff()
+	{
+		// Basic validation
+		if (landedObjects > 0 && flightPlanGenerator != null)
+		{
+			// Try to create the aircraft
+			if (tryMakeObject(flightPlanGenerator.makeFlightPlanNow(this, false, true)))
+			{
+				landedObjects--;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/** Try to create a new aircraft (using objectFactory) */
+	private boolean tryMakeObject(FlightPlan flightPlan)
+	{
+		if (objectFactory != null && flightPlan != null)
+		{
+			AirspaceObject newObject = objectFactory.makeObject(this, flightPlan);
+			if (newObject != null)
+			{
+				activeObjects.add(newObject);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/** Culls objects outside the game area */
 	private void cullObjects()
 	{
@@ -271,28 +297,20 @@ public class Airspace
 		{
 			AirspaceObject object = activeObjects.get(i);
 
-			if (!gameArea.intersects(object.getPosition(), object.getSize()))
+			// Test for intersection with game area OR if the aircraft has finished
+			if (!gameArea.intersects(object.getPosition(), object.getSize()) || object.isFinished())
 			{
 				activeObjects.remove(i);
 				culledObjects.add(object);
-			}
-			else
-			{
-				// If plane has finished flight plan
-				// Add its score to score,
-				// Then delete.
-				if (object.isFinished()) {
-					// If a plane is landing, add it to the airport
-					// Add its score to score.
-					if (object.getFlightPlan().isLanding()) {
-						this.score += object.getScore();
-						this.activeObjects.remove(i);
-						this.landedObjects.add(object);
-						this.landingPlanes--;
-					} else {
-						this.score += object.getScore();
-						this.activeObjects.remove(i);
-						this.culledObjects.add(object);
+
+				// Update score and landed planes if finished
+				if (object.isFinished())
+				{
+					score += object.getScore();
+					if (object.getFlightPlan().isLanding())
+					{
+						landingPlanes--;
+						landedObjects++;
 					}
 				}
 			}
@@ -366,8 +384,6 @@ public class Airspace
 	 */
 	public void refresh(float delta)
 	{
-		ensureInitialized();
-
 		// Refresh all active objects
 		for (AirspaceObject current : activeObjects)
 			current.refresh(delta);
@@ -375,10 +391,9 @@ public class Airspace
 		// Cull any objects outside the game area
 		cullObjects();
 
-		// Add new aircraft
-		AirspaceObject newObject = getObjectFactory().makeObject(this, delta);
-		if (newObject != null)
-			activeObjects.add(newObject);
+		// Add new aircraft if needed
+		if (flightPlanGenerator != null)
+			tryMakeObject(flightPlanGenerator.makeFlightPlan(this, delta));
 
 		// Generate collision warnings + determine if game is over
 		calculateCollisions();

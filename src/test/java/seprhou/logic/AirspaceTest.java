@@ -159,15 +159,21 @@ public class AirspaceTest
 
 	@Test
 	public void testTakeOff() {
+		// TODO Please review this test to see if it still works
+		Assert.fail();
+
 		Airspace airspace = AirspaceTest.generateAirspace(0);
 		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 1337)), 0, 0, false, true), airspace);
-		airspace.getLandedObjects().add(aircraft);
+		//airspace.getLandedObjects().add(aircraft);
 		airspace.takeOff();
 		Assert.assertTrue(airspace.getActiveObjects().contains(aircraft));
 	}
 
 	@Test
 	public void testLanding() {
+		// TODO Please review this test to see if it still works
+		Assert.fail();
+
 		Airspace airspace = AirspaceTest.generateAirspace(0);
 		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 0)), 0, 0, true, false), airspace);
 		aircraft.refresh(10);
@@ -189,34 +195,13 @@ public class AirspaceTest
 	private static Airspace generateAirspace(final int objectCount)
 	{
 		// Configure airspace
-		Airspace airspace = new Airspace();
-		airspace.setDimensions(DIMENSIONS);
+		Airspace airspace = new Airspace(DIMENSIONS, null);
 		airspace.setLateralSeparation(SEPARATION);
 		airspace.setVerticalSeparation(SEPARATION);
-		airspace.setObjectFactory(new AirspaceObjectFactory()
-		{
-			private int objectsLeft = objectCount;
-
-			@Override
-			public AirspaceObject makeObject(Airspace airspace, float delta)
-			{
-				if (objectsLeft > 0)
-				{
-					objectsLeft--;
-					return new AirspaceObjectMock();
-				}
-
-				return null;
-			}
-		});
 
 		// Generate some objects
 		for (int i = 0; i < objectCount; i++)
-			airspace.refresh(0);
-
-		// Solidify them
-		for (AirspaceObject object : airspace.getActiveObjects())
-			((AirspaceObjectMock) object).solid = true;
+			airspace.getActiveObjects().add(new AirspaceObjectMock());
 
 		// The game should not be over
 		assertThat(airspace.isGameOver(), is(false));
@@ -259,9 +244,7 @@ public class AirspaceTest
 	/** Fake {@link AirspaceObject} class used for testing */
 	private static class AirspaceObjectMock extends AirspaceObject
 	{
-		public boolean solid;
-
-		@Override public boolean isSolid() { return solid; }
+		@Override public boolean isSolid() { return true; }
 		@Override public void draw(Object state) { }
 		@Override public float getSize() { return 64; }
 		@Override public float getAscentRate() { return 100; }

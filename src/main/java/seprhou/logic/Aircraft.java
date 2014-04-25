@@ -309,7 +309,7 @@ public abstract class Aircraft extends AirspaceObject
 									- this.getMinAltitude()) < 1
 							&& Math.abs(this.getVelocity().getLength()
 									- this.getMinSpeed()) < 1
-							&& this.airspace.getLandedObjects().size()
+							&& this.airspace.getLandedObjects()
 									+ this.airspace.getLandingPlanes() < 10)
 					{
 						// Increment the counter of landing planes.

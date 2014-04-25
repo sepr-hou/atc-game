@@ -189,10 +189,6 @@ public class GameArea extends Actor
 		// Deselect the aircraft if it was culled
 		if (airspace.getCulledObjects().contains(parent.getSelectedAircraft()))
 			parent.setSelectedAircraft(null);
-
-		// Deselect the aircraft if it has landed
-		if (airspace.getLandedObjects().contains(parent.getSelectedAircraft()))
-			parent.setSelectedAircraft(null);
 	}
 
 	@Override
@@ -252,7 +248,7 @@ public class GameArea extends Actor
 			}
 
 			// Draw landed planes
-			for (int i = 0; i < airspace.getLandedObjects().size(); i++)
+			for (int i = 0; i < airspace.getLandedObjects(); i++)
 			{
 				Vector2D pos = LogicConstants.LANDED_AIRCRAFT_POSITIONS.get(i);
 				float rot = LogicConstants.LANDED_AIRCRAFT_ANGLES.get(i);

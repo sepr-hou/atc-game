@@ -64,28 +64,22 @@ public class GameScreen extends AbstractScreen
 		super.show();
 
 		// Create the airspace
-		airspace = new Airspace();
-		airspace.setDimensions(new Rectangle(gameArea.getWidth(), gameArea.getHeight()));
-		airspace.setLateralSeparation(OptionsScreen.getLateral());
-		airspace.setVerticalSeparation(OptionsScreen.getVertical());
-		airspace.setObjectFactory(new AirspaceObjectFactory()
+		Rectangle dimensions = new Rectangle(gameArea.getWidth(), gameArea.getHeight());
+		AirspaceObjectFactory objectFactory = new AirspaceObjectFactory()
 		{
 			@Override
-			public AirspaceObject makeObject(Airspace airspace, float delta)
+			public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
 			{
-				FlightPlan flightPlan = flightPathGenerator.makeFlightPlan(airspace, delta);
+				// Random flight number between YO000 and YO999
+				String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
 
-				if (flightPlan != null)
-				{
-					// Random flight number between YO000 and YO999
-					String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
-
-					return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
-				}
-
-				return null;
+				return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
 			}
-		});
+		};
+
+		airspace = new Airspace(dimensions, objectFactory);
+		airspace.setLateralSeparation(OptionsScreen.getLateral());
+		airspace.setVerticalSeparation(OptionsScreen.getVertical());
 
 		// Reset information from past games
 		selectedAircraft = null;

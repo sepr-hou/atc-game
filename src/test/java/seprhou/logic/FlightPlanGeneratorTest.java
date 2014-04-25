@@ -88,6 +88,11 @@ public class FlightPlanGeneratorTest
 	/** Airspace used to feed the current number of aircraft to the flight path generator */
 	private static class DummyAirspace extends Airspace
 	{
+		public DummyAirspace()
+		{
+			super(Rectangle.ZERO, null);
+		}
+
 		@Override
 		public Collection<AirspaceObject> getActiveObjects()
 		{

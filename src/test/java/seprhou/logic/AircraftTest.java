@@ -119,7 +119,7 @@ public class AircraftTest
 
 		public AircraftMock(FlightPlan flightPlan)
 		{
-			super("Test", 0, 0, flightPlan, 1000, new Airspace());
+			super("Test", 0, 0, flightPlan, 1000, new Airspace(Rectangle.ZERO, null));
 		}
 
 		@Override public void draw(Object state) { }
