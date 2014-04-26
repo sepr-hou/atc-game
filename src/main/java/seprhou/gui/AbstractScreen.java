@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import seprhou.logic.LogicConstants;
 
 /**
@@ -46,7 +45,7 @@ public abstract class AbstractScreen implements Screen
 		this.enableEscape = enableEscape;
 
 		// Create stage to draw everything with
-		this.stage = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
+		this.stage = new Stage(new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 	}
 
 	/** Returns the game which owns this screen */
