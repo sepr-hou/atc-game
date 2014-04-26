@@ -39,9 +39,6 @@ public class FlightPlanGenerator
 				}
 			}
 			
-			if (safePoints.size() == 0){
-				throw new RuntimeException("Entry Point List empty");
-			}
 
 			if (ok)
 				safePoints.add(point);
