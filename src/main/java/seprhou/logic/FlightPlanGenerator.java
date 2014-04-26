@@ -38,6 +38,10 @@ public class FlightPlanGenerator
 					break;
 				}
 			}
+			
+			if (safePoints.size() == 0){
+				throw new RuntimeException("Entry Point List empty");
+			}
 
 			if (ok)
 				safePoints.add(point);
@@ -72,8 +76,6 @@ public class FlightPlanGenerator
 	{
 		// Generate a subset of entryExitPoints which contains the points which we can enter from
 		List<Vector2D> entryPointSubset = generateEntryPointSubset(airspace);
-		if (entryPointSubset.size() == 0)
-			return null;
 
 		// Choose an entry and exit point then some sensible waypoints between them,
 		//  also determines whether a plane is landing or not.
