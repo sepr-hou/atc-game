@@ -268,7 +268,6 @@ public class AirspaceTest
 		public boolean finished;
 		public FlightPlan flightPlan;
 
-		@Override public boolean isSolid() { return true; }
 		@Override public void draw(Object state) { }
 		@Override public float getSize() { return 64; }
 		@Override public float getAscentRate() { return 100; }

@@ -86,6 +86,7 @@ public class MultiServer implements NetworkEndpoint
 	/** Listener for the server (single threaded) */
 	private class MyListener extends Listener
 	{
+		@Override
 		public void connected(Connection other)
 		{
 			// Reject multiple clients
@@ -102,6 +103,7 @@ public class MultiServer implements NetworkEndpoint
 			}
 		}
 
+		@Override
 		public void disconnected(Connection other)
 		{
 			if (other == otherEndpoint)
@@ -115,6 +117,7 @@ public class MultiServer implements NetworkEndpoint
 			other.close();
 		}
 
+		@Override
 		public void received(Connection other, Object obj)
 		{
 			// Add to message queue

@@ -29,7 +29,7 @@ public abstract class AbstractScreen implements Screen
 	 *
 	 * @param game game which owns this screen
 	 */
-	public AbstractScreen(AtcGame game)
+	protected AbstractScreen(AtcGame game)
 	{
 		this(game, true);
 	}
@@ -40,7 +40,7 @@ public abstract class AbstractScreen implements Screen
 	 * @param game game which owns this screen
 	 * @param enableEscape true to enable the escape key (go back to main menu)
 	 */
-	public AbstractScreen(AtcGame game, boolean enableEscape)
+	protected AbstractScreen(AtcGame game, boolean enableEscape)
 	{
 		this.game = game;
 		this.enableEscape = enableEscape;

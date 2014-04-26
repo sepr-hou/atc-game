@@ -88,16 +88,13 @@ public abstract class Aircraft extends AirspaceObject
 	 * This means that this method returns an angle from 0 to 360 where 0 degrees
 	 * points upwards (positive y direction).
 	 *
-	 * @see Vector2D.getBearing()
-	 *
 	 * @return the bearing of this aircraft
+	 * @see Vector2D#getBearing()
 	 */
 	public float getBearing()
 	{
-		float angle = this.velocity.getBearing();
-		return angle;
+		return this.velocity.getBearing();
 	}
-
 
 	/** Returns this aircraft's weight */
 	public float getWeight()

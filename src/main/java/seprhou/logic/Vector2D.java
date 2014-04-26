@@ -100,12 +100,11 @@ public class Vector2D
 	 * points upwards (positive y direction).
 	 *
 	 * @return the bearing of this vector
-	 * 
 	 */
 	public float getBearing()
 	{
 		float angle = this.getAngle();
-		angle = angle * 180;
+		angle *= 180;
 		angle /= Math.PI;
 		angle = -angle;
 		angle += 90;

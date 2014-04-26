@@ -61,7 +61,7 @@ public class FlightPlanGeneratorTest
 	}
 
 	/** Validates a flight plan against the generator's configuration */
-	private void validateFlightPlan(FlightPlan plan)
+	private static void validateFlightPlan(FlightPlan plan)
 	{
 		List<Vector2D> waypoints = plan.getWaypoints();
 

@@ -21,7 +21,7 @@ public class FlightPlanGenerator
 	 * @param airspace airspace to gather data from
 	 * @return the list of safe entry points
 	 */
-	private List<Vector2D> generateEntryPointSubset(Airspace airspace)
+	private static List<Vector2D> generateEntryPointSubset(Airspace airspace)
 	{
 		List<Vector2D> safePoints = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class FlightPlanGenerator
 		// Choose an entry and exit point then some sensible waypoints between them,
 		//  also determines whether a plane is landing or not.
 
-		List<Vector2D> myWaypoints = new ArrayList<Vector2D>();
+		List<Vector2D> myWaypoints = new ArrayList<>();
 
 		if (isOnRunway) {
 			// Makes sure that aircraft take off from alternating runways.
@@ -115,7 +115,7 @@ public class FlightPlanGenerator
 
 
 		// Create list of eligible first waypoints and chooses a random one to be added
-		List<Vector2D> firstWaypoints = new ArrayList<Vector2D>();
+		List<Vector2D> firstWaypoints = new ArrayList<>();
 		for (Vector2D waypoint : WAYPOINTS)
 		{
 			if (entryPoint.distanceTo(waypoint) < 400)
@@ -131,7 +131,7 @@ public class FlightPlanGenerator
 		// Add flightplanlength number of waypoints to the flightplan
 		for (int i = 0; i < flightPlanLength; i++){
 			// List of eligible waypoints
-			List<Vector2D> nextWaypoints = new ArrayList<Vector2D>();
+			List<Vector2D> nextWaypoints = new ArrayList<>();
 			// Check each waypoint to see if eligible and add to list
 			for (Vector2D newWaypoint : WAYPOINTS)
 			{

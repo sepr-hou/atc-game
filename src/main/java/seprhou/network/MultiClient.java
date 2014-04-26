@@ -101,17 +101,20 @@ public class MultiClient implements NetworkEndpoint
 	/** Listener for the server (single threaded) */
 	private class MyListener extends Listener
 	{
+		@Override
 		public void connected(Connection other)
 		{
 			otherEndpoint = other;
 			// TODO handle this
 		}
 
+		@Override
 		public void disconnected(Connection other)
 		{
 			// TODO handle this
 		}
 
+		@Override
 		public void received(Connection other, Object obj)
 		{
 			// Add to message queue
