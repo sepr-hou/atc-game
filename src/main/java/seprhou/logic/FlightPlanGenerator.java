@@ -38,7 +38,6 @@ public class FlightPlanGenerator
 					break;
 				}
 			}
-			
 
 			if (ok)
 				safePoints.add(point);
@@ -71,13 +70,10 @@ public class FlightPlanGenerator
 	 */
 	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand, boolean isOnRunway)
 	{
-		// Generate a subset of entryExitPoints which contains the points which we can enter from
-		List<Vector2D> entryPointSubset = generateEntryPointSubset(airspace);
+		List<Vector2D> myWaypoints = new ArrayList<>();
 
 		// Choose an entry and exit point then some sensible waypoints between them,
 		//  also determines whether a plane is landing or not.
-
-		List<Vector2D> myWaypoints = new ArrayList<>();
 
 		if (isOnRunway) {
 			// Makes sure that aircraft take off from alternating runways.
@@ -89,10 +85,14 @@ public class FlightPlanGenerator
 			myWaypoints.add(runway.getStart());
 			myWaypoints.add(runway.getEnd());
 		} else {
+			// Generate a subset of entryExitPoints which contains the points which we can enter from
+			List<Vector2D> entryPointSubset = generateEntryPointSubset(airspace);
+			if (entryPointSubset.size() == 0)
+				return null;
+
 			// Choose random entry point and add into the list
 			// if the plane is not taking off from the runway
-			Vector2D entryPoint = Utils.randomItem(entryPointSubset);
-			myWaypoints.add(entryPoint);
+			myWaypoints.add(Utils.randomItem(entryPointSubset));
 		}
 
 		Vector2D entryPoint = myWaypoints.get(0);
@@ -112,7 +112,6 @@ public class FlightPlanGenerator
 			exitPoint = Utils.randomItem(ENTRY_EXIT_POINTS, entryPoint);
 			landing = false;
 		}
-
 
 		// Create list of eligible first waypoints and chooses a random one to be added
 		List<Vector2D> firstWaypoints = new ArrayList<>();
