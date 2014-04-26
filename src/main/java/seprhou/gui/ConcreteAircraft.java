@@ -1,7 +1,7 @@
 package seprhou.gui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import seprhou.logic.*;
 
 import java.util.Collections;
@@ -28,9 +28,9 @@ public class ConcreteAircraft extends Aircraft
 	public void draw(Object state)
 	{
 		GameArea gameArea = (GameArea) state;
-		SpriteBatch batch = gameArea.getBatch();
+		Batch batch = gameArea.getBatch();
 
-		// Add parent X and Y since SpriteBatch does not adjust coordinates for the Actor
+		// Add parent X and Y since Batch does not adjust coordinates for the Actor
 		float xPos = gameArea.getX() + getPosition().getX() - getSize();
 		float yPos = gameArea.getY() + getPosition().getY() - getSize();
 
@@ -72,7 +72,7 @@ public class ConcreteAircraft extends Aircraft
 		Assets.FONT.draw(batch, str2, xPos + this.getSize() * 2, yPos + this.getSize() * 2 - 16);
 	}
 
-	private void drawAircraft(SpriteBatch batch, Texture texture, float xPos, float yPos)
+	private void drawAircraft(Batch batch, Texture texture, float xPos, float yPos)
 	{
 		float angleDegrees = getVelocity().getAngle() * (float) (180.0 / Math.PI);
 

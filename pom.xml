@@ -15,15 +15,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gdx.version>0.9.9</gdx.version>
+    <gdx.version>1.0.0</gdx.version>
     <mainClass>seprhou.gui.Main</mainClass>
   </properties>
 
   <repositories>
-    <repository>
-      <id>gdx-nightlies</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </repository>
     <repository>
       <id>sepr-hou</id>
       <url>https://raw.github.com/sepr-hou/mvn-repo/master/</url>

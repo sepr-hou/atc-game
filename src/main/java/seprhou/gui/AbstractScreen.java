@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import seprhou.logic.LogicConstants;
 
 /**
@@ -44,7 +46,7 @@ public abstract class AbstractScreen implements Screen
 		this.enableEscape = enableEscape;
 
 		// Create stage to draw everything with
-		this.stage = new Stage(SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.stage = new Stage(new StretchViewport(SCREEN_WIDTH, SCREEN_HEIGHT));
 	}
 
 	/** Returns the game which owns this screen */
@@ -99,10 +101,10 @@ public abstract class AbstractScreen implements Screen
 	}
 
 	@Override
-	public void resize(int arg0, int arg1)
+	public void resize(int width, int height)
 	{
-		// Makes the stage the same size as the camera and changes the actors' sizes in proportion
-		stage.setViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
+		// Tell the stage viewport about the change in screen size so it can update it's projections
+		stage.getViewport().update(width, height);
 	}
 
 	// Empty methods

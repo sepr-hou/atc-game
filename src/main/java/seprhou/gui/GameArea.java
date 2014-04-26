@@ -3,7 +3,7 @@ package seprhou.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,7 +20,7 @@ public class GameArea extends Actor
 {
 	private final GameScreen parent;
 
-	private SpriteBatch batch;
+	private Batch batch;
 
 	/** Position of click event - null if there has been no clicks since last call to act */
 	private Vector2D clickPosition;
@@ -95,7 +95,7 @@ public class GameArea extends Actor
 	 *
 	 * <p>This is only defined when within the draw method
 	 */
-	public SpriteBatch getBatch()
+	public Batch getBatch()
 	{
 		return batch;
 	}
@@ -192,7 +192,7 @@ public class GameArea extends Actor
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha)
+	public void draw(Batch batch, float parentAlpha)
 	{
 		Airspace airspace = this.parent.getAirspace();
 
@@ -299,14 +299,14 @@ public class GameArea extends Actor
 	}
 
 	/**
-	 * Draws a line using a SpriteBatch
+	 * Draws a line using a Batch
 	 *
 	 * @param batch batch to draw to
 	 * @param color line color
 	 * @param a first point
 	 * @param b second point
 	 */
-	private void drawLine(SpriteBatch batch, Vector2D a, Vector2D b, Color color, float thickness)
+	private void drawLine(Batch batch, Vector2D a, Vector2D b, Color color, float thickness)
 	{
 		Vector2D vectorDiff = b.sub(a);
 		float length = vectorDiff.getLength();
