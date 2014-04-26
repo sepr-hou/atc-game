@@ -1,19 +1,13 @@
 package seprhou.logic;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-
-import seprhou.gui.ConcreteAircraft;
 
 /**
  * Tests for {@link Airspace}
@@ -158,26 +152,35 @@ public class AirspaceTest
 	}
 
 	@Test
-	public void testTakeOff() {
-		// TODO Please review this test to see if it still works
-		Assert.fail();
+	public void testTakeOffLanding()
+	{
+		// Prepare airspace
+		Airspace airspace = generateAirspace(0, true);
+		AirspaceObjectMock plane = new AirspaceObjectMock();
+		airspace.getActiveObjects().add(plane);
 
-		Airspace airspace = AirspaceTest.generateAirspace(0);
-		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 1337)), 0, 0, false, true), airspace);
-		//airspace.getLandedObjects().add(aircraft);
+		// Plane should still be active after one turn
+		airspace.refresh(1);
+		assertThat(airspace.getActiveObjects(), hasItem(plane));
+		assertThat(airspace.getLandedObjects(), is(0));
+		assertThat(airspace.getLandingPlanes(), is(0));
+
+		// Force the plane to land (by marking it as finished)
+		plane.finished = true;
+		plane.flightPlan = makeFakeFlightPlan(true);
+		airspace.setLandingPlanes(1);
+		airspace.refresh(1);
+		assertThat(airspace.getActiveObjects(), empty());
+		assertThat(airspace.getLandedObjects(), is(1));
+		assertThat(airspace.getLandingPlanes(), is(0));
+
+		// Make plane takeoff (should generate a completely separate object)
 		airspace.takeOff();
-		Assert.assertTrue(airspace.getActiveObjects().contains(aircraft));
-	}
-
-	@Test
-	public void testLanding() {
-		// TODO Please review this test to see if it still works
-		Assert.fail();
-
-		Airspace airspace = AirspaceTest.generateAirspace(0);
-		AirspaceObject aircraft = new ConcreteAircraft("", 0, 0, new FlightPlan(Arrays.asList(new Vector2D(0, 0), new Vector2D(0, 0)), 0, 0, true, false), airspace);
-		aircraft.refresh(10);
-		Assert.assertFalse(airspace.getActiveObjects().contains(aircraft));
+		airspace.refresh(1);
+		assertThat(airspace.getActiveObjects(), hasSize(1));
+		assertThat(airspace.getActiveObjects(), not(hasItem(plane)));
+		assertThat(airspace.getLandedObjects(), is(0));
+		assertThat(airspace.getLandingPlanes(), is(0));
 	}
 
 	/** Converts a list of objects to a list of positions */
@@ -191,13 +194,31 @@ public class AirspaceTest
 		return positions;
 	}
 
-	/** Generates an airspace with the given number of objects */
-	private static Airspace generateAirspace(final int objectCount)
+	/** Create a fake flight plan */
+	private static FlightPlan makeFakeFlightPlan(boolean landing)
 	{
+		return new FlightPlan(Arrays.asList(Vector2D.ZERO, Vector2D.ZERO), 0, 0, landing, !landing);
+	}
+
+	/** Generates an airspace with the given number of objects */
+	private static Airspace generateAirspace(int objectCount)
+	{
+		return generateAirspace(objectCount, false);
+	}
+
+	/** Generates an airspace with the given number of objects */
+	private static Airspace generateAirspace(int objectCount, boolean useFactory)
+	{
+		// Make factory
+		AirspaceObjectFactory factory = null;
+		if (useFactory)
+			factory = new AirspaceObjectFactoryImpl();
+
 		// Configure airspace
-		Airspace airspace = new Airspace(DIMENSIONS, null);
+		Airspace airspace = new Airspace(DIMENSIONS, factory);
 		airspace.setLateralSeparation(SEPARATION);
 		airspace.setVerticalSeparation(SEPARATION);
+		airspace.setFlightPlanGenerator(new FlightPathGeneratorMock());
 
 		// Generate some objects
 		for (int i = 0; i < objectCount; i++)
@@ -244,6 +265,9 @@ public class AirspaceTest
 	/** Fake {@link AirspaceObject} class used for testing */
 	private static class AirspaceObjectMock extends AirspaceObject
 	{
+		public boolean finished;
+		public FlightPlan flightPlan;
+
 		@Override public boolean isSolid() { return true; }
 		@Override public void draw(Object state) { }
 		@Override public float getSize() { return 64; }
@@ -254,5 +278,38 @@ public class AirspaceTest
 		@Override public float getMaxAltitude() { return 5000; }
 		@Override public float getMaxAcceleration() { return 100; }
 		@Override public float getMaxTurnRate() { return 1; }
+
+		@Override public boolean isFinished() { return finished; }
+		@Override public FlightPlan getFlightPlan() { return flightPlan; }
+	}
+
+	/**
+	 * Fake {@link FlightPlanGenerator} class used for testing
+	 *
+	 * <p>This class only creates objects for takeOffs (no "random" objects)
+	 */
+	private static class FlightPathGeneratorMock extends FlightPlanGenerator
+	{
+		@Override
+		public FlightPlan makeFlightPlan(Airspace airspace, float delta)
+		{
+			return null;
+		}
+
+		@Override
+		public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand, boolean isOnRunway)
+		{
+			return makeFakeFlightPlan(canLand);
+		}
+	}
+
+	/** Implementation of {@link AirspaceObjectFactory} used for testing */
+	private static class AirspaceObjectFactoryImpl implements AirspaceObjectFactory
+	{
+		@Override
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
+		{
+			return new AirspaceObjectMock();
+		}
 	}
 }
