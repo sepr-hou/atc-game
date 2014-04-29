@@ -63,19 +63,8 @@ public class GameScreen extends AbstractScreen
 
 		// Create the airspace
 		Rectangle dimensions = new Rectangle(gameArea.getWidth(), gameArea.getHeight());
-		AirspaceObjectFactory objectFactory = new AirspaceObjectFactory()
-		{
-			@Override
-			public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
-			{
-				// Random flight number between YO000 and YO999
-				String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
 
-				return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
-			}
-		};
-
-		airspace = new Airspace(dimensions, objectFactory);
+		airspace = new Airspace(dimensions, ConcreteAircraft.FACTORY);
 		airspace.setLateralSeparation(OptionsScreen.getLateral());
 		airspace.setVerticalSeparation(OptionsScreen.getVertical());
 

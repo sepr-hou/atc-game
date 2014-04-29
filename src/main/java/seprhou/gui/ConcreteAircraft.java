@@ -9,6 +9,9 @@ import java.util.Collections;
 /** The only type of aircraft (currently?) available */
 public class ConcreteAircraft extends Aircraft
 {
+	/** The AirspaceObjectFactory which can create concrete aircraft */
+	public static final AirspaceObjectFactory FACTORY = new FactoryClass();
+
 	// Derived constants
 	// The +1 and -1 here are leeway needed due to float rounding errors
 	private static final float AIRCRAFT_MIN_SPEED = Collections.min(LogicConstants.INITIAL_SPEEDS) - 10;
@@ -19,9 +22,25 @@ public class ConcreteAircraft extends Aircraft
 	private static final float SHADOW_ANGLE = 0.4f;
 	private static final Vector2D SHADOW_DIRECTION = Vector2D.fromPolar(SHADOW_HEIGHT_MULTIPLIER, SHADOW_ANGLE);
 
-	public ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan, Airspace airspace)
+	/** Creates a new concrete aircraft */
+	private ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan, Airspace airspace)
 	{
 		super(name, weight, crew, flightPlan, 1000, airspace);
+	}
+
+	/**
+	 * Factory class which can create aircraft from an aisrpace an a flight plan
+	 */
+	private static class FactoryClass implements AirspaceObjectFactory
+	{
+		@Override
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
+		{
+			// Random flight number between YO000 and YO999
+			String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
+
+			return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
+		}
 	}
 
 	@Override
