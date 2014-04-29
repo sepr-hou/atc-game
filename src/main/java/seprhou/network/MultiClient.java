@@ -60,12 +60,7 @@ public class MultiClient extends NetworkCommon<Client>
 			IOException result = connectionThread.result;
 			connectionThread = null;
 
-			if (result == null)
-			{
-				// Connected!
-				state = GameEndpointState.CONNECTED;
-			}
-			else
+			if (result != null)
 			{
 				closeWithFail(result);
 				return;
