@@ -1,11 +1,9 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiServer;
+package seprhou.network;
 
 /**
  * Ask the server to make a plane takeoff
  */
-public class CMsgTakeoff implements ClientMessage
+class CMsgTakeoff implements ClientMessage
 {
 	/** Creates a new takeoff message */
 	public CMsgTakeoff()

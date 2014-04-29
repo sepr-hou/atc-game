@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiServer;
+package seprhou.network;
 
 /**
  * Ask the server to set the speed of an aircraft
  *
  * <p>Invalid messages received (invalid aircraft id, target out of bounds) are ignored.
  */
-public class CMsgSetSpeed implements ClientMessage
+class CMsgSetSpeed implements ClientMessage
 {
 	private int aircraftId;
 	private float newTarget;

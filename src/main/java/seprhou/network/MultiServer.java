@@ -1,18 +1,14 @@
 package seprhou.network;
 
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.minlog.Log;
+import seprhou.logic.*;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
-import seprhou.logic.*;
-
-import com.esotericsoftware.kryonet.Server;
-import com.esotericsoftware.minlog.Log;
-import seprhou.network.message.ClientMessage;
-import seprhou.network.message.SMsgGameStart;
-import seprhou.network.message.SMsgVersion;
 
 /**
  * Class which implements the host side of the multiplayer game

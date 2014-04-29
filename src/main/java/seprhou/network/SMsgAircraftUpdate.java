@@ -1,15 +1,14 @@
-package seprhou.network.message;
+package seprhou.network;
 
 import seprhou.logic.Aircraft;
 import seprhou.logic.Vector2D;
-import seprhou.network.MultiClient;
 
 /**
  * Aircraft update
  *
  * <p>Sent by server to update the position of an aircraft
  */
-public class SMsgAircraftUpdate implements ServerMessage
+class SMsgAircraftUpdate implements ServerMessage
 {
 	private int aircraftId;
 

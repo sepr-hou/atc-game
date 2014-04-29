@@ -3,16 +3,13 @@ package seprhou.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import seprhou.logic.*;
-import seprhou.network.message.CMsgSetAltitude;
-import seprhou.network.message.CMsgTakeoff;
-import seprhou.network.message.ClientMessage;
-import seprhou.network.message.ServerMessage;
+import seprhou.logic.AirspaceObject;
+import seprhou.logic.AirspaceObjectFactory;
+import seprhou.logic.Rectangle;
+import seprhou.logic.Vector2D;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**

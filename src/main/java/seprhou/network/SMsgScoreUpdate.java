@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
+package seprhou.network;
 
 /**
  * Update the score
  *
  * <p>Sent by server when the score changes
  */
-public class SMsgScoreUpdate implements ServerMessage
+class SMsgScoreUpdate implements ServerMessage
 {
 	private int score;
 

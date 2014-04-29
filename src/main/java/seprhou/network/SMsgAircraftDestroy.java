@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
+package seprhou.network;
 
 /**
  * Aircraft destroyed message
  *
  * <p>Sent by server when an aircraft leaves the game (out of bounds, landed)
  */
-public class SMsgAircraftDestroy implements ServerMessage
+class SMsgAircraftDestroy implements ServerMessage
 {
 	private int id;
 

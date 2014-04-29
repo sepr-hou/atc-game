@@ -7,7 +7,6 @@ import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.esotericsoftware.minlog.Log;
 import seprhou.logic.*;
-import seprhou.network.message.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,10 +28,10 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 	 *     <li>Changing the order of message registration</li>
 	 * </ul>
 	 */
-	public static final int PROTOCOL_VERSION = 1;
+	protected static final int PROTOCOL_VERSION = 1;
 
 	/** TCP port number to listen / connect on */
-	public static final int PORT = 59873;
+	protected static final int PORT = 59873;
 
 	/** TCP connect timeout in milliseconds */
 	protected static final int CONNECT_TIMEOUT = 5000;

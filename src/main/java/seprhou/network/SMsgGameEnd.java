@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
+package seprhou.network;
 
 /**
  * End game message
  *
  * <p>Sent by server when the game ends (collision)
  */
-public class SMsgGameEnd implements ServerMessage
+class SMsgGameEnd implements ServerMessage
 {
 	private float finalTime;
 	private int finalScore;
@@ -32,6 +30,6 @@ public class SMsgGameEnd implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-		
+
 	}
 }

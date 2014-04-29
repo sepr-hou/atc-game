@@ -1,11 +1,9 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiServer;
+package seprhou.network;
 
 /**
  * Interface for messages which are sent by the client and received by the server
  */
-public interface ClientMessage
+interface ClientMessage
 {
 	/**
 	 * This message was received from the client
