@@ -1,14 +1,13 @@
-package seprhou.network.message;
+package seprhou.network;
 
 import com.esotericsoftware.kryo.NotNull;
-import seprhou.network.MultiServer;
 
 /**
  * Ask the server to begin / end turning of an aircraft
  *
  * <p>Invalid messages received (invalid aircraft id) are ignored.
  */
-public class CMsgSetTurning implements ClientMessage
+class CMsgSetTurning implements ClientMessage
 {
 	private int aircraftId;
 	@NotNull private TurningState state;

@@ -8,7 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import seprhou.logic.*;
-import seprhou.network.NetworkEndpoint;
+import seprhou.network.GameEndpoint;
+import seprhou.network.GameEndpointState;
 
 import java.util.List;
 
@@ -104,14 +105,14 @@ public class GameArea extends Actor
 	@Override
 	public void act(float delta)
 	{
-		NetworkEndpoint endpoint = parent.getEndpoint();
+		GameEndpoint endpoint = parent.getEndpoint();
 		Airspace airspace = endpoint.getAirspace();
 
 		// Process received network messages
 		endpoint.actBegin();
 
 		// Test for network outage
-		if (!endpoint.isConnected())
+		if (endpoint.getState() != GameEndpointState.CONNECTED)
 		{
 			// TODO Handle network failure a bit better than this!
 			throw new RuntimeException("Network failiure!", endpoint.getFailException());

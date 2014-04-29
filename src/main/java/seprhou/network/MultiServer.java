@@ -1,67 +1,59 @@
 package seprhou.network;
 
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
+import com.esotericsoftware.minlog.Log;
+import seprhou.logic.*;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
-import seprhou.logic.Airspace;
-
-import com.esotericsoftware.kryonet.Server;
-import com.esotericsoftware.minlog.Log;
-import seprhou.logic.AirspaceObject;
-import seprhou.logic.Vector2D;
-import seprhou.network.message.ClientMessage;
-
 /**
  * Class which implements the host side of the multiplayer game
  */
-public class MultiServer implements NetworkEndpoint
+public class MultiServer extends NetworkCommon<Server>
 {
-	private final Server server = new Server();
 	private final Queue<ClientMessage> messageQueue = new LinkedList<>();
-
 	private Connection otherEndpoint;
-	private Airspace airspace;
 
 	/**
 	 * Creates and starts the server
-	 *
-	 * @throws IOException thrown if an IO error occurs
 	 */
-	public MultiServer() throws IOException
+	public MultiServer(Rectangle dimensions, AirspaceObjectFactory factory, float lateral, float vertical)
 	{
-		NetworkCommon.register(server.getKryo());
-		server.addListener(new MyListener());
-		server.bind(NetworkCommon.PORT);
-	}
+		super(new Server(), dimensions, factory);
 
-	@Override
-	public boolean isConnected()
-	{
-		return otherEndpoint != null;
-	}
+		// Create airspace
+		airspace = new Airspace(dimensions, factory);
+		airspace.setLateralSeparation(lateral);
+		airspace.setVerticalSeparation(vertical);
 
-	@Override
-	public IOException getFailException()
-	{
-		// TODO Implement this
-		return null;
-	}
+		// Setup server connection
+		kryoEndpoint.addListener(new MyListener());
 
-	@Override
-	public Airspace getAirspace()
-	{
-		return airspace;
+		try
+		{
+			// Update server
+			kryoEndpoint.bind(NetworkCommon.PORT);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+		}
 	}
 
 	@Override
 	public void actBegin()
 	{
+		// Ignore if closed
+		if (getState() == GameEndpointState.CLOSED)
+			return;
+
 		// Update server
-		// TODO UNCOMMENT THIS
-		//server.update(0);
+		if (!updateEndpoint())
+			return;
 
 		// Process any messages in the queue
 		for (;;)
@@ -83,33 +75,41 @@ public class MultiServer implements NetworkEndpoint
 
 		// TODO send updates
 
+		// Update airspace
+		airspace.refresh(delta);
+
 		// Update server
-		// TODO UNCOMMENT THIS
-		//server.update(0);
+		updateEndpoint();
 	}
 
 	@Override
 	public void takeOff()
 	{
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
-		// TODO Implement this
-	}
+		// Ignore if not connected
+		if (!isConnected())
+			return;
 
-	@Override
-	public void close() throws IOException
-	{
-		server.close();
+		// TODO Implement this
 	}
 
 	/** Listener for the server (single threaded) */
@@ -118,32 +118,31 @@ public class MultiServer implements NetworkEndpoint
 		@Override
 		public void connected(Connection other)
 		{
-			// Reject multiple clients
-			if (isConnected())
-			{
+			// Reject if not connecting
+			if (getState() != GameEndpointState.CONNECTING)
 				other.close();
-			}
-			else
-			{
-				Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
-				otherEndpoint = other;
 
-				// TODO handle this
-			}
+			// Initialize internal state
+			Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
+			otherEndpoint = other;
+			state = GameEndpointState.CONNECTED;
+
+			// Start game messages
+			otherEndpoint.sendTCP(new SMsgVersion());
+			otherEndpoint.sendTCP(new SMsgGameStart(airspace.getLateralSeparation(), airspace.getVerticalSeparation()));
 		}
 
 		@Override
 		public void disconnected(Connection other)
 		{
-			if (other == otherEndpoint)
+			if (getState() == GameEndpointState.CONNECTED && other == otherEndpoint)
 			{
 				Log.info("[Server] Client has disconnected");
 				otherEndpoint = null;
 
-				// TODO handle this
+				// Close entire server to prevent more connections
+				close();
 			}
-
-			other.close();
 		}
 
 		@Override

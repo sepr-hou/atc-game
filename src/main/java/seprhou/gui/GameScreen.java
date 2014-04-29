@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
-import seprhou.network.NetworkEndpoint;
+import seprhou.network.GameEndpoint;
 
 /**
  * The main game screen
@@ -22,12 +22,12 @@ public class GameScreen extends AbstractScreen
 
 	private final GameArea gameArea;
 	private final ControlPanel controlPanel;
-	private final NetworkEndpoint endpoint;
+	private final GameEndpoint endpoint;
 
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
 
-	public GameScreen(AtcGame game, NetworkEndpoint endpoint)
+	public GameScreen(AtcGame game, GameEndpoint endpoint)
 	{
 		super(game);
 		Stage stage = getStage();
@@ -64,7 +64,7 @@ public class GameScreen extends AbstractScreen
 	}
 
 	/** Returns the network endpoint */
-	public NetworkEndpoint getEndpoint() { return endpoint; }
+	public GameEndpoint getEndpoint() { return endpoint; }
 
 	/** Returns the airspace object used by the game */
 	public Airspace getAirspace()

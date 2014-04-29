@@ -1,6 +1,4 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
+package seprhou.network;
 
 /**
  * Interface for messages which are sent by the server and received by the client

@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
+package seprhou.network;
 
 /**
  * Start game message
  *
  * <p>Sent by server to begin a new game (after it has ended)
  */
-public class SMsgGameStart implements ServerMessage
+class SMsgGameStart implements ServerMessage
 {
 	private float verticalSep, lateralSep;
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import seprhou.network.NetworkEndpoint;
+import seprhou.network.GameEndpoint;
 import seprhou.network.SinglePlayer;
 
 /**
@@ -32,7 +32,7 @@ public class MenuScreen extends AbstractScreen
 			public void clicked(InputEvent event, float x, float y)
 			{
 				// Create single player game
-				NetworkEndpoint endpoint = new SinglePlayer(
+				GameEndpoint endpoint = new SinglePlayer(
 						GameScreen.GAME_DIMENSIONS,
 						ConcreteAircraft.FACTORY,
 						OptionsScreen.getLateral(),

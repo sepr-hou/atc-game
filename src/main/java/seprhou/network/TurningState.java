@@ -1,4 +1,4 @@
-package seprhou.network.message;
+package seprhou.network;
 
 /** The state of turning an aircraft can be in */
 public enum TurningState

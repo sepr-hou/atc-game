@@ -1,13 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiServer;
+package seprhou.network;
 
 /**
  * Ask the server to set the altitude of an aircraft
  *
  * <p>Invalid messages received (invalid aircraft id, target out of bounds) are ignored.
  */
-public class CMsgSetAltitude implements ClientMessage
+class CMsgSetAltitude implements ClientMessage
 {
 	private int aircraftId;
 	private float newTarget;

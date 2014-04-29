@@ -1,16 +1,15 @@
-package seprhou.network.message;
+package seprhou.network;
 
 import com.esotericsoftware.kryo.NotNull;
 import seprhou.logic.Aircraft;
 import seprhou.logic.FlightPlan;
-import seprhou.network.MultiClient;
 
 /**
  * New aircraft message
  *
  * <p>Sent by server when a new aircraft enters the game
  */
-public class SMsgAircraftCreate implements ServerMessage
+class SMsgAircraftCreate implements ServerMessage
 {
 	private int id;
 	@NotNull private String name;

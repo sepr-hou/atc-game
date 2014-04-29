@@ -1,14 +1,11 @@
-package seprhou.network.message;
-
-import seprhou.network.MultiClient;
-import seprhou.network.NetworkCommon;
+package seprhou.network;
 
 /**
  * Version message
  *
  * <p>Sent by server to verify the protocol version
  */
-public class SMsgVersion implements ServerMessage
+class SMsgVersion implements ServerMessage
 {
 	private int version;
 

@@ -3,10 +3,10 @@ package seprhou.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import seprhou.logic.Airspace;
 import seprhou.logic.AirspaceObject;
+import seprhou.logic.AirspaceObjectFactory;
+import seprhou.logic.Rectangle;
 import seprhou.logic.Vector2D;
-import seprhou.network.message.ServerMessage;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -15,14 +15,10 @@ import java.util.Queue;
 /**
  * Class which implements the client side of the multiplayer game
  */
-public class MultiClient implements NetworkEndpoint
+public class MultiClient extends NetworkCommon<Client>
 {
-	private final Client client = new Client();
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
-
 	private ConnectionThread connectionThread;
-	private Connection otherEndpoint;
-	private Airspace airspace;
 
 	/**
 	 * Creates a new client and opens the connection
@@ -31,10 +27,10 @@ public class MultiClient implements NetworkEndpoint
 	 *
 	 * @param hostname name of the host to connect to
 	 */
-	public MultiClient(String hostname)
+	public MultiClient(String hostname, Rectangle dimensions, AirspaceObjectFactory factory)
 	{
-		NetworkCommon.register(client.getKryo());
-		client.addListener(new MyListener());
+		super(new Client(), dimensions, factory);
+		kryoEndpoint.addListener(new MyListener());
 
 		// Run connection attempt in new thread (so we don't block the GUI)
 		connectionThread = new ConnectionThread(hostname);
@@ -42,45 +38,35 @@ public class MultiClient implements NetworkEndpoint
 	}
 
 	@Override
-	public boolean isConnected()
-	{
-		return otherEndpoint != null;
-	}
-
-	@Override
-	public IOException getFailException()
-	{
-		// TODO Implement this
-		return null;
-	}
-
-	@Override
-	public Airspace getAirspace()
-	{
-		return airspace;
-	}
-
-	@Override
 	public void actBegin()
 	{
 		// TODO Client only: Ensure airspace.isGameOver always returns false unless the server has told us
 
+		// Ignore if closed
+		if (getState() == GameEndpointState.CLOSED)
+			return;
+
 		// Update client
-		// TODO UNCOMMENT THIS
-		//client.update(0);
+		if (!updateEndpoint())
+			return;
 
 		// Handle connection completion
 		if (connectionThread != null && connectionThread.done)
 		{
-			// Rethrow any exceptions + kill the thread object
+			// Store any exceptions in connect thread
 			IOException result = connectionThread.result;
 			connectionThread = null;
 
-			// TODO UNCOMMENT THIS
-			/*
-			if (result != null)
-				throw result;
-			*/
+			if (result == null)
+			{
+				// Connected!
+				state = GameEndpointState.CONNECTED;
+			}
+			else
+			{
+				closeWithFail(result);
+				return;
+			}
 		}
 
 		// Process messages in queue
@@ -101,51 +87,52 @@ public class MultiClient implements NetworkEndpoint
 		if (!isConnected())
 			return;
 
-		// TODO Send updates
+		// Update airspace
+		airspace.refresh(delta);
 
 		// Update client
-		// TODO UNCOMMENT THIS
-		//client.update(0);
+		updateEndpoint();
 	}
 
 	@Override
 	public void takeOff()
 	{
-		// TODO Implement this
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
+		// Send takeoff request
+		kryoEndpoint.sendTCP(new CMsgTakeoff());
 	}
 
 	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
-		// TODO Implement this
-	}
+		// Ignore if not connected
+		if (!isConnected())
+			return;
 
-	@Override
-	public void close() throws IOException
-	{
-		client.close();
+		// Send altitude request
+		kryoEndpoint.sendTCP(new CMsgSetAltitude(objectIdMap.getId(object), altitude));
 	}
 
 	/** Listener for the server (single threaded) */
 	private class MyListener extends Listener
 	{
 		@Override
-		public void connected(Connection other)
-		{
-			otherEndpoint = other;
-			// TODO handle this
-		}
-
-		@Override
 		public void disconnected(Connection other)
 		{
-			// TODO handle this
+			close();
 		}
 
 		@Override
@@ -179,7 +166,7 @@ public class MultiClient implements NetworkEndpoint
 		{
 			try
 			{
-				client.connect(NetworkCommon.CONNECT_TIMEOUT, hostname, NetworkCommon.PORT);
+				kryoEndpoint.connect(NetworkCommon.CONNECT_TIMEOUT, hostname, NetworkCommon.PORT);
 			}
 			catch (IOException e)
 			{
