@@ -28,11 +28,18 @@ public class OptionsScreen extends AbstractScreen
 		getStage().addActor(new Image(Assets.MENU_BACKGROUND_TEXTURE));
 
 		// Add buttons
-		ButtonLayoutHelper layout = new ButtonLayoutHelper(getStage(), 30);
+		ButtonLayoutHelper layout = new ButtonLayoutHelper(getStage(), 10);
 
 		layout.createButton("Easy",   new DifficultyClickListener(100, 500));
 		layout.createButton("Medium", new DifficultyClickListener(200, 1000));
 		layout.createButton("Hard",   new DifficultyClickListener(300, 1500));
+		layout.createButton("Back", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				getGame().showMenu();
+			}
+		});
 	}
 
 	/** Returns the current lateral separation (based on difficulty) */
