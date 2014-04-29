@@ -3,7 +3,9 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import seprhou.logic.*;
+import seprhou.logic.Aircraft;
+import seprhou.logic.Airspace;
+import seprhou.logic.Rectangle;
 import seprhou.network.GameEndpoint;
 
 /**

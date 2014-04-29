@@ -3,7 +3,6 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
 import seprhou.highscores.HighscoreEntry;
 import seprhou.logic.Utils;
 

@@ -1,13 +1,12 @@
 package seprhou.gui;
 
-import java.text.SimpleDateFormat;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-
 import seprhou.highscores.HighscoreEntry;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Class which shows the highscores
