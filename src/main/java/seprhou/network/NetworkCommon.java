@@ -4,18 +4,19 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryonet.EndPoint;
 import com.esotericsoftware.minlog.Log;
-import seprhou.logic.FlightPlan;
-import seprhou.logic.Vector2D;
+import seprhou.logic.*;
 import seprhou.network.message.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * Class which handles common network initialization tasks
  */
-public final class NetworkCommon
+public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameEndpoint
 {
 	/**
 	 * Version of the protocol
@@ -30,22 +31,92 @@ public final class NetworkCommon
 	 */
 	public static final int PROTOCOL_VERSION = 1;
 
-	/**
-	 * TCP port number to listen / connect on
-	 */
+	/** TCP port number to listen / connect on */
 	public static final int PORT = 59873;
 
-	/**
-	 * TCP connect timeout in milliseconds
-	 */
-	public static final int CONNECT_TIMEOUT = 5000;
+	/** TCP connect timeout in milliseconds */
+	protected static final int CONNECT_TIMEOUT = 5000;
+
+	protected final TEndPoint kryoEndpoint;
+	protected final Rectangle dimensions;
+	protected final AirspaceObjectFactory userFactory;
+
+	protected GameEndpointState state = GameEndpointState.CONNECTING;
+	protected IOException failException;
+	protected Airspace airspace;
 
 	/**
-	 * Setup the global kryo log level
+	 * Initializes a common network endpoint
+	 *
+	 * @param kryoEndpoint the kryo endpoint object to use
+	 * @param dimensions the dimensions of the airspace
+	 * @param factory the factory class used to create aircraft
 	 */
-	public static void setupLogger()
+	public NetworkCommon(TEndPoint kryoEndpoint, Rectangle dimensions, AirspaceObjectFactory factory)
 	{
+		// Setup final fields
+		this.kryoEndpoint = kryoEndpoint;
+		this.dimensions = dimensions;
+		this.userFactory = factory;
+
+		// Set log level
 		Log.set(Log.LEVEL_DEBUG);
+
+		// Register kryo objects
+		register(kryoEndpoint.getKryo());
+	}
+
+	@Override
+	public void close()
+	{
+		kryoEndpoint.close();
+		state = GameEndpointState.CLOSED;
+	}
+
+	/** Close connection and set fail exception */
+	protected void closeWithFail(IOException e)
+	{
+		failException = e;
+		close();
+	}
+
+	@Override
+	public GameEndpointState getState()
+	{
+		return state;
+	}
+
+	/** Returns true if this endpoint is connected */
+	public boolean isConnected()
+	{
+		return getState() == GameEndpointState.CONNECTED;
+	}
+
+	@Override
+	public IOException getFailException()
+	{
+		return failException;
+	}
+
+	@Override
+	public Airspace getAirspace()
+	{
+		return airspace;
+	}
+
+	/** Runs update(0) on the endpoint */
+	protected boolean updateEndpoint()
+	{
+		try
+		{
+			kryoEndpoint.update(0);
+			return true;
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+			return false;
+		}
 	}
 
 	/**
@@ -53,7 +124,7 @@ public final class NetworkCommon
 	 *
 	 * @param kryo kryo object to register with
 	 */
-	public static void register(Kryo kryo)
+	private static void register(Kryo kryo)
 	{
 		// READ PROTOCOL_VERSION JAVADOC BEFORE CHANGING THIS METHOD
 		kryo.setReferences(false);
@@ -78,10 +149,6 @@ public final class NetworkCommon
 		kryo.register(FlightPlan.class, new FlightPlanSerializer());
 		kryo.register(Vector2D.class);
 		kryo.register(Vector2D[].class);
-	}
-
-	private NetworkCommon()
-	{
 	}
 
 	/** Manual serializer for FlightPlan */
