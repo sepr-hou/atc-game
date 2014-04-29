@@ -34,7 +34,7 @@ public class HighScoresScreen extends AbstractScreen {
 
 		// Create table to store labels into
 		scoresTable = new Table(Assets.SKIN);
-		scoresTable.setBounds((SCREEN_WIDTH - TABLE_WIDTH) / 2, 400, TABLE_WIDTH, 500);
+		scoresTable.setBounds((SCREEN_WIDTH - TABLE_WIDTH) / 2, SCREEN_HEIGHT/5, TABLE_WIDTH, 500);
 		stage.addActor(scoresTable);
 	}
 
