@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import seprhou.logic.*;
 import seprhou.network.NetworkEndpoint;
+import seprhou.network.NetworkEndpointState;
 
 import java.util.List;
 
@@ -111,7 +112,7 @@ public class GameArea extends Actor
 		endpoint.actBegin();
 
 		// Test for network outage
-		if (!endpoint.isConnected())
+		if (endpoint.getState() != NetworkEndpointState.CONNECTED)
 		{
 			// TODO Handle network failure a bit better than this!
 			throw new RuntimeException("Network failiure!", endpoint.getFailException());

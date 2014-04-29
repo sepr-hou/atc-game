@@ -6,12 +6,10 @@ import java.util.Queue;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import seprhou.logic.Airspace;
+import seprhou.logic.*;
 
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
-import seprhou.logic.AirspaceObject;
-import seprhou.logic.Vector2D;
 import seprhou.network.message.ClientMessage;
 
 /**
@@ -19,10 +17,12 @@ import seprhou.network.message.ClientMessage;
  */
 public class MultiServer implements NetworkEndpoint
 {
-	private final Server server = new Server();
 	private final Queue<ClientMessage> messageQueue = new LinkedList<>();
 
+	private Server server = new Server();
 	private Connection otherEndpoint;
+	private IOException failException;
+
 	private Airspace airspace;
 
 	/**
@@ -30,24 +30,44 @@ public class MultiServer implements NetworkEndpoint
 	 *
 	 * @throws IOException thrown if an IO error occurs
 	 */
-	public MultiServer() throws IOException
+	public MultiServer(Rectangle dimensions, AirspaceObjectFactory factory, float lateral, float vertical)
 	{
+		// Create airspace
+		airspace = new Airspace(dimensions, factory);
+		airspace.setLateralSeparation(lateral);
+		airspace.setVerticalSeparation(vertical);
+
+		// Setup server connection
 		NetworkCommon.register(server.getKryo());
 		server.addListener(new MyListener());
-		server.bind(NetworkCommon.PORT);
+
+		try
+		{
+			// Update server
+			server.bind(NetworkCommon.PORT);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+		}
 	}
 
 	@Override
-	public boolean isConnected()
+	public NetworkEndpointState getState()
 	{
-		return otherEndpoint != null;
+		if (server == null)
+			return NetworkEndpointState.CLOSED;
+
+		if (otherEndpoint == null)
+			return NetworkEndpointState.CONNECTING;
+
+		return NetworkEndpointState.CONNECTED;
 	}
 
 	@Override
 	public IOException getFailException()
 	{
-		// TODO Implement this
-		return null;
+		return failException;
 	}
 
 	@Override
@@ -59,9 +79,20 @@ public class MultiServer implements NetworkEndpoint
 	@Override
 	public void actBegin()
 	{
-		// Update server
-		// TODO UNCOMMENT THIS
-		//server.update(0);
+		// Ignore if closed
+		if (getState() == NetworkEndpointState.CLOSED)
+			return;
+
+		try
+		{
+			// Update server
+			server.update(0);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+			return;
+		}
 
 		// Process any messages in the queue
 		for (;;)
@@ -78,38 +109,65 @@ public class MultiServer implements NetworkEndpoint
 	public void actEnd(float delta)
 	{
 		// Ignore if not connected
-		if (!isConnected())
+		if (getState() != NetworkEndpointState.CONNECTED)
 			return;
 
 		// TODO send updates
 
 		// Update server
-		// TODO UNCOMMENT THIS
-		//server.update(0);
+		try
+		{
+			// Update server
+			server.update(0);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+		}
 	}
 
 	@Override
 	public void takeOff()
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
-	public void close() throws IOException
+	public void close()
 	{
 		server.close();
+		server = null;
+	}
+
+	/** Close endpoint with a failiure */
+	private void closeWithFail(IOException e)
+	{
+		failException = e;
+		close();
 	}
 
 	/** Listener for the server (single threaded) */
@@ -118,32 +176,25 @@ public class MultiServer implements NetworkEndpoint
 		@Override
 		public void connected(Connection other)
 		{
-			// Reject multiple clients
-			if (isConnected())
-			{
+			// Reject if not connecting
+			if (getState() != NetworkEndpointState.CONNECTING)
 				other.close();
-			}
-			else
-			{
-				Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
-				otherEndpoint = other;
 
-				// TODO handle this
-			}
+			Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
+			otherEndpoint = other;
 		}
 
 		@Override
 		public void disconnected(Connection other)
 		{
-			if (other == otherEndpoint)
+			if (getState() == NetworkEndpointState.CONNECTED && other == otherEndpoint)
 			{
 				Log.info("[Server] Client has disconnected");
 				otherEndpoint = null;
 
-				// TODO handle this
+				// Close entire server to prevent more connections
+				close();
 			}
-
-			other.close();
 		}
 
 		@Override

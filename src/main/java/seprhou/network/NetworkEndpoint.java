@@ -15,17 +15,21 @@ import java.io.IOException;
  */
 public interface NetworkEndpoint extends Closeable
 {
-	/**
-	 * Returns true if connected to another endpoint
-	 */
-	boolean isConnected();
+	/** Closes the network endpoint */
+	@Override
+	void close();
 
 	/**
-	 * Returns the exception which caused the network failiure
+	 * Returns the state of the endpoint
+	 */
+	NetworkEndpointState getState();
+
+	/**
+	 * Returns the exception which caused the connection to close
 	 *
-	 * <p>Will only return an exception if {@link #isConnected()} is also false.
-	 *
-	 * @return the exception or null if there is none
+	 * <p>If {@link #getState()} returns {@link NetworkEndpointState#CLOSED}, then you can
+	 * call this method to get the reason. Often, this method will still return null if
+	 * no extra information can be obtained.
 	 */
 	IOException getFailException();
 

@@ -17,11 +17,13 @@ import java.util.Queue;
  */
 public class MultiClient implements NetworkEndpoint
 {
-	private final Client client = new Client();
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
 
-	private ConnectionThread connectionThread;
+	private Client client = new Client();
 	private Connection otherEndpoint;
+	private ConnectionThread connectionThread;
+	private IOException failException;
+
 	private Airspace airspace;
 
 	/**
@@ -42,16 +44,21 @@ public class MultiClient implements NetworkEndpoint
 	}
 
 	@Override
-	public boolean isConnected()
+	public NetworkEndpointState getState()
 	{
-		return otherEndpoint != null;
+		if (client == null)
+			return NetworkEndpointState.CLOSED;
+
+		if (otherEndpoint == null)
+			return NetworkEndpointState.CONNECTING;
+
+		return NetworkEndpointState.CONNECTED;
 	}
 
 	@Override
 	public IOException getFailException()
 	{
-		// TODO Implement this
-		return null;
+		return failException;
 	}
 
 	@Override
@@ -65,22 +72,34 @@ public class MultiClient implements NetworkEndpoint
 	{
 		// TODO Client only: Ensure airspace.isGameOver always returns false unless the server has told us
 
+		// Ignore if closed
+		if (getState() == NetworkEndpointState.CLOSED)
+			return;
+
 		// Update client
-		// TODO UNCOMMENT THIS
-		//client.update(0);
+		try
+		{
+			// Update server
+			client.update(0);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+			return;
+		}
 
 		// Handle connection completion
 		if (connectionThread != null && connectionThread.done)
 		{
-			// Rethrow any exceptions + kill the thread object
+			// Store any exceptions in connect thread
 			IOException result = connectionThread.result;
 			connectionThread = null;
 
-			// TODO UNCOMMENT THIS
-			/*
 			if (result != null)
-				throw result;
-			*/
+			{
+				closeWithFail(result);
+				return;
+			}
 		}
 
 		// Process messages in queue
@@ -98,38 +117,65 @@ public class MultiClient implements NetworkEndpoint
 	public void actEnd(float delta)
 	{
 		// Ignore if not connected
-		if (!isConnected())
+		if (getState() != NetworkEndpointState.CONNECTED)
 			return;
 
 		// TODO Send updates
 
 		// Update client
-		// TODO UNCOMMENT THIS
-		//client.update(0);
+		try
+		{
+			// Update server
+			client.update(0);
+		}
+		catch (IOException e)
+		{
+			closeWithFail(e);
+		}
 	}
 
 	@Override
 	public void takeOff()
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
+		// Ignore if not connected
+		if (getState() != NetworkEndpointState.CONNECTED)
+			return;
+
 		// TODO Implement this
 	}
 
 	@Override
-	public void close() throws IOException
+	public void close()
 	{
 		client.close();
+		client = null;
+	}
+
+	/** Close endpoint with a failiure */
+	private void closeWithFail(IOException e)
+	{
+		failException = e;
+		close();
 	}
 
 	/** Listener for the server (single threaded) */
@@ -139,13 +185,12 @@ public class MultiClient implements NetworkEndpoint
 		public void connected(Connection other)
 		{
 			otherEndpoint = other;
-			// TODO handle this
 		}
 
 		@Override
 		public void disconnected(Connection other)
 		{
-			// TODO handle this
+			close();
 		}
 
 		@Override

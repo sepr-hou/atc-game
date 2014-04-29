@@ -62,7 +62,7 @@ public class SinglePlayer implements NetworkEndpoint
 	public void actBegin() { }
 
 	@Override
-	public boolean isConnected() { return true; }
+	public NetworkEndpointState getState() { return NetworkEndpointState.CONNECTED; }
 
 	@Override
 	public IOException getFailException() { return null; }
