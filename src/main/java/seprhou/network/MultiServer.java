@@ -15,7 +15,7 @@ import seprhou.network.message.ClientMessage;
 /**
  * Class which implements the host side of the multiplayer game
  */
-public class MultiServer implements NetworkEndpoint
+public class MultiServer implements GameEndpoint
 {
 	private final Queue<ClientMessage> messageQueue = new LinkedList<>();
 
@@ -53,15 +53,15 @@ public class MultiServer implements NetworkEndpoint
 	}
 
 	@Override
-	public NetworkEndpointState getState()
+	public GameEndpointState getState()
 	{
 		if (server == null)
-			return NetworkEndpointState.CLOSED;
+			return GameEndpointState.CLOSED;
 
 		if (otherEndpoint == null)
-			return NetworkEndpointState.CONNECTING;
+			return GameEndpointState.CONNECTING;
 
-		return NetworkEndpointState.CONNECTED;
+		return GameEndpointState.CONNECTED;
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class MultiServer implements NetworkEndpoint
 	public void actBegin()
 	{
 		// Ignore if closed
-		if (getState() == NetworkEndpointState.CLOSED)
+		if (getState() == GameEndpointState.CLOSED)
 			return;
 
 		try
@@ -109,7 +109,7 @@ public class MultiServer implements NetworkEndpoint
 	public void actEnd(float delta)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO send updates
@@ -130,7 +130,7 @@ public class MultiServer implements NetworkEndpoint
 	public void takeOff()
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this
@@ -140,7 +140,7 @@ public class MultiServer implements NetworkEndpoint
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this
@@ -150,7 +150,7 @@ public class MultiServer implements NetworkEndpoint
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this
@@ -177,7 +177,7 @@ public class MultiServer implements NetworkEndpoint
 		public void connected(Connection other)
 		{
 			// Reject if not connecting
-			if (getState() != NetworkEndpointState.CONNECTING)
+			if (getState() != GameEndpointState.CONNECTING)
 				other.close();
 
 			Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
@@ -187,7 +187,7 @@ public class MultiServer implements NetworkEndpoint
 		@Override
 		public void disconnected(Connection other)
 		{
-			if (getState() == NetworkEndpointState.CONNECTED && other == otherEndpoint)
+			if (getState() == GameEndpointState.CONNECTED && other == otherEndpoint)
 			{
 				Log.info("[Server] Client has disconnected");
 				otherEndpoint = null;

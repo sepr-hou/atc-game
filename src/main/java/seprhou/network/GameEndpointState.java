@@ -3,7 +3,7 @@ package seprhou.network;
 /**
  * The state of an endpoint
  */
-public enum NetworkEndpointState
+public enum GameEndpointState
 {
 	/** Connecting to the other endpoint (or waiting for someone to connect) */
 	CONNECTING,

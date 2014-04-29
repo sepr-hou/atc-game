@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * A single player endpoint which simply passes all events to the airspace
  */
-public class SinglePlayer implements NetworkEndpoint
+public class SinglePlayer implements GameEndpoint
 {
 	private final Airspace airspace;
 
@@ -62,7 +62,7 @@ public class SinglePlayer implements NetworkEndpoint
 	public void actBegin() { }
 
 	@Override
-	public NetworkEndpointState getState() { return NetworkEndpointState.CONNECTED; }
+	public GameEndpointState getState() { return GameEndpointState.CONNECTED; }
 
 	@Override
 	public IOException getFailException() { return null; }

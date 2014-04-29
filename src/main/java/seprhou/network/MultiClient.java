@@ -15,7 +15,7 @@ import java.util.Queue;
 /**
  * Class which implements the client side of the multiplayer game
  */
-public class MultiClient implements NetworkEndpoint
+public class MultiClient implements GameEndpoint
 {
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
 
@@ -44,15 +44,15 @@ public class MultiClient implements NetworkEndpoint
 	}
 
 	@Override
-	public NetworkEndpointState getState()
+	public GameEndpointState getState()
 	{
 		if (client == null)
-			return NetworkEndpointState.CLOSED;
+			return GameEndpointState.CLOSED;
 
 		if (otherEndpoint == null)
-			return NetworkEndpointState.CONNECTING;
+			return GameEndpointState.CONNECTING;
 
-		return NetworkEndpointState.CONNECTED;
+		return GameEndpointState.CONNECTED;
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class MultiClient implements NetworkEndpoint
 		// TODO Client only: Ensure airspace.isGameOver always returns false unless the server has told us
 
 		// Ignore if closed
-		if (getState() == NetworkEndpointState.CLOSED)
+		if (getState() == GameEndpointState.CLOSED)
 			return;
 
 		// Update client
@@ -117,7 +117,7 @@ public class MultiClient implements NetworkEndpoint
 	public void actEnd(float delta)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Send updates
@@ -138,7 +138,7 @@ public class MultiClient implements NetworkEndpoint
 	public void takeOff()
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this
@@ -148,7 +148,7 @@ public class MultiClient implements NetworkEndpoint
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this
@@ -158,7 +158,7 @@ public class MultiClient implements NetworkEndpoint
 	public void setTargetAltitude(AirspaceObject object, float altitude)
 	{
 		// Ignore if not connected
-		if (getState() != NetworkEndpointState.CONNECTED)
+		if (getState() != GameEndpointState.CONNECTED)
 			return;
 
 		// TODO Implement this

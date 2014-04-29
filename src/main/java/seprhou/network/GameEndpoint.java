@@ -8,12 +8,12 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * An endpoint of the network
+ * An endpoint of the game
  *
  * <p>This interface allows the GUI code to interface with the network code without worrying
  * about if we're the server, client or on a single player game.
  */
-public interface NetworkEndpoint extends Closeable
+public interface GameEndpoint extends Closeable
 {
 	/** Closes the network endpoint */
 	@Override
@@ -22,12 +22,12 @@ public interface NetworkEndpoint extends Closeable
 	/**
 	 * Returns the state of the endpoint
 	 */
-	NetworkEndpointState getState();
+	GameEndpointState getState();
 
 	/**
 	 * Returns the exception which caused the connection to close
 	 *
-	 * <p>If {@link #getState()} returns {@link NetworkEndpointState#CLOSED}, then you can
+	 * <p>If {@link #getState()} returns {@link GameEndpointState#CLOSED}, then you can
 	 * call this method to get the reason. Often, this method will still return null if
 	 * no extra information can be obtained.
 	 */
