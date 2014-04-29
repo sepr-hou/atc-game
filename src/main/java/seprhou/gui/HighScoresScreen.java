@@ -57,7 +57,7 @@ public class HighScoresScreen extends AbstractScreen {
 			scoresTable.row();
 		}
 	}
-
+	
 	private void addTableLabel(String str)
 	{
 		Label label = new Label(str, Assets.SKIN);
