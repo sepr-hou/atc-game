@@ -133,39 +133,36 @@ public class GameArea extends Actor
 		Aircraft selected = parent.getSelectedAircraft();
 		if (selected != null && selected.isActive())
 		{
+			Vector2D oldTargetVelocity = selected.getTargetVelocity();
+			float oldTargetAltitude = selected.getTargetAltitude();
+
 			// These keys are updated each frame so they're checked here
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
 			{
-				selected.setTargetVelocity(
-						selected.getTargetVelocity()
-								.rotate(selected.getMaxTurnRate() * delta));
+				selected.setTargetVelocity(oldTargetVelocity.rotate(selected.getMaxTurnRate() * delta));
 			}
 			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
 			{
 				// Note the rotation angle is NEGATIVE here
-				selected.setTargetVelocity(
-						selected.getTargetVelocity()
-								.rotate(-selected.getMaxTurnRate() * delta));
+				selected.setTargetVelocity(oldTargetVelocity.rotate(-selected.getMaxTurnRate() * delta));
 			}
 
 			if (this.qPressed)
 			{
 				// Slow down by 100mph
-				selected.setTargetVelocity(selected.getTargetVelocity().sub(
-						selected.getTargetVelocity().normalize().multiply(10f)));
+				selected.setTargetVelocity(oldTargetVelocity.changeLength(oldTargetVelocity.getLength() - 10));
 			}
 			else if (this.ePressed)
 			{
 				// Speed up by 100mph
-				selected.setTargetVelocity(selected.getTargetVelocity().add(
-						selected.getTargetVelocity().normalize().multiply(10f)));
+				selected.setTargetVelocity(oldTargetVelocity.changeLength(oldTargetVelocity.getLength() + 10));
 			}
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
 			if (upPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() + LogicConstants.ALTITUDE_JUMP);
+				selected.setTargetAltitude(oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
 			else if (downPressed)
-				selected.setTargetAltitude(selected.getTargetAltitude() - LogicConstants.ALTITUDE_JUMP);
+				selected.setTargetAltitude(oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
 		}
 
 		// Takes off landed airplanes.
