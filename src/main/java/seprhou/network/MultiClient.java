@@ -4,10 +4,15 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import seprhou.logic.*;
+import seprhou.network.message.CMsgSetAltitude;
+import seprhou.network.message.CMsgTakeoff;
+import seprhou.network.message.ClientMessage;
 import seprhou.network.message.ServerMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -85,7 +90,8 @@ public class MultiClient extends NetworkCommon<Client>
 		if (!isConnected())
 			return;
 
-		// TODO Send updates
+		// Update airspace
+		airspace.refresh(delta);
 
 		// Update client
 		updateEndpoint();
@@ -98,7 +104,8 @@ public class MultiClient extends NetworkCommon<Client>
 		if (!isConnected())
 			return;
 
-		// TODO Implement this
+		// Send takeoff request
+		kryoEndpoint.sendTCP(new CMsgTakeoff());
 	}
 
 	@Override
@@ -118,7 +125,8 @@ public class MultiClient extends NetworkCommon<Client>
 		if (!isConnected())
 			return;
 
-		// TODO Implement this
+		// Send altitude request
+		kryoEndpoint.sendTCP(new CMsgSetAltitude(objectIdMap.getId(object), altitude));
 	}
 
 	/** Listener for the server (single threaded) */

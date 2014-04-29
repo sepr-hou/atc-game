@@ -11,6 +11,8 @@ import seprhou.logic.*;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
 import seprhou.network.message.ClientMessage;
+import seprhou.network.message.SMsgGameStart;
+import seprhou.network.message.SMsgVersion;
 
 /**
  * Class which implements the host side of the multiplayer game
@@ -77,6 +79,9 @@ public class MultiServer extends NetworkCommon<Server>
 
 		// TODO send updates
 
+		// Update airspace
+		airspace.refresh(delta);
+
 		// Update server
 		updateEndpoint();
 	}
@@ -121,9 +126,14 @@ public class MultiServer extends NetworkCommon<Server>
 			if (getState() != GameEndpointState.CONNECTING)
 				other.close();
 
+			// Initialize internal state
 			Log.info("[Server] Client " + other.getRemoteAddressTCP() + " has connected");
 			otherEndpoint = other;
 			state = GameEndpointState.CONNECTED;
+
+			// Start game messages
+			otherEndpoint.sendTCP(new SMsgVersion());
+			otherEndpoint.sendTCP(new SMsgGameStart(airspace.getLateralSeparation(), airspace.getVerticalSeparation()));
 		}
 
 		@Override
