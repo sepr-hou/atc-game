@@ -3,6 +3,7 @@ package seprhou.network;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.minlog.Log;
 import seprhou.logic.AirspaceObject;
 import seprhou.logic.AirspaceObjectFactory;
 import seprhou.logic.Rectangle;
@@ -35,6 +36,8 @@ public class MultiClient extends NetworkCommon<Client>
 		// Run connection attempt in new thread (so we don't block the GUI)
 		connectionThread = new ConnectionThread(hostname);
 		connectionThread.start();
+
+		Log.info("[Client] Connecting to " + hostname);
 	}
 
 	@Override
@@ -67,6 +70,8 @@ public class MultiClient extends NetworkCommon<Client>
 				closeWithFail(result);
 				return;
 			}
+
+			Log.info("[Client] Connected (waiting for server to start game)");
 		}
 
 		// Process messages in queue

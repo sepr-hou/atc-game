@@ -36,12 +36,14 @@ public class MultiServer extends NetworkCommon<Server>
 		try
 		{
 			// Update server
-			kryoEndpoint.bind(NetworkCommon.PORT);
+			kryoEndpoint.bind(PORT);
 		}
 		catch (IOException e)
 		{
 			closeWithFail(e);
 		}
+
+		Log.info("[Server] Listening on port " + PORT);
 	}
 
 	@Override

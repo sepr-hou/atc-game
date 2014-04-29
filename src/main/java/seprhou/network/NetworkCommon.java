@@ -64,6 +64,7 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 
 		// Register kryo objects
 		register(kryoEndpoint.getKryo());
+		Log.info("[Endpoint] Endpoint open");
 	}
 
 	@Override
@@ -71,11 +72,13 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 	{
 		kryoEndpoint.close();
 		state = GameEndpointState.CLOSED;
+		Log.info("[Endpoint] Endpoint closed");
 	}
 
 	/** Close connection and set fail exception */
 	protected void closeWithFail(IOException e)
 	{
+		Log.error("[Endpoint] Network exception occurred", e);
 		failException = e;
 		close();
 	}
