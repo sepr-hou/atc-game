@@ -30,7 +30,7 @@ public class ControlPanel extends Group
 		this.parent = parent;
 
 		Image gamelogo = new Image(Assets.GAME_TITLE);
-		gamelogo.setPosition(TITLE_ALIGN, 850);
+		gamelogo.setPosition(TITLE_ALIGN, 840);
 		addActor(gamelogo);
 
 		valueFlightNo = createTitleAndValue(800, "Flight Number");

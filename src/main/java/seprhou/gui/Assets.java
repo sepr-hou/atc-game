@@ -23,7 +23,7 @@ public final class Assets
 	public static final Texture VIOLATED_TEXTURE = loadTextureFromFile("violated.png");
 	public static final Texture GAMEOVER_TEXTURE = loadTextureFromFile("gameoverbackground.png");
 	public static final Texture AIRCRAFT_SELECTED = loadTextureFromFile("airplaneselected.png");
-	public static final Texture GAME_TITLE = loadTextureFromFile("title.gif");
+	public static final Texture GAME_TITLE = loadTextureFromFile("Title.png");
 	public static final Texture AIRCRAFT_SHADOW = loadTextureFromFile("airplaneshadow.png");
 	public static final Texture BLANK;
 
