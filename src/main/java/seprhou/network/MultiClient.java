@@ -4,6 +4,8 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import seprhou.logic.Airspace;
+import seprhou.logic.AirspaceObject;
+import seprhou.logic.Vector2D;
 import seprhou.network.message.ServerMessage;
 
 import java.io.IOException;
@@ -46,16 +48,26 @@ public class MultiClient implements NetworkEndpoint
 	}
 
 	@Override
+	public IOException getFailException()
+	{
+		// TODO Implement this
+		return null;
+	}
+
+	@Override
 	public Airspace getAirspace()
 	{
 		return airspace;
 	}
 
 	@Override
-	public void actBegin() throws IOException
+	public void actBegin()
 	{
+		// TODO Client only: Ensure airspace.isGameOver always returns false unless the server has told us
+
 		// Update client
-		client.update(0);
+		// TODO UNCOMMENT THIS
+		//client.update(0);
 
 		// Handle connection completion
 		if (connectionThread != null && connectionThread.done)
@@ -64,8 +76,11 @@ public class MultiClient implements NetworkEndpoint
 			IOException result = connectionThread.result;
 			connectionThread = null;
 
+			// TODO UNCOMMENT THIS
+			/*
 			if (result != null)
 				throw result;
+			*/
 		}
 
 		// Process messages in queue
@@ -80,7 +95,7 @@ public class MultiClient implements NetworkEndpoint
 	}
 
 	@Override
-	public void actEnd(float delta) throws IOException
+	public void actEnd(float delta)
 	{
 		// Ignore if not connected
 		if (!isConnected())
@@ -89,7 +104,26 @@ public class MultiClient implements NetworkEndpoint
 		// TODO Send updates
 
 		// Update client
-		client.update(0);
+		// TODO UNCOMMENT THIS
+		//client.update(0);
+	}
+
+	@Override
+	public void takeOff()
+	{
+		// TODO Implement this
+	}
+
+	@Override
+	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
+	{
+		// TODO Implement this
+	}
+
+	@Override
+	public void setTargetAltitude(AirspaceObject object, float altitude)
+	{
+		// TODO Implement this
 	}
 
 	@Override

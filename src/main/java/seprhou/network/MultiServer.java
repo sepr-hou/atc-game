@@ -10,6 +10,8 @@ import seprhou.logic.Airspace;
 
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import seprhou.logic.AirspaceObject;
+import seprhou.logic.Vector2D;
 import seprhou.network.message.ClientMessage;
 
 /**
@@ -42,16 +44,24 @@ public class MultiServer implements NetworkEndpoint
 	}
 
 	@Override
+	public IOException getFailException()
+	{
+		// TODO Implement this
+		return null;
+	}
+
+	@Override
 	public Airspace getAirspace()
 	{
 		return airspace;
 	}
 
 	@Override
-	public void actBegin() throws IOException
+	public void actBegin()
 	{
 		// Update server
-		server.update(0);
+		// TODO UNCOMMENT THIS
+		//server.update(0);
 
 		// Process any messages in the queue
 		for (;;)
@@ -65,7 +75,7 @@ public class MultiServer implements NetworkEndpoint
 	}
 
 	@Override
-	public void actEnd(float delta) throws IOException
+	public void actEnd(float delta)
 	{
 		// Ignore if not connected
 		if (!isConnected())
@@ -74,7 +84,26 @@ public class MultiServer implements NetworkEndpoint
 		// TODO send updates
 
 		// Update server
-		server.update(0);
+		// TODO UNCOMMENT THIS
+		//server.update(0);
+	}
+
+	@Override
+	public void takeOff()
+	{
+		// TODO Implement this
+	}
+
+	@Override
+	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
+	{
+		// TODO Implement this
+	}
+
+	@Override
+	public void setTargetAltitude(AirspaceObject object, float altitude)
+	{
+		// TODO Implement this
 	}
 
 	@Override

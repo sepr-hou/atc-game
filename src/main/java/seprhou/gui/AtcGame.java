@@ -3,6 +3,7 @@ package seprhou.gui;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import seprhou.highscores.HighscoresFile;
+import seprhou.network.NetworkEndpoint;
 
 /**
  * The main class of the game
@@ -16,7 +17,7 @@ public class AtcGame extends Game
 {
 	private HighscoresFile globalScores;
 
-	private Screen menuScreen, gameScreen, optionsScreen, scoresScreen, netConfScreen;
+	private Screen menuScreen, optionsScreen, scoresScreen, netConfScreen;
 	private GameOverScreen gameOverScreen;
 
 	@Override
@@ -45,12 +46,14 @@ public class AtcGame extends Game
 		setScreen(menuScreen);
 	}
 
-	/** Show the game screen */
-	public void showGame()
+	/**
+	 * Show the game screen
+	 *
+	 * @param endpoint endpoint to use in the game
+	 */
+	public void showGame(NetworkEndpoint endpoint)
 	{
-		if (gameScreen == null)
-			gameScreen = new GameScreen(this);
-		setScreen(gameScreen);
+		setScreen(new GameScreen(this, endpoint));
 	}
 
 	/** Show the options screen */

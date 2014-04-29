@@ -1,6 +1,8 @@
 package seprhou.network;
 
 import seprhou.logic.Airspace;
+import seprhou.logic.AirspaceObject;
+import seprhou.logic.Vector2D;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -19,6 +21,15 @@ public interface NetworkEndpoint extends Closeable
 	boolean isConnected();
 
 	/**
+	 * Returns the exception which caused the network failiure
+	 *
+	 * <p>Will only return an exception if {@link #isConnected()} is also false.
+	 *
+	 * @return the exception or null if there is none
+	 */
+	IOException getFailException();
+
+	/**
 	 * Returns the airspace controlled by this endpoint
 	 *
 	 * <p>Returns NULL if no game is active (eg connecting, waiting for connection, game ended, etc)
@@ -33,7 +44,7 @@ public interface NetworkEndpoint extends Closeable
 	 * <p>You should call this method once per frame, before acting on anything in the airspace.
 	 * <p>This method will receive + process messages from the other endpoint
 	 */
-	void actBegin() throws IOException;
+	void actBegin();
 
 	/**
 	 * Method called at the end of the global act method
@@ -43,5 +54,32 @@ public interface NetworkEndpoint extends Closeable
 	 *
 	 * @param delta time since last frame (seconds)
 	 */
-	void actEnd(float delta) throws IOException;
+	void actEnd(float delta);
+
+	/**
+	 * Ask one aircraft to take off
+	 *
+	 * <p>The request may not take affect immediately (it may need a network roundtrip)
+	 */
+	void takeOff();
+
+	/**
+	 * Sets the target velocity of an aircraft
+	 *
+	 * <p>The request may not take affect immediately (it may need a network roundtrip)
+	 *
+	 * @param object object to change
+	 * @param velocity new velocity
+	 */
+	void setTargetVelocity(AirspaceObject object, Vector2D velocity);
+
+	/**
+	 * Sets the target altitude of an aircraft
+	 *
+	 * <p>The request may not take affect immediately (it may need a network roundtrip)
+	 *
+	 * @param object object to change
+	 * @param altitude new altitude
+	 */
+	void setTargetAltitude(AirspaceObject object, float altitude);
 }

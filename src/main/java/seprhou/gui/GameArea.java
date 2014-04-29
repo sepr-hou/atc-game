@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import seprhou.logic.*;
+import seprhou.network.NetworkEndpoint;
 
 import java.util.List;
 
@@ -103,9 +104,20 @@ public class GameArea extends Actor
 	@Override
 	public void act(float delta)
 	{
-		Airspace airspace = this.parent.getAirspace();
+		NetworkEndpoint endpoint = parent.getEndpoint();
+		Airspace airspace = endpoint.getAirspace();
 
-		// Switch to GameOver screen if the game is over
+		// Process received network messages
+		endpoint.actBegin();
+
+		// Test for network outage
+		if (!endpoint.isConnected())
+		{
+			// TODO Handle network failure a bit better than this!
+			throw new RuntimeException("Network failiure!", endpoint.getFailException());
+		}
+
+		// Test for game over
 		if (airspace.isGameOver())
 		{
 			parent.getGame().showGameOver(parent.getSecondsSinceStart(), parent.getScore());
@@ -124,10 +136,8 @@ public class GameArea extends Actor
 		}
 
 		// Tab Cycling through aircraft
-		if (this.tabPressed) {
-			this.parent.setSelectedAircraft((Aircraft) airspace
-					.cycleAircraft());
-		}
+		if (this.tabPressed)
+			parent.setSelectedAircraft((Aircraft) airspace.cycleAircraft());
 
 		// Keyboard controls
 		Aircraft selected = parent.getSelectedAircraft();
@@ -139,38 +149,37 @@ public class GameArea extends Actor
 			// These keys are updated each frame so they're checked here
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
 			{
-				selected.setTargetVelocity(oldTargetVelocity.rotate(selected.getMaxTurnRate() * delta));
+				endpoint.setTargetVelocity(selected, oldTargetVelocity.rotate(selected.getMaxTurnRate() * delta));
 			}
 			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
 			{
 				// Note the rotation angle is NEGATIVE here
-				selected.setTargetVelocity(oldTargetVelocity.rotate(-selected.getMaxTurnRate() * delta));
+				endpoint.setTargetVelocity(selected, oldTargetVelocity.rotate(-selected.getMaxTurnRate() * delta));
 			}
 
 			if (this.qPressed)
 			{
 				// Slow down by 100mph
-				selected.setTargetVelocity(oldTargetVelocity.changeLength(oldTargetVelocity.getLength() - 10));
+				endpoint.setTargetVelocity(selected, oldTargetVelocity.changeLength(oldTargetVelocity.getLength() - 10));
 			}
 			else if (this.ePressed)
 			{
 				// Speed up by 100mph
-				selected.setTargetVelocity(oldTargetVelocity.changeLength(oldTargetVelocity.getLength() + 10));
+				endpoint.setTargetVelocity(selected, oldTargetVelocity.changeLength(oldTargetVelocity.getLength() + 10));
 			}
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
 			if (upPressed)
-				selected.setTargetAltitude(oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
+				endpoint.setTargetAltitude(selected, oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
 			else if (downPressed)
-				selected.setTargetAltitude(oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
+				endpoint.setTargetAltitude(selected, oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
 		}
 
 		// Takes off landed airplanes.
 		// Additional check, to make sure, that it is impossible to have more
 		// than MAX_AIRCRAFT planes in the airspace.
-		if (this.spacePressed && airspace.getActiveObjects().size() < LogicConstants.MAX_AIRCRAFT) {
-			airspace.takeOff();
-		}
+		if (this.spacePressed && airspace.getActiveObjects().size() < LogicConstants.MAX_AIRCRAFT)
+			endpoint.takeOff();
 
 		// Clear keypress events
 		upPressed = false;
@@ -180,8 +189,8 @@ public class GameArea extends Actor
 		ePressed = false;
 		tabPressed = false;
 
-		// Refresh airspace
-		airspace.refresh(delta);
+		// Refresh airspace + process sent network messages
+		endpoint.actEnd(delta);
 
 		// Deselect the aircraft if it was culled
 		if (airspace.getCulledObjects().contains(parent.getSelectedAircraft()))

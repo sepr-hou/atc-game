@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import seprhou.logic.*;
+import seprhou.network.NetworkEndpoint;
 
 /**
  * The main game screen
@@ -16,14 +17,17 @@ import seprhou.logic.*;
  */
 public class GameScreen extends AbstractScreen
 {
+	private static final int GAME_AREA_WIDTH = 1400;
+	public static final Rectangle GAME_DIMENSIONS = new Rectangle(GAME_AREA_WIDTH, SCREEN_HEIGHT);
+
 	private final GameArea gameArea;
 	private final ControlPanel controlPanel;
+	private final NetworkEndpoint endpoint;
 
-	private Airspace airspace;
 	private Aircraft selectedAircraft;
 	private float secondsSinceStart;
 
-	public GameScreen(AtcGame game)
+	public GameScreen(AtcGame game, NetworkEndpoint endpoint)
 	{
 		super(game);
 		Stage stage = getStage();
@@ -34,12 +38,12 @@ public class GameScreen extends AbstractScreen
 
 		// Create the game area (where the action takes place)
 		gameArea = new GameArea(this);
-		gameArea.setBounds(0, 0, 1400, SCREEN_HEIGHT);
+		gameArea.setBounds(0, 0, GAME_AREA_WIDTH, SCREEN_HEIGHT);
 		stage.addActor(gameArea);
 
 		// Create the control panel (where info is displayed)
 		controlPanel = new ControlPanel(this);
-		controlPanel.setBounds(1400, 0, 280, SCREEN_HEIGHT);
+		controlPanel.setBounds(GAME_AREA_WIDTH, 0, SCREEN_WIDTH - GAME_AREA_WIDTH, SCREEN_HEIGHT);
 		stage.addActor(controlPanel);
 
 		// Add timer update actor
@@ -54,29 +58,18 @@ public class GameScreen extends AbstractScreen
 				
 		// Give the game area keyboard focus (this is where keyboard events are sent)
 		stage.setKeyboardFocus(gameArea);
+
+		// Set endpoint
+		this.endpoint = endpoint;
 	}
 
-	@Override
-	public void show()
-	{
-		super.show();
-
-		// Create the airspace
-		Rectangle dimensions = new Rectangle(gameArea.getWidth(), gameArea.getHeight());
-
-		airspace = new Airspace(dimensions, ConcreteAircraft.FACTORY);
-		airspace.setLateralSeparation(OptionsScreen.getLateral());
-		airspace.setVerticalSeparation(OptionsScreen.getVertical());
-
-		// Reset information from past games
-		selectedAircraft = null;
-		secondsSinceStart = 0;
-	}
+	/** Returns the network endpoint */
+	public NetworkEndpoint getEndpoint() { return endpoint; }
 
 	/** Returns the airspace object used by the game */
 	public Airspace getAirspace()
 	{
-		return airspace;
+		return endpoint.getAirspace();
 	}
 
 	/**
