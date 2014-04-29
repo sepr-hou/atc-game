@@ -18,6 +18,7 @@ import java.util.List;
 public class HighscoresFile
 {
 	private static final String DEFAULT_FILE = File.separator + ".atc-game-scores";
+	private static final int MAX_SCORES = 10;
 
 	private final String filename;
 	private final Kryo kryo;
@@ -55,9 +56,13 @@ public class HighscoresFile
 		if (entry == null)
 			throw new IllegalArgumentException("entry cannot be null");
 
+		// Add new entry and force order
 		scores.add(entry);
-		Collections.sort(scores);
-		Collections.reverse(scores);
+		Collections.sort(scores, Collections.reverseOrder());
+
+		// Truncate to top 10 scores
+		if (scores.size() > MAX_SCORES)
+			scores = scores.subList(0, MAX_SCORES);
 
 		return writeFile();
 	}
@@ -79,7 +84,7 @@ public class HighscoresFile
 				HighscoreEntry[] entries = kryo.readObject(in, HighscoreEntry[].class);
 
 				// Sort list and save into entries arraylist
-				Arrays.sort(entries);
+				Arrays.sort(entries, Collections.reverseOrder());
 				scores.addAll(Arrays.asList(entries));
 
 				Log.debug("Read highscores file");
