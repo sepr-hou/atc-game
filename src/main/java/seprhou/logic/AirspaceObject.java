@@ -38,17 +38,32 @@ public abstract class AirspaceObject
 	{
 		return position;
 	}
+	
+	/** Allows network to modify an aircraft's position*/
+	public void setPosition(Vector2D position) {
+		this.position = position;
+	}
 
 	/** Returns this aircraft's current velocity */
 	public Vector2D getVelocity()
 	{
 		return velocity;
 	}
+	
+	/** Allows network to modify an aircraft's velocity*/
+	public void setVelocity(Vector2D velocity) {
+		this.velocity = velocity;
+	}
 
 	/** Returns this aircraft's current altitude */
 	public float getAltitude()
 	{
 		return altitude;
+	}
+	
+	/** Allows network to modify an aircraft's altitude*/
+	public void setAltitude(float altitude) {
+		this.altitude = altitude;
 	}
 
 	/** Returns this aircraft's target velocity */

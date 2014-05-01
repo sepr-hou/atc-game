@@ -139,12 +139,12 @@ public class Airspace
 	 * were therefore culled / destroyed.
 	 *
 	 * <p>
-	 * The returned list is unmodifiable and is reused each refresh (so you must
+	 * The returned list is reused each refresh (so you must
 	 * copy it if you want to keep it between refreshes)
 	 */
 	public Collection<AirspaceObject> getCulledObjects()
 	{
-		return Collections.unmodifiableCollection(culledObjects);
+		return culledObjects;
 	}
 
 	/** Returns the number of landed objects */
