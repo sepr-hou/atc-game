@@ -51,8 +51,8 @@ class SMsgAircraftUpdate implements ServerMessage
 				object.setPosition(position);
 				object.setVelocity(velocity);
 				object.setAltitude(altitude);
-				object.setTargetVelocity(targetVelocity);
-				object.setTargetAltitude(targetAltitude);
+				object.setTargetVelocityNoClamping(targetVelocity);
+				object.setTargetAltitudeNoClamping(targetAltitude);
 
 				// TODO turning state
 			}
