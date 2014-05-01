@@ -20,6 +20,7 @@ class SMsgAircraftDestroy implements ServerMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private SMsgAircraftDestroy()
 	{
 	}

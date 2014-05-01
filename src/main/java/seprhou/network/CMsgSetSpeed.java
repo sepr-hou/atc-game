@@ -23,6 +23,7 @@ class CMsgSetSpeed implements ClientMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private CMsgSetSpeed()
 	{
 	}

@@ -24,6 +24,7 @@ public class Vector2D
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private Vector2D()
 	{
 		this(0, 0);

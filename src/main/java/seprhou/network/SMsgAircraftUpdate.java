@@ -28,6 +28,7 @@ class SMsgAircraftUpdate implements ServerMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private SMsgAircraftUpdate()
 	{
 	}

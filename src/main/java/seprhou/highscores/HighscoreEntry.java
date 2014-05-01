@@ -11,6 +11,7 @@ public final class HighscoreEntry implements Comparable<HighscoreEntry>
 	/**
 	 * Private constructor used by kryo when creating instances of this object
 	 */
+	@SuppressWarnings("unused")
 	private HighscoreEntry()
 	{
 		date = 0;

@@ -22,6 +22,7 @@ class SMsgGameStart implements ServerMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private SMsgGameStart()
 	{
 	}

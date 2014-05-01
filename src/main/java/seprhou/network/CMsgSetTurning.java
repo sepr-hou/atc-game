@@ -28,6 +28,7 @@ class CMsgSetTurning implements ClientMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private CMsgSetTurning()
 	{
 	}

@@ -23,6 +23,7 @@ class CMsgSetAltitude implements ClientMessage
 	}
 
 	/** Private constructor for Kryo */
+	@SuppressWarnings("unused")
 	private CMsgSetAltitude()
 	{
 	}
