@@ -18,7 +18,7 @@ public class ConcreteAircraft extends Aircraft
 	private static final float AIRCRAFT_MAX_SPEED = Collections.max(LogicConstants.INITIAL_SPEEDS) + 10;
 	private static final float AIRCRAFT_MIN_ALTITUDE = 5000f;
 	private static final float AIRCRAFT_MAX_ALTITUDE = Collections.max(LogicConstants.INITIAL_ALTITUDES);
-	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.003f;
+	private static final float SHADOW_HEIGHT_MULTIPLIER = 0.001f;
 	private static final float SHADOW_ANGLE = 10.5f;
 	private static final Vector2D SHADOW_DIRECTION = Vector2D.fromPolar(SHADOW_HEIGHT_MULTIPLIER, SHADOW_ANGLE);
 
