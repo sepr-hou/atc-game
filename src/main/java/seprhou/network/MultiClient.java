@@ -69,8 +69,6 @@ public class MultiClient extends NetworkCommon<Client>
 	@Override
 	public void actBegin()
 	{
-		// TODO Client only: Ensure airspace.isGameOver always returns false unless the server has told us
-
 		// Ignore if closed
 		if (getState() == GameEndpointState.CLOSED)
 			return;
@@ -104,6 +102,9 @@ public class MultiClient extends NetworkCommon<Client>
 
 			msg.receivedFromServer(this);
 		}
+
+		// Force game over value
+		airspace.setGameOver(serverGameOver);
 	}
 
 	@Override
