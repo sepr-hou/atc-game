@@ -67,6 +67,7 @@ public class MultiServer extends NetworkCommon<Server>
 		airspace.setLateralSeparation(lateral);
 		airspace.setVerticalSeparation(vertical);
 		previousScore = 0;
+		objectIdMap.clear();
 
 		// Send start message
 		otherEndpoint.sendTCP(new SMsgGameStart(lateral, vertical));

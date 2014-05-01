@@ -59,6 +59,7 @@ public class MultiClient extends NetworkCommon<Client>
 		airspace.setLateralSeparation(lateral);
 		airspace.setVerticalSeparation(vertical);
 		serverGameOver = false;
+		objectIdMap.clear();
 
 		// Mark as connected
 		state = GameEndpointState.CONNECTED;
