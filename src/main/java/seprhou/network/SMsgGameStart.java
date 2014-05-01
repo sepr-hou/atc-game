@@ -30,6 +30,6 @@ class SMsgGameStart implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-
+		client.startGame(lateralSep, verticalSep);
 	}
 }

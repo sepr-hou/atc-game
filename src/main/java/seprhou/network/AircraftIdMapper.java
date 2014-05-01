@@ -70,7 +70,7 @@ class AircraftIdMapper
 	 * Gets the aircraft with the given id
 	 *
 	 * @param id aircraft id
-	 * @return the mapped object
+	 * @return the mapped object or null if it does not exist
 	 */
 	public AirspaceObject getObject(int id)
 	{

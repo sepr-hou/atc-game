@@ -39,6 +39,12 @@ public class ConcreteAircraft extends Aircraft
 			// Random flight number between YO000 and YO999
 			String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
 
+			return makeObject(airspace, flightPlan, flightNumber);
+		}
+
+		@Override
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
+		{
 			return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
 		}
 	}

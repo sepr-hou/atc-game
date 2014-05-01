@@ -125,6 +125,10 @@ public class GameArea extends Actor
 			return;
 		}
 
+		// Deselect the aircraft if it was culled
+		if (airspace.getCulledObjects().contains(parent.getSelectedAircraft()))
+			parent.setSelectedAircraft(null);
+
 		// Selecting new aircraft
 		if (clickPosition != null)
 		{
@@ -192,10 +196,6 @@ public class GameArea extends Actor
 
 		// Refresh airspace + process sent network messages
 		endpoint.actEnd(delta);
-
-		// Deselect the aircraft if it was culled
-		if (airspace.getCulledObjects().contains(parent.getSelectedAircraft()))
-			parent.setSelectedAircraft(null);
 	}
 
 	@Override

@@ -13,6 +13,9 @@ class CMsgTakeoff implements ClientMessage
 	@Override
 	public void receivedFromClient(MultiServer server)
 	{
-
+		if (server.isConnected())
+		{
+			server.getAirspace().takeOff();
+		}
 	}
 }

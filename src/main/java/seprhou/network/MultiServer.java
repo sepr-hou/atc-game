@@ -104,7 +104,19 @@ public class MultiServer extends NetworkCommon<Server>
 		// Update airspace
 		airspace.refresh(delta);
 
-		// TODO Handle game ending
+		// Update score
+		if (airspace.getScore() != previousScore)
+		{
+			previousScore = airspace.getScore();
+			otherEndpoint.sendTCP(new SMsgScoreUpdate(previousScore));
+		}
+
+		// Handle game over
+		if (airspace.isGameOver())
+		{
+			otherEndpoint.sendTCP(new SMsgGameEnd());
+			// TODO What now?
+		}
 
 		// Send create and update messages
 		for (AirspaceObject object : airspace.getActiveObjects())
@@ -148,13 +160,6 @@ public class MultiServer extends NetworkCommon<Server>
 
 		// Reset new aircraft list
 		newAircraft.clear();
-
-		// Update score
-		if (airspace.getScore() != previousScore)
-		{
-			previousScore = airspace.getScore();
-			otherEndpoint.sendTCP(new SMsgScoreUpdate(previousScore));
-		}
 
 		// Update server
 		updateEndpoint();
@@ -209,6 +214,12 @@ public class MultiServer extends NetworkCommon<Server>
 				newAircraft.add(object);
 
 			return object;
+		}
+
+		@Override
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
+		{
+			return null;
 		}
 	}
 

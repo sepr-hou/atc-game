@@ -24,4 +24,17 @@ public interface AirspaceObjectFactory
 	 * @return the new object or {@code null} to create no object
 	 */
 	public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan);
+
+	/**
+	 * Creates a new airspace object with a flight number
+	 *
+	 * <p>This is an optional method which should create th object with a specific flight number as well
+	 *
+	 * @param airspace the airspace the object will be created in
+	 * @param flightPlan flight plan to generate aircraft with
+	 * @param flightNumber the flight number of the aircraft
+	 * @return the new object or {@code null} to create no object
+	 * @see #makeObject(Airspace, FlightPlan)
+	 */
+	public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber);
 }

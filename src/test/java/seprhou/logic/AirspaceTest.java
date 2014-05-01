@@ -310,5 +310,11 @@ public class AirspaceTest
 		{
 			return new AirspaceObjectMock();
 		}
+
+		@Override
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
+		{
+			return null;
+		}
 	}
 }

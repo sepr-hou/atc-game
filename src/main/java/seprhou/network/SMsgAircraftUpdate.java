@@ -1,6 +1,8 @@
 package seprhou.network;
 
+import com.esotericsoftware.kryo.NotNull;
 import seprhou.logic.Aircraft;
+import seprhou.logic.AirspaceObject;
 import seprhou.logic.Vector2D;
 
 /**
@@ -12,9 +14,12 @@ class SMsgAircraftUpdate implements ServerMessage
 {
 	private int aircraftId;
 
-	private Vector2D position, velocity, targetVelocity;
+	@NotNull private Vector2D position;
+	@NotNull private Vector2D velocity;
+	@NotNull private Vector2D targetVelocity;
 	private float altitude, targetAltitude;
-	private TurningState turningState;
+
+	@NotNull private TurningState turningState;
 
 	public SMsgAircraftUpdate(int aircraftId, Aircraft aircraft, TurningState turningState)
 	{
@@ -36,6 +41,21 @@ class SMsgAircraftUpdate implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
+		if (client.isConnected())
+		{
+			AirspaceObject object = client.objectIdMap.getObject(aircraftId);
 
+			if (object != null)
+			{
+				// Update all values
+				object.setPosition(position);
+				object.setVelocity(velocity);
+				object.setAltitude(altitude);
+				object.setTargetVelocity(targetVelocity);
+				object.setTargetAltitude(targetAltitude);
+
+				// TODO turning state
+			}
+		}
 	}
 }

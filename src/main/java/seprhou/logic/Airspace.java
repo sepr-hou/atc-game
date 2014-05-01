@@ -243,6 +243,12 @@ public class Airspace
 		return gameOver;
 	}
 
+	/** Force the game over flag */
+	public void setGameOver(boolean value)
+	{
+		gameOver = value;
+	}
+
 	/**
 	 * Requests that a plane takes off
 	 *

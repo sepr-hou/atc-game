@@ -28,6 +28,9 @@ class SMsgScoreUpdate implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-
+		if (client.isConnected())
+		{
+			client.getAirspace().setScore(score);
+		}
 	}
 }

@@ -18,9 +18,10 @@ public class MultiClient extends NetworkCommon<Client>
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
 
 	private final Rectangle dimensions;
-	private final AirspaceObjectFactory factory;
+	final AirspaceObjectFactory factory;
 
 	private ConnectionThread connectionThread;
+	boolean serverGameOver;		// Server's perspective on if the game is over or not
 
 	/**
 	 * Creates a new client and opens the connection
@@ -46,7 +47,7 @@ public class MultiClient extends NetworkCommon<Client>
 	}
 
 	/** Start the game */
-	private void startGame(float lateral, float vertical)
+	void startGame(float lateral, float vertical)
 	{
 		// Must not be closed + must have a connection
 		if (getState() == GameEndpointState.CLOSED || !kryoEndpoint.isConnected())
@@ -57,6 +58,7 @@ public class MultiClient extends NetworkCommon<Client>
 		airspace = new Airspace(dimensions, null);
 		airspace.setLateralSeparation(lateral);
 		airspace.setVerticalSeparation(vertical);
+		serverGameOver = false;
 
 		// Mark as connected
 		state = GameEndpointState.CONNECTED;

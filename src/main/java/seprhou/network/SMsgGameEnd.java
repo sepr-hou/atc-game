@@ -7,30 +7,15 @@ package seprhou.network;
  */
 class SMsgGameEnd implements ServerMessage
 {
-	private float finalTime;
-	private int finalScore;
-
-	/**
-	 * Create a new game end message
-	 *
-	 * @param time final game time (seconds)
-	 * @param score final game score
-	 */
-	public SMsgGameEnd(float time, int score)
-	{
-		this.finalTime = time;
-		this.finalScore = score;
-	}
-
-	/** Private constructor for Kryo */
-	@SuppressWarnings("unused")
-	private SMsgGameEnd()
+	/** Create a new game end message */
+	public SMsgGameEnd()
 	{
 	}
 
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-
+		if (client.isConnected())
+			client.serverGameOver = true;
 	}
 }

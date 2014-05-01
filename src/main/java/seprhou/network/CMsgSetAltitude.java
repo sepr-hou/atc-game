@@ -1,5 +1,7 @@
 package seprhou.network;
 
+import seprhou.logic.AirspaceObject;
+
 /**
  * Ask the server to set the altitude of an aircraft
  *
@@ -31,6 +33,12 @@ class CMsgSetAltitude implements ClientMessage
 	@Override
 	public void receivedFromClient(MultiServer server)
 	{
+		if (server.isConnected())
+		{
+			AirspaceObject object = server.objectIdMap.getObject(aircraftId);
 
+			if (object != null)
+				object.setTargetAltitude(newTarget);
+		}
 	}
 }

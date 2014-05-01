@@ -1,5 +1,8 @@
 package seprhou.network;
 
+import seprhou.logic.Airspace;
+import seprhou.logic.AirspaceObject;
+
 /**
  * Aircraft destroyed message
  *
@@ -28,6 +31,18 @@ class SMsgAircraftDestroy implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
+		if (client.isConnected())
+		{
+			AirspaceObject object = client.objectIdMap.getObject(id);
+			if (object != null)
+			{
+				// TODO landed planes handling??
+				// Move object to culled list
+				Airspace airspace = client.getAirspace();
 
+				airspace.getActiveObjects().remove(object);
+				airspace.getCulledObjects().add(object);
+			}
+		}
 	}
 }
