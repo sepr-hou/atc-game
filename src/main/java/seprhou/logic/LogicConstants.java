@@ -81,7 +81,7 @@ public final class LogicConstants
 	public static final int MAX_WAYPOINTS = 4;
 	
 	/** Chance of having to land (1 in x chance) */
-	public static final int LANDING_CHANCE = 3;
+	public static final int LANDING_CHANCE = 6;
 
 	// #################
 	// ConcreteAircraft options (some other options are derived from the above options)

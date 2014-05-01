@@ -103,7 +103,7 @@ public class FlightPlanGenerator
 		Vector2D landingPoint = null;
 		Vector2D exitPoint;
 		boolean landing;
-		if (Utils.getRandom().nextInt(LANDING_CHANCE) != 1 && canLand && !isOnRunway) {
+		if (Utils.getRandom().nextInt(LANDING_CHANCE) == 1 && canLand && !isOnRunway) {
 			Runway landingStrip = Utils.randomItem(RUNWAYS);
 			landingPoint = landingStrip.getEnd();
 			exitPoint = landingStrip.getStart();
