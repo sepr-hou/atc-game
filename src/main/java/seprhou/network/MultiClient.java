@@ -4,10 +4,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import seprhou.logic.AirspaceObject;
-import seprhou.logic.AirspaceObjectFactory;
-import seprhou.logic.Rectangle;
-import seprhou.logic.Vector2D;
+import seprhou.logic.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,6 +16,10 @@ import java.util.Queue;
 public class MultiClient extends NetworkCommon<Client>
 {
 	private final Queue<ServerMessage> messageQueue = new LinkedList<>();
+
+	private final Rectangle dimensions;
+	private final AirspaceObjectFactory factory;
+
 	private ConnectionThread connectionThread;
 
 	/**
@@ -30,14 +31,36 @@ public class MultiClient extends NetworkCommon<Client>
 	 */
 	public MultiClient(String hostname, Rectangle dimensions, AirspaceObjectFactory factory)
 	{
-		super(new Client(), dimensions, factory);
+		super(new Client());
 		kryoEndpoint.addListener(new MyListener());
+
+		// Store airspace properties for later
+		this.dimensions = dimensions;
+		this.factory = factory;
 
 		// Run connection attempt in new thread (so we don't block the GUI)
 		connectionThread = new ConnectionThread(hostname);
 		connectionThread.start();
 
 		Log.info("[Client] Connecting to " + hostname);
+	}
+
+	/** Start the game */
+	private void startGame(float lateral, float vertical)
+	{
+		// Must not be closed + must have a connection
+		if (getState() == GameEndpointState.CLOSED || !kryoEndpoint.isConnected())
+			return;
+
+		// Initialize airspace
+		//  Use null factory to prevent aircraft being created
+		airspace = new Airspace(dimensions, null);
+		airspace.setLateralSeparation(lateral);
+		airspace.setVerticalSeparation(vertical);
+
+		// Mark as connected
+		state = GameEndpointState.CONNECTED;
+		Log.info("[Client] Game started");
 	}
 
 	@Override

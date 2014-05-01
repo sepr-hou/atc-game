@@ -37,8 +37,6 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 	protected static final int CONNECT_TIMEOUT = 5000;
 
 	protected final TEndPoint kryoEndpoint;
-	protected final Rectangle dimensions;
-	protected final AirspaceObjectFactory userFactory;
 	protected final AircraftIdMapper objectIdMap = new AircraftIdMapper();
 
 	protected GameEndpointState state = GameEndpointState.CONNECTING;
@@ -49,15 +47,11 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 	 * Initializes a common network endpoint
 	 *
 	 * @param kryoEndpoint the kryo endpoint object to use
-	 * @param dimensions the dimensions of the airspace
-	 * @param factory the factory class used to create aircraft
 	 */
-	protected NetworkCommon(TEndPoint kryoEndpoint, Rectangle dimensions, AirspaceObjectFactory factory)
+	protected NetworkCommon(TEndPoint kryoEndpoint)
 	{
-		// Setup final fields
+		// Store endpoint and airspace
 		this.kryoEndpoint = kryoEndpoint;
-		this.dimensions = dimensions;
-		this.userFactory = factory;
 
 		// Set log level
 		Log.set(Log.LEVEL_DEBUG);
