@@ -63,10 +63,11 @@ public class FlightPlanGenerator
 	 * it is not even possible to generate a path without impossible to avoid collisions.
 	 *
 	 * @param airspace the airspace the aircraft will be created in
-	 * @param canLand if true, the aircraft is permitted to land (but it might not)
+	 * @param canLand if true, the aircraft is permitted to land 
 	 * @param isOnRunway if true, the aircraft starts on the runway (taking off)
 	 * @return the new flight plan or null if no aircraft should be created now
 	 * @see #makeFlightPlan(Airspace, float)
+	 * @see LogicConstants#LANDING_CHANCE 
 	 */
 	public FlightPlan makeFlightPlanNow(Airspace airspace, boolean canLand, boolean isOnRunway)
 	{
