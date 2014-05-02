@@ -141,7 +141,10 @@ public class MultiServer extends NetworkCommon<Server>
 		if (airspace.isGameOver())
 		{
 			otherEndpoint.sendTCP(new SMsgGameEnd());
-			// TODO What now?
+
+			// Update endpoint before returning so any packets are sent
+			updateEndpoint();
+			return;
 		}
 
 		// Send create and update messages
