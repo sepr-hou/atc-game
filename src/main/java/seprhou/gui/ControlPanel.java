@@ -18,7 +18,7 @@ public class ControlPanel extends Group
 	private final GameScreen parent;
 
 	private final Label valueFlightNo, valueAltitude, valueBearing, valueAirspeed,
-			valueXPosition, valueYPosition, valueCrew, valueWeight, valueScore;
+			valueXPosition, valueYPosition, valueCrew, valueWeight, timerLabel, valueScore;
 
 	/**
 	 * Creates a new ControlPanel
@@ -44,6 +44,9 @@ public class ControlPanel extends Group
 
 		valueCrew = createTitleAndValue(380, "Crew");
 		valueWeight = createTitleAndValue(300, "Weight");
+
+		timerLabel = createValueLabel(160);
+		timerLabel.setFontScale(2);
 
 		valueScore = createTitleAndValue(100, "Score");
 		valueScore.setFontScale(2);
@@ -107,6 +110,9 @@ public class ControlPanel extends Group
 			valueCrew.setText("");
 			valueWeight.setText("");
 		}
+
+		// Update timer
+		timerLabel.setText(Utils.formatTime(parent.getSecondsSinceStart()));
 
 		// Update score
 		valueScore.setText(Integer.toString(parent.getScore()));
