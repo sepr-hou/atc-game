@@ -36,7 +36,6 @@ class SMsgAircraftDestroy implements ServerMessage
 			AirspaceObject object = client.objectIdMap.getObject(id);
 			if (object != null)
 			{
-				// TODO landed planes handling??
 				// Move object to culled list
 				Airspace airspace = client.getAirspace();
 
