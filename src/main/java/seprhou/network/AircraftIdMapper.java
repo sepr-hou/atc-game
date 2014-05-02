@@ -1,5 +1,8 @@
 package seprhou.network;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import seprhou.logic.AirspaceObject;
 
 /**
@@ -9,6 +12,10 @@ import seprhou.logic.AirspaceObject;
  */
 class AircraftIdMapper
 {
+	private final Map <Integer, AirspaceObject> idToObject = new HashMap<>();
+	private final Map <AirspaceObject, Integer> objectToId = new HashMap<>();
+	
+	private int counter = 0; 
 	/**
 	 * Creates a new id to aircraft mapping
 	 *
@@ -17,7 +24,8 @@ class AircraftIdMapper
 	 */
 	public void create(int id, AirspaceObject aircraft)
 	{
-		// TODO Implement this
+		idToObject.put(id, aircraft);
+		objectToId.put(aircraft, id);
 	}
 
 	/**
@@ -30,8 +38,9 @@ class AircraftIdMapper
 	 */
 	public int createWithNewId(AirspaceObject aircraft)
 	{
-		// TODO Implement this
-		return 0;
+		counter += 1;
+		create(counter, aircraft);
+		return counter;
 	}
 
 	/**
@@ -41,7 +50,8 @@ class AircraftIdMapper
 	 */
 	public void destroy(int id)
 	{
-		// TODO Implement this
+		objectToId.remove(idToObject.get(id));
+		idToObject.remove(id);
 	}
 
 	/**
@@ -51,7 +61,8 @@ class AircraftIdMapper
 	 */
 	public void clear()
 	{
-		// TODO Implement this
+		objectToId.clear();
+		idToObject.clear();
 	}
 
 	/**
@@ -62,8 +73,7 @@ class AircraftIdMapper
 	 */
 	public int getId(AirspaceObject object)
 	{
-		// TODO Implement this
-		return 0;
+		return objectToId.get(object);
 	}
 
 	/**
@@ -74,7 +84,6 @@ class AircraftIdMapper
 	 */
 	public AirspaceObject getObject(int id)
 	{
-		// TODO Implement this
-		return null;
+		return idToObject.get(id);
 	}
 }
