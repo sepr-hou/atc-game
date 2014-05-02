@@ -103,9 +103,14 @@ public class MultiClient extends NetworkCommon<Client>
 			msg.receivedFromServer(this);
 		}
 
-		// Force game over value
-		if (isConnected()){
-		airspace.setGameOver(serverGameOver);
+		if (isConnected())
+		{
+			// Force game over
+			airspace.setGameOver(serverGameOver);
+
+			// Force landing planes to 0
+			//  Disables landing planes limit in Aircraft.refresh (controlled by server)
+			airspace.setLandingPlanes(0);
 		}
 	}
 

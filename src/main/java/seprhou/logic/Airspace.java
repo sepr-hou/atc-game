@@ -154,6 +154,16 @@ public class Airspace
 	}
 
 	/**
+	 * Forces the number of landed objects
+	 *
+	 * @param landed number of landed objects
+	 */
+	public void setLandedObjects(int landed)
+	{
+		this.landedObjects = landed;
+	}
+
+	/**
 	 * Returns the list of active aircraft
 	 *
 	 * <p>These objects are sorted by altitude (small altitudes first)

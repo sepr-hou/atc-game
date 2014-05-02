@@ -22,7 +22,7 @@ public class MultiServer extends NetworkCommon<Server>
 	private final float lateral, vertical;
 
 	private Connection otherEndpoint;
-	private int previousScore;
+	private int previousScore, previousLanded;
 
 	/**
 	 * Creates and starts the server
@@ -67,6 +67,7 @@ public class MultiServer extends NetworkCommon<Server>
 		airspace.setLateralSeparation(lateral);
 		airspace.setVerticalSeparation(vertical);
 		previousScore = 0;
+		previousLanded = 0;
 		objectIdMap.clear();
 
 		// Send start message
@@ -110,6 +111,13 @@ public class MultiServer extends NetworkCommon<Server>
 		{
 			previousScore = airspace.getScore();
 			otherEndpoint.sendTCP(new SMsgScoreUpdate(previousScore));
+		}
+
+		// Update landed objects
+		if (airspace.getLandedObjects() != previousLanded)
+		{
+			previousLanded = airspace.getLandedObjects();
+			otherEndpoint.sendTCP(new SMsgScoreUpdate(previousLanded));
 		}
 
 		// Handle game over
