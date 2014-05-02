@@ -7,18 +7,18 @@ package seprhou.network;
  */
 class SMsgGameStart implements ServerMessage
 {
-	private float verticalSep, lateralSep;
+	private float lateral, vertical;
 
 	/**
 	 * Create a new game start message
 	 *
-	 * @param verticalSep vertical separation distance (passed to new airspace)
-	 * @param lateralSep lateral separation distance (passed to new airspace)
+	 * @param lateral lateral separation distance (passed to new airspace)
+	 * @param vertical vertical separation distance (passed to new airspace)
 	 */
-	public SMsgGameStart(float verticalSep, float lateralSep)
+	public SMsgGameStart(float lateral, float vertical)
 	{
-		this.verticalSep = verticalSep;
-		this.lateralSep = lateralSep;
+		this.lateral = lateral;
+		this.vertical = vertical;
 	}
 
 	/** Private constructor for Kryo */
@@ -30,6 +30,6 @@ class SMsgGameStart implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-		client.startGame(lateralSep, verticalSep);
+		client.startGame(lateral, vertical);
 	}
 }
