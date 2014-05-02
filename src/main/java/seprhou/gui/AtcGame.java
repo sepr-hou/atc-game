@@ -93,4 +93,8 @@ public class AtcGame extends Game
 		gameOverScreen.setTimerValue(time, score);
 		setScreen(this.gameOverScreen);
 	}
+	
+	public void showConnectingScreen(String textforlabel, GameEndpoint endpoint){
+		setScreen(new ConnectingScreen(this, textforlabel, endpoint));
+	}
 }
