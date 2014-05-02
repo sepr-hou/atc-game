@@ -54,7 +54,7 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 		this.kryoEndpoint = kryoEndpoint;
 
 		// Set log level
-		Log.set(Log.LEVEL_DEBUG);
+		Log.set(Log.LEVEL_INFO);
 
 		// Register kryo objects
 		register(kryoEndpoint.getKryo());
