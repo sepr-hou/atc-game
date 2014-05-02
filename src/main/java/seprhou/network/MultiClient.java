@@ -104,7 +104,9 @@ public class MultiClient extends NetworkCommon<Client>
 		}
 
 		// Force game over value
+		if (isConnected()){
 		airspace.setGameOver(serverGameOver);
+		}
 	}
 
 	@Override
