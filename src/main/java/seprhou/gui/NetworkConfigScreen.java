@@ -26,37 +26,10 @@ public class NetworkConfigScreen extends AbstractScreen
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
-				// FIXME do this without a busy loop
-				//  - possibly use a new screen?
-				// FIXME handle connection errors
-
 				GameEndpoint endpoint = new MultiClient(hostnameField.getText(),
 						GameScreen.GAME_DIMENSIONS, ConcreteAircraft.FACTORY);
 
-				// Wait until not connecting
-				while (endpoint.getState() == GameEndpointState.CONNECTING)
-				{
-					endpoint.actBegin();
-
-					try
-					{
-						Thread.sleep(100);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-
-				// Enter game
-				if (endpoint.getState() == GameEndpointState.CONNECTED)
-				{
-					getGame().showGame(endpoint);
-				}
-				else
-				{
-					endpoint.close();
-				}
+				getGame().showConnectingScreen("Connecting...", endpoint);
 			}
 		});
 		
@@ -66,40 +39,13 @@ public class NetworkConfigScreen extends AbstractScreen
 			@Override
 			public void clicked(InputEvent event, float x, float y)
 			{
-				// FIXME do this without a busy loop
-				//  - possibly use a new screen?
-				// FIXME handle connection errors
-
 				GameEndpoint endpoint = new MultiServer(
 						GameScreen.GAME_DIMENSIONS,
 						ConcreteAircraft.FACTORY,
 						OptionsScreen.getLateral(),
 						OptionsScreen.getVertical());
 
-				// Wait until not connecting
-				while (endpoint.getState() == GameEndpointState.CONNECTING)
-				{
-					endpoint.actBegin();
-
-					try
-					{
-						Thread.sleep(100);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-
-				// Enter game
-				if (endpoint.getState() == GameEndpointState.CONNECTED)
-				{
-					getGame().showGame(endpoint);
-				}
-				else
-				{
-					endpoint.close();
-				}
+				getGame().showConnectingScreen("Waiting for someone to connect...", endpoint);
 			}
 		});
 		
