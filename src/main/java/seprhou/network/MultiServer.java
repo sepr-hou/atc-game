@@ -136,8 +136,7 @@ public class MultiServer extends NetworkCommon<Server>
 				else
 				{
 					// Create update message
-					// TODO set correct turning state
-					msg = new SMsgAircraftUpdate(objectIdMap.getId(aircraft), aircraft, TurningState.NOT_TURNING);
+					msg = new SMsgAircraftUpdate(objectIdMap.getId(aircraft), aircraft);
 				}
 
 				otherEndpoint.sendTCP(msg);

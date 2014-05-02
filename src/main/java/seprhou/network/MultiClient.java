@@ -139,7 +139,8 @@ public class MultiClient extends NetworkCommon<Client>
 		if (!isConnected())
 			return;
 
-		// TODO Implement this
+		// Send velocity request
+		kryoEndpoint.sendTCP(new CMsgSetVelocity(objectIdMap.getId(object), velocity));
 	}
 
 	@Override

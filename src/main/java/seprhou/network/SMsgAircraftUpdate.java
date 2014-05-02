@@ -19,9 +19,7 @@ class SMsgAircraftUpdate implements ServerMessage
 	@NotNull private Vector2D targetVelocity;
 	private float altitude, targetAltitude;
 
-	@NotNull private TurningState turningState;
-
-	public SMsgAircraftUpdate(int aircraftId, Aircraft aircraft, TurningState turningState)
+	public SMsgAircraftUpdate(int aircraftId, Aircraft aircraft)
 	{
 		this.aircraftId = aircraftId;
 		this.position = aircraft.getPosition();
@@ -29,7 +27,6 @@ class SMsgAircraftUpdate implements ServerMessage
 		this.targetVelocity = aircraft.getTargetVelocity();
 		this.altitude = aircraft.getAltitude();
 		this.targetAltitude = aircraft.getTargetAltitude();
-		this.turningState = turningState;
 	}
 
 	/** Private constructor for Kryo */
@@ -53,8 +50,6 @@ class SMsgAircraftUpdate implements ServerMessage
 				object.setAltitude(altitude);
 				object.setTargetVelocityNoClamping(targetVelocity);
 				object.setTargetAltitudeNoClamping(targetAltitude);
-
-				// TODO turning state
 			}
 		}
 	}

@@ -130,8 +130,7 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 
 		// Register all message classes
 		kryo.register(CMsgSetAltitude.class);
-		kryo.register(CMsgSetSpeed.class);
-		kryo.register(CMsgSetTurning.class);
+		kryo.register(CMsgSetVelocity.class);
 
 		kryo.register(SMsgAircraftCreate.class);
 		kryo.register(SMsgAircraftDestroy.class);
@@ -142,7 +141,6 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 		kryo.register(SMsgVersion.class);
 
 		// Register extra classes (used by messages)
-		kryo.register(TurningState.class);
 		kryo.register(FlightPlan.class, new FlightPlanSerializer());
 		kryo.register(Vector2D.class);
 		kryo.register(Vector2D[].class);
