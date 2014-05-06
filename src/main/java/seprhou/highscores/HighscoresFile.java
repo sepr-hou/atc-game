@@ -78,7 +78,6 @@ public class HighscoresFile
 	{
 		// Wipe existing scores
 		scores.clear();
-		Log.set(Log.LEVEL_DEBUG);
 		try
 		{
 			try (Input in = new Input(new FileInputStream(filename)))
