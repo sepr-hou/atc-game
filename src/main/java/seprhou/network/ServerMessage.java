@@ -3,7 +3,7 @@ package seprhou.network;
 /**
  * Interface for messages which are sent by the server and received by the client
  */
-public interface ServerMessage
+interface ServerMessage
 {
 	/**
 	 * This message was received from the server
