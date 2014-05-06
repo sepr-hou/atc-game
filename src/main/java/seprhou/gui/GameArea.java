@@ -102,9 +102,12 @@ public class GameArea extends Actor
 			throw new RuntimeException("Network failiure!", endpoint.getFailException());
 		}
 
+		// Get currently selected aircraft
+		Aircraft selected = parent.getSelectedAircraft();
+
 		// Deselect the aircraft if it was culled
-		if (airspace.getCulledObjects().contains(parent.getSelectedAircraft()))
-			parent.setSelectedAircraft(null);
+		if (airspace.getCulledObjects().contains(selected))
+			selected = null;
 
 		// Selecting new aircraft
 		if (clickPosition != null)
@@ -113,21 +116,24 @@ public class GameArea extends Actor
 				System.out.println(this.clickPosition);
 
 			// Mouse click registered - update selected aircraft (if it's the right colour)
-			parent.setSelectedAircraft(null);
+			selected = null;
 
 			Aircraft aircraft = (Aircraft) airspace.findAircraft(clickPosition);
 			if (aircraft != null && aircraft.getColour() == endpoint.getMyColour())
-				parent.setSelectedAircraft(aircraft);
+				selected = aircraft;
 
 			clickPosition = null;
 		}
 
 		// Tab Cycling through aircraft
 		if (buttonsPressed.get(Input.Keys.TAB))
-			parent.setSelectedAircraft((Aircraft) airspace.cycleAircraft());
+			selected = (Aircraft) airspace.cycleAircraft();
+
+		// Deselect aircraft if we don't control it
+		if (selected != null && selected.getColour() != endpoint.getMyColour())
+			selected = null;
 
 		// Keyboard controls
-		Aircraft selected = parent.getSelectedAircraft();
 		if (selected != null && selected.isActive())
 		{
 			Vector2D oldTargetVelocity = selected.getTargetVelocity();
@@ -164,6 +170,9 @@ public class GameArea extends Actor
 			if (buttonsPressed.get(Input.Keys.H))
 				endpoint.handover(selected);
 		}
+
+		// Save selected aircraft
+		parent.setSelectedAircraft(selected);
 
 		// Takes off landed airplanes.
 		// Additional check, to make sure, that it is impossible to have more
