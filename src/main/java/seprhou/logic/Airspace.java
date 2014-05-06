@@ -288,7 +288,11 @@ public class Airspace
 	{
 		if (objectFactory != null && flightPlan != null)
 		{
-			AirspaceObject newObject = objectFactory.makeObject(this, flightPlan);
+			// Generate random flight number
+			String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
+
+			// Try to create aircraft
+			AirspaceObject newObject = objectFactory.makeObject(this, flightPlan, flightNumber, AircraftColour.WHITE);
 			if (newObject != null)
 			{
 				activeObjects.add(newObject);

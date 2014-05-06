@@ -23,7 +23,7 @@ public class ConcreteAircraft extends Aircraft
 	private static final Vector2D SHADOW_DIRECTION = Vector2D.fromPolar(SHADOW_HEIGHT_MULTIPLIER, SHADOW_ANGLE);
 
 	/** Creates a new concrete aircraft */
-	private ConcreteAircraft(String name, float weight, int crew, int colour, FlightPlan flightPlan, Airspace airspace)
+	private ConcreteAircraft(String name, float weight, int crew, AircraftColour colour, FlightPlan flightPlan, Airspace airspace)
 	{
 		super(name, weight, crew, colour, flightPlan, 1000, airspace);
 	}
@@ -34,17 +34,7 @@ public class ConcreteAircraft extends Aircraft
 	private static class FactoryClass implements AirspaceObjectFactory
 	{
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
-		{
-			// Random flight number between YO000 and YO999
-			String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
-			int colour = Utils.getRandom().nextInt(2);
-
-			return makeObject(airspace, flightPlan, flightNumber, colour);
-		}
-
-		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, int colour)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, AircraftColour colour)
 		{
 			return new ConcreteAircraft(flightNumber, 100, 5, colour, flightPlan, airspace);
 		}
@@ -79,13 +69,19 @@ public class ConcreteAircraft extends Aircraft
 		}
 		else
 		{
-			if (colour == 1)
+			switch (getColour())
 			{
-				aircraftTexture = Assets.AIRCRAFT_TEXTURE_RED;
-			}
-			else
-			{
-				aircraftTexture = Assets.AIRCRAFT_TEXTURE_BLUE;	
+				case WHITE:
+					aircraftTexture = Assets.AIRCRAFT_TEXTURE;
+					break;
+				case BLUE:
+					aircraftTexture = Assets.AIRCRAFT_TEXTURE_BLUE;
+					break;
+				case RED:
+					aircraftTexture = Assets.AIRCRAFT_TEXTURE_RED;
+					break;
+				default:
+					throw new AssertionError("impossible colour");
 			}
 		}
 
