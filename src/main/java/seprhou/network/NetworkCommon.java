@@ -129,14 +129,17 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 		kryo.setAutoReset(true);
 
 		// Register all message classes
+		kryo.register(CMsgHandover.class);
 		kryo.register(CMsgSetAltitude.class);
 		kryo.register(CMsgSetVelocity.class);
+		kryo.register(CMsgTakeoff.class);
 
 		kryo.register(SMsgAircraftCreate.class);
 		kryo.register(SMsgAircraftDestroy.class);
 		kryo.register(SMsgAircraftUpdate.class);
 		kryo.register(SMsgGameEnd.class);
 		kryo.register(SMsgGameStart.class);
+		kryo.register(SMsgLandedUpdate.class);
 		kryo.register(SMsgScoreUpdate.class);
 		kryo.register(SMsgVersion.class);
 
