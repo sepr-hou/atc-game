@@ -4,11 +4,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
- * Class used by the main and options menu to help the layout of buttons
+ * Class used by the main, connecting, highscores and options screens to help the layout of buttons
  */
 public class ButtonLayoutHelper
 {
@@ -34,6 +33,13 @@ public class ButtonLayoutHelper
 	{
 		this.stage = stage;
 		this.buttonSpacing = spacing;
+	}
+	
+	public ButtonLayoutHelper(Stage stage, float spacing, float ypos)
+	{
+		this.stage = stage;
+		this.buttonSpacing = spacing;
+		this.nextYPos = ypos;
 	}
 
 	/**

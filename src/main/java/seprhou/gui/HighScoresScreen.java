@@ -1,9 +1,12 @@
 package seprhou.gui;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
 import seprhou.highscores.HighscoreEntry;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +38,16 @@ public class HighScoresScreen extends AbstractScreen {
 		scoresTable = new Table(Assets.SKIN);
 		scoresTable.setBounds((SCREEN_WIDTH - TABLE_WIDTH) / 2, SCREEN_HEIGHT/5, TABLE_WIDTH, 500);
 		stage.addActor(scoresTable);
+		
+		ButtonLayoutHelper layout = new ButtonLayoutHelper(getStage(), 10, 100);
+
+		layout.createButton("Back", new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				getGame().showMenu();
+			}
+		});
 	}
 
 	@Override
@@ -63,4 +76,5 @@ public class HighScoresScreen extends AbstractScreen {
 		label.setFontScale(SCORE_SCALE);
 		scoresTable.add(label).pad(TABLE_PADDING);
 	}
+	
 }
