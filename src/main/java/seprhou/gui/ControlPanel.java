@@ -45,10 +45,10 @@ public class ControlPanel extends Group
 		valueCrew = createTitleAndValue(380, "Crew");
 		valueWeight = createTitleAndValue(300, "Weight");
 
-		timerLabel = createValueLabel(260);
+		timerLabel = createValueLabel(200);
 		timerLabel.setFontScale(2);
 
-		valueScore = createTitleAndValue(200, "Score");
+		valueScore = createTitleAndValue(140, "Score");
 		valueScore.setFontScale(2);
 		
 		Image plane = new Image(Assets.AIRCRAFT_TEXTURE);
