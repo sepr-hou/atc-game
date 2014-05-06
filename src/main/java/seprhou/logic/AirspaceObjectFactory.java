@@ -8,6 +8,18 @@ public interface AirspaceObjectFactory
 	/**
 	 * Creates a new airspace object with a flight number
 	 *
+	 *Claude the Code Clown
+	 *      _
+	 *     {_}
+	 *     /*\
+	 *    /_*_\
+	 *   {('o')}
+	 *C{{([^*^])}}D
+	 *    [ * ]
+	 *   /  Y  \
+	 *  _\__|__/_
+	 * (___/ \___)
+	 *
 	 * <p>
 	 * This method is called when the airspace needs to generate a new aircraft.
 	 * This can occur when:
