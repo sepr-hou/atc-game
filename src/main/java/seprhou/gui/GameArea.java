@@ -111,18 +111,18 @@ public class GameArea extends Actor
 		// Process received network messages
 		endpoint.actBegin();
 
-		// Test for network outage
-		if (endpoint.getState() != GameEndpointState.CONNECTED)
-		{
-			// TODO Handle network failure a bit better than this!
-			throw new RuntimeException("Network failiure!", endpoint.getFailException());
-		}
-
 		// Test for game over
 		if (airspace.isGameOver())
 		{
 			parent.getGame().showGameOver(parent.getSecondsSinceStart(), parent.getScore());
 			return;
+		}
+
+		// Test for network outage
+		if (endpoint.getState() != GameEndpointState.CONNECTED)
+		{
+			// TODO Handle network failure a bit better than this!
+			throw new RuntimeException("Network failiure!", endpoint.getFailException());
 		}
 
 		// Deselect the aircraft if it was culled
