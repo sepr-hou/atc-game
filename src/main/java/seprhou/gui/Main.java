@@ -10,7 +10,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		boolean windowed = true;
+		boolean windowed = false;
 
 		// Check arguments
 		if (args.length >= 1)
