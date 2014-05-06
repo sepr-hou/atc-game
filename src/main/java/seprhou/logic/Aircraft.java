@@ -15,6 +15,7 @@ public abstract class Aircraft extends AirspaceObject
 	private final String name;
 	private final float weight;
 	private final int crew;
+	public int colour;
 
 	private float tickCount = 0;
 
@@ -36,7 +37,7 @@ public abstract class Aircraft extends AirspaceObject
 	 * @param crew number of crew
 	 * @param flightPlan aircraft flight plan
 	 */
-	protected Aircraft(String name, float weight, int crew, FlightPlan flightPlan, int score, Airspace airspace)
+	protected Aircraft(String name, float weight, int crew, int colour, FlightPlan flightPlan, int score, Airspace airspace)
 	{
 		if (flightPlan == null)
 			throw new IllegalArgumentException("flightPlan cannot be null");
@@ -48,6 +49,7 @@ public abstract class Aircraft extends AirspaceObject
 		this.name = name;
 		this.weight = weight;
 		this.crew = crew;
+		this.colour = colour;
 		this.flightPlan = flightPlan;
 		this.setScore(score);
 		this.airspace = airspace;
@@ -106,6 +108,12 @@ public abstract class Aircraft extends AirspaceObject
 	public int getCrew()
 	{
 		return crew;
+	}
+	
+	/** Returns this aircraft's colour (represented by number)*/
+	public int getColour()
+	{
+		return colour;
 	}
 
 	/** Returns this aircraft's flight plan (unmodifiable) */

@@ -225,7 +225,7 @@ public class MultiServer extends NetworkCommon<Server>
 		}
 
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, int colour)
 		{
 			return null;
 		}

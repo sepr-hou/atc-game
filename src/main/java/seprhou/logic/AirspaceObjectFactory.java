@@ -36,5 +36,5 @@ public interface AirspaceObjectFactory
 	 * @return the new object or {@code null} to create no object
 	 * @see #makeObject(Airspace, FlightPlan)
 	 */
-	public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber);
+	public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, int textureNum);
 }

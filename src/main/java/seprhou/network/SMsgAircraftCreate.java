@@ -16,6 +16,7 @@ class SMsgAircraftCreate implements ServerMessage
 	private int id;
 	@NotNull private String name;
 	@NotNull private FlightPlan flightPlan;
+	private int colour;
 
 	/**
 	 * Create a new aircraft create message
@@ -23,9 +24,9 @@ class SMsgAircraftCreate implements ServerMessage
 	 * @param id id of new aircraft
 	 * @param aircraft aircraft which was created
 	 */
-	public SMsgAircraftCreate(int id, Aircraft aircraft)
+	public SMsgAircraftCreate(int id, Aircraft aircraft, int colour)
 	{
-		this(id, aircraft.getName(), aircraft.getFlightPlan());
+		this(id, aircraft.getName(), aircraft.getFlightPlan(), aircraft.getColour());
 	}
 
 	/**
@@ -35,7 +36,7 @@ class SMsgAircraftCreate implements ServerMessage
 	 * @param name name of the aircraft
 	 * @param flightPlan flight plan of the aircraft
 	 */
-	public SMsgAircraftCreate(int id, String name, FlightPlan flightPlan)
+	public SMsgAircraftCreate(int id, String name, FlightPlan flightPlan, int colour)
 	{
 		if (name == null || flightPlan == null)
 			throw new IllegalArgumentException("name and flightPlan must be non-null");
@@ -43,6 +44,7 @@ class SMsgAircraftCreate implements ServerMessage
 		this.id = id;
 		this.name = name;
 		this.flightPlan = flightPlan;
+		this.colour = colour;
 	}
 
 	/** Private constructor for Kryo */
@@ -58,7 +60,7 @@ class SMsgAircraftCreate implements ServerMessage
 		{
 			// Create new aircraft
 			Airspace airspace = client.getAirspace();
-			AirspaceObject object = client.factory.makeObject(client.getAirspace(), flightPlan, name);
+			AirspaceObject object = client.factory.makeObject(client.getAirspace(), flightPlan, name, colour);
 
 			if (object != null)
 			{

@@ -23,9 +23,9 @@ public class ConcreteAircraft extends Aircraft
 	private static final Vector2D SHADOW_DIRECTION = Vector2D.fromPolar(SHADOW_HEIGHT_MULTIPLIER, SHADOW_ANGLE);
 
 	/** Creates a new concrete aircraft */
-	private ConcreteAircraft(String name, float weight, int crew, FlightPlan flightPlan, Airspace airspace)
+	private ConcreteAircraft(String name, float weight, int crew, int colour, FlightPlan flightPlan, Airspace airspace)
 	{
-		super(name, weight, crew, flightPlan, 1000, airspace);
+		super(name, weight, crew, colour, flightPlan, 1000, airspace);
 	}
 
 	/**
@@ -38,14 +38,15 @@ public class ConcreteAircraft extends Aircraft
 		{
 			// Random flight number between YO000 and YO999
 			String flightNumber = String.format("YO%03d", Utils.getRandom().nextInt(1000));
+			int colour = Utils.getRandom().nextInt(2);
 
-			return makeObject(airspace, flightPlan, flightNumber);
+			return makeObject(airspace, flightPlan, flightNumber, colour);
 		}
 
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, int colour)
 		{
-			return new ConcreteAircraft(flightNumber, 100, 5, flightPlan, airspace);
+			return new ConcreteAircraft(flightNumber, 100, 5, colour, flightPlan, airspace);
 		}
 	}
 
@@ -78,7 +79,14 @@ public class ConcreteAircraft extends Aircraft
 		}
 		else
 		{
-			aircraftTexture = Assets.AIRCRAFT_TEXTURE;
+			if (colour == 1)
+			{
+				aircraftTexture = Assets.AIRCRAFT_TEXTURE_RED;
+			}
+			else
+			{
+				aircraftTexture = Assets.AIRCRAFT_TEXTURE_BLUE;	
+			}
 		}
 
 		// Draw aircraft + its shadow
