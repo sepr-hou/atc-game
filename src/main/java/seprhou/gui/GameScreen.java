@@ -43,6 +43,9 @@ public class GameScreen extends AbstractScreen
 		gameArea.setBounds(0, 0, GAME_AREA_WIDTH, SCREEN_HEIGHT);
 		stage.addActor(gameArea);
 
+		// Set endpoint
+		this.endpoint = endpoint;
+		
 		// Create the control panel (where info is displayed)
 		controlPanel = new ControlPanel(this);
 		controlPanel.setBounds(GAME_AREA_WIDTH, 0, SCREEN_WIDTH - GAME_AREA_WIDTH, SCREEN_HEIGHT);
@@ -61,8 +64,7 @@ public class GameScreen extends AbstractScreen
 		// Give the game area keyboard focus (this is where keyboard events are sent)
 		stage.setKeyboardFocus(gameArea);
 
-		// Set endpoint
-		this.endpoint = endpoint;
+		
 	}
 
 	@Override

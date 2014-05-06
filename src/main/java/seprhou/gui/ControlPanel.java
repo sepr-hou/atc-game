@@ -3,7 +3,9 @@ package seprhou.gui;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 import seprhou.logic.Aircraft;
+import seprhou.logic.AircraftColour;
 import seprhou.logic.Utils;
 
 /**
@@ -50,10 +52,22 @@ public class ControlPanel extends Group
 
 		valueScore = createTitleAndValue(140, "Score");
 		valueScore.setFontScale(2);
-		
-		Image plane = new Image(Assets.AIRCRAFT_TEXTURE);
-		plane.setPosition(VALUE_ALIGN, 50);
-		addActor(plane);
+
+		AircraftColour colour = parent.getEndpoint().getMyColour();
+
+		if (colour == AircraftColour.WHITE){
+			Image plane = new Image(Assets.AIRCRAFT_TEXTURE);
+			plane.setPosition(VALUE_ALIGN, 50);
+			addActor(plane);}
+		else if (colour == AircraftColour.BLUE){
+			Image plane = new Image(Assets.AIRCRAFT_TEXTURE_BLUE);
+			plane.setPosition(VALUE_ALIGN, 50);
+			addActor(plane);}	
+
+		else if (colour == AircraftColour.RED){
+			Image plane = new Image(Assets.AIRCRAFT_TEXTURE_RED);
+			plane.setPosition(VALUE_ALIGN, 50);
+			addActor(plane);}	
 	}
 
 	/** Creates a new label for a value */
