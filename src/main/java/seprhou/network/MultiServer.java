@@ -18,8 +18,9 @@ public class MultiServer extends NetworkCommon<Server>
 	private final Set<AirspaceObject> newAircraft = new HashSet<>();
 
 	private final Rectangle dimensions;
-	private final CreatedObjectsDetector serverFactory;
+	private final FactoryProxy serverFactory;
 	private final float lateral, vertical;
+	private final AircraftColour myColour;
 
 	private Connection otherEndpoint;
 	private int previousScore, previousLanded;
@@ -33,9 +34,12 @@ public class MultiServer extends NetworkCommon<Server>
 
 		// Store airspace parameters
 		this.dimensions = dimensions;
-		this.serverFactory = new CreatedObjectsDetector(factory);
+		this.serverFactory = new FactoryProxy(factory);
 		this.lateral = lateral;
 		this.vertical = vertical;
+
+		// Choose random colour for myself
+		this.myColour = randomColour();
 
 		// Setup server connection
 		kryoEndpoint.addListener(new MyListener());
@@ -70,8 +74,21 @@ public class MultiServer extends NetworkCommon<Server>
 		previousLanded = 0;
 		objectIdMap.clear();
 
+		// Calculate other colour
+		AircraftColour otherColour;
+		if (myColour == AircraftColour.BLUE)
+			otherColour = AircraftColour.RED;
+		else
+			otherColour = AircraftColour.BLUE;
+
 		// Send start message
-		otherEndpoint.sendTCP(new SMsgGameStart(lateral, vertical));
+		otherEndpoint.sendTCP(new SMsgGameStart(lateral, vertical, otherColour));
+	}
+
+	@Override
+	public AircraftColour getMyColour()
+	{
+		return myColour;
 	}
 
 	@Override
@@ -203,20 +220,30 @@ public class MultiServer extends NetworkCommon<Server>
 		object.setTargetAltitude(altitude);
 	}
 
-	/** AirspaceObjectFactory which "captures" all requests to create aircraft */
-	private class CreatedObjectsDetector implements AirspaceObjectFactory
+	/** Returns a random multiplayer colour */
+	private static AircraftColour randomColour()
+	{
+		if (Utils.getRandom().nextBoolean())
+			return AircraftColour.BLUE;
+		else
+			return AircraftColour.RED;
+	}
+
+	/** AirspaceObjectFactory which handles multiplayer specific stuff */
+	private class FactoryProxy implements AirspaceObjectFactory
 	{
 		private final AirspaceObjectFactory userFactory;
 
-		public CreatedObjectsDetector(AirspaceObjectFactory userFactory)
+		public FactoryProxy(AirspaceObjectFactory userFactory)
 		{
 			this.userFactory = userFactory;
 		}
 
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, AircraftColour colour)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, AircraftColour dummy)
 		{
-			AirspaceObject object = userFactory.makeObject(airspace, flightPlan, flightNumber, colour);
+			// Create the object (note we use a new colour here)
+			AirspaceObject object = userFactory.makeObject(airspace, flightPlan, flightNumber, randomColour());
 
 			if (object != null)
 				newAircraft.add(object);

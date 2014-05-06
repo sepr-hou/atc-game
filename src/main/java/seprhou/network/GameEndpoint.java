@@ -1,5 +1,6 @@
 package seprhou.network;
 
+import seprhou.logic.AircraftColour;
 import seprhou.logic.Airspace;
 import seprhou.logic.AirspaceObject;
 import seprhou.logic.Vector2D;
@@ -41,6 +42,9 @@ public interface GameEndpoint extends Closeable
 	 * @return the active airspace or null if no game is active
 	 */
 	Airspace getAirspace();
+
+	/** Returns the colour used for aircraft controlled by this endpoint */
+	AircraftColour getMyColour();
 
 	/**
 	 * Method called at the start of the global act method

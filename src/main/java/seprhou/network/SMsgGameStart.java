@@ -1,5 +1,8 @@
 package seprhou.network;
 
+import com.esotericsoftware.kryo.NotNull;
+import seprhou.logic.AircraftColour;
+
 /**
  * Start game message
  *
@@ -8,17 +11,20 @@ package seprhou.network;
 class SMsgGameStart implements ServerMessage
 {
 	private float lateral, vertical;
+	@NotNull private AircraftColour yourColour;
 
 	/**
 	 * Create a new game start message
 	 *
 	 * @param lateral lateral separation distance (passed to new airspace)
 	 * @param vertical vertical separation distance (passed to new airspace)
+	 * @param yourColour the colour assigned to the CLIENT end (the receiver of this message)
 	 */
-	public SMsgGameStart(float lateral, float vertical)
+	public SMsgGameStart(float lateral, float vertical, AircraftColour yourColour)
 	{
 		this.lateral = lateral;
 		this.vertical = vertical;
+		this.yourColour = yourColour;
 	}
 
 	/** Private constructor for Kryo */
@@ -30,6 +36,6 @@ class SMsgGameStart implements ServerMessage
 	@Override
 	public void receivedFromServer(MultiClient client)
 	{
-		client.startGame(lateral, vertical);
+		client.startGame(lateral, vertical, yourColour);
 	}
 }

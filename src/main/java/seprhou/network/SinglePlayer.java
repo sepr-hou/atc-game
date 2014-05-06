@@ -32,6 +32,12 @@ public class SinglePlayer implements GameEndpoint
 		return airspace;
 	}
 
+	@Override
+	public AircraftColour getMyColour()
+	{
+		return AircraftColour.WHITE;
+	}
+
 	// Airspace forwarding methods
 	@Override
 	public void actEnd(float delta)
