@@ -148,6 +148,17 @@ public class MultiClient extends NetworkCommon<Client>
 	}
 
 	@Override
+	public void handover(Aircraft object)
+	{
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
+		// Send velocity request
+		kryoEndpoint.sendTCP(new CMsgHandover(objectIdMap.getId(object)));
+	}
+
+	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
 		// Ignore if not connected

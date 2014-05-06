@@ -1,9 +1,6 @@
 package seprhou.network;
 
-import seprhou.logic.AircraftColour;
-import seprhou.logic.Airspace;
-import seprhou.logic.AirspaceObject;
-import seprhou.logic.Vector2D;
+import seprhou.logic.*;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -70,6 +67,15 @@ public interface GameEndpoint extends Closeable
 	 * <p>The request may not take affect immediately (it may need a network roundtrip)
 	 */
 	void takeOff();
+
+	/**
+	 * Handover an aircraft to the other player
+	 *
+	 * <p>The request may not take affect immediately (it may need a network roundtrip)
+	 *
+	 * @param object aircraft to handover
+	 */
+	void handover(Aircraft object);
 
 	/**
 	 * Sets the target velocity of an aircraft

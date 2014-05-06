@@ -52,6 +52,9 @@ public class SinglePlayer implements GameEndpoint
 	}
 
 	@Override
+	public void handover(Aircraft object) { }
+
+	@Override
 	public void setTargetVelocity(AirspaceObject object, Vector2D velocity)
 	{
 		object.setTargetVelocity(velocity);

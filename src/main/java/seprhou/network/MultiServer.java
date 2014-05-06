@@ -74,15 +74,17 @@ public class MultiServer extends NetworkCommon<Server>
 		previousLanded = 0;
 		objectIdMap.clear();
 
-		// Calculate other colour
-		AircraftColour otherColour;
-		if (myColour == AircraftColour.BLUE)
-			otherColour = AircraftColour.RED;
-		else
-			otherColour = AircraftColour.BLUE;
-
 		// Send start message
-		otherEndpoint.sendTCP(new SMsgGameStart(lateral, vertical, otherColour));
+		otherEndpoint.sendTCP(new SMsgGameStart(lateral, vertical, getOtherColour()));
+	}
+
+	/** Returns the other player's colour */
+	private AircraftColour getOtherColour()
+	{
+		if (getMyColour() == AircraftColour.BLUE)
+			return AircraftColour.RED;
+		else
+			return AircraftColour.BLUE;
 	}
 
 	@Override
@@ -201,6 +203,16 @@ public class MultiServer extends NetworkCommon<Server>
 			return;
 
 		airspace.takeOff();
+	}
+
+	@Override
+	public void handover(Aircraft aircraft)
+	{
+		// Ignore if not connected
+		if (!isConnected())
+			return;
+
+		aircraft.setColour(getOtherColour());
 	}
 
 	@Override
