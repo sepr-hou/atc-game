@@ -18,6 +18,8 @@ public final class Assets
 	public static final Texture WAYPOINT_TEXTURE = loadTextureFromFile("waypoint.png");
 	public static final Texture NEXT_WAYPOINT_TEXTURE = loadTextureFromFile("nextwaypoint.png");
 	public static final Texture AIRCRAFT_TEXTURE = loadTextureFromFile("airplane.png");
+	public static final Texture AIRCRAFT_TEXTURE_BLUE = loadTextureFromFile("airplaneblue.png");
+	public static final Texture AIRCRAFT_TEXTURE_RED = loadTextureFromFile("airplanered.png");
 	public static final Texture MENU_BACKGROUND_TEXTURE = loadTextureFromFile("menubackground.png");
 	public static final Texture CIRCLE_TEXTURE = loadTextureFromFile("circle.png");
 	public static final Texture VIOLATED_TEXTURE = loadTextureFromFile("violated.png");
