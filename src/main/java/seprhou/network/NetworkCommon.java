@@ -144,6 +144,7 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 		kryo.register(FlightPlan.class, new FlightPlanSerializer());
 		kryo.register(Vector2D.class);
 		kryo.register(Vector2D[].class);
+		kryo.register(AircraftColour.class);
 	}
 
 	/** Manual serializer for FlightPlan */
