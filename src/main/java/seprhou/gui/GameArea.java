@@ -162,9 +162,9 @@ public class GameArea extends Actor
 			}
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
-			if (buttonsPressed.get(Input.Keys.UP))
+			if (buttonsPressed.get(Input.Keys.UP) || buttonsPressed.get(Input.Keys.W))
 				endpoint.setTargetAltitude(selected, oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
-			else if (buttonsPressed.get(Input.Keys.DOWN))
+			else if (buttonsPressed.get(Input.Keys.DOWN) || buttonsPressed.get(Input.Keys.S))
 				endpoint.setTargetAltitude(selected, oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
 
 			if (buttonsPressed.get(Input.Keys.H))
