@@ -136,7 +136,7 @@ public class MultiServer extends NetworkCommon<Server>
 		if (airspace.getLandedObjects() != previousLanded)
 		{
 			previousLanded = airspace.getLandedObjects();
-			otherEndpoint.sendTCP(new SMsgScoreUpdate(previousLanded));
+			otherEndpoint.sendTCP(new SMsgLandedUpdate(previousLanded));
 		}
 
 		// Handle game over
