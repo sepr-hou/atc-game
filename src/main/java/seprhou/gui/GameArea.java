@@ -11,6 +11,7 @@ import seprhou.logic.*;
 import seprhou.network.GameEndpoint;
 import seprhou.network.GameEndpointState;
 
+import java.util.BitSet;
 import java.util.List;
 
 /**
@@ -27,8 +28,8 @@ public class GameArea extends Actor
 	/** Position of click event - null if there has been no clicks since last call to act */
 	private Vector2D clickPosition;
 
-	/** If true, a keydown event was received for the up / down buttons */
-	private boolean upPressed, downPressed, spacePressed, qPressed, ePressed, tabPressed;
+	/** Set containing the keys pressed since the last act */
+	private BitSet buttonsPressed = new BitSet();
 
 	/**
 	 * Creates a new GameArea
@@ -38,35 +39,11 @@ public class GameArea extends Actor
 		this.parent = parent;
 		this.addListener(new InputListener()
 		{
-			// New keys should be added here if it is important that the
-			// keypress
-			// is only registered a single time.
 			@Override
 			public boolean keyDown(InputEvent event, int keycode)
 			{
-				if (keycode == Input.Keys.UP || keycode == Input.Keys.W)
-				{
-					upPressed = true;
-					return true;
-				}
-				else if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S)
-				{
-					downPressed = true;
-					return true;
-				} else if (keycode == Input.Keys.SPACE) {
-					GameArea.this.spacePressed = true;
-					return true;
-				} else if (keycode == Input.Keys.E) {
-					GameArea.this.ePressed = true;
-					return true;
-				} else if (keycode == Input.Keys.Q) {
-					GameArea.this.qPressed = true;
-					return true;
-				} else if (keycode == Input.Keys.TAB) {
-					GameArea.this.tabPressed = true;
-				}
-
-				return false;
+				buttonsPressed.set(keycode);
+				return true;
 			}
 
 			@Override
@@ -141,7 +118,7 @@ public class GameArea extends Actor
 		}
 
 		// Tab Cycling through aircraft
-		if (this.tabPressed)
+		if (buttonsPressed.get(Input.Keys.TAB))
 			parent.setSelectedAircraft((Aircraft) airspace.cycleAircraft());
 
 		// Keyboard controls
@@ -162,37 +139,32 @@ public class GameArea extends Actor
 				endpoint.setTargetVelocity(selected, oldTargetVelocity.rotate(-selected.getMaxTurnRate() * delta));
 			}
 
-			if (this.qPressed)
+			if (buttonsPressed.get(Input.Keys.Q))
 			{
 				// Slow down by 100mph
 				endpoint.setTargetVelocity(selected, oldTargetVelocity.changeLength(oldTargetVelocity.getLength() - 10));
 			}
-			else if (this.ePressed)
+			else if (buttonsPressed.get(Input.Keys.E))
 			{
 				// Speed up by 100mph
 				endpoint.setTargetVelocity(selected, oldTargetVelocity.changeLength(oldTargetVelocity.getLength() + 10));
 			}
 
 			// These keys are updated once - the Stage events handler works out when the down event occured
-			if (upPressed)
+			if (buttonsPressed.get(Input.Keys.UP))
 				endpoint.setTargetAltitude(selected, oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
-			else if (downPressed)
+			else if (buttonsPressed.get(Input.Keys.DOWN))
 				endpoint.setTargetAltitude(selected, oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
 		}
 
 		// Takes off landed airplanes.
 		// Additional check, to make sure, that it is impossible to have more
 		// than MAX_AIRCRAFT planes in the airspace.
-		if (this.spacePressed && airspace.getActiveObjects().size() < LogicConstants.MAX_AIRCRAFT)
+		if (buttonsPressed.get(Input.Keys.SPACE) && airspace.getActiveObjects().size() < LogicConstants.MAX_AIRCRAFT)
 			endpoint.takeOff();
 
 		// Clear keypress events
-		upPressed = false;
-		downPressed = false;
-		spacePressed = false;
-		qPressed = false;
-		ePressed = false;
-		tabPressed = false;
+		buttonsPressed.clear();
 
 		// Refresh airspace + process sent network messages
 		endpoint.actEnd(delta);
