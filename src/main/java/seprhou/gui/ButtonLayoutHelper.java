@@ -26,15 +26,21 @@ public class ButtonLayoutHelper
 	private float nextYPos = BUTTON_INITIAL_YPOS;
 
 	/**
-	 * Initializes a new ButtonLayoutHelper
+	 * Initialises a new ButtonLayoutHelper
 	 * @param stage stage to add buttons to
+	 * @param spacing spacing between button and other objects
 	 */
 	public ButtonLayoutHelper(Stage stage, float spacing)
 	{
 		this.stage = stage;
 		this.buttonSpacing = spacing;
 	}
-	
+	/**
+	 * Initialises a new ButtonLayoutHelper
+	 * @param stage stage to add buttons to
+	 * @param spacing spacing between button and other objects
+	 * @param ypos position on screen with respect to y axis
+	 */
 	public ButtonLayoutHelper(Stage stage, float spacing, float ypos)
 	{
 		this.stage = stage;
