@@ -112,8 +112,13 @@ public class GameArea extends Actor
 			if (LogicConstants.DEBUG)
 				System.out.println(this.clickPosition);
 
-			// Mouse click registered - update selected aircraft
-			parent.setSelectedAircraft((Aircraft) airspace.findAircraft(clickPosition));
+			// Mouse click registered - update selected aircraft (if it's the right colour)
+			parent.setSelectedAircraft(null);
+
+			Aircraft aircraft = (Aircraft) airspace.findAircraft(clickPosition);
+			if (aircraft != null && aircraft.getColour() == endpoint.getMyColour())
+				parent.setSelectedAircraft(aircraft);
+
 			clickPosition = null;
 		}
 
@@ -155,6 +160,9 @@ public class GameArea extends Actor
 				endpoint.setTargetAltitude(selected, oldTargetAltitude + LogicConstants.ALTITUDE_JUMP);
 			else if (buttonsPressed.get(Input.Keys.DOWN))
 				endpoint.setTargetAltitude(selected, oldTargetAltitude - LogicConstants.ALTITUDE_JUMP);
+
+			if (buttonsPressed.get(Input.Keys.H))
+				endpoint.handover(selected);
 		}
 
 		// Takes off landed airplanes.
