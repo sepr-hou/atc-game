@@ -306,15 +306,9 @@ public class AirspaceTest
 	private static class AirspaceObjectFactoryImpl implements AirspaceObjectFactory
 	{
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, AircraftColour colour)
 		{
 			return new AirspaceObjectMock();
-		}
-
-		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber)
-		{
-			return null;
 		}
 	}
 }

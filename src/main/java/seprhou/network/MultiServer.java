@@ -214,20 +214,14 @@ public class MultiServer extends NetworkCommon<Server>
 		}
 
 		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan)
+		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, AircraftColour colour)
 		{
-			AirspaceObject object = userFactory.makeObject(airspace, flightPlan);
+			AirspaceObject object = userFactory.makeObject(airspace, flightPlan, flightNumber, colour);
 
 			if (object != null)
 				newAircraft.add(object);
 
 			return object;
-		}
-
-		@Override
-		public AirspaceObject makeObject(Airspace airspace, FlightPlan flightPlan, String flightNumber, int colour)
-		{
-			return null;
 		}
 	}
 

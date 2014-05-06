@@ -1,10 +1,7 @@
 package seprhou.network;
 
 import com.esotericsoftware.kryo.NotNull;
-import seprhou.logic.Aircraft;
-import seprhou.logic.Airspace;
-import seprhou.logic.AirspaceObject;
-import seprhou.logic.FlightPlan;
+import seprhou.logic.*;
 
 /**
  * New aircraft message
@@ -16,7 +13,7 @@ class SMsgAircraftCreate implements ServerMessage
 	private int id;
 	@NotNull private String name;
 	@NotNull private FlightPlan flightPlan;
-	private int colour;
+	@NotNull private AircraftColour colour;
 
 	/**
 	 * Create a new aircraft create message
@@ -24,7 +21,7 @@ class SMsgAircraftCreate implements ServerMessage
 	 * @param id id of new aircraft
 	 * @param aircraft aircraft which was created
 	 */
-	public SMsgAircraftCreate(int id, Aircraft aircraft, int colour)
+	public SMsgAircraftCreate(int id, Aircraft aircraft)
 	{
 		this(id, aircraft.getName(), aircraft.getFlightPlan(), aircraft.getColour());
 	}
@@ -35,8 +32,9 @@ class SMsgAircraftCreate implements ServerMessage
 	 * @param id id of new aircraft
 	 * @param name name of the aircraft
 	 * @param flightPlan flight plan of the aircraft
+	 * @param colour the colour of the aircraft
 	 */
-	public SMsgAircraftCreate(int id, String name, FlightPlan flightPlan, int colour)
+	public SMsgAircraftCreate(int id, String name, FlightPlan flightPlan, AircraftColour colour)
 	{
 		if (name == null || flightPlan == null)
 			throw new IllegalArgumentException("name and flightPlan must be non-null");
