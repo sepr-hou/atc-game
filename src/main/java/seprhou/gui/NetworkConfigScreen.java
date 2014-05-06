@@ -29,7 +29,7 @@ public class NetworkConfigScreen extends AbstractScreen
 				GameEndpoint endpoint = new MultiClient(hostnameField.getText(),
 						GameScreen.GAME_DIMENSIONS, ConcreteAircraft.FACTORY);
 
-				getGame().showConnectingScreen("Connecting...", endpoint);
+				getGame().showNetworkInfoScreen("Connecting...", endpoint);
 			}
 		});
 		
@@ -45,7 +45,7 @@ public class NetworkConfigScreen extends AbstractScreen
 						OptionsScreen.getLateral(),
 						OptionsScreen.getVertical());
 
-				getGame().showConnectingScreen("Waiting for someone to connect...", endpoint);
+				getGame().showNetworkInfoScreen("Waiting for someone to connect...", endpoint);
 			}
 		});
 		

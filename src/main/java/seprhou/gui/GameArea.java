@@ -98,8 +98,8 @@ public class GameArea extends Actor
 		// Test for network outage
 		if (endpoint.getState() != GameEndpointState.CONNECTED)
 		{
-			// TODO Handle network failure a bit better than this!
-			throw new RuntimeException("Network failiure!", endpoint.getFailException());
+			parent.getGame().showNetworkInfoScreen("Network failure!", null);
+			return;
 		}
 
 		// Get currently selected aircraft
