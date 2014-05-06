@@ -64,9 +64,13 @@ public abstract class NetworkCommon<TEndPoint extends EndPoint> implements GameE
 	@Override
 	public void close()
 	{
-		kryoEndpoint.close();
-		state = GameEndpointState.CLOSED;
-		Log.info("[Endpoint] Endpoint closed");
+		// Do not re-close
+		if (state != GameEndpointState.CLOSED)
+		{
+			kryoEndpoint.close();
+			state = GameEndpointState.CLOSED;
+			Log.info("[Endpoint] Endpoint closed");
+		}
 	}
 
 	/** Close connection and set fail exception */

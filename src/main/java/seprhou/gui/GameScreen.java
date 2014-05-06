@@ -73,7 +73,6 @@ public class GameScreen extends AbstractScreen
 		super.hide();
 
 		// Close the endpoint when leaving this screen
-		// TODO This will prevent restarts (game over / escspe results in immediate disconnection) - do we want this?
 		if (endpoint != null)
 			endpoint.close();
 	}
